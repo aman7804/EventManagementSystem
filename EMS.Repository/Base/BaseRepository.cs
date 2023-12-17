@@ -31,14 +31,17 @@ namespace EMS.Repository.Base
             Context.Add(entity);
             await Context.SaveChangesAsync();
         }
+        public virtual async Task UpdateAsync(T entity)
+        {
+            entity.UpdateDate = DateTime.Now;
+            entity.UpdatedBy = CurrentUser;
+            Context.Update(entity);
+            await Context.SaveChangesAsync();
+        }
 
         public virtual async Task DeleteAsync(int id)
         {
-            T? entity = await GetByIdAsync(id);
-            if (entity == null)
-            {
-                throw new Exception(ExceptionMessage.RECORD_NOT_FOUND);
-            }
+            T? entity = await GetByIdAsync(id) ?? throw new Exception(ExceptionMessage.RECORD_NOT_FOUND);
             Context.Remove(entity);
             await Context.SaveChangesAsync();
         }
@@ -69,12 +72,5 @@ namespace EMS.Repository.Base
             return await GetAsync(x => x.Id == id, asNoTracking);
         }
 
-        public virtual async Task UpdateAsync(T entity)
-        {
-            entity.UpdateDate = DateTime.Now;
-            entity.UpdatedBy = CurrentUser;
-            Context.Update(entity);
-            await Context.SaveChangesAsync();
-        }
     }
 }
