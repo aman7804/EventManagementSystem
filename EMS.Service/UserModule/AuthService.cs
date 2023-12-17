@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using EMS.Entity;
+using EMS.Entity.Entity;
 using EMS.Repository.UserModule;
 using EMS.Service.Base;
 using EMS.Service.DTO;
@@ -9,14 +9,14 @@ using System.Text;
 
 namespace EMS.Service.UserModule
 {
-    public class AuthService : BaseService<User, UserDTO>, IAuthService
+    public class AuthService : BaseService<UserEntity, UserDTO>, IAuthService
     {
         public AuthService(IMapper mapper, IUserRepository userRepository) : base(mapper, userRepository)
         { }
 
         public async Task ChangePassword(ChangePasswordDTO changePasswordDTO)
         {
-            User? user = await Repo.GetAsync(x => x.EmailId == changePasswordDTO.EmailId, false);       
+            UserEntity? user = await Repo.GetAsync(x => x.EmailId == changePasswordDTO.EmailId, false);       
             if (user == null)
             {
                 throw new Exception(ExceptionMessage.USER_NOT_FOUND);
@@ -32,7 +32,7 @@ namespace EMS.Service.UserModule
 
         public async Task<UserDTO> GetByEmailId(string emailId)
         {
-            User? user = await Repo.GetAsync(x => x.EmailId == emailId, true);
+            UserEntity? user = await Repo.GetAsync(x => x.EmailId == emailId, true);
             if (user == null)
             {
                 throw new Exception(ExceptionMessage.USER_NOT_FOUND);
@@ -42,7 +42,7 @@ namespace EMS.Service.UserModule
 
         public async Task<UserDTO> Login(LoginDTO loginDTO)
         {
-            User? user = await Repo.GetAsync(x => x.EmailId == loginDTO.EmailId, false);
+            UserEntity? user = await Repo.GetAsync(x => x.EmailId == loginDTO.EmailId, false);
             if (user == null)
             {
                 throw new Exception(ExceptionMessage.USER_NOT_FOUND);

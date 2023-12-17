@@ -1,9 +1,9 @@
 ﻿using EMS.Data;
-using EMS.Entity;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using EMS.Shared.Constant;
 using Microsoft.AspNetCore.Http;
+using EMS.Entity.Base;
 
 namespace EMS.Repository.Base
 {

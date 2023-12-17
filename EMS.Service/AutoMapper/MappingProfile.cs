@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using EMS.Entity;
+using EMS.Entity.Entity;
 using EMS.Service.DTO;
 
 namespace EMS.Service.AutoMapper
@@ -8,7 +8,7 @@ namespace EMS.Service.AutoMapper
     {
         public MappingProfile()
         {
-            CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<UserEntity, UserDTO>().ReverseMap();
         }
     }
 }

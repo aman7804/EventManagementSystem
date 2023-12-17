@@ -1,4 +1,4 @@
-﻿using EMS.Entity;
+﻿using EMS.Entity.Base;
 
 namespace EMS.Repository.Base
 {

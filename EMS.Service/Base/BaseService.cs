@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using EMS.Entity;
+using EMS.Entity.Base;
 using EMS.Repository.Base;
 using EMS.Service.DTO;
 using EMS.Shared.Constant;
