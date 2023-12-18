@@ -44,5 +44,18 @@ namespace EMS.Api.Controllers
             }
         }
 
+        [NonAction]
+        public async Task<IActionResult> Delete(int Id)
+        {
+            try
+            {
+                await _baseService.DeleteAsync(Id);
+                return Ok("Deleted Successfully");
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

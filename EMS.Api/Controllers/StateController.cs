@@ -17,5 +17,14 @@ namespace EMS.Api.Controllers
         {
             return await Save(dto);
         }
+
+        [HttpDelete("delete/{Id}")]
+        public async Task<IActionResult> DeleteAsync(int Id)
+        {
+            return await Delete(Id);
+        }
+        
+
+
     }
 }
