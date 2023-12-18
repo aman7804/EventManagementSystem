@@ -17,14 +17,22 @@ namespace EMS.Service.Base
             Mapper = mapper;
             Repo = baseRepository; 
         }
-        public async Task AddAsync(D dto)
+        public virtual async Task AddAsync(D dto)
         {
+            if (dto == null) { throw new NullReferenceException(); }
             T entity = ToEntity(dto);
             await Repo.AddAsync(entity);
+        }
+        public virtual async Task UpdateAsync(D dto)
+        {
+            if (dto == null) { throw new NullReferenceException(); }
+            T entity = ToEntity(dto);
+            await Repo.UpdateAsync(entity);
         }
 
         public async Task DeleteAsync(int Id)
         {
+            if (Id <= 0) { throw new NullReferenceException(); }
             await Repo.DeleteAsync(Id);
         }
 
@@ -67,11 +75,6 @@ namespace EMS.Service.Base
             return paginationDTO;
         }
 
-        public async Task UpdateAsync(D dto)
-        {
-            T entity = ToEntity(dto);
-            await Repo.UpdateAsync(entity);
-        }
 
         #region Protected Methods
         protected virtual D ToDTO(T entity)
