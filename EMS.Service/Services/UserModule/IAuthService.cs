@@ -2,7 +2,7 @@
 using EMS.Service.Base;
 using EMS.Service.DTO;
 
-namespace EMS.Service.UserModule
+namespace EMS.Service.Services.UserModule
 {
     public interface IAuthService : IBaseService<UserEntity, UserDTO>
     {
