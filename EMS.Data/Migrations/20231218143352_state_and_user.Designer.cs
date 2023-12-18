@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EMS.Data.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    [Migration("20231217135354_state_and_user")]
-    partial class state_and_user
+    [Migration("20231218143352_state")]
+    partial class state
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
