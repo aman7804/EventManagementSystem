@@ -16,7 +16,7 @@ namespace EMS.Service.UserModule
 
         public async Task ChangePassword(ChangePasswordDTO changePasswordDTO)
         {
-            UserEntity? user = await Repo.GetAsync(x => x.EmailId == changePasswordDTO.EmailId, false);       
+            UserEntity? user = await Repo.GetAsync(x => x.EmailId == changePasswordDTO.EmailId, false);
             if (user == null)
             {
                 throw new Exception(ExceptionMessage.USER_NOT_FOUND);
