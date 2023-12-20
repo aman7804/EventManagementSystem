@@ -57,5 +57,19 @@ namespace EMS.Api.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [NonAction]
+        public virtual async Task<IActionResult> GetById(int Id)
+        {
+            try
+            {
+                D dto = await _baseService.GetByIdAsync(Id);
+                return Ok(dto);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

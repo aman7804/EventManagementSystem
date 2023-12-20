@@ -19,20 +19,20 @@ namespace EMS.Service.Base
         }
         public virtual async Task AddAsync(D dto)
         {
-            if (dto == null) { throw new NullReferenceException(); }
+            if (dto == null) { throw new ArgumentNullException(nameof(dto), "DTO cannot be null"); }
             T entity = ToEntity(dto);
             await Repo.AddAsync(entity);
         }
         public virtual async Task UpdateAsync(D dto)
         {
-            if (dto == null) { throw new NullReferenceException(); }
+            if (dto == null) { throw new ArgumentNullException(nameof(dto), "DTO cannot be null"); }
             T entity = ToEntity(dto);
             await Repo.UpdateAsync(entity);
         }
 
         public async Task DeleteAsync(int Id)
         {
-            if (Id <= 0) { throw new NullReferenceException(); }
+            if (Id <= 0) { throw new ArgumentNullException(nameof(Id), "Id cannot be null"); }
             await Repo.DeleteAsync(Id);
         }
 
@@ -45,6 +45,8 @@ namespace EMS.Service.Base
 
         public async Task<D> GetByIdAsync(int Id)
         {
+            if (Id <= 0) { throw new ArgumentNullException(nameof(Id), "Id cannot be null"); }
+
             T? entity = await Repo.GetByIdAsync(Id);
             if (entity == null)
             {

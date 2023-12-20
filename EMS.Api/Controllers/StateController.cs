@@ -23,8 +23,12 @@ namespace EMS.Api.Controllers
         {
             return await Delete(Id);
         }
-        
 
+        [HttpGet("getById/{Id}")]
+        public async Task<IActionResult> GetByIdAsync(int Id)
+        {
+            return await GetById(Id);
+        }
 
     }
 }
