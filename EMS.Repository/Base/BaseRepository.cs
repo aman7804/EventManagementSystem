@@ -50,8 +50,8 @@ namespace EMS.Repository.Base
         {
             IQueryable<T> query = Context.Set<T>().AsQueryable<T>();
             if (predicate != null)
-            {
-                query.Where(predicate);
+            {   
+                query = query.Where(predicate);
             }
             return query;
         }
