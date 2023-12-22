@@ -3,6 +3,8 @@ using EMS.Repository.StateModule;
 using EMS.Service.DTO;
 using EMS.Service.Services.StateModule;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
+using System.Net;
 
 namespace EMS.Api.Controllers
 {
@@ -13,22 +15,44 @@ namespace EMS.Api.Controllers
         public StateController(IStateService stateService) : base(stateService) { }
 
         [HttpPost("save")]
-        public async Task<IActionResult> SaveStateAsync(StateDTO dto)
+        public async Task<IActionResult> SaveState(StateDTO dto)
         {
-            return await Save(dto);
+            if (dto.Id == 0)
+            {
+                await _baseService.AddAsync(dto);
+                return GetResult<StateDTO>(null, HttpStatusCode.OK);
+            }
+            else
+            {
+                await _baseService.UpdateAsync(dto);
+                return GetResult<StateDTO>(null, HttpStatusCode.OK);
+            }
         }
 
         [HttpDelete("delete/{Id}")]
-        public async Task<IActionResult> DeleteAsync(int Id)
+        public async Task<IActionResult> DeleteState(int Id)
         {
-            return await Delete(Id);
+            await _baseService.DeleteAsync(Id);
+            return GetResult<StateDTO>(null, HttpStatusCode.OK );
         }
 
-        [HttpGet("getById/{Id}")]
-        public async Task<IActionResult> GetByIdAsync(int Id)
+        [HttpGet("index/{Id}")]
+        public async Task<IActionResult> Index(int Id)
         {
-            return await GetById(Id);
+            return GetResult<StateDTO>(await _baseService.GetByIdAsync(Id));
         }
 
+        [HttpPost("list")]
+        public async Task<IActionResult> List(PaginationDTO<StateDTO> pagination)
+        {
+
+            return GetResult<PaginationDTO<StateDTO>>( await _baseService.GetPageAsync(pagination));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetDropdownList()
+        {
+            return GetResult<List<StateDTO>>(await _baseService.GetAllAsync(x => true));
+        }
     }
 }

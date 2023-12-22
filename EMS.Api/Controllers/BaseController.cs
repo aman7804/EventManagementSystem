@@ -2,6 +2,9 @@
 using EMS.Service.Base;
 using Microsoft.AspNetCore.Mvc;
 using EMS.Service.DTO;
+using Microsoft.AspNetCore.Http;
+using System.Net;
+using EMS.Api.ViewModels;
 
 namespace EMS.Api.Controllers
 {
@@ -15,60 +18,40 @@ namespace EMS.Api.Controllers
             _baseService = baseService;
         }
 
-        [NonAction]
-        public async Task<IActionResult> Save(D dto)
+        protected IActionResult GetResult<T>(ApiResult<T> result) where T : class
         {
-
-            try
-            {
-                if (dto.Id == 0)
-                {
-                    await _baseService.AddAsync(dto);
-                    return Ok("Created Successfully");
-                }
-                else
-                {
-                    await _baseService.UpdateAsync(dto);
-                    return Ok("Updated Successfully");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                if(ex.InnerException != null)
-                {
-                    Console.WriteLine(ex.InnerException.Message);
-                    return BadRequest(ex.InnerException.Message);
-                }
-                return BadRequest(ex.Message);
-            }
+            if (result.IsSuccessStatusCode && result.Code == (int)HttpStatusCode.OK) return Ok(result);
+            else if (result.Code == (int)HttpStatusCode.NotFound) return NotFound(result.Message);
+            else return BadRequest(result.Message);
         }
 
-        [NonAction]
-        public async Task<IActionResult> Delete(int Id)
+        protected IActionResult GetResult<T>(T? _dto, HttpStatusCode _statusCode = HttpStatusCode.OK, Exception? ex = null) where T : class
         {
-            try
+            ApiResult<T> result = new()
             {
-                await _baseService.DeleteAsync(Id);
-                return Ok("Deleted Successfully");
-            }
-            catch (Exception e)
+                Data = _dto,
+                Code = (int)_statusCode,
+                Message = GetMessageByStatusCode(_statusCode)
+            };
+            if (ex != null)
             {
-                return BadRequest(e.Message);
+                result.Message = ex.Message;
             }
+            return GetResult(result);
         }
 
-        [NonAction]
-        public virtual async Task<IActionResult> GetById(int Id)
+        private static string GetMessageByStatusCode(HttpStatusCode _statusCode)
         {
-            try
+            switch (_statusCode)
             {
-                D dto = await _baseService.GetByIdAsync(Id);
-                return Ok(dto);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
+                case HttpStatusCode.OK:
+                    return "Success";
+                case HttpStatusCode.Forbidden:
+                    return "Unauthorised";
+                case HttpStatusCode.NotFound:
+                    return "Record Not Found";
+                default:
+                    return _statusCode.ToString();
             }
         }
     }

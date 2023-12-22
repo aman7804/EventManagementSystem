@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using System.Net;
-using System.Reflection;
+﻿using System.Net;
 
 namespace EMS.Api.Common
 {   
@@ -39,8 +37,6 @@ namespace EMS.Api.Common
                 await context.Response.WriteAsync($"{{\"message\": \"Internal Server Error\"," +
                                                     $"\"error\": \"{ex.Message}\"," +
                                                     $"\"innerExcetion\": \"{innerExcetion}\"}} ");
-
-
             }
         }
     }

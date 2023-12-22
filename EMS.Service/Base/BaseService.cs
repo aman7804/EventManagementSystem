@@ -2,9 +2,11 @@
 using EMS.Entity.Base;
 using EMS.Repository.Base;
 using EMS.Service.DTO;
+using EMS.Shared;
 using EMS.Shared.Constant;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using EMS.Service.Extension;
 
 namespace EMS.Service.Base
 {
@@ -26,7 +28,9 @@ namespace EMS.Service.Base
         public virtual async Task UpdateAsync(D dto)
         {
             if (dto == null) { throw new ArgumentNullException(nameof(dto), "DTO cannot be null"); }
-            T entity = ToEntity(dto);
+            D dtoToUpdate = await GetByIdAsync(dto.Id);
+
+            T entity = ToEntity(dtoToUpdate);
             await Repo.UpdateAsync(entity);
         }
 
@@ -57,23 +61,33 @@ namespace EMS.Service.Base
 
         public async Task<PaginationDTO<D>> GetPageAsync(PaginationDTO<D> paginationDTO)
         {            
-            Expression<Func<D, bool>> expression = paginationDTO.FilterDTO.GetFilter();
-            Expression<Func<T, bool>> where = Map<Expression<Func<D, bool>>, Expression<Func<T, bool>>>(expression);
-            IQueryable<T> query = Repo.GetAll(where);
+            //Expression<Func<D, bool>> expression = paginationDTO.FilterDTO.GetFilter();
+            //Expression<Func<T, bool>> where = Map<Expression<Func<D, bool>>, Expression<Func<T, bool>>>(expression);
+            IQueryable<T> query = Repo.GetAll(null);
 
             paginationDTO.RecordCount = await query.CountAsync();
 
-            query.Skip(paginationDTO.PageSize * (paginationDTO.PageNo - 1));
-            query.Take(paginationDTO.PageSize);
+            if (!string.IsNullOrWhiteSpace(paginationDTO.SortByColumns))
+            {
+                if (paginationDTO.SortBy == EnumSortBy.Descending)
+                {
+                    query = query.OrderByDescending(paginationDTO.SortByColumns);
+                }
+                else
+                {
+                    query = query.OrderBy(paginationDTO.SortByColumns);
+                }
+            }
+
+            query = query.Skip(paginationDTO.PageSize * (paginationDTO.PageNo - 1));
+            query = query.Take(paginationDTO.PageSize);
 
             List<T> records = await query.ToListAsync();
             if (records.Count > 0)
             {
                 paginationDTO.Data = Map<List<T>, List<D>>(records);
-            } else if(paginationDTO.RecordCount > 0 && paginationDTO.PageNo > 1)
-            {
-                paginationDTO.PageNo -= 1;
             }
+
             return paginationDTO;
         }
 

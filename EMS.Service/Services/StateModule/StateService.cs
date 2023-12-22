@@ -11,14 +11,9 @@ namespace EMS.Service.Services.StateModule
     {
         public StateService(IMapper mapper, IStateRepository stateRepo) : base(mapper, stateRepo) { }
 
-            private static readonly string[] validStateNames = new[] {
-            "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh",
-            "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha",
-            "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal" };
-
         private static bool IsStateValid(string stateName)
         {
-            return validStateNames.Contains(stateName);
+            return stateName.Length > 2;
         }
 
         public override async Task AddAsync(StateDTO dto)
@@ -27,7 +22,7 @@ namespace EMS.Service.Services.StateModule
             {
                 throw new InvalidCredentialException("Invalid State Name.");
             }
-            else { await base.AddAsync(dto); }
+            await base.AddAsync(dto);
         }
     }
 }
