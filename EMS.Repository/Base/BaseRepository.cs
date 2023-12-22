@@ -61,7 +61,7 @@ namespace EMS.Repository.Base
             IQueryable<T> query = GetAll(predicate);
             if (asNoTracking)
             {
-                query.AsNoTracking();
+                query = query.AsNoTracking();
             }
             
             return await query.FirstOrDefaultAsync();
