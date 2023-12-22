@@ -1,10 +1,10 @@
-﻿using EMS.Entity;
+﻿using EMS.Entity.Entity;
 using EMS.Service.Base;
 using EMS.Service.DTO;
 
-namespace EMS.Service.UserModule
+namespace EMS.Service.Services.UserModule
 {
-    public interface IAuthService : IBaseService<User, UserDTO>
+    public interface IAuthService : IBaseService<UserEntity, UserDTO>
     {
         Task<UserDTO> Login(LoginDTO user);
         Task ChangePassword(ChangePasswordDTO changePasswordDTO);

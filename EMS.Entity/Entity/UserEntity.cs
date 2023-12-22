@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using EMS.Entity.Base;
 
-namespace EMS.Entity
+namespace EMS.Entity.Entity
 {
-    public class User : BaseEntity
+    public class UserEntity : BaseEntity
     {
         [Required, StringLength(50)]
         public string FirstName { get; set; } = string.Empty!;

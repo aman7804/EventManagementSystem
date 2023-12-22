@@ -1,4 +1,4 @@
-﻿namespace EMS.Entity
+﻿namespace EMS.Entity.Base
 {
     public class SoftDeleteBaseEntity : BaseEntity
     {

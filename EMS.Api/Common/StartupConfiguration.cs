@@ -1,6 +1,8 @@
 ﻿using EMS.Data;
+using EMS.Repository.StateModule;
 using EMS.Repository.UserModule;
-using EMS.Service.UserModule;
+using EMS.Service.Services.StateModule;
+using EMS.Service.Services.UserModule;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -41,11 +43,13 @@ namespace EMS.Api.Common
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IStateRepository, StateRepository>();
         }
 
         public static void RegisterServices(this IServiceCollection services)
         {
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IStateService, StateService>();
         }
 
     }

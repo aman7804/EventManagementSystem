@@ -1,9 +1,9 @@
 ﻿using EMS.Data;
-using EMS.Entity;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using EMS.Shared.Constant;
 using Microsoft.AspNetCore.Http;
+using EMS.Entity.Base;
 
 namespace EMS.Repository.Base
 {
@@ -31,14 +31,17 @@ namespace EMS.Repository.Base
             Context.Add(entity);
             await Context.SaveChangesAsync();
         }
+        public virtual async Task UpdateAsync(T entity)
+        {
+            entity.UpdateDate = DateTime.Now;
+            entity.UpdatedBy = CurrentUser;
+            Context.Update(entity);
+            await Context.SaveChangesAsync();
+        }
 
         public virtual async Task DeleteAsync(int id)
         {
-            T? entity = await GetByIdAsync(id);
-            if (entity == null)
-            {
-                throw new Exception(ExceptionMessage.RECORD_NOT_FOUND);
-            }
+            T? entity = await GetByIdAsync(id) ?? throw new Exception(ExceptionMessage.RECORD_NOT_FOUND);
             Context.Remove(entity);
             await Context.SaveChangesAsync();
         }
@@ -47,8 +50,8 @@ namespace EMS.Repository.Base
         {
             IQueryable<T> query = Context.Set<T>().AsQueryable<T>();
             if (predicate != null)
-            {
-                query.Where(predicate);
+            {   
+                query = query.Where(predicate);
             }
             return query;
         }
@@ -69,12 +72,5 @@ namespace EMS.Repository.Base
             return await GetAsync(x => x.Id == id, asNoTracking);
         }
 
-        public virtual async Task UpdateAsync(T entity)
-        {
-            entity.UpdateDate = DateTime.Now;
-            entity.UpdatedBy = CurrentUser;
-            Context.Update(entity);
-            await Context.SaveChangesAsync();
-        }
     }
 }

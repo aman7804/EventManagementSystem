@@ -1,5 +1,5 @@
 ﻿using EMS.Data;
-using EMS.Entity;
+using EMS.Entity.Base;
 using EMS.Shared.Constant;
 using Microsoft.AspNetCore.Http;
 
