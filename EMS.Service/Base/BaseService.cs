@@ -28,9 +28,8 @@ namespace EMS.Service.Base
         public virtual async Task UpdateAsync(D dto)
         {
             if (dto == null) { throw new ArgumentNullException(nameof(dto), "DTO cannot be null"); }
-            D dtoToUpdate = await GetByIdAsync(dto.Id);
 
-            T entity = ToEntity(dtoToUpdate);
+            T entity = ToEntity(dto);
             await Repo.UpdateAsync(entity);
         }
 
