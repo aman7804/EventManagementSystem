@@ -49,7 +49,7 @@ namespace EMS.Api.Controllers
             return GetResult<PaginationDTO<StateDTO>>( await _baseService.GetPageAsync(pagination));
         }
 
-        [HttpGet]
+        [HttpGet("dropDownList")]
         public async Task<IActionResult> GetDropdownList()
         {
             return GetResult<List<StateDTO>>(await _baseService.GetAllAsync(x => true));
