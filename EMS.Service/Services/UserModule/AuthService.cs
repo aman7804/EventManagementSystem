@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using EMS.Entity.Entity;
-using EMS.Repository.UserModule;
+using EMS.Repository.Repository.UserModule;
 using EMS.Service.Base;
 using EMS.Service.DTO;
 using EMS.Shared.Constant;

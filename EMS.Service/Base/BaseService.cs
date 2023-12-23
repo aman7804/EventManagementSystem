@@ -29,7 +29,7 @@ namespace EMS.Service.Base
         {
             if (dto == null) { throw new ArgumentNullException(nameof(dto), "DTO cannot be null"); }
 
-            T entity = ToEntity(dto);
+            T entity = ToEntity(dto);   
             await Repo.UpdateAsync(entity);
         }
 
@@ -46,11 +46,11 @@ namespace EMS.Service.Base
             return Map<List<T>, List<D>>(list);
         }
 
-        public async Task<D> GetByIdAsync(int Id)
+        public async Task<D> GetByIdAsync(int Id, bool asNoTracking = false)
         {
             if (Id <= 0) { throw new ArgumentNullException(nameof(Id), "Id cannot be null"); }
 
-            T? entity = await Repo.GetByIdAsync(Id);
+            T? entity = await Repo.GetByIdAsync(Id, asNoTracking);
             if (entity == null)
             {
                 throw new Exception(ExceptionMessage.RECORD_NOT_FOUND);

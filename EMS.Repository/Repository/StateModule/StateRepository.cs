@@ -3,7 +3,7 @@ using EMS.Entity;
 using EMS.Repository.Base;
 using Microsoft.AspNetCore.Http;
 
-namespace EMS.Repository.StateModule
+namespace EMS.Repository.Repository.StateModule
 {
     public class StateRepository : BaseRepository<StateEntity>, IStateRepository
     {
