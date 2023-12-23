@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using EMS.Entity;
-using EMS.Repository.StateModule;
+using EMS.Repository.Repository.StateModule;
 using EMS.Service.Base;
 using EMS.Service.DTO;
 using System.Security.Authentication;

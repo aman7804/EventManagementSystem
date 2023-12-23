@@ -1,9 +1,7 @@
 ﻿using EMS.Entity;
-using EMS.Repository.StateModule;
 using EMS.Service.DTO;
 using EMS.Service.Services.StateModule;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq.Expressions;
 using System.Net;
 
 namespace EMS.Api.Controllers
