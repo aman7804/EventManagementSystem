@@ -10,6 +10,7 @@ namespace EMS.Data
         public DbSet<UserEntity> User { get; set; } = null!;
         public DbSet<StateEntity> State { get; set; } = null!;
         public DbSet<CityEntity> City { get; set; } = null!;
+        public DbSet<VenueEntity> Venue { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
