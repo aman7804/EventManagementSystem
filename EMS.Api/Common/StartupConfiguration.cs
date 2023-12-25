@@ -6,6 +6,7 @@ using EMS.Repository.Repository.VenueModule;
 using EMS.Service.Services.CityModule;
 using EMS.Service.Services.StateModule;
 using EMS.Service.Services.UserModule;
+using EMS.Service.Services.VendorModule;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -56,6 +57,7 @@ namespace EMS.Api.Common
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IStateService, StateService>();
             services.AddTransient<ICityService, CityService>();
+            services.AddTransient<IVenueService, VenueService>();
         }
 
     }
