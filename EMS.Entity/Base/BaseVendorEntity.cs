@@ -5,8 +5,7 @@ namespace EMS.Entity.Base
 {
     public class BaseVendorEntity : BaseEntity
     {
-        [Required]
-        public bool IsChecked { set; get; }
+        public bool? IsChecked { set; get; }
         
         [Required, StringLength(20)]
         public string Name { set; get; } = string.Empty!;
@@ -25,11 +24,9 @@ namespace EMS.Entity.Base
 
         [Required, StringLength(250)]
         public string Description { set; get; } = string.Empty!;
-
-        [Required]
-        public bool IsActive { set; get; }
+        public bool? IsActive { set; get; }
         
         [Required]
-        public bool IsAvailable { set; get; }
+        public bool? IsAvailable { set; get; }
     }
 }

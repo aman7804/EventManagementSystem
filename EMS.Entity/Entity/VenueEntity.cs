@@ -1,4 +1,5 @@
 ﻿    using EMS.Entity.Base;
+using EMS.Entity.Entity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,11 +15,13 @@ namespace EMS.Entity
         [Required]
         public static int MaxCapacity { set; get; }
         
-        [Required, ForeignKey("CityEntity")]
+        [Required, ForeignKey("City")]
         public int CityId { set; get; }
+        public CityEntity City { get; set; }
 
-        [Required , ForeignKey("StateEntity")]
+        [Required , ForeignKey("State")]
         public int StateId { set; get; }
+        public StateEntity State { get; set; }
 
     }
 }
