@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EMS.Entity.Base
 {
     public class BaseVendorEntity : BaseEntity
     {
+        [DefaultValue(false)]
         public bool? IsChecked { set; get; }
         
         [Required, StringLength(20)]
@@ -24,9 +26,11 @@ namespace EMS.Entity.Base
 
         [Required, StringLength(250)]
         public string Description { set; get; } = string.Empty!;
+        
+        [DefaultValue(false)]
         public bool? IsActive { set; get; }
         
-        [Required]
+        [DefaultValue(true)]
         public bool? IsAvailable { set; get; }
     }
 }
