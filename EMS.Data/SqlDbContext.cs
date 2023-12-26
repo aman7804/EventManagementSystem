@@ -17,6 +17,7 @@ namespace EMS.Data
             base.OnModelCreating(modelBuilder);
         }
 
+
         public SqlDbContext(DbContextOptions<SqlDbContext> options) : base(options)
         {
         }
