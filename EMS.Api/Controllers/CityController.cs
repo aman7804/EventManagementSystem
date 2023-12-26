@@ -48,10 +48,10 @@ namespace EMS.Api.Controllers
             return GetResult<PaginationDTO<CityDTO>>(await _baseService.GetPageAsync(pagination));
         }
 
-        [HttpGet("dropDownList")]
-        public async Task<IActionResult> GetDropdownList()
+        [HttpGet("dropDownList/{stateId}")]
+        public async Task<IActionResult> GetDropdownList(int stateId)
         {
-            return GetResult<List<CityDTO>>(await _baseService.GetAllAsync(x => true));
+            return GetResult<List<CityDTO>>(await _baseService.GetAllAsync(x => x.StateId == stateId));
         }
     }
 }

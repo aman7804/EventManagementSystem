@@ -14,18 +14,6 @@ namespace EMS.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<VenueEntity>()
-                .Property(b => b.IsChecked)
-                .HasDefaultValueSql("0");
-            
-            modelBuilder.Entity<VenueEntity>()
-                .Property(b => b.IsActive)
-                .HasDefaultValueSql("0");
-            
-            modelBuilder.Entity<VenueEntity>()
-                .Property(b => b.IsAvailable)
-                .HasDefaultValueSql("1");
-
             base.OnModelCreating(modelBuilder);
         }
 
