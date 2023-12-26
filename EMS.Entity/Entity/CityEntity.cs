@@ -9,7 +9,7 @@ namespace EMS.Entity.Entity
     public  class CityEntity : BaseEntity
     {
         [Required]
-        public string Name { set; get; } = string.Empty;
+        public string Name { set; get; } = string.Empty!;
         
         [Required, ForeignKey("State")]
         public int StateId { set; get; }

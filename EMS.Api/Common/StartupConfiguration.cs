@@ -2,9 +2,11 @@
 using EMS.Repository.Repository.CitytModule;
 using EMS.Repository.Repository.StateModule;
 using EMS.Repository.Repository.UserModule;
+using EMS.Repository.Repository.VenueModule;
 using EMS.Service.Services.CityModule;
 using EMS.Service.Services.StateModule;
 using EMS.Service.Services.UserModule;
+using EMS.Service.Services.VenueModule;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -47,6 +49,7 @@ namespace EMS.Api.Common
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IStateRepository, StateRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
+            services.AddScoped<IVenueRepository, VenueRepository>();
         }
 
         public static void RegisterServices(this IServiceCollection services)
@@ -54,6 +57,7 @@ namespace EMS.Api.Common
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IStateService, StateService>();
             services.AddTransient<ICityService, CityService>();
+            services.AddTransient<IVenueService, VenueService>();
         }
 
     }
