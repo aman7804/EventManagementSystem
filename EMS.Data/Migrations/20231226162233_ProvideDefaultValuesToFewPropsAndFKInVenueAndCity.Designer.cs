@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EMS.Data.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    [Migration("20231226140135_ProvideDefaultValuesToFewPropsAndFKInVenueAndCity")]
+    [Migration("20231226162233_ProvideDefaultValuesToFewPropsAndFKInVenueAndCity")]
     partial class ProvideDefaultValuesToFewPropsAndFKInVenueAndCity
     {
         /// <inheritdoc />

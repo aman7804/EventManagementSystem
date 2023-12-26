@@ -50,7 +50,8 @@ namespace EMS.Data.Migrations
                 column: "StateId",
                 principalTable: "State",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.NoAction,
+                onUpdate: ReferentialAction.NoAction);
         }
 
         /// <inheritdoc />
