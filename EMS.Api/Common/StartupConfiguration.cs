@@ -9,6 +9,7 @@ using EMS.Repository.Repository.VenueModule;
 using EMS.Service.Services.CateringModule;
 using EMS.Service.Services.CityModule;
 using EMS.Service.Services.DecorationModule;
+using EMS.Service.Services.PhotographyModule;
 using EMS.Service.Services.StateModule;
 using EMS.Service.Services.UserModule;
 using EMS.Service.Services.VenueModule;
@@ -68,6 +69,7 @@ namespace EMS.Api.Common
             services.AddTransient<IVenueService, VenueService>();
             services.AddTransient<IDecorationService, DecorationService>();
             services.AddTransient<ICateringService, CateringService>();
+            services.AddTransient<IPhotographyService, PhotographyService>();
         }
 
     }
