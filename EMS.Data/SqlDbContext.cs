@@ -13,6 +13,7 @@ namespace EMS.Data
         public DbSet<VenueEntity> Venue { get; set; } = null!;
         public DbSet<DecorationEntity> Decoration { get; set; } = null!;
         public DbSet<CateringEntity> Catering { get; set; } = null!;
+        public DbSet<PhotographyEntity> Photography { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
