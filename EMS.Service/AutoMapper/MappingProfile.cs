@@ -14,6 +14,7 @@ namespace EMS.Service.AutoMapper
             CreateMap<CityEntity, CityDTO>().ReverseMap();
             CreateMap<VenueEntity, VenueDTO>().ReverseMap();
             CreateMap<DecorationEntity, DecorationDTO>().ReverseMap();
+            CreateMap<CateringEntity, CateringDTO>().ReverseMap();
         }
     }
 }
