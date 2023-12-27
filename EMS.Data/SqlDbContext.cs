@@ -11,6 +11,7 @@ namespace EMS.Data
         public DbSet<StateEntity> State { get; set; } = null!;
         public DbSet<CityEntity> City { get; set; } = null!;
         public DbSet<VenueEntity> Venue { get; set; } = null!;
+        public DbSet<DecorationEntity> Decoration { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
