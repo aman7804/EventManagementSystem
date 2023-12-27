@@ -1,4 +1,5 @@
 ﻿using EMS.Data;
+using EMS.Repository.Repository.CateringModule;
 using EMS.Repository.Repository.CitytModule;
 using EMS.Repository.Repository.DecorationModule;
 using EMS.Repository.Repository.StateModule;
@@ -53,6 +54,7 @@ namespace EMS.Api.Common
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<IVenueRepository, VenueRepository>();
             services.AddScoped<IDecorationRepository, DecorationRepository>();
+            services.AddScoped<ICateringRepository, CateringRepository>();
         }
 
         public static void RegisterServices(this IServiceCollection services)
