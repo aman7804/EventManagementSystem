@@ -5,10 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace EMS.Entity.Base
 {
     public class BaseVendorEntity : BaseEntity
-    {
-        [DefaultValue(false)]
-        public bool? IsChecked { set; get; }
-        
+    {   
         [Required, StringLength(20)]
         public string Name { set; get; } = string.Empty!;
 

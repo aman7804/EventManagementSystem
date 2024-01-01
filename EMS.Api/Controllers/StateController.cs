@@ -1,4 +1,4 @@
-﻿using EMS.Entity;
+﻿using EMS.Entity.Entity;
 using EMS.Service.DTO;
 using EMS.Service.Services.StateModule;
 using Microsoft.AspNetCore.Mvc;

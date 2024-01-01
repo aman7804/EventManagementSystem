@@ -10,10 +10,6 @@ namespace EMS.Entity.Entity
     {
         [Required, ForeignKey("City")]
         public int CityId { set; get; }
-        public CityEntity? City { get; set; }
-
-        [Required, ForeignKey("State")]
-        public int StateId { set; get; }
-        public StateEntity? State { get; set; }
+        public virtual CityEntity City { get; set; } = null!;
     }
 }

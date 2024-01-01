@@ -13,6 +13,6 @@ namespace EMS.Entity.Entity
         
         [Required, ForeignKey("State")]
         public int StateId { set; get; }
-        public StateEntity? State { get; set; }
+        public virtual StateEntity State { get; set; } = null!;
     }
 }

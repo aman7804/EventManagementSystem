@@ -1,4 +1,4 @@
-﻿using EMS.Entity;
+﻿using EMS.Entity.Entity;
 using EMS.Service.Base;
 using EMS.Service.DTO;
 
