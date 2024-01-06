@@ -1,19 +1,32 @@
 ﻿using EMS.Entity.Base;
 using EMS.Entity.Entity;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EMS.Entity
 {
-    [Index(nameof(MobileNo), nameof(Email), IsUnique = true)]
-    public class VenueEntity : BaseVendorEntity
+    [Index(nameof(Name), IsUnique = true)]
+    public class VenueEntity : BaseEntity
     {
-        [Required]
-        public static int MinCapacity { set; get; }
+        [Required, StringLength(20)]
+        public string Name { set; get; } = string.Empty!;
+
+        [Required, Column(TypeName = "decimal(18,2)")]
+        public decimal Price { set; get; }
+
+        [Required, StringLength(100)]
+        public string Description { set; get; } = string.Empty!;
+
+        [DefaultValue(false)]
+        public bool? IsActive { set; get; }
+
+        [Required, StringLength(200)]
+        public string Add { set; get; } = string.Empty!;
         
-        [Required]
-        public static int MaxCapacity { set; get; }
+        [Required] public int MinCapacity { set; get; }
+        [Required] public int MaxCapacity { set; get; }
         
         [Required, ForeignKey("City")]
         public int CityId { set; get; }
