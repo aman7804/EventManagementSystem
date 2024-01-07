@@ -6,5 +6,6 @@ namespace EMS.Service.Services.PackageModule
 {
     public interface IPackageService : IBaseService<PackageEntity, PackageDTO>
     {
+        Task<PaginationDTO<PackageItemDTO>> GetPackages(PaginationDTO<PackageItemDTO> paginationDTO);
     }
 }

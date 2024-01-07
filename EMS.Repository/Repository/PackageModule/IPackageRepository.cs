@@ -5,5 +5,6 @@ namespace EMS.Repository.Repository.PackageModule
 {
     public interface IPackageRepository : IBaseRepository<PackageEntity>
     {
+        IQueryable<PackageEntity> GetDraftAndPackages();
     }
 }
