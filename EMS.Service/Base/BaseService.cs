@@ -7,6 +7,7 @@ using EMS.Shared.Constant;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using EMS.Service.Extension;
+using Microsoft.AspNetCore.Http;
 
 namespace EMS.Service.Base
 {
@@ -14,11 +15,20 @@ namespace EMS.Service.Base
     {
         public readonly IMapper Mapper;
         public readonly IBaseRepository<T> Repo;
-        public BaseService(IMapper mapper, IBaseRepository<T> baseRepository)
+        public readonly int CurrentUser;
+
+        public BaseService(IMapper mapper, IBaseRepository<T> baseRepository, IHttpContextAccessor httpContextAccessor)
         {
             Mapper = mapper;
-            Repo = baseRepository; 
+            Repo = baseRepository;
+            string? userId = httpContextAccessor.HttpContext?.User?.Identity?.Name;
+
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                CurrentUser = Convert.ToInt32(userId);
+            }
         }
+
         public virtual async Task AddAsync(D dto)
         {
             if (dto == null) { throw new ArgumentNullException(nameof(dto), "DTO cannot be null"); }
