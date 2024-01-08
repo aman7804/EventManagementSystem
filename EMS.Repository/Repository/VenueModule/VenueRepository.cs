@@ -7,6 +7,7 @@ namespace EMS.Repository.Repository.VenueModule
 {
     public class VenueRepository : BaseRepository<VenueEntity>, IVenueRepository
     {
-        public VenueRepository(SqlDbContext sqlDbContext, IHttpContextAccessor httpContextAccessor) : base(sqlDbContext, httpContextAccessor) { }
+        public VenueRepository(SqlDbContext sqlDbContext, IHttpContextAccessor httpContextAccessor)
+            : base(sqlDbContext, httpContextAccessor) { }
     }
 }

@@ -3,7 +3,5 @@ using EMS.Repository.Base;
 
 namespace EMS.Repository.Repository.PhotographyModule
 {
-    public interface IPhotographyRepository : IBaseRepository<PhotographyEntity>
-    {
-    }
+    public interface IPhotographyRepository : IBaseRepository<PhotographyEntity> { }
 }

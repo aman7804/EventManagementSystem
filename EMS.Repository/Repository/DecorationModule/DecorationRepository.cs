@@ -7,6 +7,7 @@ namespace EMS.Repository.Repository.DecorationModule
 {
     public class DecorationRepository : BaseRepository<DecorationEntity>, IDecorationRepository
     {
-        public DecorationRepository(SqlDbContext dbContext, IHttpContextAccessor httpContextAccessor) : base(dbContext, httpContextAccessor) { }
+        public DecorationRepository(SqlDbContext dbContext, IHttpContextAccessor httpContextAccessor)
+            : base(dbContext, httpContextAccessor) { }
     }
 }

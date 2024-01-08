@@ -10,22 +10,16 @@ namespace EMS.Api.Controllers
     [ApiController]
     public class DecorationController : BaseController<DecorationEntity, DecorationDTO>
     {
-
         public DecorationController(IDecorationService decorationService) : base(decorationService) { }
 
         [HttpPost("save")]
         public async Task<IActionResult> SaveDecoration(DecorationDTO dto)
         {
             if (dto.Id == 0)
-            {
                 await _baseService.AddAsync(dto);
-                return GetResult<DecorationDTO>(null, HttpStatusCode.OK);
-            }
-            else
-            {
+             else
                 await _baseService.UpdateAsync(dto);
-                return GetResult<DecorationDTO>(null, HttpStatusCode.OK);
-            }
+             return GetResult<DecorationDTO>(null, HttpStatusCode.OK);
         }
 
         [HttpDelete("delete/{Id}")]
@@ -36,16 +30,11 @@ namespace EMS.Api.Controllers
         }
 
         [HttpGet("index/{Id}")]
-        public async Task<IActionResult> Index(int Id)
-        {
-            return GetResult<DecorationDTO>(await _baseService.GetByIdAsync(Id));
-        }
+        public async Task<IActionResult> Index(int Id) =>
+            GetResult<DecorationDTO>(await _baseService.GetByIdAsync(Id));
 
         [HttpPost("list")]
-        public async Task<IActionResult> List(PaginationDTO<DecorationDTO> pagination)
-        {
-
-            return GetResult<PaginationDTO<DecorationDTO>>(await _baseService.GetPageAsync(pagination));
-        }
+        public async Task<IActionResult> List(PaginationDTO<DecorationDTO> pagination) =>
+            GetResult<PaginationDTO<DecorationDTO>>(await _baseService.GetPageAsync(pagination));
     }
 }

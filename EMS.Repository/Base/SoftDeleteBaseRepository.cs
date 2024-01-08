@@ -13,12 +13,8 @@ namespace EMS.Repository.Base
 
         public override async Task DeleteAsync(int id)
         {
-            T? entity = await GetByIdAsync(id);
-
-            if (entity == null)
-            {
-                throw new Exception(ExceptionMessage.RECORD_NOT_FOUND);
-            }
+            T? entity = await GetByIdAsync(id) ?? throw new Exception(ExceptionMessage.RECORD_NOT_FOUND);
+            
             entity.UpdateDate = DateTime.Now;
             entity.DeletedBy = CurrentUser;
             entity.IsDeleted = true;

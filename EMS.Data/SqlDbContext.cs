@@ -20,15 +20,8 @@ namespace EMS.Data
             base.OnModelCreating(modelBuilder);
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
-            {
                 relationship.DeleteBehavior = DeleteBehavior.NoAction;
-            }
-
         }
-
-
-        public SqlDbContext(DbContextOptions<SqlDbContext> options) : base(options)
-        {
-        }
+        public SqlDbContext(DbContextOptions<SqlDbContext> options) : base(options) { }
     }
 }

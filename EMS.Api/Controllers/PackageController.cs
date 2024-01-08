@@ -17,18 +17,10 @@ namespace EMS.Api.Controllers
         [HttpPost("save")]
         public async Task<IActionResult> SavePackage(PackageDTO dto)
         {
-            if (dto.Id == 0)
-            {
-                await _baseService.AddAsync(dto);
-                return GetResult<PackageDTO>(null, HttpStatusCode.OK);
-            }
-            else
-            {
-                await _baseService.UpdateAsync(dto);
-                return GetResult<PackageDTO>(null, HttpStatusCode.OK);
-            }
+            dto.IsDraft = false;
+            return await SavePackageInternal(dto);
         }
-
+        
         [HttpDelete("delete/{Id}")]
         public async Task<IActionResult> DeletePackage(int Id)
         {
@@ -42,18 +34,34 @@ namespace EMS.Api.Controllers
             return GetResult<PackageDTO>(await _baseService.GetByIdAsync(Id));
         }
 
-        [HttpPost("list")]
+        [HttpGet("list")]
         public async Task<IActionResult> List(PaginationDTO<PackageDTO> pagination)
         {
 
             return GetResult<PaginationDTO<PackageDTO>>(await _baseService.GetPageAsync(pagination));
         }
         
-        [HttpPost("explore-packages")]
+        [HttpGet("explore-packages")]
         public async Task<IActionResult> ExplorePackages(PaginationDTO<PackageItemDTO> pagination)
         {
 
             return GetResult<PaginationDTO<PackageItemDTO>>(await _packageService.GetPackages(pagination));
+        }
+
+        [HttpPost("save-as-draft")]
+        public async Task<IActionResult> SavePackageAsDraft(PackageDTO dto)
+        {
+            dto.IsDraft = true;
+            return await SavePackageInternal(dto);
+        }
+
+        private async Task<IActionResult> SavePackageInternal(PackageDTO dto)
+        {
+            if (dto.Id == 0)
+                await _baseService.AddAsync(dto);
+            else
+                await _baseService.UpdateAsync(dto);
+            return GetResult<PackageDTO>(null, HttpStatusCode.OK);
         }
     }
 }

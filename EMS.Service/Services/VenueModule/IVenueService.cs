@@ -4,7 +4,5 @@ using EMS.Service.DTO;
 
 namespace EMS.Service.Services.VenueModule
 {
-    public interface IVenueService : IBaseService<VenueEntity, VenueDTO>
-    {
-    }
+    public interface IVenueService : IBaseService<VenueEntity, VenueDTO> { }
 }

@@ -4,7 +4,5 @@ using EMS.Service.DTO;
 
 namespace EMS.Service.Services.PhotographyModule
 {
-    public interface IPhotographyService : IBaseService<PhotographyEntity, PhotographyDTO>
-    {
-    }
+    public interface IPhotographyService : IBaseService<PhotographyEntity, PhotographyDTO> { }
 }

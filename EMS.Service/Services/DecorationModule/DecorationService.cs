@@ -8,6 +8,7 @@ namespace EMS.Service.Services.DecorationModule
 {
     public class DecorationService : BaseService<DecorationEntity, DecorationDTO>, IDecorationService
     {
-        public DecorationService(IMapper mapper, IDecorationRepository decorationRepository) : base(mapper, decorationRepository) { }  
+        public DecorationService(IMapper mapper, IDecorationRepository decorationRepository)
+            : base(mapper, decorationRepository) { }  
     }
 }

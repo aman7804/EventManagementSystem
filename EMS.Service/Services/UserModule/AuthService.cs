@@ -16,15 +16,12 @@ namespace EMS.Service.Services.UserModule
 
         public async Task ChangePassword(ChangePasswordDTO changePasswordDTO)
         {
-            UserEntity? user = await Repo.GetAsync(x => x.EmailId == changePasswordDTO.EmailId, false);
-            if (user == null)
-            {
-                throw new Exception(ExceptionMessage.USER_NOT_FOUND);
-            }
+            UserEntity? user = await Repo.GetAsync(x => x.EmailId == changePasswordDTO.EmailId, false)
+                ?? throw new Exception(ExceptionMessage.USER_NOT_FOUND);
+
             if (!Encrypt(changePasswordDTO.OldPassword).Equals(user.Password))
-            {
                 throw new Exception(ExceptionMessage.PASSWORD_IS_INCORRECT);
-            }
+            
             user.Password = Encrypt(changePasswordDTO.NewPassword);
 
             await Repo.UpdateAsync(user);
@@ -42,15 +39,11 @@ namespace EMS.Service.Services.UserModule
 
         public async Task<UserDTO> Login(LoginDTO loginDTO)
         {
-            UserEntity? user = await Repo.GetAsync(x => x.EmailId == loginDTO.EmailId, false);
-            if (user == null)
-            {
-                throw new Exception(ExceptionMessage.USER_NOT_FOUND);
-            }
+            UserEntity? user = await Repo.GetAsync(x => x.EmailId == loginDTO.EmailId, false)
+                ?? throw new Exception(ExceptionMessage.USER_NOT_FOUND);
+            
             if (!Encrypt(loginDTO.Password).Equals(user.Password))
-            {
                 throw new Exception(ExceptionMessage.PASSWORD_IS_INCORRECT);
-            }
 
             return ToDTO(user);
         }

@@ -19,9 +19,7 @@ namespace EMS.Repository.Base
             string? userId = httpContextAccessor.HttpContext?.User?.Identity?.Name;
 
             if (!string.IsNullOrWhiteSpace(userId))
-            {
                 CurrentUser = Convert.ToInt32(userId);
-            }
         }
 
         public virtual async Task AddAsync(T entity)
@@ -46,13 +44,12 @@ namespace EMS.Repository.Base
             await Context.SaveChangesAsync();
         }
 
-        public virtual IQueryable<T> GetAll(Expression<Func<T, bool>> predicate)
+        public virtual IQueryable<T> GetAll(Expression<Func<T, bool>>? predicate)
         {
             IQueryable<T> query = Context.Set<T>().AsQueryable<T>();
             if (predicate != null)
-            {   
                 query = query.Where(predicate);
-            }
+            
             return query;
         }
 
@@ -60,17 +57,13 @@ namespace EMS.Repository.Base
         {
             IQueryable<T> query = GetAll(predicate);
             if (asNoTracking)
-            {
                 query = query.AsNoTracking();
-            }
             
             return await query.FirstOrDefaultAsync();
         }
 
-        public virtual async Task<T?> GetByIdAsync(int id, bool asNoTracking = false)
-        {
-            return await GetAsync(x => x.Id == id, asNoTracking);
-        }
+        public virtual async Task<T?> GetByIdAsync(int id, bool asNoTracking = false) =>
+            await GetAsync(x => x.Id == id, asNoTracking);
 
     }
 }

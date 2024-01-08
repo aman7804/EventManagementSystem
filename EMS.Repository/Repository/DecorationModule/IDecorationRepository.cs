@@ -3,7 +3,5 @@ using EMS.Repository.Base;
 
 namespace EMS.Repository.Repository.DecorationModule
 {
-    public interface IDecorationRepository : IBaseRepository<DecorationEntity>
-    {
-    }
+    public interface IDecorationRepository : IBaseRepository<DecorationEntity> { }
 }

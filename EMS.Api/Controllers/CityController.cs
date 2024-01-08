@@ -1,5 +1,4 @@
-﻿using EMS.Entity;
-using EMS.Entity.Entity;
+﻿using EMS.Entity.Entity;
 using EMS.Service.DTO;
 using EMS.Service.Services.CityModule;
 using Microsoft.AspNetCore.Mvc;
@@ -17,15 +16,10 @@ namespace EMS.Api.Controllers
         public async Task<IActionResult> SaveCity(CityDTO dto)
         {
             if (dto.Id == 0)
-            {
                 await _baseService.AddAsync(dto);
-                return GetResult<CityDTO>(null, HttpStatusCode.OK);
-            }
             else
-            {
                 await _baseService.UpdateAsync(dto);
-                return GetResult<CityDTO>(null, HttpStatusCode.OK);
-            }
+            return GetResult<CityDTO>(null, HttpStatusCode.OK);
         }
     
         [HttpDelete("delete/{Id}")]
@@ -36,22 +30,15 @@ namespace EMS.Api.Controllers
         }
 
         [HttpGet("index/{Id}")]
-        public async Task<IActionResult> Index(int Id)
-        {
-            return GetResult<CityDTO>(await _baseService.GetByIdAsync(Id));
-        }
+        public async Task<IActionResult> Index(int Id) =>
+            GetResult<CityDTO>(await _baseService.GetByIdAsync(Id));
 
         [HttpPost("list")]
-        public async Task<IActionResult> List(PaginationDTO<CityDTO> pagination)
-        {
-
-            return GetResult<PaginationDTO<CityDTO>>(await _baseService.GetPageAsync(pagination));
-        }
+        public async Task<IActionResult> List(PaginationDTO<CityDTO> pagination) =>
+            GetResult<PaginationDTO<CityDTO>>(await _baseService.GetPageAsync(pagination));
 
         [HttpGet("dropDownList/{stateId}")]
-        public async Task<IActionResult> GetDropdownList(int stateId)
-        {
-            return GetResult<List<CityDTO>>(await _baseService.GetAllAsync(x => x.StateId == stateId));
-        }
+        public async Task<IActionResult> GetDropdownList(int stateId) =>
+            GetResult<List<CityDTO>>(await _baseService.GetAllAsync(x => x.StateId == stateId));
     }
 }

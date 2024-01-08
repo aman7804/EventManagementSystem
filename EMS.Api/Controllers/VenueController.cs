@@ -16,15 +16,10 @@ namespace EMS.Api.Controllers
         public async Task<IActionResult> SaveVenue(VenueDTO dto)
         {
             if (dto.Id == 0)
-            {
                 await _baseService.AddAsync(dto);
-                return GetResult<VenueDTO>(null, HttpStatusCode.OK);
-            }
             else
-            {
                 await _baseService.UpdateAsync(dto);
-                return GetResult<VenueDTO>(null, HttpStatusCode.OK);
-            }
+            return GetResult<VenueDTO>(null, HttpStatusCode.OK);
         }
 
         [HttpDelete("delete/{Id}")]
@@ -35,16 +30,11 @@ namespace EMS.Api.Controllers
         }
 
         [HttpGet("index/{Id}")]
-        public async Task<IActionResult> Index(int Id)
-        {
-            return GetResult<VenueDTO>(await _baseService.GetByIdAsync(Id));
-        }
+        public async Task<IActionResult> Index(int Id) =>
+            GetResult<VenueDTO>(await _baseService.GetByIdAsync(Id));
 
         [HttpPost("list")]
-        public async Task<IActionResult> List(PaginationDTO<VenueDTO> pagination)
-        {
-
-            return GetResult<PaginationDTO<VenueDTO>>(await _baseService.GetPageAsync(pagination));
-        }
+        public async Task<IActionResult> List(PaginationDTO<VenueDTO> pagination) =>
+            GetResult<PaginationDTO<VenueDTO>>(await _baseService.GetPageAsync(pagination));
     }
 }

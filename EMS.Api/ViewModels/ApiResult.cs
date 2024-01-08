@@ -4,25 +4,16 @@
     {
         public int Code { get; set; }
         public string Message { get; set; } = string.Empty!;
-
         public T? Data { get; set; }
-
         public bool IsSuccessStatusCode
         {
-            get
-            {
-                return Code >= 200 && Code <= 299;
-            }
+            get => Code >= 200 && Code <= 299;
         }
         public bool IsValid
         {
             get
             {
-                if (this.Data is IEnumerable<T> enumerable && enumerable.Any())
-                {
-                    return true;
-                }
-
+                if (this.Data is IEnumerable<T> enumerable && enumerable.Any()) return true;
                 return this.Data != null;
             }
         }

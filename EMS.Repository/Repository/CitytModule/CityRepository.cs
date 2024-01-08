@@ -7,6 +7,7 @@ namespace EMS.Repository.Repository.CitytModule
 {
     public class CityRepository : BaseRepository<CityEntity>, ICityRepository
     {
-        public CityRepository(SqlDbContext sqlDbContext, IHttpContextAccessor httpContextAccessor) : base(sqlDbContext, httpContextAccessor) { }
+        public CityRepository(SqlDbContext sqlDbContext, IHttpContextAccessor httpContextAccessor)
+            : base(sqlDbContext, httpContextAccessor) { }
     }
 }
