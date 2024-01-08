@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EMS.Data.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    [Migration("20231231171326_City_State_Vendors")]
-    partial class City_State_Vendors
+    [Migration("20240106173711_Package")]
+    partial class Package
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,14 +33,6 @@ namespace EMS.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Add")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -52,21 +44,8 @@ namespace EMS.Data.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
-
-                    b.Property<bool?>("IsAvailable")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MobileNo")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -84,9 +63,7 @@ namespace EMS.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("MobileNo", "Email")
+                    b.HasIndex("Name")
                         .IsUnique();
 
                     b.ToTable("Catering");
@@ -110,9 +87,6 @@ namespace EMS.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("StateEntityId")
-                        .HasColumnType("int");
-
                     b.Property<int>("StateId")
                         .HasColumnType("int");
 
@@ -127,8 +101,6 @@ namespace EMS.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.HasIndex("StateEntityId");
-
                     b.HasIndex("StateId");
 
                     b.ToTable("City");
@@ -142,14 +114,6 @@ namespace EMS.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Add")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -161,21 +125,8 @@ namespace EMS.Data.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
-
-                    b.Property<bool?>("IsAvailable")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MobileNo")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -193,12 +144,72 @@ namespace EMS.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("MobileNo", "Email")
+                    b.HasIndex("Name")
                         .IsUnique();
 
                     b.ToTable("Decoration");
+                });
+
+            modelBuilder.Entity("EMS.Entity.Entity.PackageEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CateringId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DecorationId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDraft")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("PhotographyId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VenueId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CateringId");
+
+                    b.HasIndex("DecorationId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.HasIndex("PhotographyId");
+
+                    b.HasIndex("VenueId");
+
+                    b.ToTable("Package");
                 });
 
             modelBuilder.Entity("EMS.Entity.Entity.PhotographyEntity", b =>
@@ -209,11 +220,6 @@ namespace EMS.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Add")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -225,21 +231,8 @@ namespace EMS.Data.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
-
-                    b.Property<bool?>("IsAvailable")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MobileNo")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -257,7 +250,7 @@ namespace EMS.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MobileNo", "Email")
+                    b.HasIndex("Name")
                         .IsUnique();
 
                     b.ToTable("Photography");
@@ -370,24 +363,17 @@ namespace EMS.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<bool?>("IsAvailable")
-                        .HasColumnType("bit");
+                    b.Property<int>("MaxCapacity")
+                        .HasColumnType("int");
 
-                    b.Property<string>("MobileNo")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                    b.Property<int>("MinCapacity")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -407,50 +393,56 @@ namespace EMS.Data.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.HasIndex("MobileNo", "Email")
+                    b.HasIndex("Name")
                         .IsUnique();
 
                     b.ToTable("Venue");
                 });
 
-            modelBuilder.Entity("EMS.Entity.Entity.CateringEntity", b =>
-                {
-                    b.HasOne("EMS.Entity.Entity.CityEntity", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_Catering_City_CityId");
-
-                    b.Navigation("City");
-                });
-
             modelBuilder.Entity("EMS.Entity.Entity.CityEntity", b =>
                 {
-                    b.HasOne("EMS.Entity.Entity.StateEntity", null)
-                        .WithMany("City")
-                        .HasForeignKey("StateEntityId");
-
                     b.HasOne("EMS.Entity.Entity.StateEntity", "State")
-                        .WithMany()
+                        .WithMany("City")
                         .HasForeignKey("StateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_City_State_StateId");
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("State");
                 });
 
-            modelBuilder.Entity("EMS.Entity.Entity.DecorationEntity", b =>
+            modelBuilder.Entity("EMS.Entity.Entity.PackageEntity", b =>
                 {
-                    b.HasOne("EMS.Entity.Entity.CityEntity", "City")
+                    b.HasOne("EMS.Entity.Entity.CateringEntity", "Catering")
                         .WithMany()
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_Decoration_City_CityId");
+                        .HasForeignKey("CateringId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.Navigation("City");
+                    b.HasOne("EMS.Entity.Entity.DecorationEntity", "Decoration")
+                        .WithMany()
+                        .HasForeignKey("DecorationId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("EMS.Entity.Entity.PhotographyEntity", "Photography")
+                        .WithMany()
+                        .HasForeignKey("PhotographyId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("EMS.Entity.VenueEntity", "Venue")
+                        .WithMany()
+                        .HasForeignKey("VenueId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Catering");
+
+                    b.Navigation("Decoration");
+
+                    b.Navigation("Photography");
+
+                    b.Navigation("Venue");
                 });
 
             modelBuilder.Entity("EMS.Entity.VenueEntity", b =>
@@ -458,9 +450,8 @@ namespace EMS.Data.Migrations
                     b.HasOne("EMS.Entity.Entity.CityEntity", "City")
                         .WithMany()
                         .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_Venue_City_CityId");
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("City");
                 });

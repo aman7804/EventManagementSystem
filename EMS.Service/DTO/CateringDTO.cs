@@ -1,7 +1,10 @@
 ﻿namespace EMS.Service.DTO
 {
-    public class CateringDTO : BaseVendorDTO
+    public class CateringDTO : BaseDTO
     {
-        public int CityId { set; get; }
+        public string Name { set; get; } = string.Empty!;
+        public decimal Price { set; get; }
+        public string Description { set; get; } = string.Empty!;
+        public bool IsActive { set; get; }
     }
 }

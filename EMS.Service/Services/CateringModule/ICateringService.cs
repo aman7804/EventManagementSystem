@@ -4,7 +4,5 @@ using EMS.Service.DTO;
 
 namespace EMS.Service.Services.CateringModule
 {
-    public interface ICateringService : IBaseService<CateringEntity, CateringDTO>
-    {
-    }
+    public interface ICateringService : IBaseService<CateringEntity, CateringDTO> { }
 }

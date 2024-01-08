@@ -2,7 +2,6 @@
 using EMS.Service.Base;
 using Microsoft.AspNetCore.Mvc;
 using EMS.Service.DTO;
-using Microsoft.AspNetCore.Http;
 using System.Net;
 using EMS.Api.ViewModels;
 
@@ -34,9 +33,8 @@ namespace EMS.Api.Controllers
                 Message = GetMessageByStatusCode(_statusCode)
             };
             if (ex != null)
-            {
                 result.Message = ex.Message;
-            }
+            
             return GetResult(result);
         }
 

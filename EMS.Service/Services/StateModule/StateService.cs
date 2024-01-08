@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using EMS.Entity;
 using EMS.Entity.Entity;
 using EMS.Repository.Repository.StateModule;
 using EMS.Service.Base;
@@ -12,17 +11,12 @@ namespace EMS.Service.Services.StateModule
     {
         public StateService(IMapper mapper, IStateRepository stateRepo) : base(mapper, stateRepo) { }
 
-        private static bool IsStateValid(string stateName)
-        {
-            return stateName.Length > 2;
-        }
-
+        private static bool IsStateValid(string stateName) => stateName.Length > 2;
         public override async Task AddAsync(StateDTO dto)
         {
             if (!IsStateValid(dto.Name))
-            {
                 throw new InvalidCredentialException("Invalid State Name.");
-            }
+            
             await base.AddAsync(dto);
         }
     }

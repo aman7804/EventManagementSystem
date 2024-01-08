@@ -10,22 +10,16 @@ namespace EMS.Api.Controllers
     [ApiController]
     public class PhotographyController : BaseController<PhotographyEntity, PhotographyDTO>
     {
-
         public PhotographyController(IPhotographyService photographyService) : base(photographyService) { }
 
         [HttpPost("save")]
         public async Task<IActionResult> SavePhotography(PhotographyDTO dto)
         {
             if (dto.Id == 0)
-            {
                 await _baseService.AddAsync(dto);
-                return GetResult<PhotographyDTO>(null, HttpStatusCode.OK);
-            }
             else
-            {
                 await _baseService.UpdateAsync(dto);
-                return GetResult<PhotographyDTO>(null, HttpStatusCode.OK);
-            }
+            return GetResult<PhotographyDTO>(null, HttpStatusCode.OK);
         }
 
         [HttpDelete("delete/{Id}")]
@@ -36,16 +30,11 @@ namespace EMS.Api.Controllers
         }
 
         [HttpGet("index/{Id}")]
-        public async Task<IActionResult> Index(int Id)
-        {
-            return GetResult<PhotographyDTO>(await _baseService.GetByIdAsync(Id));
-        }
+        public async Task<IActionResult> Index(int Id) =>
+             GetResult<PhotographyDTO>(await _baseService.GetByIdAsync(Id));
 
-        [HttpPost("list")]
-        public async Task<IActionResult> List(PaginationDTO<PhotographyDTO> pagination)
-        {
-
-            return GetResult<PaginationDTO<PhotographyDTO>>(await _baseService.GetPageAsync(pagination));
-        }
+        [HttpPost("list")] 
+        public async Task<IActionResult> List(PaginationDTO<PhotographyDTO> pagination) =>
+            GetResult<PaginationDTO<PhotographyDTO>>(await _baseService.GetPageAsync(pagination));
     }
 }

@@ -3,7 +3,5 @@ using EMS.Repository.Base;
 
 namespace EMS.Repository.Repository.CateringModule
 {
-    public interface ICateringRepository : IBaseRepository<CateringEntity>
-    {
-    }
+    public interface ICateringRepository : IBaseRepository<CateringEntity> { }
 }

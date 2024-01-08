@@ -2,14 +2,23 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 
 namespace EMS.Entity.Entity
 {
-    [Index(nameof(MobileNo), nameof(Email), IsUnique = true)]
-    public class DecorationEntity : BaseVendorEntity
+    [Index(nameof(Name), IsUnique = true)]
+    public class DecorationEntity : BaseEntity
     {
-        [Required, ForeignKey("City")]
-        public int CityId { set; get; }
-        public virtual CityEntity City { get; set; } = null!;
+        [Required, StringLength(20)]
+        public string Name { set; get; } = string.Empty!;
+
+        [Required, Column(TypeName = "decimal(18,2)")]
+        public decimal Price { set; get; }
+
+        [Required, StringLength(250)]
+        public string Description { set; get; } = string.Empty!;
+
+        [DefaultValue(false)]
+        public bool? IsActive { set; get; }
     }
 }

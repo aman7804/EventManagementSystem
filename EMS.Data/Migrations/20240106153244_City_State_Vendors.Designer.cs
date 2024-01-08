@@ -4,6 +4,7 @@ using EMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EMS.Data.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    partial class SqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240106153244_City_State_Vendors")]
+    partial class City_State_Vendors
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,68 +148,6 @@ namespace EMS.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Decoration");
-                });
-
-            modelBuilder.Entity("EMS.Entity.Entity.PackageEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CateringId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DecorationId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDraft")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int>("PhotographyId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("UpdatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<int>("VenueId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CateringId");
-
-                    b.HasIndex("DecorationId");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.HasIndex("PhotographyId");
-
-                    b.HasIndex("VenueId");
-
-                    b.ToTable("Package");
                 });
 
             modelBuilder.Entity("EMS.Entity.Entity.PhotographyEntity", b =>
@@ -405,41 +346,6 @@ namespace EMS.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("State");
-                });
-
-            modelBuilder.Entity("EMS.Entity.Entity.PackageEntity", b =>
-                {
-                    b.HasOne("EMS.Entity.Entity.CateringEntity", "Catering")
-                        .WithMany()
-                        .HasForeignKey("CateringId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("EMS.Entity.Entity.DecorationEntity", "Decoration")
-                        .WithMany()
-                        .HasForeignKey("DecorationId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("EMS.Entity.Entity.PhotographyEntity", "Photography")
-                        .WithMany()
-                        .HasForeignKey("PhotographyId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("EMS.Entity.VenueEntity", "Venue")
-                        .WithMany()
-                        .HasForeignKey("VenueId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Catering");
-
-                    b.Navigation("Decoration");
-
-                    b.Navigation("Photography");
-
-                    b.Navigation("Venue");
                 });
 
             modelBuilder.Entity("EMS.Entity.VenueEntity", b =>

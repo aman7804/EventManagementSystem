@@ -16,15 +16,10 @@ namespace EMS.Api.Controllers
         public async Task<IActionResult> SaveState(StateDTO dto)
         {
             if (dto.Id == 0)
-            {
                 await _baseService.AddAsync(dto);
-                return GetResult<StateDTO>(null, HttpStatusCode.OK);
-            }
             else
-            {
                 await _baseService.UpdateAsync(dto);
-                return GetResult<StateDTO>(null, HttpStatusCode.OK);
-            }
+            return GetResult<StateDTO>(null, HttpStatusCode.OK);
         }
 
         [HttpDelete("delete/{Id}")]
@@ -35,22 +30,15 @@ namespace EMS.Api.Controllers
         }
 
         [HttpGet("index/{Id}")]
-        public async Task<IActionResult> Index(int Id)
-        {
-            return GetResult<StateDTO>(await _baseService.GetByIdAsync(Id));
-        }
+        public async Task<IActionResult> Index(int Id) =>
+            GetResult<StateDTO>(await _baseService.GetByIdAsync(Id));
 
         [HttpPost("list")]
-        public async Task<IActionResult> List(PaginationDTO<StateDTO> pagination)
-        {
-
-            return GetResult<PaginationDTO<StateDTO>>( await _baseService.GetPageAsync(pagination));
-        }
+        public async Task<IActionResult> List(PaginationDTO<StateDTO> pagination) =>
+            GetResult<PaginationDTO<StateDTO>>( await _baseService.GetPageAsync(pagination));
 
         [HttpGet("dropDownList")]
-        public async Task<IActionResult> GetDropdownList()
-        {
-            return GetResult<List<StateDTO>>(await _baseService.GetAllAsync(x => true));
-        }
+        public async Task<IActionResult> GetDropdownList() =>
+            GetResult<List<StateDTO>>(await _baseService.GetAllAsync(x => true));
     }
 }

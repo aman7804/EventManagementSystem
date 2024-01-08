@@ -3,7 +3,5 @@ using EMS.Repository.Base;
 
 namespace EMS.Repository.Repository.CitytModule
 {
-    public interface ICityRepository : IBaseRepository<CityEntity>
-    {
-    }
+    public interface ICityRepository : IBaseRepository<CityEntity> { }
 }

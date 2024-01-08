@@ -7,6 +7,7 @@ namespace EMS.Repository.Repository.CateringModule
 {
     public class CateringRepository : BaseRepository<CateringEntity>, ICateringRepository
     {
-        public CateringRepository(SqlDbContext dbContext, IHttpContextAccessor contextAccessor) : base(dbContext, contextAccessor) { }
+        public CateringRepository(SqlDbContext dbContext, IHttpContextAccessor contextAccessor)
+            : base(dbContext, contextAccessor) { }
     }
 }

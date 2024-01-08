@@ -10,22 +10,16 @@ namespace EMS.Api.Controllers
     [ApiController]
     public class CateringController : BaseController<CateringEntity, CateringDTO>
     {
-
         public CateringController(ICateringService cateringService) : base(cateringService) { }
 
         [HttpPost("save")]
         public async Task<IActionResult> SaveCatering(CateringDTO dto)
         {
             if (dto.Id == 0)
-            {
                 await _baseService.AddAsync(dto);
-                return GetResult<CateringDTO>(null, HttpStatusCode.OK);
-            }
             else
-            {
                 await _baseService.UpdateAsync(dto);
-                return GetResult<CateringDTO>(null, HttpStatusCode.OK);
-            }
+            return GetResult<CateringDTO>(null, HttpStatusCode.OK);
         }
 
         [HttpDelete("delete/{Id}")]
@@ -36,16 +30,11 @@ namespace EMS.Api.Controllers
         }
 
         [HttpGet("index/{Id}")]
-        public async Task<IActionResult> Index(int Id)
-        {
-            return GetResult<CateringDTO>(await _baseService.GetByIdAsync(Id));
-        }
+        public async Task<IActionResult> Index(int Id) =>
+            GetResult<CateringDTO>(await _baseService.GetByIdAsync(Id));
 
         [HttpPost("list")]
-        public async Task<IActionResult> List(PaginationDTO<CateringDTO> pagination)
-        {
-
-            return GetResult<PaginationDTO<CateringDTO>>(await _baseService.GetPageAsync(pagination));
-        }
+        public async Task<IActionResult> List(PaginationDTO<CateringDTO> pagination) =>
+            GetResult<PaginationDTO<CateringDTO>>(await _baseService.GetPageAsync(pagination));
     }
 }

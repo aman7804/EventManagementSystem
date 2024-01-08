@@ -7,6 +7,7 @@ using EMS.Shared.Constant;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using EMS.Service.Extension;
+using Microsoft.AspNetCore.Http;
 
 namespace EMS.Service.Base
 {
@@ -14,28 +15,33 @@ namespace EMS.Service.Base
     {
         public readonly IMapper Mapper;
         public readonly IBaseRepository<T> Repo;
-        public BaseService(IMapper mapper, IBaseRepository<T> baseRepository)
+        public readonly int CurrentUser;
+        public BaseService(IMapper mapper, IBaseRepository<T> baseRepository, IHttpContextAccessor httpContextAccessor)
         {
             Mapper = mapper;
-            Repo = baseRepository; 
+            Repo = baseRepository;
+            string? userId = httpContextAccessor.HttpContext?.User?.Identity?.Name;
+
+            if (!string.IsNullOrWhiteSpace(userId))
+                CurrentUser = Convert.ToInt32(userId);
         }
+
         public virtual async Task AddAsync(D dto)
         {
-            if (dto == null) { throw new ArgumentNullException(nameof(dto), "DTO cannot be null"); }
+            if (dto == null) throw new ArgumentNullException(nameof(dto), "DTO cannot be null");
             T entity = ToEntity(dto);
             await Repo.AddAsync(entity);
         }
         public virtual async Task UpdateAsync(D dto)
         {
-            if (dto == null) { throw new ArgumentNullException(nameof(dto), "DTO cannot be null"); }
-
+            if (dto == null) throw new ArgumentNullException(nameof(dto), "DTO cannot be null");
             T entity = ToEntity(dto);   
             await Repo.UpdateAsync(entity);
         }
 
         public async Task DeleteAsync(int Id)
         {
-            if (Id <= 0) { throw new ArgumentNullException(nameof(Id), "Id cannot be null"); }
+            if (Id <= 0) throw new ArgumentNullException(nameof(Id), "Id cannot be null");
             await Repo.DeleteAsync(Id);
         }
 
@@ -48,14 +54,9 @@ namespace EMS.Service.Base
 
         public async Task<D> GetByIdAsync(int Id, bool asNoTracking = false)
         {
-            if (Id <= 0) { throw new ArgumentNullException(nameof(Id), "Id cannot be null"); }
-
+            if (Id <= 0) throw new ArgumentNullException(nameof(Id), "Id cannot be null");
             T? entity = await Repo.GetByIdAsync(Id, asNoTracking);
-            if (entity == null)
-            {
-                throw new Exception(ExceptionMessage.RECORD_NOT_FOUND);
-            }
-            return ToDTO(entity);
+            return entity == null ? throw new Exception(ExceptionMessage.RECORD_NOT_FOUND) : ToDTO(entity);
         }
 
         public async Task<PaginationDTO<D>> GetPageAsync(PaginationDTO<D> paginationDTO)
@@ -67,43 +68,26 @@ namespace EMS.Service.Base
             paginationDTO.RecordCount = await query.CountAsync();
 
             if (!string.IsNullOrWhiteSpace(paginationDTO.SortByColumns))
-            {
                 if (paginationDTO.SortBy == EnumSortBy.Descending)
-                {
                     query = query.OrderByDescending(paginationDTO.SortByColumns);
-                }
                 else
-                {
                     query = query.OrderBy(paginationDTO.SortByColumns);
-                }
-            }
 
             query = query.Skip(paginationDTO.PageSize * (paginationDTO.PageNo - 1));
             query = query.Take(paginationDTO.PageSize);
 
             List<T> records = await query.ToListAsync();
             if (records.Count > 0)
-            {
                 paginationDTO.Data = Map<List<T>, List<D>>(records);
-            }
 
             return paginationDTO;
         }
 
 
         #region Protected Methods
-        protected virtual D ToDTO(T entity)
-        {
-            return Mapper.Map<D>(entity);
-        }
-        protected virtual T ToEntity(D dto)
-        {
-            return Mapper.Map<T>(dto);
-        }
-        public virtual T2 Map<T1, T2>(T1 obj)
-        {
-            return Mapper.Map<T2>(obj);
-        }        
+        protected virtual D ToDTO(T entity) => Mapper.Map<D>(entity);
+        protected virtual T ToEntity(D dto) => Mapper.Map<T>(dto);
+        public virtual T2 Map<T1, T2>(T1 obj) => Mapper.Map<T2>(obj);
         #endregion
     }
 }

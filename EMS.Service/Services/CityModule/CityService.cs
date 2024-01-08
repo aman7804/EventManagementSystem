@@ -3,7 +3,6 @@ using EMS.Entity.Entity;
 using EMS.Repository.Repository.CitytModule;
 using EMS.Service.Base;
 using EMS.Service.DTO;
-using EMS.Shared.Constant;
 
 namespace EMS.Service.Services.CityModule
 {
