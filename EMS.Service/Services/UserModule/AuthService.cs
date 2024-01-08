@@ -4,6 +4,7 @@ using EMS.Repository.Repository.UserModule;
 using EMS.Service.Base;
 using EMS.Service.DTO;
 using EMS.Shared.Constant;
+using Microsoft.AspNetCore.Http;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -11,7 +12,7 @@ namespace EMS.Service.Services.UserModule
 {
     public class AuthService : BaseService<UserEntity, UserDTO>, IAuthService
     {
-        public AuthService(IMapper mapper, IUserRepository userRepository) : base(mapper, userRepository)
+        public AuthService(IMapper mapper, IUserRepository userRepository, IHttpContextAccessor contextAccessor) : base(mapper, userRepository, contextAccessor)
         { }
 
         public async Task ChangePassword(ChangePasswordDTO changePasswordDTO)
