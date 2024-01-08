@@ -1,4 +1,5 @@
 ﻿using EMS.Data;
+using EMS.Repository.Repository.BookingModule;
 using EMS.Repository.Repository.CateringModule;
 using EMS.Repository.Repository.CitytModule;
 using EMS.Repository.Repository.DecorationModule;
@@ -6,6 +7,7 @@ using EMS.Repository.Repository.PhotographyModule;
 using EMS.Repository.Repository.StateModule;
 using EMS.Repository.Repository.UserModule;
 using EMS.Repository.Repository.VenueModule;
+using EMS.Service.Services.BookingModule;
 using EMS.Service.Services.CateringModule;
 using EMS.Service.Services.CityModule;
 using EMS.Service.Services.DecorationModule;
@@ -59,6 +61,7 @@ namespace EMS.Api.Common
             services.AddScoped<IDecorationRepository, DecorationRepository>();
             services.AddScoped<ICateringRepository, CateringRepository>();
             services.AddScoped<IPhotographyRepository, PhotographyRepository>();
+            services.AddScoped<IBookingRepository, BookingRepository>();
         }
 
         public static void RegisterServices(this IServiceCollection services)
@@ -70,6 +73,7 @@ namespace EMS.Api.Common
             services.AddTransient<IDecorationService, DecorationService>();
             services.AddTransient<ICateringService, CateringService>();
             services.AddTransient<IPhotographyService, PhotographyService>();
+            services.AddTransient<IBookingService, BookingService>();
         }
 
     }

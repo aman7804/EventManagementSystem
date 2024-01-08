@@ -30,6 +30,7 @@ namespace EMS.Service.AutoMapper
                 .ForMember(x => x.DecorationDescription, opt => opt.MapFrom(y => y.Decoration.Description))
                 .ForMember(x => x.PhotographyName, opt => opt.MapFrom(y => y.Photography.Name))
                 .ForMember(x => x.PhotographyDescription, opt => opt.MapFrom(y => y.Photography.Description));
+            CreateMap<BookingEntity, BookingDTO>().ReverseMap();
         }
     }
 }
