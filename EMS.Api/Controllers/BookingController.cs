@@ -17,10 +17,25 @@ namespace EMS.Api.Controllers
         [HttpPost("save")]
         public async Task<IActionResult> SaveBooking(BookingDTO dto)
         {
+            dto.Status = Shared.EnumBookingStatus.Pending;
             if (dto.Id == 0)
                 await _baseService.AddAsync(dto);
             else
                 await _baseService.UpdateAsync(dto);
+            return GetResult<BookingDTO>(null, HttpStatusCode.OK);
+        }
+
+        [HttpGet("index/{Id}")]
+        public async Task<IActionResult> Index(int Id) =>
+            GetResult<GetBookingDTO>(await _bookingService.GetBookingById(Id));
+
+        [HttpGet("payment/{Id}")]
+        public async Task<IActionResult> BookingPaymentDone(int Id)
+        {
+            BookingDTO dto = await _baseService.GetByIdAsync(Id);
+            dto.Status = Shared.EnumBookingStatus.Paid;
+            await _baseService.UpdateAsync(dto);
+
             return GetResult<BookingDTO>(null, HttpStatusCode.OK);
         }
 
@@ -31,9 +46,6 @@ namespace EMS.Api.Controllers
         //    return GetResult<BookingDTO>(null, HttpStatusCode.OK);
         //}
 
-        [HttpGet("index/{Id}")]
-        public async Task<IActionResult> Index(int Id) =>
-            GetResult<GetBookingDTO>(await _bookingService.GetBookingById(Id));
 
         //[HttpPost("list")]
         //public async Task<IActionResult> List(PaginationDTO<BookingDTO> pagination) =>
