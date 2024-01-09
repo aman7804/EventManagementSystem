@@ -4,5 +4,8 @@ using EMS.Service.DTO;
 
 namespace EMS.Service.Services.BookingModule
 {
-    public interface IBookingService : IBaseService<BookingEntity, BookingDTO> { }
+    public interface IBookingService : IBaseService<BookingEntity, BookingDTO>
+    {
+        Task<GetBookingDTO> GetBookingById(int Id);
+    }
 }

@@ -10,7 +10,9 @@ namespace EMS.Api.Controllers
     [ApiController]
     public class BookingController : BaseController<BookingEntity, BookingDTO>
     {
-        public BookingController(IBookingService bookingService) : base(bookingService) { }
+        private readonly IBookingService _bookingService;
+        public BookingController(IBookingService bookingService) : base(bookingService) =>
+            _bookingService = bookingService;
 
         [HttpPost("save")]
         public async Task<IActionResult> SaveBooking(BookingDTO dto)
@@ -29,9 +31,9 @@ namespace EMS.Api.Controllers
         //    return GetResult<BookingDTO>(null, HttpStatusCode.OK);
         //}
 
-        //[HttpGet("index/{Id}")]
-        //public async Task<IActionResult> Index(int Id) =>
-        //    GetResult<BookingDTO>(await _baseService.GetByIdAsync(Id));
+        [HttpGet("index/{Id}")]
+        public async Task<IActionResult> Index(int Id) =>
+            GetResult<GetBookingDTO>(await _bookingService.GetBookingById(Id));
 
         //[HttpPost("list")]
         //public async Task<IActionResult> List(PaginationDTO<BookingDTO> pagination) =>
