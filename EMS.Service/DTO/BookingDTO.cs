@@ -2,7 +2,6 @@
 {
     public class BookingDTO : BaseDTO
     {
-        public int CustomerId { get; set; }
         public int MinGuest { get; set; }
         public int MaxGuest { get; set; }
         public decimal TotalAmount { get; set; }
