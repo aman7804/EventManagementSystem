@@ -52,7 +52,7 @@ namespace EMS.Service.Base
             return Map<List<T>, List<D>>(list);
         }
 
-        public async Task<D> GetByIdAsync(int Id, bool asNoTracking = false)
+        public virtual async Task<D> GetByIdAsync(int Id, bool asNoTracking = false)
         {
             if (Id <= 0) throw new ArgumentNullException(nameof(Id), "Id cannot be null");
             T? entity = await Repo.GetByIdAsync(Id, asNoTracking);
