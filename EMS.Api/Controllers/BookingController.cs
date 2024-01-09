@@ -39,6 +39,15 @@ namespace EMS.Api.Controllers
             return GetResult<BookingDTO>(null, HttpStatusCode.OK);
         }
 
+        [HttpGet("confirmBooking/{Id}")]
+        public async Task<IActionResult> ConfirmBooking(int Id)
+        {
+            BookingDTO dto = await _baseService.GetByIdAsync(Id);
+            dto.Status = Shared.EnumBookingStatus.Confirmed;
+            await _baseService.UpdateAsync(dto);
+
+            return GetResult<BookingDTO>(null, HttpStatusCode.OK);
+        }
         //[HttpDelete("cancel/{Id}")]
         //public async Task<IActionResult> CancelBooking(int Id)
         //{
