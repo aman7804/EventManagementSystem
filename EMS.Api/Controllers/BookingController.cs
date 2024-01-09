@@ -69,9 +69,8 @@ namespace EMS.Api.Controllers
             return GetResult<BookingDTO>(null, HttpStatusCode.OK);
         }
 
-
-        //[HttpPost("list")]
-        //public async Task<IActionResult> List(PaginationDTO<BookingDTO> pagination) =>
-        //    GetResult<PaginationDTO<BookingDTO>>(await _baseService.GetPageAsync(pagination));
+        [HttpPost("list")]
+        public async Task<IActionResult> List(PaginationDTO<BookingDTO> pagination) =>
+            GetResult<PaginationDTO<BookingDTO>>(await _bookingService.GetBookings(pagination));
     }
 }
