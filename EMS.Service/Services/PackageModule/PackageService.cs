@@ -12,16 +12,17 @@ namespace EMS.Service.Services.PackageModule
 {
     public class PackageService : BaseService<PackageEntity, PackageDTO> ,IPackageService
     {
-        private readonly IPackageRepository _packageRepository;
-        public PackageService(IMapper mapper, IPackageRepository packageRepository, IHttpContextAccessor contextAccessor)
-            : base(mapper, packageRepository, contextAccessor)
-        {
-            _packageRepository = packageRepository;
-        }
+        public PackageService(IMapper mapper, IPackageRepository packageRepository,
+            IHttpContextAccessor contextAccessor) : base(mapper, packageRepository, contextAccessor) { }
 
         public async Task<PaginationDTO<PackageItemDTO>> GetPackages(PaginationDTO<PackageItemDTO> paginationDTO)
         {
-            IQueryable<PackageEntity> packages = _packageRepository.GetDraftAndPackages();
+            IQueryable<PackageEntity> packages = Repo.GetAll(x =>
+                ((x.IsDraft == true && x.CreatedBy == CurrentUser) || x.IsDraft == false));
+            packages = packages.Include(v => v.Venue)
+                               .Include(p => p.Photography)
+                               .Include(d => d.Decoration)
+                               .Include(c => c.Catering);
 
             //Apply condition for each filter
 

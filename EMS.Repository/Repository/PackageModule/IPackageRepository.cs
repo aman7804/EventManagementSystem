@@ -3,8 +3,5 @@ using EMS.Repository.Base;
 
 namespace EMS.Repository.Repository.PackageModule
 {
-    public interface IPackageRepository : IBaseRepository<PackageEntity>
-    {
-        IQueryable<PackageEntity> GetDraftAndPackages();
-    }
+    public interface IPackageRepository : IBaseRepository<PackageEntity> { }
 }
