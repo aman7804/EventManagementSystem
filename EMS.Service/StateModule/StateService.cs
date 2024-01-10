@@ -3,7 +3,6 @@ using EMS.Entity;
 using EMS.Repository.StateModule;
 using EMS.Service.Base;
 using EMS.Service.DTO;
-using Microsoft.AspNetCore.Http;
 using System.Security.Authentication;
 
 namespace EMS.Service.StateModule

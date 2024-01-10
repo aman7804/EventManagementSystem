@@ -7,7 +7,6 @@ using EMS.Shared.Constant;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using EMS.Service.Extension;
-using Microsoft.AspNetCore.Http;
 
 namespace EMS.Service.Base
 {

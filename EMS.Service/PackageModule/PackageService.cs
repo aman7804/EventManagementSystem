@@ -2,7 +2,6 @@
 using EMS.Service.Base;
 using EMS.Service.DTO;
 using EMS.Shared;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using EMS.Service.Extension;
 using EMS.Repository.PackageModule;
@@ -14,10 +13,10 @@ namespace EMS.Service.PackageModule
     {
         public PackageService(IMapper mapper, IPackageRepository packageRepository) : base(mapper, packageRepository) { }
 
-        public async Task<PaginationDTO<PackageItemDTO>> GetPackages(PaginationDTO<PackageItemDTO> paginationDTO)
+        public async Task<PaginationDTO<PackageItemDTO>> GetPackages(PaginationDTO<PackageItemDTO> paginationDTO)   
         {
             IQueryable<PackageEntity> packages = Repo.GetAll(x =>
-                x.IsDraft == true && x.CreatedBy == 1 || x.IsDraft == false);
+                x.IsDraft == true && x.CreatedBy == 0 || x.IsDraft == false);
             packages = packages.Include(v => v.Venue)
                                .Include(p => p.Photography)
                                .Include(d => d.Decoration)

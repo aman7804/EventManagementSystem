@@ -4,7 +4,7 @@
     {
         // venue details
         public string VenueName { set; get; } = string.Empty!;
-        public string VenueAdd { set; get; } = string.Empty!;
+        public string VenueAddress { set; get; } = string.Empty!;
         public decimal VenuePrice { set; get; }
         public string VenueDescription { set; get; } = string.Empty!;
         public int MinCapacity { set; get; }

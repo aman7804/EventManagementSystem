@@ -22,10 +22,10 @@ namespace EMS.Entity
         public bool? IsActive { set; get; }
 
         [Required, StringLength(200)]
-        public string Add { set; get; } = string.Empty!;
+        public string Address { set; get; } = string.Empty!;
         
-        [Required] public int MinCapacity { set; get; }
-        [Required] public int MaxCapacity { set; get; }
+        [Required, Range(0, 100)] public int MinCapacity { set; get; }
+        [Required, Range(900, 1000)] public int MaxCapacity { set; get; }
         
         [Required, ForeignKey("City")]
         public int CityId { set; get; }

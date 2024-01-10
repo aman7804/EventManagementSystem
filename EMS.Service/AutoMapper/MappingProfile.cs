@@ -23,7 +23,7 @@ namespace EMS.Service.AutoMapper
                 .ForMember(x => x.CateringName, opt => opt.MapFrom(y => y.Catering.Name));  
             CreateMap<PackageEntity, PackageItemDTO>()
                 .ForMember(x => x.VenueName, opt => opt.MapFrom(y => y.Venue.Name))
-                .ForMember(x => x.VenueAddress, opt => opt.MapFrom(y => y.Venue.Add))
+                .ForMember(x => x.VenueAddress, opt => opt.MapFrom(y => y.Venue.Address))
                 .ForMember(x => x.CateringName, opt => opt.MapFrom(y => y.Catering.Name))
                 .ForMember(x => x.CateringDescription, opt => opt.MapFrom(y => y.Catering.Description))
                 .ForMember(x => x.DecorationName, opt => opt.MapFrom(y => y.Decoration.Name))
@@ -33,7 +33,7 @@ namespace EMS.Service.AutoMapper
             CreateMap<BookingEntity, BookingDTO>().ReverseMap();
             CreateMap<BookingEntity, GetBookingDTO>()
                 .ForPath(x => x.packageDetail.VenueName, opt=> opt.MapFrom(y => y.Package.Venue.Name))
-                .ForPath(x => x.packageDetail.VenueAdd, opt=> opt.MapFrom(y => y.Package.Venue.Add))
+                .ForPath(x => x.packageDetail.VenueAddress, opt=> opt.MapFrom(y => y.Package.Venue.Address))
                 .ForPath(x => x.packageDetail.VenueDescription, opt=> opt.MapFrom(y => y.Package.Venue.Description))
                 .ForPath(x => x.packageDetail.VenuePrice, opt=> opt.MapFrom(y => y.Package.Venue.Price))
                 .ForPath(x => x.packageDetail.MinCapacity, opt=> opt.MapFrom(y => y.Package.Venue.MinCapacity))

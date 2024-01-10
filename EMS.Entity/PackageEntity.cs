@@ -21,18 +21,18 @@ namespace EMS.Entity
 
         [ForeignKey("Venue")]
         public int? VenueId { get; set; }
-        public virtual VenueEntity Venue { get; set; } = null!;
+        public virtual VenueEntity? Venue { get; set; }
 
         [ForeignKey("Photography")]
         public int? PhotographyId { get; set; }
-        public virtual PhotographyEntity Photography { get; set; } = null!;
+        public virtual PhotographyEntity? Photography { get; set; }
 
         [ForeignKey("Decoration")]
         public int? DecorationId { get; set; }
-        public virtual DecorationEntity Decoration { get; set; } = null!;
+        public virtual DecorationEntity? Decoration { get; set; }
 
         [ForeignKey("Catering")]
         public int? CateringId { get; set; }
-        public virtual CateringEntity Catering { get; set; } = null!;
+        public virtual CateringEntity? Catering { get; set; }
     }
 }

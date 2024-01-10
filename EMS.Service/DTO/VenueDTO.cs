@@ -3,7 +3,7 @@
     public class VenueDTO : BaseDTO
     {
         public string Name { set; get; } = string.Empty!;
-        public string Add { set; get; } = string.Empty!;
+        public string Address { set; get; } = string.Empty!;
         public decimal Price { set; get; }
         public string Description { set; get; } = string.Empty!;
         public bool IsActive { set; get; }

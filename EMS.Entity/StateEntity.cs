@@ -9,6 +9,6 @@ namespace EMS.Entity
     {
         [Required, StringLength(32)]
         public string Name { set; get; } = string.Empty!;
-        public ICollection<CityEntity> City { get; set; } = null!;
+        public List<CityEntity> Cities { get; set; } = null!;
     }
 }
