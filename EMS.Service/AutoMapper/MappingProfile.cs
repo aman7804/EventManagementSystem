@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using EMS.Entity;
-using EMS.Entity.Entity;
 using EMS.Service.DTO;
 
 namespace EMS.Service.AutoMapper

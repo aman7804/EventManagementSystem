@@ -1,5 +1,4 @@
 ﻿using EMS.Entity;
-using EMS.Entity.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace EMS.Data

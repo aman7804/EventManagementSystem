@@ -15,15 +15,10 @@ namespace EMS.Service.Base
     {
         public readonly IMapper Mapper;
         public readonly IBaseRepository<T> Repo;
-        public readonly int CurrentUser;
-        public BaseService(IMapper mapper, IBaseRepository<T> baseRepository, IHttpContextAccessor httpContextAccessor)
+        public BaseService(IMapper mapper, IBaseRepository<T> baseRepository)
         {
             Mapper = mapper;
             Repo = baseRepository;
-            string? userId = httpContextAccessor.HttpContext?.User?.Identity?.Name;
-
-            if (!string.IsNullOrWhiteSpace(userId))
-                CurrentUser = Convert.ToInt32(userId);
         }
 
         public virtual async Task AddAsync(D dto)
