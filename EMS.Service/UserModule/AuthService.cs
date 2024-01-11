@@ -29,11 +29,8 @@ namespace EMS.Service.UserModule
 
         public async Task<UserDTO> GetByEmailId(string emailId)
         {
-            UserEntity? user = await Repo.GetAsync(x => x.EmailId == emailId, true);
-            if (user == null)
-            {
-                throw new Exception(ExceptionMessage.USER_NOT_FOUND);
-            }
+            UserEntity? user = await Repo.GetAsync(x => x.EmailId == emailId, true)
+                ?? throw new Exception(ExceptionMessage.USER_NOT_FOUND); 
             return ToDTO(user);
         }
 
@@ -46,6 +43,13 @@ namespace EMS.Service.UserModule
                 throw new Exception(ExceptionMessage.PASSWORD_IS_INCORRECT);
 
             return ToDTO(user);
+        }
+
+        public async Task RegisterUserAsync(RegisterDTO registerDTO)
+        {
+            UserEntity user = Mapper.Map<RegisterDTO, UserEntity>(registerDTO);
+            user.Password = Encrypt(registerDTO.Password);
+            await Repo.AddAsync(user);
         }
 
         private static string Encrypt(string text)
