@@ -1,20 +1,22 @@
 ﻿using EMS.Data;
-using EMS.Repository.Repository.BookingModule;
-using EMS.Repository.Repository.CateringModule;
-using EMS.Repository.Repository.CitytModule;
-using EMS.Repository.Repository.DecorationModule;
-using EMS.Repository.Repository.PhotographyModule;
-using EMS.Repository.Repository.StateModule;
-using EMS.Repository.Repository.UserModule;
-using EMS.Repository.Repository.VenueModule;
-using EMS.Service.Services.BookingModule;
-using EMS.Service.Services.CateringModule;
-using EMS.Service.Services.CityModule;
-using EMS.Service.Services.DecorationModule;
-using EMS.Service.Services.PhotographyModule;
-using EMS.Service.Services.StateModule;
-using EMS.Service.Services.UserModule;
-using EMS.Service.Services.VenueModule;
+using EMS.Repository.BookingModule;
+using EMS.Repository.CateringModule;
+using EMS.Repository.CitytModule;
+using EMS.Repository.DecorationModule;
+using EMS.Repository.PackageModule;
+using EMS.Repository.PhotographyModule;
+using EMS.Repository.StateModule;
+using EMS.Repository.UserModule;
+using EMS.Repository.VenueModule;
+using EMS.Service.BookingModule;
+using EMS.Service.CateringModule;
+using EMS.Service.CityModule;
+using EMS.Service.DecorationModule;
+using EMS.Service.PackageModule;
+using EMS.Service.PhotographyModule;
+using EMS.Service.StateModule;
+using EMS.Service.UserModule;
+using EMS.Service.VenueModule;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -61,6 +63,7 @@ namespace EMS.Api.Common
             services.AddScoped<IDecorationRepository, DecorationRepository>();
             services.AddScoped<ICateringRepository, CateringRepository>();
             services.AddScoped<IPhotographyRepository, PhotographyRepository>();
+            services.AddScoped<IPackageRepository, PackageRepository>();
             services.AddScoped<IBookingRepository, BookingRepository>();
         }
 
@@ -73,6 +76,7 @@ namespace EMS.Api.Common
             services.AddTransient<IDecorationService, DecorationService>();
             services.AddTransient<ICateringService, CateringService>();
             services.AddTransient<IPhotographyService, PhotographyService>();
+            services.AddTransient<IPackageService, PackageService>();
             services.AddTransient<IBookingService, BookingService>();
         }
 

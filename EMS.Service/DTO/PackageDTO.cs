@@ -3,13 +3,12 @@
     public class PackageDTO : BaseDTO
     {
         public string Name { get; set; } = string.Empty!;
-        public decimal Price { get; set; }
         public bool IsActive { get; set; }
         public bool IsDraft { get; set; } = false;
 
         // Navigation props
-        public int? VenueId { get; set; }
-        public string? VenueName { get; set; } = string.Empty!;
+        public int VenueId { get; set; }
+        public string VenueName { get; set; } = string.Empty!;
         public int? PhotographyId { get; set; }
         public string? PhotographyName { get; set; } = string.Empty!;
         public int? DecorationId { get; set; }

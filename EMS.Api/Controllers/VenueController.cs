@@ -1,6 +1,6 @@
 ﻿using EMS.Entity;
 using EMS.Service.DTO;
-using EMS.Service.Services.VenueModule;
+using EMS.Service.VenueModule;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 

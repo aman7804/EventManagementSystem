@@ -20,8 +20,7 @@ namespace EMS.Service.Extension
             return expr;
         }
 
-        // name bellow method
-        private static (MethodInfo? genericMethod, LambdaExpression? expr) OrderByImportantMethod<T>(string name, MethodInfo? method)
+        private static (MethodInfo? genericMethod, LambdaExpression? expr) GetGenericMethodForOrderBy<T>(string name, MethodInfo? method)
         {
             var propInfo = GetPropertyInfo(typeof(T), name);
             var expr = GetOrderExpression(typeof(T), propInfo);
@@ -36,7 +35,7 @@ namespace EMS.Service.Extension
             try
             {
                 var method = typeof(Enumerable).GetMethods().FirstOrDefault(m => m.Name == "OrderBy" && m.GetParameters().Length == 2);
-                var (genericMethod, expr) = OrderByImportantMethod<T>(name, method);
+                var (genericMethod, expr) = GetGenericMethodForOrderBy<T>(name, method);
                 
                 return genericMethod.Invoke(null, new object[] { query, expr.Compile() }) as IEnumerable<T>;
             }
@@ -48,7 +47,7 @@ namespace EMS.Service.Extension
             try
             {
                 var method = typeof(Enumerable).GetMethods().FirstOrDefault(m => m.Name == "OrderByDescending" && m.GetParameters().Length == 2);
-                var (genericMethod, expr) = OrderByImportantMethod<T>(name, method);
+                var (genericMethod, expr) = GetGenericMethodForOrderBy<T>(name, method);
 
                 return genericMethod.Invoke(null, new object[] { query, expr.Compile() }) as IEnumerable<T>;
             }
@@ -60,7 +59,7 @@ namespace EMS.Service.Extension
             try
             {
                 var method = typeof(Queryable).GetMethods().FirstOrDefault(m => m.Name == "OrderBy" && m.GetParameters().Length == 2);
-                var (genericMethod, expr) = OrderByImportantMethod<T>(name, method);
+                var (genericMethod, expr) = GetGenericMethodForOrderBy<T>(name, method);
 
                 return genericMethod.Invoke(null, new object[] { query, expr }) as IQueryable<T>;
             }
@@ -72,7 +71,7 @@ namespace EMS.Service.Extension
             try
             {
                 var method = typeof(Queryable).GetMethods().FirstOrDefault(m => m.Name == "OrderByDescending" && m.GetParameters().Length == 2);
-                var (genericMethod, expr) = OrderByImportantMethod<T>(name, method);
+                var (genericMethod, expr) = GetGenericMethodForOrderBy<T>(name, method);
 
                 return genericMethod.Invoke(null, new object[] { query, expr }) as IQueryable<T>;
             }

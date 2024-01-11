@@ -16,7 +16,7 @@ namespace EMS.Repository.Base
         {
             Context = sqlDbContext;
 
-            string? userId = httpContextAccessor.HttpContext?.User?.Identity?.Name;
+            string? userId = httpContextAccessor.HttpContext?.User?.Identity?.Name ?? "1";
 
             if (!string.IsNullOrWhiteSpace(userId))
                 CurrentUser = Convert.ToInt32(userId);

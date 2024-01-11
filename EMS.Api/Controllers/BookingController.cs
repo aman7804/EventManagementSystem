@@ -1,6 +1,6 @@
-﻿using EMS.Entity.Entity;
+﻿using EMS.Entity;
+using EMS.Service.BookingModule;
 using EMS.Service.DTO;
-using EMS.Service.Services.BookingModule;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -32,7 +32,7 @@ namespace EMS.Api.Controllers
         [HttpGet("payment/{Id}")]
         public async Task<IActionResult> BookingPaymentDone(int Id)
         {
-            BookingDTO dto = await _baseService.GetByIdAsync(Id);
+            BookingDTO dto = await _baseService.GetByIdAsync(Id, true);
             dto.Status = Shared.EnumBookingStatus.Paid;
             await _baseService.UpdateAsync(dto);
 
@@ -42,7 +42,7 @@ namespace EMS.Api.Controllers
         [HttpGet("confirmBooking/{Id}")]
         public async Task<IActionResult> ConfirmBooking(int Id)
         {
-            BookingDTO dto = await _baseService.GetByIdAsync(Id);
+            BookingDTO dto = await _baseService.GetByIdAsync(Id, true);
             dto.Status = Shared.EnumBookingStatus.Confirmed;
             await _baseService.UpdateAsync(dto);
 
@@ -53,7 +53,7 @@ namespace EMS.Api.Controllers
         [HttpGet("cancel/{Id}")]
         public async Task<IActionResult> CancelBooking(int Id)
         {
-            BookingDTO dto = await _baseService.GetByIdAsync(Id);
+            BookingDTO dto = await _baseService.GetByIdAsync(Id, true);
             dto.Status = Shared.EnumBookingStatus.Cancelled;
             await _baseService.UpdateAsync(dto);
 
@@ -62,7 +62,7 @@ namespace EMS.Api.Controllers
         [HttpGet("reject/{Id}")]
         public async Task<IActionResult> RejectBooking(int Id)
         {
-            BookingDTO dto = await _baseService.GetByIdAsync(Id);
+            BookingDTO dto = await _baseService.GetByIdAsync(Id, true);
             dto.Status = Shared.EnumBookingStatus.Rejected;
             await _baseService.UpdateAsync(dto);
 

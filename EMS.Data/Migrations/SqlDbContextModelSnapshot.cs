@@ -22,7 +22,7 @@ namespace EMS.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("EMS.Entity.Entity.BookingEntity", b =>
+            modelBuilder.Entity("EMS.Entity.BookingEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,7 +73,7 @@ namespace EMS.Data.Migrations
                     b.ToTable("Booking");
                 });
 
-            modelBuilder.Entity("EMS.Entity.Entity.CateringEntity", b =>
+            modelBuilder.Entity("EMS.Entity.CateringEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -97,10 +97,10 @@ namespace EMS.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal>("PricePerPlate")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime?>("UpdateDate")
@@ -115,9 +115,21 @@ namespace EMS.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Catering");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreateDate = new DateTime(2024, 1, 11, 10, 50, 19, 144, DateTimeKind.Local).AddTicks(3935),
+                            CreatedBy = 1,
+                            Description = "15 Items: (2 soups, 3 salad, 2 sweets, 2 sabji, 2 farsan, 2 types of roti, dal, rice)",
+                            IsActive = true,
+                            Name = "Jalram Catering - Gold (15 Items)",
+                            PricePerPlate = 500m
+                        });
                 });
 
-            modelBuilder.Entity("EMS.Entity.Entity.CityEntity", b =>
+            modelBuilder.Entity("EMS.Entity.CityEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -133,7 +145,8 @@ namespace EMS.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("StateId")
                         .HasColumnType("int");
@@ -152,9 +165,19 @@ namespace EMS.Data.Migrations
                     b.HasIndex("StateId");
 
                     b.ToTable("City");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreateDate = new DateTime(2024, 1, 11, 10, 50, 19, 144, DateTimeKind.Local).AddTicks(3870),
+                            CreatedBy = 1,
+                            Name = "Ahmedabad",
+                            StateId = 1
+                        });
                 });
 
-            modelBuilder.Entity("EMS.Entity.Entity.DecorationEntity", b =>
+            modelBuilder.Entity("EMS.Entity.DecorationEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -178,8 +201,8 @@ namespace EMS.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -196,9 +219,21 @@ namespace EMS.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Decoration");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreateDate = new DateTime(2024, 1, 11, 10, 50, 19, 144, DateTimeKind.Local).AddTicks(3962),
+                            CreatedBy = 1,
+                            Description = "Balloon Gate, Cake, Floor, Stage, Welcome Statue",
+                            IsActive = true,
+                            Name = "Anand Decoration - Gold",
+                            Price = 5000m
+                        });
                 });
 
-            modelBuilder.Entity("EMS.Entity.Entity.PackageEntity", b =>
+            modelBuilder.Entity("EMS.Entity.PackageEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -207,7 +242,6 @@ namespace EMS.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("CateringId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateDate")
@@ -217,7 +251,6 @@ namespace EMS.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int?>("DecorationId")
-                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
@@ -228,15 +261,14 @@ namespace EMS.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.Property<int?>("PhotographyId")
-                        .IsRequired()
+                    b.Property<int?>("PackageEntityId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int?>("PhotographyId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
@@ -244,8 +276,7 @@ namespace EMS.Data.Migrations
                     b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
 
-                    b.Property<int?>("VenueId")
-                        .IsRequired()
+                    b.Property<int>("VenueId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -257,14 +288,30 @@ namespace EMS.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
+                    b.HasIndex("PackageEntityId");
+
                     b.HasIndex("PhotographyId");
 
                     b.HasIndex("VenueId");
 
                     b.ToTable("Package");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CateringId = 1,
+                            CreateDate = new DateTime(2024, 1, 11, 10, 50, 19, 144, DateTimeKind.Local).AddTicks(4012),
+                            CreatedBy = 1,
+                            IsActive = true,
+                            IsDraft = false,
+                            Name = "Anand Vadi - Gold Package",
+                            PhotographyId = 1,
+                            VenueId = 1
+                        });
                 });
 
-            modelBuilder.Entity("EMS.Entity.Entity.PhotographyEntity", b =>
+            modelBuilder.Entity("EMS.Entity.PhotographyEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -288,8 +335,8 @@ namespace EMS.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -306,9 +353,21 @@ namespace EMS.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Photography");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreateDate = new DateTime(2024, 1, 11, 10, 50, 19, 144, DateTimeKind.Local).AddTicks(3987),
+                            CreatedBy = 1,
+                            Description = "20 page album (Karzima), 60 minutes 4K, 10 mins Drone Shot",
+                            IsActive = true,
+                            Name = "Chandresh - Wedding Gold",
+                            Price = 35000m
+                        });
                 });
 
-            modelBuilder.Entity("EMS.Entity.Entity.StateEntity", b =>
+            modelBuilder.Entity("EMS.Entity.StateEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -339,9 +398,18 @@ namespace EMS.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("State");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreateDate = new DateTime(2024, 1, 11, 10, 50, 19, 144, DateTimeKind.Local).AddTicks(3843),
+                            CreatedBy = 1,
+                            Name = "Gujarat"
+                        });
                 });
 
-            modelBuilder.Entity("EMS.Entity.Entity.UserEntity", b =>
+            modelBuilder.Entity("EMS.Entity.UserEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -389,6 +457,19 @@ namespace EMS.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreateDate = new DateTime(2024, 1, 11, 10, 50, 19, 144, DateTimeKind.Local).AddTicks(3707),
+                            CreatedBy = 0,
+                            EmailId = "nms.nt1986@gmail.com",
+                            FirstName = "Nimesh",
+                            LastName = "Parmar",
+                            MobileNo = "9898989898",
+                            Password = "xyz"
+                        });
                 });
 
             modelBuilder.Entity("EMS.Entity.VenueEntity", b =>
@@ -399,7 +480,7 @@ namespace EMS.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Add")
+                    b.Property<string>("Address")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
@@ -429,8 +510,8 @@ namespace EMS.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -449,11 +530,27 @@ namespace EMS.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Venue");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Bapunagar, Ahmedabad",
+                            CityId = 1,
+                            CreateDate = new DateTime(2024, 1, 11, 10, 50, 19, 144, DateTimeKind.Local).AddTicks(3901),
+                            CreatedBy = 1,
+                            Description = "Nothing",
+                            IsActive = true,
+                            MaxCapacity = 500,
+                            MinCapacity = 300,
+                            Name = "Anand Vadi (500 Capacity)",
+                            Price = 2500m
+                        });
                 });
 
-            modelBuilder.Entity("EMS.Entity.Entity.BookingEntity", b =>
+            modelBuilder.Entity("EMS.Entity.BookingEntity", b =>
                 {
-                    b.HasOne("EMS.Entity.Entity.PackageEntity", "Package")
+                    b.HasOne("EMS.Entity.PackageEntity", "Package")
                         .WithMany()
                         .HasForeignKey("PackageId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -462,10 +559,10 @@ namespace EMS.Data.Migrations
                     b.Navigation("Package");
                 });
 
-            modelBuilder.Entity("EMS.Entity.Entity.CityEntity", b =>
+            modelBuilder.Entity("EMS.Entity.CityEntity", b =>
                 {
-                    b.HasOne("EMS.Entity.Entity.StateEntity", "State")
-                        .WithMany("City")
+                    b.HasOne("EMS.Entity.StateEntity", "State")
+                        .WithMany("Cities")
                         .HasForeignKey("StateId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -473,28 +570,30 @@ namespace EMS.Data.Migrations
                     b.Navigation("State");
                 });
 
-            modelBuilder.Entity("EMS.Entity.Entity.PackageEntity", b =>
+            modelBuilder.Entity("EMS.Entity.PackageEntity", b =>
                 {
-                    b.HasOne("EMS.Entity.Entity.CateringEntity", "Catering")
+                    b.HasOne("EMS.Entity.CateringEntity", "Catering")
                         .WithMany()
                         .HasForeignKey("CateringId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("EMS.Entity.Entity.DecorationEntity", "Decoration")
-                        .WithMany()
+                    b.HasOne("EMS.Entity.DecorationEntity", "Decoration")
+                        .WithMany("Packages")
                         .HasForeignKey("DecorationId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("EMS.Entity.Entity.PhotographyEntity", "Photography")
-                        .WithMany()
+                    b.HasOne("EMS.Entity.PackageEntity", null)
+                        .WithMany("Packages")
+                        .HasForeignKey("PackageEntityId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("EMS.Entity.PhotographyEntity", "Photography")
+                        .WithMany("Packages")
                         .HasForeignKey("PhotographyId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("EMS.Entity.VenueEntity", "Venue")
-                        .WithMany()
+                        .WithMany("Packages")
                         .HasForeignKey("VenueId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -510,7 +609,7 @@ namespace EMS.Data.Migrations
 
             modelBuilder.Entity("EMS.Entity.VenueEntity", b =>
                 {
-                    b.HasOne("EMS.Entity.Entity.CityEntity", "City")
+                    b.HasOne("EMS.Entity.CityEntity", "City")
                         .WithMany()
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -519,9 +618,29 @@ namespace EMS.Data.Migrations
                     b.Navigation("City");
                 });
 
-            modelBuilder.Entity("EMS.Entity.Entity.StateEntity", b =>
+            modelBuilder.Entity("EMS.Entity.DecorationEntity", b =>
                 {
-                    b.Navigation("City");
+                    b.Navigation("Packages");
+                });
+
+            modelBuilder.Entity("EMS.Entity.PackageEntity", b =>
+                {
+                    b.Navigation("Packages");
+                });
+
+            modelBuilder.Entity("EMS.Entity.PhotographyEntity", b =>
+                {
+                    b.Navigation("Packages");
+                });
+
+            modelBuilder.Entity("EMS.Entity.StateEntity", b =>
+                {
+                    b.Navigation("Cities");
+                });
+
+            modelBuilder.Entity("EMS.Entity.VenueEntity", b =>
+                {
+                    b.Navigation("Packages");
                 });
 #pragma warning restore 612, 618
         }

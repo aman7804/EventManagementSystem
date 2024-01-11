@@ -1,6 +1,6 @@
-﻿using EMS.Entity.Entity;
+﻿using EMS.Entity;
 using EMS.Service.DTO;
-using EMS.Service.Services.PhotographyModule;
+using EMS.Service.PhotographyModule;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 

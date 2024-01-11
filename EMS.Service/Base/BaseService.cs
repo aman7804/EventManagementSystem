@@ -7,7 +7,6 @@ using EMS.Shared.Constant;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using EMS.Service.Extension;
-using Microsoft.AspNetCore.Http;
 
 namespace EMS.Service.Base
 {
@@ -15,15 +14,10 @@ namespace EMS.Service.Base
     {
         public readonly IMapper Mapper;
         public readonly IBaseRepository<T> Repo;
-        public readonly int CurrentUser;
-        public BaseService(IMapper mapper, IBaseRepository<T> baseRepository, IHttpContextAccessor httpContextAccessor)
+        public BaseService(IMapper mapper, IBaseRepository<T> baseRepository)
         {
             Mapper = mapper;
             Repo = baseRepository;
-            string? userId = httpContextAccessor.HttpContext?.User?.Identity?.Name;
-
-            if (!string.IsNullOrWhiteSpace(userId))
-                CurrentUser = Convert.ToInt32(userId);
         }
 
         public virtual async Task AddAsync(D dto)
@@ -59,7 +53,7 @@ namespace EMS.Service.Base
             return entity == null ? throw new Exception(ExceptionMessage.RECORD_NOT_FOUND) : ToDTO(entity);
         }
 
-        public async Task<PaginationDTO<D>> GetPageAsync(PaginationDTO<D> paginationDTO)
+        public virtual async Task<PaginationDTO<D>> GetPageAsync(PaginationDTO<D> paginationDTO)
         {            
             //Expression<Func<D, bool>> expression = paginationDTO.FilterDTO.GetFilter();
             //Expression<Func<T, bool>> where = Map<Expression<Func<D, bool>>, Expression<Func<T, bool>>>(expression);

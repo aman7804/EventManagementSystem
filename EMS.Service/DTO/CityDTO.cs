@@ -1,5 +1,4 @@
-﻿
-namespace EMS.Service.DTO
+﻿namespace EMS.Service.DTO
 {
     public class CityDTO : BaseDTO
     {

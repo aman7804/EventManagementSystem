@@ -1,5 +1,4 @@
 ﻿using EMS.Entity;
-using EMS.Entity.Entity;
 using Microsoft.EntityFrameworkCore;
 
 namespace EMS.Data
@@ -22,6 +21,14 @@ namespace EMS.Data
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
                 relationship.DeleteBehavior = DeleteBehavior.NoAction;
+
+            //modelBuilder.Entity<PackageEntity>()
+            //    .HasOne(x => x.Decoration)
+            //    .WithMany(x => x.Packages)
+            //    .HasForeignKey(x => x.DecorationId)
+            //    .IsRequired(false);
+
+            Seed.InsertDefaultData(modelBuilder);
         }
         public SqlDbContext(DbContextOptions<SqlDbContext> options) : base(options) { }
     }
