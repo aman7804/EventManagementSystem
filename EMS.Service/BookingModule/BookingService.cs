@@ -27,6 +27,13 @@ namespace EMS.Service.BookingModule
         public async Task<PaginationDTO<BookingDTO>> GetBookings(PaginationDTO<BookingDTO> paginationDTO)
         {
             IQueryable<BookingEntity> bookings = _bookingRepository.GetAll(null);
+            bookings = bookings.Include(p => p.Package)
+                                   .ThenInclude(v => v.Venue)
+                               .Include(p => p.Package)
+                                   .ThenInclude(p => p.Photography)
+                               .Include(p => p.Package)
+                                   .ThenInclude(v => v.Catering)
+                               .Include(p => p.Package);
 
             //Apply condition for each filter
 

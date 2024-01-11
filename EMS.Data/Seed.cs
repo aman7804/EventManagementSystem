@@ -98,7 +98,7 @@ namespace EMS.Data
                 IsActive = true,
                 CateringId = defaultCatering.Id,
                 VenueId = defaultVenue.Id,
-                PhotographyId = null,
+                PhotographyId = defaultPhotography.Id,
                 CreatedBy = defaultUser.Id,
                 CreateDate = DateTime.Now
             };
