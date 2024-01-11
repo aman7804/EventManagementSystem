@@ -12,19 +12,19 @@
         public int CityId { set; get; }
 
         //photography details
-        public string PhotographyName { set; get; } = string.Empty!;
-        public decimal PhotographyPrice { set; get; }
-        public string PhotographyDescription { set; get; } = string.Empty!;
+        public string? PhotographyName { set; get; }
+        public decimal? PhotographyPrice { set; get; }
+        public string? PhotographyDescription { set; get; }
 
         //decoration details
-        public string DecorationName { set; get; } = string.Empty!;
-        public decimal DecorationPrice { set; get; }
-        public string DecorationDescription { set; get; } = string.Empty!;
+        public string? DecorationName { set; get; }
+        public decimal? DecorationPrice { set; get; }
+        public string? DecorationDescription { set; get; }
 
         //catering details
-        public string CateringName { set; get; } = string.Empty!;
-        public decimal CateringPrice { set; get; }
-        public string CateringDescription { set; get; } = string.Empty!;
+        public string? CateringName { set; get; }
+        public decimal? CateringPrice { set; get; }
+        public string? CateringDescription { set; get; }
 
     }
 }

@@ -8,8 +8,8 @@ namespace EMS.Entity
     public class BookingEntity : BaseEntity
     {
         [Required] public int CustomerId { get; set; }
-        [Required, Range(0, 100)] public int MinGuest { get; set; } // should i validate this and bellow one too, idk which validation would be nice?
-        [Required, Range(900, 1000)] public int MaxGuest { get; set; }
+        [Required] public int MinGuest { get; set; } // should i validate this and bellow one too, idk which validation would be nice?
+        [Required] public int MaxGuest { get; set; }
 
         [Required, Column(TypeName = "decimal(18,2)")]
         public decimal TotalAmount { get; set; }

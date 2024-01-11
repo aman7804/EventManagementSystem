@@ -8,7 +8,7 @@ namespace EMS.Entity
     [Index(nameof(Name), IsUnique = true)]
     public class CityEntity : BaseEntity
     {
-        [Required]
+        [Required, StringLength(50)]
         public string Name { set; get; } = string.Empty!;
 
         [Required, ForeignKey("State")]

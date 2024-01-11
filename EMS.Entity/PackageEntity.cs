@@ -8,11 +8,8 @@ namespace EMS.Entity
     [Index(nameof(Name), IsUnique = true)]
     public class PackageEntity : BaseEntity
     {
-        [Required, StringLength(50)]
+        [Required, StringLength(100)]
         public string Name { get; set; } = string.Empty!;
-
-        [Required, Column(TypeName = "decimal(18,2)")]
-        public decimal Price { get; set; }
 
         public bool IsActive { get; set; }
         public bool IsDraft { get; set; }
@@ -20,8 +17,8 @@ namespace EMS.Entity
         // Navigation props
 
         [ForeignKey("Venue")]
-        public int? VenueId { get; set; }
-        public virtual VenueEntity? Venue { get; set; }
+        public int VenueId { get; set; }
+        public virtual VenueEntity Venue { get; set; } = null!;
 
         [ForeignKey("Photography")]
         public int? PhotographyId { get; set; }
@@ -34,5 +31,7 @@ namespace EMS.Entity
         [ForeignKey("Catering")]
         public int? CateringId { get; set; }
         public virtual CateringEntity? Catering { get; set; }
+
+        public virtual IList<PackageEntity> Packages { get; set; } = null!;
     }
 }

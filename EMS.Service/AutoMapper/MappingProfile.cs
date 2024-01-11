@@ -46,7 +46,7 @@ namespace EMS.Service.AutoMapper
                 .ForPath(x => x.packageDetail.DecorationPrice, opt=> opt.MapFrom(y => y.Package.Decoration.Price))
                 .ForPath(x => x.packageDetail.DecorationDescription, opt=> opt.MapFrom(y => y.Package.Decoration.Description))
                 .ForPath(x => x.packageDetail.CateringName, opt=> opt.MapFrom(y => y.Package.Catering.Name))
-                .ForPath(x => x.packageDetail.CateringPrice, opt=> opt.MapFrom(y => y.Package.Catering.Price))
+                .ForPath(x => x.packageDetail.CateringPrice, opt=> opt.MapFrom(y => y.Package.Catering.PricePerPlate))
                 .ForPath(x => x.packageDetail.CateringDescription, opt=> opt.MapFrom(y => y.Package.Catering.Description));
         }
     }
