@@ -9,7 +9,7 @@
 
         public class JwtSetting
         {
-            public string Secret { get; set; } = string.Empty!;
+            public string Secret { get; set; } = "HELLOWROLD";
         }
         public class ConnectionStringSetting
         {

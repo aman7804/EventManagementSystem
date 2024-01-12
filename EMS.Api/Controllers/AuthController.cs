@@ -12,18 +12,20 @@ namespace EMS.Api.Controllers
     public class AuthController : BaseController<UserEntity, UserDTO>
     {
         private readonly IAuthService _authService;
+        private readonly IJwtUtils _jwtUtils;
 
-        public AuthController(IConfiguration config, IAuthService authService) : base(authService)
+        public AuthController(IConfiguration config, IAuthService authService, IJwtUtils jwtUtils) : base(authService)
         {
             _authService = authService;
+            _jwtUtils = jwtUtils;
         }
 
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO dto)
         {
-            await _authService.Login(dto);
-            return GetResult<object>(new { Token = _authService.GetToken()});
+            var userDto = await _authService.Login(dto);
+            return GetResult( new AuthenticateResponseDTO(userDto, _jwtUtils.GenerateJwtToken(userDto)) );
         }
 
         [AllowAnonymous]
@@ -37,7 +39,7 @@ namespace EMS.Api.Controllers
         [AllowAnonymous]
         [HttpGet("forgot-password/{Id}")]
         public async Task<IActionResult> GetByEmailId(string Id) =>
-            GetResult<UserDTO>(await _authService.GetByEmailId(Id));
+            GetResult(await _authService.GetByEmailId(Id));
 
         
 

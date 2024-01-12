@@ -78,6 +78,8 @@ namespace EMS.Api.Common
             services.AddTransient<IPhotographyService, PhotographyService>();
             services.AddTransient<IPackageService, PackageService>();
             services.AddTransient<IBookingService, BookingService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IJwtUtils, JwtUtils>();
         }
 
     }

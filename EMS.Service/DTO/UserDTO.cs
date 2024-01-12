@@ -1,4 +1,6 @@
-﻿namespace EMS.Service.DTO
+﻿using EMS.Shared;
+
+namespace EMS.Service.DTO
 {
     public class UserDTO : BaseDTO
     {
