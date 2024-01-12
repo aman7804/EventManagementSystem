@@ -4,6 +4,10 @@ using EMS.Repository.UserModule;
 using EMS.Service.Base;
 using EMS.Service.DTO;
 using EMS.Shared.Constant;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -11,8 +15,10 @@ namespace EMS.Service.UserModule
 {
     public class AuthService : BaseService<UserEntity, UserDTO>, IAuthService
     {
-        public AuthService(IMapper mapper, IUserRepository userRepository) : base(mapper, userRepository)
-        { }
+        private readonly IConfiguration _config;
+        public AuthService(IConfiguration config, IMapper mapper, IUserRepository userRepository)
+            : base(mapper, userRepository) =>
+            _config = config;
 
         public async Task ChangePassword(ChangePasswordDTO changePasswordDTO)
         {
@@ -51,6 +57,26 @@ namespace EMS.Service.UserModule
             user.Password = Encrypt(registerDTO.Password);
             await Repo.AddAsync(user);
         }
+
+        public string GetToken()
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            byte[] key = Encoding.ASCII.GetBytes(_config["Jwt:Secret"] ?? String.Empty);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, "userId")
+                }),
+                Expires = DateTime.UtcNow.AddHours(24),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            var tokenString = tokenHandler.WriteToken(token);
+            return tokenString;
+        }
+
+
 
         private static string Encrypt(string text)
         {

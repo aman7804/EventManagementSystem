@@ -10,5 +10,6 @@ namespace EMS.Service.UserModule
         Task ChangePassword(ChangePasswordDTO changePasswordDTO);
         Task<UserDTO> GetByEmailId(string emailId);
         Task RegisterUserAsync(RegisterDTO registerDTO);
+        string GetToken();
     }
 }
