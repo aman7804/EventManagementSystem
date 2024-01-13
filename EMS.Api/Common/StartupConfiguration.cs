@@ -20,6 +20,7 @@ using EMS.Service.VenueModule;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 namespace EMS.Api.Common
@@ -37,7 +38,7 @@ namespace EMS.Api.Common
         public static void AddJWTAuthentication(this IServiceCollection services, IConfiguration config)
         {
             string? jwt_secret = config?.GetSection("Jwt")?.GetSection("Secret")?.Value?.ToString() ?? string.Empty;
-            var key = Encoding.ASCII.GetBytes(jwt_secret);
+            byte[] key = Encoding.ASCII.GetBytes(jwt_secret);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {
@@ -45,8 +46,14 @@ namespace EMS.Api.Common
                         options.SaveToken = true;
                         options.TokenValidationParameters = new TokenValidationParameters
                         {
-                            ValidateIssuerSigningKey = true,
+                            ValidateIssuerSigningKey = false,
                             IssuerSigningKey = new SymmetricSecurityKey(key),
+                            SignatureValidator = delegate (string token, TokenValidationParameters parameters)
+                            {
+                                var jwt = new JwtSecurityToken(token);
+
+                                return jwt;
+                            },
                             ValidateIssuer = false,
                             ValidateAudience = false
                         };

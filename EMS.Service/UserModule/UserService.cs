@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using EMS.Entity;
-using EMS.Repository.Base;
+using EMS.Repository.UserModule;
 using EMS.Service.Base;
 using EMS.Service.DTO;
 
@@ -8,6 +8,6 @@ namespace EMS.Service.UserModule
 {
     public class UserService : BaseService<UserEntity, UserDTO>, IUserService
     {
-        public UserService(IMapper mapper, IBaseRepository<UserEntity> userRepo) : base(mapper, userRepo) { }
+        public UserService(IMapper mapper, IUserRepository userRepository) : base(mapper, userRepository) { }
     }
 }

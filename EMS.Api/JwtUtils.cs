@@ -22,7 +22,8 @@ namespace EMS.Api
         public string GenerateJwtToken(UserDTO user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            byte[] key = Encoding.ASCII.GetBytes(_config["Jwt:Secret"] ?? String.Empty);
+            string? jwt_secret = _config["Jwt:Secret"] ?? String.Empty;
+            byte[] key = Encoding.ASCII.GetBytes(jwt_secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
@@ -44,13 +45,12 @@ namespace EMS.Api
                 return null;
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            byte[] key = Encoding.ASCII.GetBytes(_config["Jwt:Secret"] ?? string.Empty);
             var tokenValidationParameters = _jwtBearerOptions.TokenValidationParameters;
 
-            tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken validatedToken);
+                tokenHandler.ValidateToken(token, tokenValidationParameters, out SecurityToken validatedToken);
 
             var jwtToken = (JwtSecurityToken)validatedToken;
-            var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
+            var userId = int.Parse(jwtToken.Claims.First(x => x.Type == ClaimTypes.Name).Value);
 
             return userId;
         }

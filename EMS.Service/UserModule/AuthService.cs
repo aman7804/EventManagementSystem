@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using EMS.Entity;
-using EMS.Repository.Base;
+using EMS.Repository.UserModule;
 using EMS.Service.Base;
 using EMS.Service.DTO;
 using EMS.Shared.Constant;
@@ -11,7 +11,7 @@ namespace EMS.Service.UserModule
 {
     public class AuthService : BaseService<UserEntity, UserDTO>, IAuthService
     {
-        public AuthService(IMapper mapper, IBaseRepository<UserEntity> userRepository)
+        public AuthService(IMapper mapper, IUserRepository userRepository)
             : base(mapper, userRepository) { }
 
         public async Task ChangePassword(ChangePasswordDTO changePasswordDTO)
