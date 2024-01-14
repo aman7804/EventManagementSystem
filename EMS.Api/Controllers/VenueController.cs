@@ -1,4 +1,5 @@
-﻿using EMS.Entity;
+﻿using EMS.Api.Authorization;
+using EMS.Entity;
 using EMS.Service.DTO;
 using EMS.Service.VenueModule;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using System.Net;
 
 namespace EMS.Api.Controllers
 {
+    [Authorize(Shared.EnumRole.Admin)]
     [Route("api/[controller]")]
     [ApiController]
     public class VenueController : BaseController<VenueEntity, VenueDTO>
@@ -31,10 +33,11 @@ namespace EMS.Api.Controllers
 
         [HttpGet("index/{Id}")]
         public async Task<IActionResult> Index(int Id) =>
-            GetResult<VenueDTO>(await _baseService.GetByIdAsync(Id));
+            GetResult(await _baseService.GetByIdAsync(Id));
 
+        [AllowAnonymous]
         [HttpPost("list")]
         public async Task<IActionResult> List(PaginationDTO<VenueDTO> pagination) =>
-            GetResult<PaginationDTO<VenueDTO>>(await _baseService.GetPageAsync(pagination));
+            GetResult(await _baseService.GetPageAsync(pagination));
     }
 }

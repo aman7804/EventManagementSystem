@@ -11,8 +11,8 @@ namespace EMS.Service.UserModule
 {
     public class AuthService : BaseService<UserEntity, UserDTO>, IAuthService
     {
-        public AuthService(IMapper mapper, IUserRepository userRepository) : base(mapper, userRepository)
-        { }
+        public AuthService(IMapper mapper, IUserRepository userRepository)
+            : base(mapper, userRepository) { }
 
         public async Task ChangePassword(ChangePasswordDTO changePasswordDTO)
         {
@@ -29,11 +29,8 @@ namespace EMS.Service.UserModule
 
         public async Task<UserDTO> GetByEmailId(string emailId)
         {
-            UserEntity? user = await Repo.GetAsync(x => x.EmailId == emailId, true);
-            if (user == null)
-            {
-                throw new Exception(ExceptionMessage.USER_NOT_FOUND);
-            }
+            UserEntity? user = await Repo.GetAsync(x => x.EmailId == emailId, true)
+                ?? throw new Exception(ExceptionMessage.USER_NOT_FOUND);
             return ToDTO(user);
         }
 
@@ -45,6 +42,14 @@ namespace EMS.Service.UserModule
             if (!Encrypt(loginDTO.Password).Equals(user.Password))
                 throw new Exception(ExceptionMessage.PASSWORD_IS_INCORRECT);
 
+            return ToDTO(user);
+        }
+
+        public async Task<UserDTO> RegisterUser(RegisterDTO registerDTO)
+        {
+            UserEntity user = Mapper.Map<RegisterDTO, UserEntity>(registerDTO);
+            user.Password = Encrypt(registerDTO.Password);
+            await Repo.AddAsync(user);
             return ToDTO(user);
         }
 
@@ -69,5 +74,6 @@ namespace EMS.Service.UserModule
             }
             return text;
         }
+
     }
 }

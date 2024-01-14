@@ -15,6 +15,9 @@ namespace EMS.Data
                 EmailId = "nms.nt1986@gmail.com",
                 MobileNo = "9898989898",
                 Password = "xyz",
+                Address = "string",
+                CityId = 1,
+                Role = Shared.EnumRole.Admin,
                 CreatedBy = 0,
                 CreateDate = DateTime.Now,
             };

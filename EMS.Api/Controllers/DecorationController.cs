@@ -1,4 +1,5 @@
-﻿using EMS.Entity;
+﻿using EMS.Api.Authorization;
+using EMS.Entity;
 using EMS.Service.DecorationModule;
 using EMS.Service.DTO;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using System.Net;
 
 namespace EMS.Api.Controllers
 {
+    [Authorize(Shared.EnumRole.Admin)]
     [Route("api/[controller]")]
     [ApiController]
     public class DecorationController : BaseController<DecorationEntity, DecorationDTO>
@@ -33,6 +35,7 @@ namespace EMS.Api.Controllers
         public async Task<IActionResult> Index(int Id) =>
             GetResult<DecorationDTO>(await _baseService.GetByIdAsync(Id));
 
+        [AllowAnonymous]
         [HttpPost("list")]
         public async Task<IActionResult> List(PaginationDTO<DecorationDTO> pagination) =>
             GetResult<PaginationDTO<DecorationDTO>>(await _baseService.GetPageAsync(pagination));

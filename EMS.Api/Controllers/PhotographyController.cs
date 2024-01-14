@@ -1,4 +1,5 @@
-﻿using EMS.Entity;
+﻿using EMS.Api.Authorization;
+using EMS.Entity;
 using EMS.Service.DTO;
 using EMS.Service.PhotographyModule;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using System.Net;
 
 namespace EMS.Api.Controllers
 {
+    [Authorize(Shared.EnumRole.Admin)]
     [Route("api/[controller]")]
     [ApiController]
     public class PhotographyController : BaseController<PhotographyEntity, PhotographyDTO>
@@ -33,6 +35,7 @@ namespace EMS.Api.Controllers
         public async Task<IActionResult> Index(int Id) =>
              GetResult<PhotographyDTO>(await _baseService.GetByIdAsync(Id));
 
+        [AllowAnonymous]
         [HttpPost("list")] 
         public async Task<IActionResult> List(PaginationDTO<PhotographyDTO> pagination) =>
             GetResult<PaginationDTO<PhotographyDTO>>(await _baseService.GetPageAsync(pagination));

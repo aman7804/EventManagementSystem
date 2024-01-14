@@ -17,8 +17,6 @@ namespace EMS.Entity
 
         [Required, StringLength(100)]
         public string Description { set; get; } = string.Empty!;
-
-        [DefaultValue(false)]
         public bool? IsActive { set; get; }
 
         [Required, StringLength(200)]

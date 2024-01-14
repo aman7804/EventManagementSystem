@@ -49,7 +49,6 @@ namespace EMS.Data.Migrations
                 {
                     table.PrimaryKey("PK_Decoration", x => x.Id);
                 });
-
             migrationBuilder.CreateTable(
                 name: "Photography",
                 columns: table => new

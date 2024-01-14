@@ -1,4 +1,5 @@
 using AutoMapper.Extensions.ExpressionMapping;
+using EMS.Api.Authorization;
 using EMS.Api.Common;
 using EMS.Service.AutoMapper;
 
@@ -28,6 +29,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseMiddleware<JwtMiddleware>();
 
 app.UseAuthorization();
 

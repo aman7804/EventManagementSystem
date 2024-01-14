@@ -1,4 +1,5 @@
-﻿using EMS.Entity;
+﻿using EMS.Api.Authorization;
+using EMS.Entity;
 using EMS.Service.BookingModule;
 using EMS.Service.DTO;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using System.Net;
 
 namespace EMS.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BookingController : BaseController<BookingEntity, BookingDTO>
@@ -14,6 +16,7 @@ namespace EMS.Api.Controllers
         public BookingController(IBookingService bookingService) : base(bookingService) =>
             _bookingService = bookingService;
 
+        [Authorize(Shared.EnumRole.Customer)]
         [HttpPost("save")]
         public async Task<IActionResult> SaveBooking(BookingDTO dto)
         {
@@ -29,6 +32,7 @@ namespace EMS.Api.Controllers
         public async Task<IActionResult> Index(int Id) =>
             GetResult<GetBookingDTO>(await _bookingService.GetBookingById(Id));
 
+        [Authorize(Shared.EnumRole.Customer)]
         [HttpGet("payment/{Id}")]
         public async Task<IActionResult> BookingPaymentDone(int Id)
         {
@@ -39,6 +43,7 @@ namespace EMS.Api.Controllers
             return GetResult<BookingDTO>(null, HttpStatusCode.OK);
         }
 
+        [Authorize(Shared.EnumRole.Admin)]
         [HttpGet("confirmBooking/{Id}")]
         public async Task<IActionResult> ConfirmBooking(int Id)
         {
@@ -49,7 +54,7 @@ namespace EMS.Api.Controllers
             return GetResult<BookingDTO>(null, HttpStatusCode.OK);
         }
 
-
+        [Authorize(Shared.EnumRole.Customer)]
         [HttpGet("cancel/{Id}")]
         public async Task<IActionResult> CancelBooking(int Id)
         {
@@ -59,6 +64,8 @@ namespace EMS.Api.Controllers
 
             return GetResult<BookingDTO>(null, HttpStatusCode.OK);
         }
+
+        [Authorize(Shared.EnumRole.Admin)]
         [HttpGet("reject/{Id}")]
         public async Task<IActionResult> RejectBooking(int Id)
         {
@@ -71,6 +78,6 @@ namespace EMS.Api.Controllers
 
         [HttpPost("list")]
         public async Task<IActionResult> List(PaginationDTO<BookingDTO> pagination) =>
-            GetResult<PaginationDTO<BookingDTO>>(await _bookingService.GetBookings(pagination));
+            GetResult(await _bookingService.GetBookings(pagination));
     }
 }

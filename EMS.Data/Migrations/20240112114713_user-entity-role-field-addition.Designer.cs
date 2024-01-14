@@ -4,6 +4,7 @@ using EMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EMS.Data.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    partial class SqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240112114713_user-entity-role-field-addition")]
+    partial class userentityrolefieldaddition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,7 +73,7 @@ namespace EMS.Data.Migrations
 
                     b.HasIndex("PackageId");
 
-                    b.ToTable("Booking", (string)null);
+                    b.ToTable("Booking");
                 });
 
             modelBuilder.Entity("EMS.Entity.CateringEntity", b =>
@@ -114,7 +117,7 @@ namespace EMS.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Catering", (string)null);
+                    b.ToTable("Catering");
 
                     b.HasData(
                         new
@@ -164,7 +167,7 @@ namespace EMS.Data.Migrations
 
                     b.HasIndex("StateId");
 
-                    b.ToTable("City", (string)null);
+                    b.ToTable("City");
 
                     b.HasData(
                         new
@@ -218,7 +221,7 @@ namespace EMS.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Decoration", (string)null);
+                    b.ToTable("Decoration");
 
                     b.HasData(
                         new
@@ -294,7 +297,7 @@ namespace EMS.Data.Migrations
 
                     b.HasIndex("VenueId");
 
-                    b.ToTable("Package", (string)null);
+                    b.ToTable("Package");
 
                     b.HasData(
                         new
@@ -352,7 +355,7 @@ namespace EMS.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Photography", (string)null);
+                    b.ToTable("Photography");
 
                     b.HasData(
                         new
@@ -397,7 +400,7 @@ namespace EMS.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("State", (string)null);
+                    b.ToTable("State");
 
                     b.HasData(
                         new
@@ -469,7 +472,7 @@ namespace EMS.Data.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("User", (string)null);
+                    b.ToTable("User");
 
                     b.HasData(
                         new
@@ -545,7 +548,7 @@ namespace EMS.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Venue", (string)null);
+                    b.ToTable("Venue");
 
                     b.HasData(
                         new

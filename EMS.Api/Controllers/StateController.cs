@@ -1,11 +1,13 @@
 ﻿using EMS.Entity;
 using EMS.Service.DTO;
 using EMS.Service.StateModule;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc; 
 using System.Net;
+using EMS.Api.Authorization;
 
 namespace EMS.Api.Controllers
 {
+    [Authorize(Shared.EnumRole.Admin)]
     [Route("api/[controller]")]
     [ApiController]
     public class StateController : BaseController<StateEntity, StateDTO>
@@ -35,10 +37,11 @@ namespace EMS.Api.Controllers
 
         [HttpPost("list")]
         public async Task<IActionResult> List(PaginationDTO<StateDTO> pagination) =>
-            GetResult<PaginationDTO<StateDTO>>( await _baseService.GetPageAsync(pagination));
+            GetResult( await _baseService.GetPageAsync(pagination));
 
+        [AllowAnonymous]
         [HttpGet("dropDownList")]
         public async Task<IActionResult> GetDropdownList() =>
-            GetResult<List<StateDTO>>(await _baseService.GetAllAsync(x => true));
+            GetResult(await _baseService.GetAllAsync(x => true));
     }
 }

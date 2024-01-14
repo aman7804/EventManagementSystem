@@ -1,42 +1,50 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using EMS.Api.Authorization;
+using EMS.Entity;
+using EMS.Service.DTO;
+using EMS.Service.UserModule;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using System.Net;
 
 namespace EMS.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController : BaseController<UserEntity, UserDTO>
     {
-        private readonly IConfiguration _config;
+        private readonly IAuthService _authService;
+        private readonly IJwtUtils _jwtUtils;
 
-        public AuthController(IConfiguration config)
+        public AuthController(IConfiguration config, IAuthService authService, IJwtUtils jwtUtils) : base(authService)
         {
-            _config = config;
+            _authService = authService;
+            _jwtUtils = jwtUtils;
         }
 
-        [AllowAnonymous]
         [HttpPost("login")]
-        public IActionResult Login()
+        public async Task<IActionResult> Login(LoginDTO dto)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            byte[] key = Encoding.ASCII.GetBytes(_config["Jwt:Secret"] ?? String.Empty);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, "userId")
-                }),
-                Expires = DateTime.UtcNow.AddHours(24),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            var tokenString = tokenHandler.WriteToken(token);
-
-            return Ok(new { Token = tokenString });
+            var userDto = await _authService.Login(dto);
+            return GetResult( new AuthenticateResponseDTO(userDto, _jwtUtils.GenerateJwtToken(userDto.Id)) );
         }
+
+        [HttpPost("signup")]
+        public async Task<IActionResult> RegisterUser(RegisterDTO dto)
+        {
+            var userDto = await _authService.RegisterUser(dto);
+            return GetResult( new AuthenticateResponseDTO(userDto, _jwtUtils.GenerateJwtToken(userDto.Id)) );
+        }
+
+        [HttpGet("forgot-password/{Id}")]
+        public async Task<IActionResult> GetByEmailId(string Id) =>
+            GetResult(await _authService.GetByEmailId(Id));
+
+        [Authorize]
+        [HttpPut("change-password")]
+        public async Task<IActionResult> ChangePassowrd(ChangePasswordDTO cpd)
+        {
+            await _authService.ChangePassword(cpd);
+            return GetResult<ChangePasswordDTO>(null, HttpStatusCode.OK);
+        }
+
     }
 }
