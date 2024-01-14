@@ -1,10 +1,9 @@
-﻿using EMS.Entity;
+﻿using EMS.Service.DTO;
 using EMS.Shared;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace WebApi.Authorization;
+namespace EMS.Api.Authorization;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class AuthorizeAttribute : Attribute, IAuthorizationFilter
@@ -18,12 +17,12 @@ public class AuthorizeAttribute : Attribute, IAuthorizationFilter
     {
         // skip authorization if action is decorated with [AllowAnonymous] attribute
         var allowAnonymous = context.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any();
-        if (allowAnonymous)
+        if (allowAnonymous || context == null)
             return;
 
         // authorization
-        var user = (UserEntity)context.HttpContext.Items["User"];
-        if (user == null || (_roles.Any() && !_roles.Contains(user.Role)))
+        var user = (UserDTO)context.HttpContext.Items["User"];
+        if (user == null || _roles.Any() && !_roles.Contains(user.Role))
         {
             // not logged in or role not authorized
             context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };

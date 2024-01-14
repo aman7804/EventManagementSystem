@@ -17,21 +17,19 @@ namespace EMS.Data.Migrations
                 table: "User",
                 type: "nvarchar(500)",
                 maxLength: 500,
-                nullable: false,
-                defaultValue: "");
+                nullable: true);
 
             migrationBuilder.AddColumn<int>(
                 name: "CityId",
                 table: "User",
                 type: "int",
-                nullable: false,
-                defaultValue: 0);
+                nullable: true);
 
             migrationBuilder.AddColumn<int>(
                 name: "Role",
                 table: "User",
                 type: "int",
-                nullable: false,
+                nullable: true,
                 defaultValue: EnumRole.Customer);
 
             migrationBuilder.UpdateData(

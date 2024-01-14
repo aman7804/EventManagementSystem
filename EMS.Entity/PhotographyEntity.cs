@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
 
 namespace EMS.Entity
 {
@@ -17,8 +16,6 @@ namespace EMS.Entity
 
         [Required, StringLength(250)]
         public string Description { set; get; } = string.Empty!;
-
-        [DefaultValue(false)]
         public bool? IsActive { set; get; }
 
         public virtual IList<PackageEntity> Packages { get; set; } = null!;

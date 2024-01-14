@@ -1,7 +1,7 @@
-﻿using EMS.Entity;
+﻿using EMS.Api.Authorization;
+using EMS.Entity;
 using EMS.Service.DTO;
 using EMS.Service.UserModule;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -20,28 +20,31 @@ namespace EMS.Api.Controllers
             _jwtUtils = jwtUtils;
         }
 
-        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDTO dto)
         {
             var userDto = await _authService.Login(dto);
-            return GetResult( new AuthenticateResponseDTO(userDto, _jwtUtils.GenerateJwtToken(userDto)) );
+            return GetResult( new AuthenticateResponseDTO(userDto, _jwtUtils.GenerateJwtToken(userDto.Id)) );
         }
 
-        [AllowAnonymous]
         [HttpPost("signup")]
         public async Task<IActionResult> RegisterUser(RegisterDTO dto)
         {
-            await _authService.RegisterUserAsync(dto);
-            return GetResult<UserDTO>(null, HttpStatusCode.OK);
+            var userDto = await _authService.RegisterUser(dto);
+            return GetResult( new AuthenticateResponseDTO(userDto, _jwtUtils.GenerateJwtToken(userDto.Id)) );
         }
 
-        [AllowAnonymous]
         [HttpGet("forgot-password/{Id}")]
         public async Task<IActionResult> GetByEmailId(string Id) =>
             GetResult(await _authService.GetByEmailId(Id));
 
-        
+        [Authorize]
+        [HttpPut("change-password")]
+        public async Task<IActionResult> ChangePassowrd(ChangePasswordDTO cpd)
+        {
+            await _authService.ChangePassword(cpd);
+            return GetResult<ChangePasswordDTO>(null, HttpStatusCode.OK);
+        }
 
     }
 }

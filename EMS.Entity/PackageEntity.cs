@@ -10,7 +10,6 @@ namespace EMS.Entity
     {
         [Required, StringLength(100)]
         public string Name { get; set; } = string.Empty!;
-
         public bool IsActive { get; set; }
         public bool IsDraft { get; set; }
 

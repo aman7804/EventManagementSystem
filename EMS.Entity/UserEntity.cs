@@ -28,8 +28,7 @@ namespace EMS.Entity
         [Required, ForeignKey("City")]
         public int CityId { get; set; }
         public virtual CityEntity City { get; set; } = null!;
-
-        public EnumRole Role { get; set; }
+        public EnumRole? Role { get; set; }
     }
 }
 

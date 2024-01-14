@@ -45,11 +45,12 @@ namespace EMS.Service.UserModule
             return ToDTO(user);
         }
 
-        public async Task RegisterUserAsync(RegisterDTO registerDTO)
+        public async Task<UserDTO> RegisterUser(RegisterDTO registerDTO)
         {
             UserEntity user = Mapper.Map<RegisterDTO, UserEntity>(registerDTO);
             user.Password = Encrypt(registerDTO.Password);
             await Repo.AddAsync(user);
+            return ToDTO(user);
         }
 
         private static string Encrypt(string text)

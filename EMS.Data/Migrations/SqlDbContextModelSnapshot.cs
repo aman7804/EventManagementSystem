@@ -70,7 +70,7 @@ namespace EMS.Data.Migrations
 
                     b.HasIndex("PackageId");
 
-                    b.ToTable("Booking");
+                    b.ToTable("Booking", (string)null);
                 });
 
             modelBuilder.Entity("EMS.Entity.CateringEntity", b =>
@@ -114,7 +114,7 @@ namespace EMS.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Catering");
+                    b.ToTable("Catering", (string)null);
 
                     b.HasData(
                         new
@@ -164,7 +164,7 @@ namespace EMS.Data.Migrations
 
                     b.HasIndex("StateId");
 
-                    b.ToTable("City");
+                    b.ToTable("City", (string)null);
 
                     b.HasData(
                         new
@@ -218,7 +218,7 @@ namespace EMS.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Decoration");
+                    b.ToTable("Decoration", (string)null);
 
                     b.HasData(
                         new
@@ -294,7 +294,7 @@ namespace EMS.Data.Migrations
 
                     b.HasIndex("VenueId");
 
-                    b.ToTable("Package");
+                    b.ToTable("Package", (string)null);
 
                     b.HasData(
                         new
@@ -352,7 +352,7 @@ namespace EMS.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Photography");
+                    b.ToTable("Photography", (string)null);
 
                     b.HasData(
                         new
@@ -397,7 +397,7 @@ namespace EMS.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("State");
+                    b.ToTable("State", (string)null);
 
                     b.HasData(
                         new
@@ -469,7 +469,7 @@ namespace EMS.Data.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("User");
+                    b.ToTable("User", (string)null);
 
                     b.HasData(
                         new
@@ -545,7 +545,7 @@ namespace EMS.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Venue");
+                    b.ToTable("Venue", (string)null);
 
                     b.HasData(
                         new

@@ -8,5 +8,6 @@ namespace EMS.Service.DTO
         public string LastName { get; set; } = string.Empty!;
         public string EmailId { get; set; } = string.Empty!;
         public string MobileNo { get; set; } = string.Empty!;
+        public EnumRole Role { get; set; }
     }
 }

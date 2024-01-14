@@ -1,10 +1,10 @@
 ﻿using EMS.Service.DTO;
 
-namespace EMS.Api
+namespace EMS.Api.Authorization
 {
     public interface IJwtUtils
     {
-        public string GenerateJwtToken(UserDTO user);
+        public string GenerateJwtToken(int userId);
         public int? ValidateJwtToken(string token);
     }
 }
