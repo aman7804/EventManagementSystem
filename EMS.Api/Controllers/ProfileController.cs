@@ -17,14 +17,19 @@ namespace EMS.Api.Controllers
         [HttpPut("update")]
         public async Task<IActionResult> Update(UserDTO dto)
         {
-            if (dto.Id > 0)
-            {
-                if (dto.Id != CurrentUser)
-                    return Unauthorized(new { message = "Unauthorized" });
+            if (dto.Id != CurrentUser)
+                return Unauthorized(new { message = "Unauthorized" });
 
-                await _baseService.UpdateAsync(dto);
-            }
+            await _baseService.UpdateAsync(dto);
             return GetResult<UserDTO>(null, HttpStatusCode.OK);
+        }
+
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> GetProfile(int Id)
+        {
+            if (Id != CurrentUser)
+                return Unauthorized(new { message = "Unauthorized" });
+            return GetResult(await _baseService.GetByIdAsync(Id));
         }
     }
 }
