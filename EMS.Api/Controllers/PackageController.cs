@@ -12,7 +12,8 @@ namespace EMS.Api.Controllers
     public class PackageController : BaseController<PackageEntity, PackageDTO>
     {
         private readonly IPackageService _packageService;
-        public PackageController(IPackageService packageService, IHttpContextAccessor httpContextAccessor) : base(packageService, httpContextAccessor) =>
+        public PackageController(IPackageService packageService, IHttpContextAccessor httpContextAccessor)
+            : base(packageService, httpContextAccessor) =>
             _packageService = packageService;
 
         [Authorize(Shared.EnumRole.Admin)]
@@ -36,7 +37,6 @@ namespace EMS.Api.Controllers
         public async Task<IActionResult> Index(int Id) =>
             GetResult(await _baseService.GetByIdAsync(Id));
 
-
         [Authorize(Shared.EnumRole.Admin)]
         [HttpPost("list")]
         public async Task<IActionResult> List(PaginationDTO<PackageDTO> pagination) =>
@@ -45,7 +45,7 @@ namespace EMS.Api.Controllers
         [AllowAnonymous]
         [HttpPost("explore-packages")]
         public async Task<IActionResult> ExplorePackages(PaginationDTO<PackageItemDTO> pagination) =>
-            GetResult(await _packageService.GetPackages(pagination));
+            GetResult(await _packageService.GetPackages(pagination, CurrentUser));
 
         [Authorize(Shared.EnumRole.Customer)]
         [HttpPost("save-as-draft")]
