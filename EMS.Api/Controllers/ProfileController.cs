@@ -12,7 +12,8 @@ namespace EMS.Api.Controllers
     [ApiController]
     public class ProfileController : BaseController<UserEntity, UserDTO>
     {
-        public ProfileController(IUserService userService, IHttpContextAccessor httpContextAccessor) : base(userService, httpContextAccessor) { }
+        public ProfileController(IUserService userService, IHttpContextAccessor httpContextAccessor)
+            : base(userService, httpContextAccessor) { }
 
         [HttpPut("update")]
         public async Task<IActionResult> Update(UserDTO dto)

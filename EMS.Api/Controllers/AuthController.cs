@@ -14,7 +14,8 @@ namespace EMS.Api.Controllers
         private readonly IAuthService _authService;
         private readonly IJwtUtils _jwtUtils;
 
-        public AuthController(IAuthService authService, IJwtUtils jwtUtils, IHttpContextAccessor httpContextAccessor) : base(authService, httpContextAccessor)
+        public AuthController(IAuthService authService, IJwtUtils jwtUtils, IHttpContextAccessor httpContextAccessor)
+            : base(authService, httpContextAccessor)
         {
             _authService = authService;
             _jwtUtils = jwtUtils;
@@ -28,15 +29,12 @@ namespace EMS.Api.Controllers
         }
 
         [HttpPost("signup")]
-        public async Task<IActionResult> RegisterUser(RegisterDTO dto)
-        {
-            var userDto = await _authService.RegisterUser(dto);
-            return GetResult( new AuthenticateResponseDTO(userDto, _jwtUtils.GenerateJwtToken(userDto.Id)) );
-        }
+        public async Task<IActionResult> RegisterUser(RegisterDTO dto) =>
+            GetResult( new AuthenticateResponseDTO(await _authService.RegisterUser(dto), null));
 
         [HttpGet("forgot-password/{Id}")]
         public async Task<IActionResult> GetByEmailId(string Id) =>
-            GetResult(await _authService.GetByEmailId(Id));
+            GetResult(new AuthenticateResponseDTO(await _authService.GetByEmailId(Id), null));
 
         [Authorize]
         [HttpPut("change-password")]

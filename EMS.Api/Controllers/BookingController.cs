@@ -13,7 +13,8 @@ namespace EMS.Api.Controllers
     public class BookingController : BaseController<BookingEntity, BookingDTO>
     {
         private readonly IBookingService _bookingService;
-        public BookingController(IBookingService bookingService, IHttpContextAccessor httpContextAccessor) : base(bookingService, httpContextAccessor) =>
+        public BookingController(IBookingService bookingService, IHttpContextAccessor httpContextAccessor)
+            : base(bookingService, httpContextAccessor) =>
             _bookingService = bookingService;
 
         [Authorize(Shared.EnumRole.Customer)]

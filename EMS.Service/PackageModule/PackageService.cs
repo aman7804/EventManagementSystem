@@ -13,10 +13,11 @@ namespace EMS.Service.PackageModule
     {
         public PackageService(IMapper mapper, IPackageRepository packageRepository) : base(mapper, packageRepository) { }
 
-        public async Task<PaginationDTO<PackageItemDTO>> GetPackages(PaginationDTO<PackageItemDTO> paginationDTO)   
+        public async Task<PaginationDTO<PackageItemDTO>> GetPackages(PaginationDTO<PackageItemDTO> paginationDTO, int CurrentUser)   
         {
-            IQueryable<PackageEntity> packages = Repo.GetAll(x =>
-                x.IsDraft == true && x.CreatedBy == 0 || x.IsDraft == false);
+            IQueryable<PackageEntity> packages = CurrentUser > 0
+                            ? packages = Repo.GetAll(x => x.IsDraft == true && x.CreatedBy == CurrentUser || x.IsDraft == false)
+                            : packages = Repo.GetAll(x => x.IsDraft == false);
             packages = packages.Include(v => v.Venue)
                                .Include(p => p.Photography)
                                .Include(d => d.Decoration)

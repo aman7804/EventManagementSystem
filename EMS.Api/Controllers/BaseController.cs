@@ -29,7 +29,7 @@ namespace EMS.Api.Controllers
             else return BadRequest(result.Message);
         }
 
-        protected IActionResult GetResult<T>(T? _dto, HttpStatusCode _statusCode = HttpStatusCode.OK, Exception? ex = null) where T : class
+        protected IActionResult GetResult<T>(T? _dto, HttpStatusCode _statusCode = HttpStatusCode.OK,Exception? ex = null) where T : class
         {
             ApiResult<T> result = new()
             {
