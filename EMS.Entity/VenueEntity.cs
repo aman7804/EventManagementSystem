@@ -1,6 +1,5 @@
 ﻿using EMS.Entity.Base;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -28,7 +27,6 @@ namespace EMS.Entity
         [Required, ForeignKey("City")]
         public int CityId { set; get; }
         public virtual CityEntity City { get; set; } = null!;
-
         public virtual IList<PackageEntity> Packages { get; set; } = null!;
 
     }

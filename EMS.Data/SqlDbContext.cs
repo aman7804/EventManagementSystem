@@ -23,6 +23,14 @@ namespace EMS.Data
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
                 relationship.DeleteBehavior = DeleteBehavior.NoAction;
             Seed.InsertDefaultData(modelBuilder);
+
+            modelBuilder.Entity<UserEntity>()
+                .Property(u => u.Address)
+                .IsRequired();
+
+            modelBuilder.Entity<UserEntity>()
+                .Property(u => u.CityId)
+                .IsRequired();
         }
         public SqlDbContext(DbContextOptions<SqlDbContext> options) : base(options) { }
     }

@@ -12,7 +12,7 @@ namespace EMS.Api.Controllers
     [ApiController]
     public class CateringController : BaseController<CateringEntity, CateringDTO>
     {
-        public CateringController(ICateringService cateringService) : base(cateringService) { }
+        public CateringController(ICateringService cateringService, IHttpContextAccessor httpContextAccessor) : base(cateringService, httpContextAccessor) { }
 
         [HttpPost("save")]
         public async Task<IActionResult> SaveCatering(CateringDTO dto)

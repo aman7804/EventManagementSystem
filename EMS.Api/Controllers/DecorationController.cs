@@ -12,7 +12,7 @@ namespace EMS.Api.Controllers
     [ApiController]
     public class DecorationController : BaseController<DecorationEntity, DecorationDTO>
     {
-        public DecorationController(IDecorationService decorationService) : base(decorationService) { }
+        public DecorationController(IDecorationService decorationService, IHttpContextAccessor httpContextAccessor) : base(decorationService, httpContextAccessor) { }
 
         [HttpPost("save")]
         public async Task<IActionResult> SaveDecoration(DecorationDTO dto)

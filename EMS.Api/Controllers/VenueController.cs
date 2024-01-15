@@ -12,7 +12,7 @@ namespace EMS.Api.Controllers
     [ApiController]
     public class VenueController : BaseController<VenueEntity, VenueDTO>
     {
-        public VenueController(IVenueService venueService) : base(venueService) { }
+        public VenueController(IVenueService venueService, IHttpContextAccessor httpContextAccessor) : base(venueService, httpContextAccessor) { }
 
         [HttpPost("save")]
         public async Task<IActionResult> SaveVenue(VenueDTO dto)
