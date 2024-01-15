@@ -12,7 +12,7 @@ namespace EMS.Api.Controllers
     [ApiController]
     public class PhotographyController : BaseController<PhotographyEntity, PhotographyDTO>
     {
-        public PhotographyController(IPhotographyService photographyService) : base(photographyService) { }
+        public PhotographyController(IPhotographyService photographyService, IHttpContextAccessor httpContextAccessor) : base(photographyService, httpContextAccessor) { }
 
         [HttpPost("save")]
         public async Task<IActionResult> SavePhotography(PhotographyDTO dto)

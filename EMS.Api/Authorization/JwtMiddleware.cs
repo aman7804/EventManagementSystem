@@ -18,7 +18,7 @@ namespace EMS.Api.Authorization
             if (userId != null)
             {
                 // attach user to context on successful jwt validation
-                context.Items["User"] = await _userService.GetByIdAsync(userId.Value);
+                context.Items["User"] = await _userService.GetByIdAsync(userId.Value, true);
             }
 
             await _next(context);

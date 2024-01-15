@@ -12,7 +12,7 @@ namespace EMS.Api.Controllers
     [ApiController]
     public class StateController : BaseController<StateEntity, StateDTO>
     {
-        public StateController(IStateService stateService) : base(stateService) { }
+        public StateController(IStateService stateService, IHttpContextAccessor httpContextAccessor) : base(stateService, httpContextAccessor) { }
 
         [HttpPost("save")]
         public async Task<IActionResult> SaveState(StateDTO dto)

@@ -11,10 +11,15 @@ namespace EMS.Api.Controllers
     public class BaseController<T, D> : ControllerBase where T : BaseEntity where D : BaseDTO
     {
         public readonly IBaseService<T, D> _baseService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public int CurrentUser { get; }
 
-        public BaseController(IBaseService<T, D> baseService)
+        public BaseController(IBaseService<T, D> baseService, IHttpContextAccessor httpContextAccessor)
         {
             _baseService = baseService;
+            _httpContextAccessor = httpContextAccessor;
+            var user = (UserDTO)_httpContextAccessor.HttpContext.Items["User"];
+            CurrentUser = user?.Id ?? 0;
         }
 
         protected IActionResult GetResult<T>(ApiResult<T> result) where T : class

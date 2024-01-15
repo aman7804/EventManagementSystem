@@ -12,7 +12,7 @@ namespace EMS.Api.Controllers
     public class PackageController : BaseController<PackageEntity, PackageDTO>
     {
         private readonly IPackageService _packageService;
-        public PackageController(IPackageService packageService ) : base(packageService) =>
+        public PackageController(IPackageService packageService, IHttpContextAccessor httpContextAccessor) : base(packageService, httpContextAccessor) =>
             _packageService = packageService;
 
         [Authorize(Shared.EnumRole.Admin)]

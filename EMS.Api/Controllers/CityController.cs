@@ -12,7 +12,7 @@ namespace EMS.Api.Controllers
     [ApiController]
     public class CityController : BaseController<CityEntity, CityDTO>
     {
-        public CityController(ICityService cityService) : base(cityService) { }
+        public CityController(ICityService cityService, IHttpContextAccessor httpContextAccessor) : base(cityService, httpContextAccessor) { }
 
         [HttpPost("save")]
         public async Task<IActionResult> SaveCity(CityDTO dto)
