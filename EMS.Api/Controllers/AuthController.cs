@@ -29,15 +29,12 @@ namespace EMS.Api.Controllers
         }
 
         [HttpPost("signup")]
-        public async Task<IActionResult> RegisterUser(RegisterDTO dto)
-        {
-            var userDto = await _authService.RegisterUser(dto);
-            return GetResult( new AuthenticateResponseDTO(userDto, null));
-        }
+        public async Task<IActionResult> RegisterUser(RegisterDTO dto) =>
+            GetResult( new AuthenticateResponseDTO(await _authService.RegisterUser(dto), null));
 
         [HttpGet("forgot-password/{Id}")]
         public async Task<IActionResult> GetByEmailId(string Id) =>
-            GetResult(await _authService.GetByEmailId(Id));
+            GetResult(new AuthenticateResponseDTO(await _authService.GetByEmailId(Id), null));
 
         [Authorize]
         [HttpPut("change-password")]
