@@ -32,7 +32,7 @@ namespace EMS.Api.Controllers
         public async Task<IActionResult> RegisterUser(RegisterDTO dto)
         {
             var userDto = await _authService.RegisterUser(dto);
-            return GetResult( new AuthenticateResponseDTO(userDto, _jwtUtils.GenerateJwtToken(userDto.Id)) );
+            return GetResult( new AuthenticateResponseDTO(userDto, null));
         }
 
         [HttpGet("forgot-password/{Id}")]
