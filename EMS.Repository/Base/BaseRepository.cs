@@ -10,16 +10,14 @@ namespace EMS.Repository.Base
     public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
         public readonly SqlDbContext Context;
-
         public readonly int CurrentUser;
         public BaseRepository(SqlDbContext sqlDbContext, IHttpContextAccessor httpContextAccessor)
         {
             Context = sqlDbContext;
+            var userIdClaim = httpContextAccessor.HttpContext?.User?.FindFirst("userId");
 
-            string? userId = httpContextAccessor.HttpContext?.User?.Identity?.Name ?? "1";
-
-            if (!string.IsNullOrWhiteSpace(userId))
-                CurrentUser = Convert.ToInt32(userId);
+            CurrentUser = userIdClaim?.Value != null
+                ? Convert.ToInt32(userIdClaim.Value) : 0;
         }
 
         public virtual async Task AddAsync(T entity)

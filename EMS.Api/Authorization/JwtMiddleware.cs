@@ -1,4 +1,5 @@
 ﻿using EMS.Service.UserModule;
+using System.Security.Claims;
 
 namespace EMS.Api.Authorization
 {
@@ -17,6 +18,14 @@ namespace EMS.Api.Authorization
             var userId = jwtUtils.ValidateJwtToken(token);
             if (userId != null)
             {
+                var claims = new List<Claim>
+                {
+                    new Claim("userId", userId.ToString()),
+                };
+                var identity = new ClaimsIdentity(claims, "custom");
+                var principal = new ClaimsPrincipal(identity);
+                context.User = principal;
+
                 // attach user to context on successful jwt validation
                 context.Items["User"] = await _userService.GetByIdAsync(userId.Value, true);
             }

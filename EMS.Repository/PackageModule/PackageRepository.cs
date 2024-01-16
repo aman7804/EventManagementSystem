@@ -25,5 +25,11 @@ namespace EMS.Repository.PackageModule
 
             return await query.FirstOrDefaultAsync();
         }
+
+        public async Task DeletePackage(PackageEntity entity)
+        {
+            Context.Remove(entity);
+            await Context.SaveChangesAsync();
+        }
     }
-}
+} 
