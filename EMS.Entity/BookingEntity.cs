@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EMS.Entity
 {
-    public class BookingEntity : BaseEntity
+    public class BookingEntity : SoftDeleteBaseEntity
     {
         [Required] public int CustomerId { get; set; }
         [Required] public int MinGuest { get; set; } // should i validate this and bellow one too, idk which validation would be nice?

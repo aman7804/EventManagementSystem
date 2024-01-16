@@ -31,7 +31,15 @@ namespace EMS.Api.Controllers
 
         [HttpGet("index/{Id}")]
         public async Task<IActionResult> Index(int Id) =>
-            GetResult<GetBookingDTO>(await _bookingService.GetBookingById(Id));
+            GetResult(await _bookingService.GetBookingById(Id));
+
+        [Authorize(Shared.EnumRole.Admin)]
+        [HttpDelete("delete/{Id}")]
+        public async Task<IActionResult> DeleteBooking(int Id)
+        {
+            await _baseService.DeleteAsync(Id);
+            return GetResult<BookingDTO>(null, HttpStatusCode.OK);
+        }
 
         [Authorize(Shared.EnumRole.Customer)]
         [HttpGet("payment/{Id}")]
