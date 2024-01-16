@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace EMS.Repository.BookingModule
 {
-    public class BookingRepository : BaseRepository<BookingEntity>, IBookingRepository
+    public class BookingRepository : SoftDeleteBaseRepository<BookingEntity>, IBookingRepository
     {
         public BookingRepository(SqlDbContext dbContext, IHttpContextAccessor contextAccessor)
             : base(dbContext, contextAccessor) { }

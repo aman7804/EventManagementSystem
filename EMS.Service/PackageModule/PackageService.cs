@@ -6,12 +6,15 @@ using Microsoft.EntityFrameworkCore;
 using EMS.Service.Extension;
 using EMS.Repository.PackageModule;
 using EMS.Entity;
+using EMS.Shared.Constant;
 
 namespace EMS.Service.PackageModule
 {
     public class PackageService : BaseService<PackageEntity, PackageDTO>, IPackageService
     {
-        public PackageService(IMapper mapper, IPackageRepository packageRepository) : base(mapper, packageRepository) { }
+        private readonly IPackageRepository _packageRepository;
+        public PackageService(IMapper mapper, IPackageRepository packageRepository) : base(mapper, packageRepository) => 
+            _packageRepository = packageRepository;
 
         public async Task<PaginationDTO<PackageItemDTO>> GetPackages(PaginationDTO<PackageItemDTO> paginationDTO, int CurrentUser)   
         {
@@ -74,5 +77,15 @@ namespace EMS.Service.PackageModule
 
             return paginationDTO;
         }
+
+        public async Task<bool> DeletePackage(int Id, int CurrentUser)
+        {
+            var package = await Repo.GetByIdAsync(Id) ?? throw new Exception(ExceptionMessage.RECORD_NOT_FOUND);
+            if (package.CreatedBy != CurrentUser || !package.IsDraft)
+                return false;   
+            await _packageRepository.DeletePackage(package);
+            return true;
+        }
+
     }
 }

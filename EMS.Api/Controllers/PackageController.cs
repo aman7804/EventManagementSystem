@@ -4,6 +4,7 @@ using EMS.Service.DTO;
 using EMS.Service.PackageModule;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Reflection.Metadata.Ecma335;
 
 namespace EMS.Api.Controllers
 {
@@ -53,6 +54,16 @@ namespace EMS.Api.Controllers
         {
             dto.IsDraft = true;
             return await SavePackageInternal(dto);
+        }
+
+        [Authorize(Shared.EnumRole.Customer)]
+        [HttpDelete("delete-draft/{Id}")]
+        public async Task<IActionResult> DeleteDraft(int Id)
+        {
+            var isDeleted = await _packageService.DeletePackage(Id, CurrentUser);
+            return isDeleted
+                ? GetResult<PackageDTO>(null, HttpStatusCode.OK)
+                : Unauthorized(new { message = "Unauthorized" });
         }
 
         private async Task<IActionResult> SavePackageInternal(PackageDTO dto)

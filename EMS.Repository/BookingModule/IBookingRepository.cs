@@ -3,5 +3,5 @@ using EMS.Repository.Base;
 
 namespace EMS.Repository.BookingModule
 {
-    public interface IBookingRepository : IBaseRepository<BookingEntity> { }
+    public interface IBookingRepository : ISoftDeleteBaseRepository<BookingEntity> { }
 }
