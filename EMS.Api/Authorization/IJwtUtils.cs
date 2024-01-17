@@ -4,7 +4,7 @@ namespace EMS.Api.Authorization
 {
     public interface IJwtUtils
     {
-        public string GenerateJwtToken(int userId);
-        public int? ValidateJwtToken(string token);
+        public string GenerateJwtToken(int userId, string role);
+        //public int? ValidateJwtToken(string token);
     }
 }

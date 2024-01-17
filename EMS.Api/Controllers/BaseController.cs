@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using EMS.Service.DTO;
 using System.Net;
 using EMS.Api.ViewModels;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace EMS.Api.Controllers
 {
@@ -16,7 +17,7 @@ namespace EMS.Api.Controllers
         public BaseController(IBaseService<T, D> baseService, IHttpContextAccessor httpContextAccessor)
         {
             _baseService = baseService;
-            var userIdClaim = httpContextAccessor.HttpContext?.User?.FindFirst("userId");
+            var userIdClaim = httpContextAccessor.HttpContext?.User?.FindFirst(JwtRegisteredClaimNames.Name);
             
             CurrentUser = userIdClaim?.Value != null
                 ? Convert.ToInt32(userIdClaim.Value) : 0;

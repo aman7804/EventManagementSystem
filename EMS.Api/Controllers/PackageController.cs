@@ -1,10 +1,9 @@
-﻿using EMS.Api.Authorization;
-using EMS.Entity;
+﻿using EMS.Entity;
 using EMS.Service.DTO;
 using EMS.Service.PackageModule;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using System.Reflection.Metadata.Ecma335;
 
 namespace EMS.Api.Controllers
 {
@@ -17,7 +16,7 @@ namespace EMS.Api.Controllers
             : base(packageService, httpContextAccessor) =>
             _packageService = packageService;
 
-        [Authorize(Shared.EnumRole.Admin)]
+        [Authorize(Roles = "Admin")]
         [HttpPost("save")]
         public async Task<IActionResult> SavePackage(PackageDTO dto)
         {
@@ -25,7 +24,7 @@ namespace EMS.Api.Controllers
             return await SavePackageInternal(dto);
         }
         
-        [Authorize(Shared.EnumRole.Admin)]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("delete/{Id}")]
         public async Task<IActionResult> DeletePackage(int Id)
         {
@@ -38,7 +37,7 @@ namespace EMS.Api.Controllers
         public async Task<IActionResult> Index(int Id) =>
             GetResult(await _baseService.GetByIdAsync(Id));
 
-        [Authorize(Shared.EnumRole.Admin)]
+        [Authorize(Roles = "Admin")]
         [HttpPost("list")]
         public async Task<IActionResult> List(PaginationDTO<PackageDTO> pagination) =>
             GetResult(await _baseService.GetPageAsync(pagination));
@@ -48,7 +47,7 @@ namespace EMS.Api.Controllers
         public async Task<IActionResult> ExplorePackages(PaginationDTO<PackageItemDTO> pagination) =>
             GetResult(await _packageService.GetPackages(pagination, CurrentUser));
 
-        [Authorize(Shared.EnumRole.Customer)]
+        [Authorize(Roles = "Customer")]
         [HttpPost("save-as-draft")]
         public async Task<IActionResult> SavePackageAsDraft(PackageDTO dto)
         {
@@ -56,7 +55,7 @@ namespace EMS.Api.Controllers
             return await SavePackageInternal(dto);
         }
 
-        [Authorize(Shared.EnumRole.Customer)]
+        [Authorize(Roles = "Customer")]
         [HttpDelete("delete-draft/{Id}")]
         public async Task<IActionResult> DeleteDraft(int Id)
         {

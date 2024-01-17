@@ -1,7 +1,7 @@
-﻿using EMS.Api.Authorization;
-using EMS.Entity;
+﻿using EMS.Entity;
 using EMS.Service.BookingModule;
 using EMS.Service.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -17,7 +17,7 @@ namespace EMS.Api.Controllers
             : base(bookingService, httpContextAccessor) =>
             _bookingService = bookingService;
 
-        [Authorize(Shared.EnumRole.Customer)]
+        [Authorize(Roles = "Customer")]
         [HttpPost("save")]
         public async Task<IActionResult> SaveBooking(BookingDTO dto)
         {
@@ -33,7 +33,7 @@ namespace EMS.Api.Controllers
         public async Task<IActionResult> Index(int Id) =>
             GetResult(await _bookingService.GetBookingById(Id));
 
-        [Authorize(Shared.EnumRole.Admin)]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("delete/{Id}")]
         public async Task<IActionResult> DeleteBooking(int Id)
         {
@@ -41,7 +41,7 @@ namespace EMS.Api.Controllers
             return GetResult<BookingDTO>(null, HttpStatusCode.OK);
         }
 
-        [Authorize(Shared.EnumRole.Customer)]
+        [Authorize(Roles = "Customer")]
         [HttpGet("payment/{Id}")]
         public async Task<IActionResult> BookingPaymentDone(int Id)
         {
@@ -52,7 +52,7 @@ namespace EMS.Api.Controllers
             return GetResult<BookingDTO>(null, HttpStatusCode.OK);
         }
 
-        [Authorize(Shared.EnumRole.Admin)]
+        [Authorize(Roles = "Admin")]
         [HttpGet("confirmBooking/{Id}")]
         public async Task<IActionResult> ConfirmBooking(int Id)
         {
@@ -63,7 +63,7 @@ namespace EMS.Api.Controllers
             return GetResult<BookingDTO>(null, HttpStatusCode.OK);
         }
 
-        [Authorize(Shared.EnumRole.Customer)]
+        [Authorize(Roles = "Customer")]
         [HttpGet("cancel/{Id}")]
         public async Task<IActionResult> CancelBooking(int Id)
         {
@@ -74,7 +74,7 @@ namespace EMS.Api.Controllers
             return GetResult<BookingDTO>(null, HttpStatusCode.OK);
         }
 
-        [Authorize(Shared.EnumRole.Admin)]
+        [Authorize(Roles = "Admin")]
         [HttpGet("reject/{Id}")]
         public async Task<IActionResult> RejectBooking(int Id)
         {

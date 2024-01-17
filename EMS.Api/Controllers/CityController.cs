@@ -1,13 +1,13 @@
-﻿using EMS.Api.Authorization;
-using EMS.Entity;
+﻿using EMS.Entity;
 using EMS.Service.CityModule;
 using EMS.Service.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace EMS.Api.Controllers
 {
-    [Authorize(Shared.EnumRole.Admin)]
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class CityController : BaseController<CityEntity, CityDTO>

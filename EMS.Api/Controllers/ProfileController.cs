@@ -1,7 +1,7 @@
-﻿using EMS.Api.Authorization;
-using EMS.Entity;
+﻿using EMS.Entity;
 using EMS.Service.DTO;
 using EMS.Service.UserModule;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
