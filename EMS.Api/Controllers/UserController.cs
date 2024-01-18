@@ -1,5 +1,4 @@
-﻿using EMS.Entity;
-using EMS.Service.DTO;
+﻿using EMS.Service.DTO;
 using EMS.Service.UserModule;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +9,12 @@ namespace EMS.Api.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class ProfileController : BaseController<UserEntity, UserDTO>
+    public class UserController : BaseController
     {
-        public ProfileController(IUserService userService, IHttpContextAccessor httpContextAccessor)
-            : base(userService, httpContextAccessor) { }
+        private readonly IUserService service;
+        public UserController(IUserService userService, IHttpContextAccessor httpContextAccessor)
+            : base(httpContextAccessor) =>
+                service = userService;
 
         [HttpPut("update")]
         public async Task<IActionResult> Update(UserDTO dto)
@@ -21,7 +22,7 @@ namespace EMS.Api.Controllers
             if (dto.Id != CurrentUser)
                 return Unauthorized(new { message = "Unauthorized" });
 
-            await _baseService.UpdateAsync(dto);
+            await service.UpdateAsync(dto);
             return GetResult<UserDTO>(null, HttpStatusCode.OK);
         }
 
@@ -30,7 +31,7 @@ namespace EMS.Api.Controllers
         {
             if (Id != CurrentUser)
                 return Unauthorized(new { message = "Unauthorized" });
-            return GetResult(await _baseService.GetByIdAsync(Id));
+            return GetResult(await service.GetByIdAsync(Id));
         }
     }
 }

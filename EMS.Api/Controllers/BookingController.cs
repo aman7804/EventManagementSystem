@@ -1,4 +1,4 @@
-﻿using EMS.Entity;
+﻿using EMS.Api.Authorization;
 using EMS.Service.BookingModule;
 using EMS.Service.DTO;
 using Microsoft.AspNetCore.Authorization;
@@ -10,12 +10,12 @@ namespace EMS.Api.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class BookingController : BaseController<BookingEntity, BookingDTO>
+    public class BookingController : BaseController
     {
-        private readonly IBookingService _bookingService;
+        private readonly IBookingService service;
         public BookingController(IBookingService bookingService, IHttpContextAccessor httpContextAccessor)
-            : base(bookingService, httpContextAccessor) =>
-            _bookingService = bookingService;
+            : base(httpContextAccessor) =>
+            service = bookingService;
 
         [Authorize(Roles = "Customer")]
         [HttpPost("save")]
@@ -23,21 +23,21 @@ namespace EMS.Api.Controllers
         {
             dto.Status = Shared.EnumBookingStatus.Pending;
             if (dto.Id == 0)
-                await _baseService.AddAsync(dto);
+                await service.AddAsync(dto);
             else
-                await _baseService.UpdateAsync(dto);
+                await service.UpdateAsync(dto);
             return GetResult<BookingDTO>(null, HttpStatusCode.OK);
         }
 
         [HttpGet("index/{Id}")]
         public async Task<IActionResult> Index(int Id) =>
-            GetResult(await _bookingService.GetBookingById(Id));
+            GetResult(await service.GetBookingById(Id));
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("delete/{Id}")]
         public async Task<IActionResult> DeleteBooking(int Id)
         {
-            await _baseService.DeleteAsync(Id);
+            await service.DeleteAsync(Id);
             return GetResult<BookingDTO>(null, HttpStatusCode.OK);
         }
 
@@ -45,9 +45,9 @@ namespace EMS.Api.Controllers
         [HttpGet("payment/{Id}")]
         public async Task<IActionResult> BookingPaymentDone(int Id)
         {
-            BookingDTO dto = await _baseService.GetByIdAsync(Id, true);
+            BookingDTO dto = await service.GetByIdAsync(Id, true);
             dto.Status = Shared.EnumBookingStatus.Paid;
-            await _baseService.UpdateAsync(dto);
+            await service.UpdateAsync(dto);
 
             return GetResult<BookingDTO>(null, HttpStatusCode.OK);
         }
@@ -56,9 +56,9 @@ namespace EMS.Api.Controllers
         [HttpGet("confirmBooking/{Id}")]
         public async Task<IActionResult> ConfirmBooking(int Id)
         {
-            BookingDTO dto = await _baseService.GetByIdAsync(Id, true);
+            BookingDTO dto = await service.GetByIdAsync(Id, true);
             dto.Status = Shared.EnumBookingStatus.Confirmed;
-            await _baseService.UpdateAsync(dto);
+            await service.UpdateAsync(dto);
 
             return GetResult<BookingDTO>(null, HttpStatusCode.OK);
         }
@@ -67,9 +67,9 @@ namespace EMS.Api.Controllers
         [HttpGet("cancel/{Id}")]
         public async Task<IActionResult> CancelBooking(int Id)
         {
-            BookingDTO dto = await _baseService.GetByIdAsync(Id, true);
+            BookingDTO dto = await service.GetByIdAsync(Id, true);
             dto.Status = Shared.EnumBookingStatus.Cancelled;
-            await _baseService.UpdateAsync(dto);
+            await service.UpdateAsync(dto);
 
             return GetResult<BookingDTO>(null, HttpStatusCode.OK);
         }
@@ -78,15 +78,15 @@ namespace EMS.Api.Controllers
         [HttpGet("reject/{Id}")]
         public async Task<IActionResult> RejectBooking(int Id)
         {
-            BookingDTO dto = await _baseService.GetByIdAsync(Id, true);
+            BookingDTO dto = await service.GetByIdAsync(Id, true);
             dto.Status = Shared.EnumBookingStatus.Rejected;
-            await _baseService.UpdateAsync(dto);
+            await service.UpdateAsync(dto);
 
             return GetResult<BookingDTO>(null, HttpStatusCode.OK);
         }
 
         [HttpPost("list")]
         public async Task<IActionResult> List(PaginationDTO<BookingDTO> pagination) =>
-            GetResult(await _bookingService.GetBookings(pagination));
+            GetResult(await service.GetBookings(pagination));
     }
 }

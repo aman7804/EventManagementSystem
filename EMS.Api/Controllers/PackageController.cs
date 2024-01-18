@@ -1,4 +1,4 @@
-﻿using EMS.Entity;
+﻿using EMS.Api.Authorization;
 using EMS.Service.DTO;
 using EMS.Service.PackageModule;
 using Microsoft.AspNetCore.Authorization;
@@ -9,12 +9,12 @@ namespace EMS.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PackageController : BaseController<PackageEntity, PackageDTO>
+    public class PackageController : BaseController
     {
-        private readonly IPackageService _packageService;
+        private readonly IPackageService service;
         public PackageController(IPackageService packageService, IHttpContextAccessor httpContextAccessor)
-            : base(packageService, httpContextAccessor) =>
-            _packageService = packageService;
+            : base(httpContextAccessor) =>
+            service = packageService;
 
         [Authorize(Roles = "Admin")]
         [HttpPost("save")]
@@ -28,24 +28,24 @@ namespace EMS.Api.Controllers
         [HttpDelete("delete/{Id}")]
         public async Task<IActionResult> DeletePackage(int Id)
         {
-            await _baseService.DeleteAsync(Id);
+            await service.DeleteAsync(Id);
             return GetResult<PackageDTO>(null, HttpStatusCode.OK);
         }
 
         [AllowAnonymous]
         [HttpGet("index/{Id}")]
         public async Task<IActionResult> Index(int Id) =>
-            GetResult(await _baseService.GetByIdAsync(Id));
+            GetResult(await service.GetByIdAsync(Id));
 
         [Authorize(Roles = "Admin")]
         [HttpPost("list")]
         public async Task<IActionResult> List(PaginationDTO<PackageDTO> pagination) =>
-            GetResult(await _baseService.GetPageAsync(pagination));
+            GetResult(await service.GetPageAsync(pagination));
         
         [AllowAnonymous]
         [HttpPost("explore-packages")]
         public async Task<IActionResult> ExplorePackages(PaginationDTO<PackageItemDTO> pagination) =>
-            GetResult(await _packageService.GetPackages(pagination, CurrentUser));
+            GetResult(await service.GetPackages(pagination, CurrentUser));
 
         [Authorize(Roles = "Customer")]
         [HttpPost("save-as-draft")]
@@ -59,7 +59,7 @@ namespace EMS.Api.Controllers
         [HttpDelete("delete-draft/{Id}")]
         public async Task<IActionResult> DeleteDraft(int Id)
         {
-            var isDeleted = await _packageService.DeletePackage(Id, CurrentUser);
+            var isDeleted = await service.DeletePackage(Id, CurrentUser);
             return isDeleted
                 ? GetResult<PackageDTO>(null, HttpStatusCode.OK)
                 : Unauthorized(new { message = "Unauthorized" });
@@ -68,9 +68,9 @@ namespace EMS.Api.Controllers
         private async Task<IActionResult> SavePackageInternal(PackageDTO dto)
         {
             if (dto.Id == 0)
-                await _baseService.AddAsync(dto);
+                await service.AddAsync(dto);
             else
-                await _baseService.UpdateAsync(dto);
+                await service.UpdateAsync(dto);
             return GetResult<PackageDTO>(null, HttpStatusCode.OK);
         }
     }

@@ -1,7 +1,4 @@
-﻿using EMS.Entity.Base;
-using EMS.Service.Base;
-using Microsoft.AspNetCore.Mvc;
-using EMS.Service.DTO;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using EMS.Api.ViewModels;
 using System.IdentityModel.Tokens.Jwt;
@@ -9,14 +6,12 @@ using System.IdentityModel.Tokens.Jwt;
 namespace EMS.Api.Controllers
 {
     [ApiController]
-    public class BaseController<T, D> : ControllerBase where T : BaseEntity where D : BaseDTO
+    public class BaseController: ControllerBase 
     {
-        public readonly IBaseService<T, D> _baseService;
         public int CurrentUser { get; }
 
-        public BaseController(IBaseService<T, D> baseService, IHttpContextAccessor httpContextAccessor)
+        public BaseController(IHttpContextAccessor httpContextAccessor)
         {
-            _baseService = baseService;
             var userIdClaim = httpContextAccessor.HttpContext?.User?.FindFirst(JwtRegisteredClaimNames.Name);
             
             CurrentUser = userIdClaim?.Value != null
