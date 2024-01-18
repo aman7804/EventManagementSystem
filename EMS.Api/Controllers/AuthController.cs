@@ -1,5 +1,4 @@
 ﻿using EMS.Api.Authorization;
-using EMS.Entity;
 using EMS.Service.DTO;
 using EMS.Service.UserModule;
 using Microsoft.AspNetCore.Authorization;
@@ -10,13 +9,13 @@ namespace EMS.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : BaseController<UserEntity, UserDTO>
+    public class AuthController : BaseController
     {
         private readonly IAuthService _authService;
         private readonly IJwtUtils _jwtUtils;
 
-        public AuthController(IAuthService authService, IJwtUtils jwtUtils,
-            IHttpContextAccessor httpContextAccessor) : base(authService, httpContextAccessor)
+        public AuthController(IAuthService authService, IJwtUtils jwtUtils, IHttpContextAccessor httpContextAccessor)
+            : base(httpContextAccessor)
         {
             _authService = authService;
             _jwtUtils = jwtUtils;

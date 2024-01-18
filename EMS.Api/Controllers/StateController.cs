@@ -1,5 +1,4 @@
-﻿using EMS.Entity;
-using EMS.Service.DTO;
+﻿using EMS.Service.DTO;
 using EMS.Service.StateModule;
 using Microsoft.AspNetCore.Mvc; 
 using System.Net;
@@ -10,39 +9,41 @@ namespace EMS.Api.Controllers
     [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
-    public class StateController : BaseController<StateEntity, StateDTO>
+    public class StateController : BaseController
     {
+        private readonly IStateService service;
         public StateController(IStateService stateService, IHttpContextAccessor httpContextAccessor)
-            : base(stateService, httpContextAccessor) { }
+            : base(httpContextAccessor) =>
+            service = stateService;
 
         [HttpPost("save")]
         public async Task<IActionResult> SaveState(StateDTO dto)
         {
             if (dto.Id == 0)
-                await _baseService.AddAsync(dto);
+                await service.AddAsync(dto);
             else
-                await _baseService.UpdateAsync(dto);
+                await service.UpdateAsync(dto);
             return GetResult<StateDTO>(null, HttpStatusCode.OK);
         }
 
         [HttpDelete("delete/{Id}")]
         public async Task<IActionResult> DeleteState(int Id)
         {
-            await _baseService.DeleteAsync(Id);
+            await service.DeleteAsync(Id);
             return GetResult<StateDTO>(null, HttpStatusCode.OK );
         }
 
         [HttpGet("index/{Id}")]
         public async Task<IActionResult> Index(int Id) =>
-            GetResult<StateDTO>(await _baseService.GetByIdAsync(Id));
+            GetResult(await service.GetByIdAsync(Id));
 
         [HttpPost("list")]
         public async Task<IActionResult> List(PaginationDTO<StateDTO> pagination) =>
-            GetResult( await _baseService.GetPageAsync(pagination));
+            GetResult(await service.GetPageAsync(pagination));
 
         [AllowAnonymous]
         [HttpGet("dropDownList")]
         public async Task<IActionResult> GetDropdownList() =>
-            GetResult(await _baseService.GetAllAsync(x => true));
+            GetResult(await service.GetAllAsync(x => true));
     }
 }
