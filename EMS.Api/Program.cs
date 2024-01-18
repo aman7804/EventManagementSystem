@@ -7,11 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.Configure<ConfigurationSettings>(builder.Configuration);
-
+    
 builder.Services.AddControllers();
 builder.Services.ConnectDatabase(builder.Configuration);
 builder.Services.RegisterRepository();
 builder.Services.RegisterServices();
+builder.Services.AddJWTAuthentication(builder.Configuration);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -29,8 +30,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseMiddleware<JwtMiddleware>();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 

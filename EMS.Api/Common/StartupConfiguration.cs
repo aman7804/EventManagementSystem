@@ -18,7 +18,11 @@ using EMS.Service.PhotographyModule;
 using EMS.Service.StateModule;
 using EMS.Service.UserModule;
 using EMS.Service.VenueModule;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace EMS.Api.Common
 {
@@ -29,6 +33,27 @@ namespace EMS.Api.Common
             services.AddDbContext<SqlDbContext>(options =>
             {
                 options.UseSqlServer(config.GetConnectionString("Default"));
+            });
+        }
+        public static void AddJWTAuthentication(this IServiceCollection services, IConfiguration config)
+        {
+            string? jwt_secret = config["Jwt:Secret"] ?? string.Empty;
+            var key = Encoding.UTF8.GetBytes(jwt_secret);
+            services.AddAuthentication( auth =>
+            {
+                auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options => 
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
             });
         }
 

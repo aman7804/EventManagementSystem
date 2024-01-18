@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using EMS.Shared.Constant;
 using Microsoft.AspNetCore.Http;
 using EMS.Entity.Base;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace EMS.Repository.Base
 {
@@ -14,7 +15,7 @@ namespace EMS.Repository.Base
         public BaseRepository(SqlDbContext sqlDbContext, IHttpContextAccessor httpContextAccessor)
         {
             Context = sqlDbContext;
-            var userIdClaim = httpContextAccessor.HttpContext?.User?.FindFirst("userId");
+            var userIdClaim = httpContextAccessor.HttpContext?.User?.FindFirst(JwtRegisteredClaimNames.Name);
 
             CurrentUser = userIdClaim?.Value != null
                 ? Convert.ToInt32(userIdClaim.Value) : 0;

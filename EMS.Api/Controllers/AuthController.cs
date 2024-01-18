@@ -2,6 +2,7 @@
 using EMS.Entity;
 using EMS.Service.DTO;
 using EMS.Service.UserModule;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -14,8 +15,8 @@ namespace EMS.Api.Controllers
         private readonly IAuthService _authService;
         private readonly IJwtUtils _jwtUtils;
 
-        public AuthController(IAuthService authService, IJwtUtils jwtUtils, IHttpContextAccessor httpContextAccessor)
-            : base(authService, httpContextAccessor)
+        public AuthController(IAuthService authService, IJwtUtils jwtUtils,
+            IHttpContextAccessor httpContextAccessor) : base(authService, httpContextAccessor)
         {
             _authService = authService;
             _jwtUtils = jwtUtils;
@@ -25,7 +26,8 @@ namespace EMS.Api.Controllers
         public async Task<IActionResult> Login(LoginDTO dto)
         {
             var userDto = await _authService.Login(dto);
-            return GetResult( new AuthenticateResponseDTO(userDto, _jwtUtils.GenerateJwtToken(userDto.Id)) );
+            return GetResult(new AuthenticateResponseDTO(userDto,
+                _jwtUtils.GenerateJwtToken(userDto.Id, userDto.Role.ToString())));
         }
 
         [HttpPost("signup")]
