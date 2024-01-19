@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using EMS.Entity;
 using EMS.Repository.Base;
 using EMS.Service.DTO;
 using EMS.Shared.Constant;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using EMS.Entity;
 
 namespace EMS.Service.Base
 {
@@ -15,16 +15,25 @@ namespace EMS.Service.Base
         public BaseService(IMapper mapper, IBaseRepository<T> baseRepository)
         {
             Mapper = mapper;
-            Repo = baseRepository; 
+            Repo = baseRepository;
         }
-        public async Task AddAsync(D dto)
+
+        public virtual async Task AddAsync(D dto)
         {
+            if (dto == null) throw new ArgumentNullException(nameof(dto), "DTO cannot be null");
             T entity = ToEntity(dto);
             await Repo.AddAsync(entity);
+        }
+        public virtual async Task UpdateAsync(D dto)
+        {
+            if (dto == null) throw new ArgumentNullException(nameof(dto), "DTO cannot be null");
+            T entity = ToEntity(dto);   
+            await Repo.UpdateAsync(entity);
         }
 
         public async Task DeleteAsync(int Id)
         {
+            if (Id <= 0) throw new ArgumentNullException(nameof(Id), "Id cannot be null");
             await Repo.DeleteAsync(Id);
         }
 
@@ -35,57 +44,18 @@ namespace EMS.Service.Base
             return Map<List<T>, List<D>>(list);
         }
 
-        public async Task<D> GetByIdAsync(int Id)
+        public virtual async Task<D> GetByIdAsync(int Id, bool asNoTracking = false)
         {
-            T? entity = await Repo.GetByIdAsync(Id);
-            if (entity == null)
-            {
-                throw new Exception(ExceptionMessage.RECORD_NOT_FOUND);
-            }
-            return ToDTO(entity);
+            if (Id <= 0) throw new ArgumentNullException(nameof(Id), "Id cannot be null");
+            T? entity = await Repo.GetByIdAsync(Id, asNoTracking);
+            return entity == null ? throw new Exception(ExceptionMessage.RECORD_NOT_FOUND) : ToDTO(entity);
         }
 
-        public async Task<PaginationDTO<D>> GetPageAsync(PaginationDTO<D> paginationDTO)
-        {            
-            Expression<Func<D, bool>> expression = paginationDTO.FilterDTO.GetFilter();
-            Expression<Func<T, bool>> where = Map<Expression<Func<D, bool>>, Expression<Func<T, bool>>>(expression);
-            IQueryable<T> query = Repo.GetAll(where);
-
-            paginationDTO.RecordCount = await query.CountAsync();
-
-            query.Skip(paginationDTO.PageSize * (paginationDTO.PageNo - 1));
-            query.Take(paginationDTO.PageSize);
-
-            List<T> records = await query.ToListAsync();
-            if (records.Count > 0)
-            {
-                paginationDTO.Data = Map<List<T>, List<D>>(records);
-            } else if(paginationDTO.RecordCount > 0 && paginationDTO.PageNo > 1)
-            {
-                paginationDTO.PageNo -= 1;
-            }
-            return paginationDTO;
-        }
-
-        public async Task UpdateAsync(D dto)
-        {
-            T entity = ToEntity(dto);
-            await Repo.UpdateAsync(entity);
-        }
 
         #region Protected Methods
-        protected virtual D ToDTO(T entity)
-        {
-            return Mapper.Map<D>(entity);
-        }
-        protected virtual T ToEntity(D dto)
-        {
-            return Mapper.Map<T>(dto);
-        }
-        public virtual T2 Map<T1, T2>(T1 obj)
-        {
-            return Mapper.Map<T2>(obj);
-        }        
+        protected virtual D ToDTO(T entity) => Mapper.Map<D>(entity);
+        protected virtual T ToEntity(D dto) => Mapper.Map<T>(dto);
+        public virtual T2 Map<T1, T2>(T1 obj) => Mapper.Map<T2>(obj);
         #endregion
     }
 }

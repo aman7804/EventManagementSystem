@@ -1,11 +1,11 @@
-﻿using System.Text.Json.Serialization;
-
-namespace EMS.Service.DTO
+﻿namespace EMS.Service.DTO
 {
-    public class UserDTO : BaseDTO
+    public class RegisterDTO
     {
         public string FirstName { get; set; } = string.Empty!;
         public string LastName { get; set; } = string.Empty!;
         public string EmailId { get; set; } = string.Empty!;
+        public string Password { get; set; } = string.Empty!;
+
     }
 }

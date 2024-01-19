@@ -8,7 +8,9 @@ namespace EMS.Service.AutoMapper
     {
         public MappingProfile()
         {
-            CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<UserEntity, UserDTO>().ReverseMap();
+            CreateMap<RegisterDTO, UserEntity>();
+            CreateMap<TaskDTO, TaskEntity>().ReverseMap();
         }
     }
 }
