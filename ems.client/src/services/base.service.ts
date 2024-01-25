@@ -1,4 +1,4 @@
-/ eslint-disable no-console /
+/* eslint-disable no-console */
 import { INTERNAL_SERVER_ERROR, SOMETHING_WENT_WRONG } from "utils/constants";
 import { HttpStatusCodes } from "utils/enums";
 import axios, {
