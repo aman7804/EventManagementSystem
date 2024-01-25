@@ -41,7 +41,12 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 builder.Services.AddAutoMapper(cfg => { cfg.AddExpressionMapping(); }, typeof(MappingProfile));
-
+builder.Services.AddCors(o => o.AddPolicy("EMSPolicy", builder =>
+{
+    builder.AllowAnyOrigin()
+           .AllowAnyMethod()
+           .AllowAnyHeader();
+}));
 
 var app = builder.Build();
 
@@ -53,7 +58,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("EMSPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 
