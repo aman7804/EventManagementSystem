@@ -1,7 +1,10 @@
 /* eslint-disable import/no-cycle */
+import { ILoaderProps } from "components/loader";
 import {
   ILogin,
   ILoginResponse,
+  ISignup,
+  ISignupResponse,
 } from "../interfaces/auth.interface";
 import { IApiSuccessResponse } from "../interfaces/generic.interface";
 import baseService from "./base.service";
@@ -18,6 +21,14 @@ const login = async (
     requestBody,
   );
 
+const signup = async(
+  requestBody: ISignup,
+): Promise<AxiosResponse<IApiSuccessResponse<ISignupResponse>>> =>
+  baseService.post<IApiSuccessResponse<ISignupResponse>>(
+    `${baseLoginUrl}/signup`, requestBody
+  );
+
+
 const signOut = (): void => {
   localStorage.clear();
   sessionStorage.clear();
@@ -28,5 +39,6 @@ const signOut = (): void => {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   login,  
+  signup,
   signOut,
 };

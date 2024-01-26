@@ -6,7 +6,13 @@ import {
     emailId: string;
     password: string;
   }
-  
+  export interface ISignup{
+    firstName: string,
+    lastName: string,
+    emailId: string,
+    password: string
+  }
+
   export interface ILoginResponse {
     firstName: string;
     lastName: string;
@@ -16,7 +22,12 @@ import {
     roleName: string;
     id: number;
   }
-  
+  export interface ISignupResponse{
+    id: number,
+    fullName: string,
+    emailId: string,
+  }
+
   export interface ILoginContainerState {
     rememberMe: boolean;
   }
