@@ -56,7 +56,7 @@ import {
   }
   
   export interface SignupPayload{
-    value:{
+    values:{
       firstName:string,
       lastName:string,
       emailId:string,
