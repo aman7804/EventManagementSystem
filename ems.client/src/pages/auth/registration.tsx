@@ -17,7 +17,7 @@ import {
   } from "@mui/material";
   import React, { useEffect } from "react";
   import * as images from "assets/images";
-  import { ISignup, ISignupContainerDispatch } from "../../interfaces/auth.interface";
+  import { IRegistration, IRegistrationContainerDispatch } from "../../interfaces/auth.interface";
   import { useNavigate } from "react-router";
   import AOS from "aos";
   import "aos/dist/aos.css";
@@ -26,9 +26,9 @@ import {
   import { EMAIL_PATTERN, PASSWORD_PATTERN } from "utils/constants";
   import { useForm } from "react-hook-form";
   
-  export type SignupProps = ISignupContainerDispatch;
+  export type RegistrationProps = IRegistrationContainerDispatch;
   
-  export const SignupForm = (props: SignupProps) => {
+  export const RegistrationForm = (props: RegistrationProps) => {
     const [showPassword, setShowPassword] = React.useState(false);
   
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -42,7 +42,7 @@ import {
       register,
       handleSubmit,
       formState: { errors },
-    } = useForm<ISignup>();
+    } = useForm<IRegistration>();
   
     useEffect(() => {
       AOS.init({
@@ -93,14 +93,14 @@ import {
       return "";
     };
   
-    const onSignupSuccess = async (response: LoginSuccessPayload) => {
+    const onRegistrationSuccess = async (response: LoginSuccessPayload) => {
       navigate("/login");
-      toast.success("Signup successfull");
+      toast.success("Registration successfull");
     };
   
-    const onSubmit = async (data: ISignup) => {
-      const { signupRequest } = props;
-      if (signupRequest) {
+    const onSubmit = async (data: IRegistration) => {
+      const { registrationRequest } = props;
+      if (registrationRequest) {
         // showLoader();
         const payload = {
           values: {
@@ -110,17 +110,17 @@ import {
             password: data.password
             // rememberMe: data.rememberMe,
           },
-          callback: onSignupSuccess,
+          callback: onRegistrationSuccess,
         };
   
-        signupRequest(payload);
+        registrationRequest(payload);
       }
     };
   
     return (
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="signup-wrapper">
-          <Grid container className="signup-container">
+        <div className="registration-wrapper">
+          <Grid container className="registration-container">
             <Grid xs={12} sm="auto">
               <a
                 data-aos="fade-right"
@@ -137,15 +137,15 @@ import {
             </Grid>
             <Grid xs={12} sm="auto">
               <Card
-                className="signup-card"
+                className="registration-card"
                 data-aos="fade-left"
                 data-aos-delay="300"
               >
                 <CardContent>
                   <Typography variant="h2" className="card-heading">
-                    Signup
+                    Registration
                   </Typography>
-                  <div className="signup-content-form">
+                  <div className="registration-content-form">
                     <Stack direction={'row'} spacing={3}>
                       <TextField
                         id="firstName"
@@ -273,4 +273,4 @@ import {
     );
   }
   
-  export default SignupForm
+  export default RegistrationForm

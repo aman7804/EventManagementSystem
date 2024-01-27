@@ -2,9 +2,9 @@ import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
-    SIGNUP_REQUEST,
-    SIGNUP_SUCCESS,
-    SIGNUP_FAILURE,
+    REGISTRATION_REQUEST,
+    REGISTRATION_SUCCESS,
+    REGISTRATION_FAILURE,
   } from "./action.types";
   
   import { AuthActions, AuthState } from "./types";
@@ -38,18 +38,18 @@ import {
           error: action.payload.error,
         };    
       // Signup Logic is the same as Login logic butwe do not store Token in State
-      case SIGNUP_REQUEST:
+      case REGISTRATION_REQUEST:
         return {
           ...state,
           pending: true,
         };
-      case SIGNUP_SUCCESS:
+      case REGISTRATION_SUCCESS:
         return {
           ...state,
           pending: false,
           user: action.payload.user
         };
-      case SIGNUP_FAILURE:
+      case REGISTRATION_FAILURE:
         return {
           ...state,
           pending: false,

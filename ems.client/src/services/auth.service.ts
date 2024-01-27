@@ -3,8 +3,8 @@ import { ILoaderProps } from "components/loader";
 import {
   ILogin,
   ILoginResponse,
-  ISignup,
-  ISignupResponse,
+  IRegistration,
+  IRegistrationResponse,
 } from "../interfaces/auth.interface";
 import { IApiSuccessResponse } from "../interfaces/generic.interface";
 import baseService from "./base.service";
@@ -21,11 +21,11 @@ const login = async (
     requestBody,
   );
 
-const signup = async(
-  requestBody: ISignup,
-): Promise<AxiosResponse<IApiSuccessResponse<ISignupResponse>>> =>
-  baseService.post<IApiSuccessResponse<ISignupResponse>>(
-    `${baseLoginUrl}/signup`, requestBody
+const registration = async(
+  requestBody: IRegistration,
+): Promise<AxiosResponse<IApiSuccessResponse<IRegistrationResponse>>> =>
+  baseService.post<IApiSuccessResponse<IRegistrationResponse>>(
+    `${baseLoginUrl}/registration`, requestBody
   );
 
 
@@ -39,6 +39,6 @@ const signOut = (): void => {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   login,  
-  signup,
+  registration,
   signOut,
 };

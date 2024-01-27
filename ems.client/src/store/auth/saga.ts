@@ -3,16 +3,16 @@ import { all, call, put, takeEvery } from "redux-saga/effects";
 import {
   loginFailure,
   loginSuccess,
-  signupFailure,
-  signupSuccess,
+  registrationFailure,
+  registrationSuccess,
 } from "./actions";
 
 import {
-  LOGIN_REQUEST, SIGNUP_REQUEST,
+  LOGIN_REQUEST, REGISTRATION_REQUEST,
 } from "./action.types";
 import authService from "services/auth.service";
 import {
-  LoginResponse, SignupResponse,
+  LoginResponse, RegistrationResponse,
 } from "./types";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -46,16 +46,16 @@ function* loginSaga(action: any) {
   }
 }
 
-function* signupSaga(action: any){
+function* registrationSaga(action: any){
   try{
-    const response: SignupResponse = yield call(authService.signup,{
+    const response: RegistrationResponse = yield call(authService.registration,{
       firstName: action.payload.values.firstName,
       lastName: action.payload.values.lastName,
       emailId: action.payload.values.emailId,
       password: action.payload.values.password
     })
     yield put(
-      signupSuccess({
+      registrationSuccess({
         user: response.data
       })
     );
@@ -63,7 +63,7 @@ function* signupSaga(action: any){
   catch(e: any){
     console.log(e.response.data)
     yield put(
-      signupFailure({
+      registrationFailure({
         error: e.response.data.split("\n")[0]
       })
     )
@@ -74,7 +74,7 @@ function* signupSaga(action: any){
 function* authSaga() {
   yield all([
     takeEvery(LOGIN_REQUEST, loginSaga),
-    takeEvery(SIGNUP_REQUEST, signupSaga)
+    takeEvery(REGISTRATION_REQUEST, registrationSaga)
   ]);
 }
 

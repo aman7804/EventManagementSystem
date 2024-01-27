@@ -2,9 +2,9 @@ import {
     LOGIN_REQUEST,
     LOGIN_FAILURE,
     LOGIN_SUCCESS,
-    SIGNUP_REQUEST,
-    SIGNUP_SUCCESS,
-    SIGNUP_FAILURE,
+    REGISTRATION_REQUEST,
+    REGISTRATION_SUCCESS,
+    REGISTRATION_FAILURE,
   } from "./action.types";
   
   import {
@@ -14,12 +14,12 @@ import {
     LoginSuccessPayload,
     LoginFailure,
     LoginFailurePayload,
-    SignupRequest,
-    SignupPayload,
-    SignupSuccessPayload,
-    SignupSuccess,
-    SignupFailurePayload,
-    SignupFailure,
+    RegistrationRequest,
+    RegistrationPayload,
+    RegistrationSuccessPayload,
+    RegistrationSuccess,
+    RegistrationFailurePayload,
+    RegistrationFailure,
   } from "./types";
   
   export const loginRequest = (payload: LoginPayload): LoginRequest => ({
@@ -35,15 +35,15 @@ import {
     payload,
   });
 
-  export const signupRequest = (payload: SignupPayload): SignupRequest => ({
-    type: SIGNUP_REQUEST,
+  export const registrationRequest = (payload: RegistrationPayload): RegistrationRequest => ({
+    type: REGISTRATION_REQUEST,
     payload
   })
-  export const signupSuccess = (payload: SignupSuccessPayload): SignupSuccess => ({
-    type: SIGNUP_SUCCESS,
+  export const registrationSuccess = (payload: RegistrationSuccessPayload): RegistrationSuccess => ({
+    type: REGISTRATION_SUCCESS,
     payload
   })
-  export const signupFailure = (payload: SignupFailurePayload): SignupFailure => ({
-    type: SIGNUP_FAILURE,
+  export const registrationFailure = (payload: RegistrationFailurePayload): RegistrationFailure => ({
+    type: REGISTRATION_FAILURE,
     payload
   })

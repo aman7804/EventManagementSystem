@@ -2,9 +2,9 @@ import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
-    SIGNUP_REQUEST,
-    SIGNUP_SUCCESS,
-    SIGNUP_FAILURE,
+    REGISTRATION_REQUEST,
+    REGISTRATION_SUCCESS,
+    REGISTRATION_FAILURE,
   } from "./action.types";
   
   
@@ -27,7 +27,7 @@ import {
       id: number;
     };
   }
-  export interface SignupResponse{
+  export interface RegistrationResponse{
     data: {
       id: number;
       fullName: string;
@@ -55,23 +55,23 @@ import {
     error: string;
   }
   
-  export interface SignupPayload{
+  export interface RegistrationPayload{
     values:{
       firstName:string,
       lastName:string,
-      emailId:string,
+      emailId:string  ,
       password:string
     }
     callback: any
   }
-  export interface SignupSuccessPayload{
+  export interface RegistrationSuccessPayload{
     user: {
       id: number;
       fullName: string;
       emailId: string;
     };
   }
-  export interface SignupFailurePayload{
+  export interface RegistrationFailurePayload{
     error: string;
   }
 
@@ -88,23 +88,23 @@ import {
     payload: LoginFailurePayload;
   };
   
-  export interface SignupRequest {
-    type: typeof SIGNUP_REQUEST,
-    payload: SignupPayload;
+  export interface RegistrationRequest {
+    type: typeof REGISTRATION_REQUEST,
+    payload: RegistrationPayload;
   }
-  export type SignupSuccess = {
-    type: typeof SIGNUP_SUCCESS,
-    payload: SignupSuccessPayload;
+  export type RegistrationSuccess = {
+    type: typeof REGISTRATION_SUCCESS,
+    payload: RegistrationSuccessPayload;
   }
-  export type SignupFailure = {
-    type: typeof SIGNUP_FAILURE,
-    payload: SignupFailurePayload; 
+  export type RegistrationFailure = {
+    type: typeof REGISTRATION_FAILURE,
+    payload: RegistrationFailurePayload; 
   }
 
   export type AuthActions =
     | LoginRequest
     | LoginSuccess
     | LoginFailure
-    | SignupRequest
-    | SignupSuccess
-    | SignupFailure
+    | RegistrationRequest
+    | RegistrationSuccess
+    | RegistrationFailure

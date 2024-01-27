@@ -1,12 +1,12 @@
 import {
-    LoginPayload, SignupPayload,
+    LoginPayload, RegistrationPayload,
   } from "store/auth/types";
   
   export interface ILogin {
     emailId: string;
     password: string;
   }
-  export interface ISignup{
+  export interface IRegistration{
     firstName: string,
     lastName: string,
     emailId: string,
@@ -22,7 +22,7 @@ import {
     roleName: string;
     id: number;
   }
-  export interface ISignupResponse{
+  export interface IRegistrationResponse{
     id: number,
     fullName: string,
     emailId: string,
@@ -35,6 +35,6 @@ import {
   export interface ILoginContainerDispatch {
     loginRequest: (payload: LoginPayload) => {};
   }
-  export interface ISignupContainerDispatch {
-    signupRequest: (payload: SignupPayload) => {};
+  export interface IRegistrationContainerDispatch {
+    registrationRequest: (payload: RegistrationPayload) => {};
   }
