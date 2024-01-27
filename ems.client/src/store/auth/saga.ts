@@ -51,9 +51,13 @@ function* registrationSaga(action: any){
     const response: RegistrationResponse = yield call(authService.registration,{
       firstName: action.payload.values.firstName,
       lastName: action.payload.values.lastName,
+      address: action.payload.values.address,
+      cityId: action.payload.values.cityId,
+      mobileNo: action.payload.values.mobileNo,
       emailId: action.payload.values.emailId,
       password: action.payload.values.password
     })
+    console.log(response.data)
     yield put(
       registrationSuccess({
         user: response.data

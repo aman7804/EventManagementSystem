@@ -59,7 +59,10 @@ import {
     values:{
       firstName:string,
       lastName:string,
-      emailId:string  ,
+      address: string,
+      cityId: number,
+      mobileNo: string,
+      emailId:string,
       password:string
     }
     callback: any

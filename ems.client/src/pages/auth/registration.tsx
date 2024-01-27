@@ -13,10 +13,12 @@ import {
     OutlinedInput, 
     TextField, 
     Typography ,
-    Stack
+    Stack,
+    Select,
+    MenuItem,
   } from "@mui/material";
   import React, { useEffect } from "react";
-  import * as images from "assets/images";
+  import * as images from "../../assets/images";
   import { IRegistration, IRegistrationContainerDispatch } from "../../interfaces/auth.interface";
   import { useNavigate } from "react-router";
   import AOS from "aos";
@@ -97,7 +99,8 @@ import {
       navigate("/login");
       toast.success("Registration successfull");
     };
-  
+    
+    let cityID = 1
     const onSubmit = async (data: IRegistration) => {
       const { registrationRequest } = props;
       if (registrationRequest) {
@@ -106,6 +109,9 @@ import {
           values: {
             firstName: data.firstName,
             lastName: data.lastName,
+            address: data.address,
+            cityId: cityID,
+            mobileNo: data.mobileNo,
             emailId: data.emailId,
             password: data.password
             // rememberMe: data.rememberMe,
@@ -173,7 +179,54 @@ import {
                           required: true,
                         })}
                         />
-                      </Stack>
+                    </Stack>
+                    <TextField
+                      id="mobileNo"
+                      label={
+                        <>
+                          MobileNo <span className="color-red">*</span>
+                        </>
+                      }
+                      variant="outlined"
+                      error={!!errors.emailId}
+                      helperText={getEmailError()}
+                      {...register("mobileNo", {
+                        required: true,
+                      })}
+                      InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                +91
+                            </InputAdornment>
+                        ),
+                    }}
+                    />
+                    <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                      <InputLabel id="demo-select-small-label">City</InputLabel>
+                      <Select
+                        labelId="demo-select-small-label"
+                        id="cityId"
+                        value={cityID}
+                        label="City"
+                      >
+                        <MenuItem value={cityID}>Ahemedabad</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <TextField
+                      id="address"
+                      label={
+                        <>
+                          Address <span className="color-red">*</span>
+                        </>
+                      }
+                      fullWidth
+                      variant="outlined"
+                      error={!!errors.emailId}
+                      helperText={getEmailError()}
+                      {...register("address", {
+                        required: true,
+                      })}
+                    />
                     <TextField
                       id="email"
                       label={

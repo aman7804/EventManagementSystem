@@ -25,7 +25,7 @@ const registration = async(
   requestBody: IRegistration,
 ): Promise<AxiosResponse<IApiSuccessResponse<IRegistrationResponse>>> =>
   baseService.post<IApiSuccessResponse<IRegistrationResponse>>(
-    `${baseLoginUrl}/registration`, requestBody
+    `${baseLoginUrl}/signup`, requestBody
   );
 
 

@@ -7,10 +7,13 @@ import {
     password: string;
   }
   export interface IRegistration{
-    firstName: string,
-    lastName: string,
-    emailId: string,
-    password: string
+    firstName:string,
+    lastName:string,
+    address: string,
+    cityId: number,
+    mobileNo: string,
+    emailId:string,
+    password:string
   }
   
   export interface ILoginResponse {
