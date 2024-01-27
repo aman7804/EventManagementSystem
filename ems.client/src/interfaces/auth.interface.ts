@@ -1,5 +1,5 @@
 import {
-    LoginPayload,
+    LoginPayload, SignupPayload,
   } from "store/auth/types";
   
   export interface ILogin {
@@ -12,7 +12,7 @@ import {
     emailId: string,
     password: string
   }
-
+  
   export interface ILoginResponse {
     firstName: string;
     lastName: string;
@@ -27,11 +27,14 @@ import {
     fullName: string,
     emailId: string,
   }
-
+  
   export interface ILoginContainerState {
     rememberMe: boolean;
   }
   
   export interface ILoginContainerDispatch {
     loginRequest: (payload: LoginPayload) => {};
+  }
+  export interface ISignupContainerDispatch {
+    signupRequest: (payload: SignupPayload) => {};
   }

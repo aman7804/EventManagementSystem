@@ -61,6 +61,7 @@ function* signupSaga(action: any){
     );
   }
   catch(e: any){
+    console.log(e.response.data)
     yield put(
       signupFailure({
         error: e.response.data.split("\n")[0]
