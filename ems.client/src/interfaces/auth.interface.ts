@@ -1,10 +1,19 @@
 import {
-    LoginPayload,
+    LoginPayload, RegistrationPayload,
   } from "store/auth/types";
   
   export interface ILogin {
     emailId: string;
     password: string;
+  }
+  export interface IRegistration{
+    firstName:string,
+    lastName:string,
+    address: string,
+    cityId: number,
+    mobileNo: string,
+    emailId:string,
+    password:string
   }
   
   export interface ILoginResponse {
@@ -16,6 +25,11 @@ import {
     roleName: string;
     id: number;
   }
+  export interface IRegistrationResponse{
+    id: number,
+    fullName: string,
+    emailId: string,
+  }
   
   export interface ILoginContainerState {
     rememberMe: boolean;
@@ -23,4 +37,7 @@ import {
   
   export interface ILoginContainerDispatch {
     loginRequest: (payload: LoginPayload) => {};
+  }
+  export interface IRegistrationContainerDispatch {
+    registrationRequest: (payload: RegistrationPayload) => {};
   }

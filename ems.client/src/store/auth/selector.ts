@@ -13,16 +13,10 @@ const getUser = (state: RootState) => get(state, "auth.user");
 
 export const getAuthSelector = createSelector(getToken, (token) => token);
 
-export const getPendingSelector = createSelector(
-  getPending,
-  (pending) => pending,
-);
+export const getPendingSelector = createSelector( getPending, (pending) => pending,);
 
 export const getErrorSelector = createSelector(getError, (error) => error);
 
 export const getUserSelector = createSelector(getUser, (user) => user);
 
-export const checkIsAuthenticated = createSelector(
-  getToken,
-  (token) => !!token,
-);
+export const checkIsAuthenticated = createSelector(getToken, (token) => !!token);
