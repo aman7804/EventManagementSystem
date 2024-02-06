@@ -11,7 +11,7 @@ namespace EMS.Service.Base
         Task UpdateAsync(D dto);
 
         Task<D> GetByIdAsync(int Id, bool asNoTracking = false);
-        Task<List<D>> GetAllAsync(Expression<Func<D, bool>> expression);
+        Task<List<D>> GetAllAsync(Expression<Func<D, bool>>? expression);
         Task<PaginationDTO<D>> GetPageAsync(PaginationDTO<D> paginationDTO);
         T2 Map<T1, T2>(T1 obj);
     }

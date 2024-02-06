@@ -14,7 +14,7 @@ namespace EMS.Api.Controllers
     {
         private readonly ICityService service;
         public CityController(ICityService cityService, IHttpContextAccessor httpContextAccessor)
-            : base(httpContextAccessor) => 
+            : base(httpContextAccessor) =>
                 service = cityService;
 
         [HttpPost("save")]
@@ -26,7 +26,7 @@ namespace EMS.Api.Controllers
                 await service.UpdateAsync(dto);
             return GetResult<CityDTO>(null, HttpStatusCode.OK);
         }
-    
+
         [HttpDelete("delete/{Id}")]
         public async Task<IActionResult> DeleteCity(int Id)
         {
@@ -43,8 +43,12 @@ namespace EMS.Api.Controllers
             GetResult(await service.GetPageAsync(pagination));
 
         [AllowAnonymous]
-        [HttpGet("dropDownList/{stateId}")]
-        public async Task<IActionResult> GetDropdownList(int stateId) =>
-            GetResult(await service.GetAllAsync(x => x.StateId == stateId));
+        [HttpGet("drop-down-list/{stateId?}")]
+        public async Task<IActionResult> GetDropdownList(int stateId = 0)
+        {
+            return stateId == 0
+                ? GetResult(await service.GetAllAsync(null))
+                : GetResult(await service.GetAllAsync(x => x.StateId == stateId));
+        }
     }
 }
