@@ -39,11 +39,13 @@ namespace EMS.Service.Base
             await Repo.DeleteAsync(Id);
         }
 
-        public async Task<List<D>> GetAllAsync(Expression<Func<D, bool>> expression)
+        public async Task<List<D>> GetAllAsync(Expression<Func<D, bool>>? expression)
         {
-            Expression<Func<T, bool>> predicate = Map<Expression<Func<D, bool>>, Expression<Func<T, bool>>>(expression);
+            Expression<Func<T, bool>>? predicate = expression == null
+                ? null
+                : Map<Expression<Func<D, bool>>, Expression<Func<T, bool>>>(expression);
             List<T> list = await Repo.GetAll(predicate).AsNoTracking().ToListAsync();
-            return Map<List<T>, List<D>>(list);
+            return Map<List<T>, List<D>>(list);            
         }
 
         public virtual async Task<D> GetByIdAsync(int Id, bool asNoTracking = false)

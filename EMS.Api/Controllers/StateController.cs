@@ -42,7 +42,7 @@ namespace EMS.Api.Controllers
             GetResult(await service.GetPageAsync(pagination));
 
         [AllowAnonymous]
-        [HttpGet("dropDownList")]
+        [HttpGet("drop-down-list")]
         public async Task<IActionResult> GetDropdownList() =>
             GetResult(await service.GetAllAsync(x => true));
     }
