@@ -24,6 +24,7 @@ import {
   import { toast } from "react-toastify";
   import { EMAIL_PATTERN, PASSWORD_PATTERN } from "utils/constants";
   import { useForm } from "react-hook-form";
+import { setLoginDetails } from "utils/helper";
   
   export type LoginProps = ILoginContainerDispatch;
   
@@ -81,6 +82,7 @@ import {
     };
   
     const onLoginSuccess = async (response: LoginSuccessPayload) => {
+      setLoginDetails(response)
       navigate("/dashboard");
       toast.success("Logged in successfully");
     };

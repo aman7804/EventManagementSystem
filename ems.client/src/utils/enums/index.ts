@@ -5,3 +5,5 @@ export enum HttpStatusCodes {
     NotFound = 404,
     InternalServerError = 500,
   }
+
+export type Order = "asc" | "desc";

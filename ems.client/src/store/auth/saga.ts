@@ -57,7 +57,6 @@ function* registrationSaga(action: any){
       emailId: action.payload.values.emailId,
       password: action.payload.values.password
     })
-    console.log(response.data)
     yield put(
       registrationSuccess({
         user: response.data
@@ -65,7 +64,6 @@ function* registrationSaga(action: any){
     );
   }
   catch(e: any){
-    console.log(e.response.data)
     yield put(
       registrationFailure({
         error: e.response.data.split("\n")[0]

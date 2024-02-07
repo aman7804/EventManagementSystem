@@ -45,7 +45,6 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   (response: AxiosResponse) => {
     hideLoader();
-
     return response.data;
   },
   (error: AxiosError) => {
@@ -56,6 +55,9 @@ axios.interceptors.response.use(
       case HttpStatusCodes.InternalServerError:
         if (Config.env.NodeEnv === NODE_ENV_TYPES.Development) {
           console.log(INTERNAL_SERVER_ERROR);
+          toast.error(
+            error.response?.data?.toString().split("\n")[0] || error.message
+          );
         } else {
           console.log(SOMETHING_WENT_WRONG);
         }

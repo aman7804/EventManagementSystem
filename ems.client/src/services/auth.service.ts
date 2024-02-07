@@ -1,4 +1,4 @@
-/* eslint-disable import/no-cycle */
+// eslint-disable import/no-cycle 
 import { ILoaderProps } from "components/loader";
 import {
   ILogin,
