@@ -1,5 +1,6 @@
 ﻿using EMS.Api.Authorization;
 using EMS.Service.DTO;
+using EMS.Service.DTO.Filter;
 using EMS.Service.PackageModule;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -39,12 +40,12 @@ namespace EMS.Api.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost("list")]
-        public async Task<IActionResult> List(PaginationDTO<PackageDTO> pagination) =>
+        public async Task<IActionResult> List(PaginationDTO<PackageDTO, PackageFilter> pagination) =>
             GetResult(await service.GetPageAsync(pagination));
         
         [AllowAnonymous]
         [HttpPost("explore-packages")]
-        public async Task<IActionResult> ExplorePackages(PaginationDTO<PackageItemDTO> pagination) =>
+        public async Task<IActionResult> ExplorePackages(PaginationDTO<PackageItemDTO, PackageItemFilter> pagination) =>
             GetResult(await service.GetPackages(pagination, CurrentUser));
 
         [Authorize(Roles = "Customer")]

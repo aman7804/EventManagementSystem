@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using EMS.Service.Extension;
 using EMS.Repository.BookingModule;
 using EMS.Entity;
+using EMS.Service.DTO.Filter;
+using System.Linq.Expressions;
 
 namespace EMS.Service.BookingModule
 {
@@ -24,9 +26,15 @@ namespace EMS.Service.BookingModule
             return entity == null ? throw new Exception(ExceptionMessage.RECORD_NOT_FOUND) : Map<BookingEntity, GetBookingDTO>(entity);
         }
 
-        public async Task<PaginationDTO<BookingDTO>> GetBookings(PaginationDTO<BookingDTO> paginationDTO)
+        public async Task<PaginationDTO<BookingDTO, BookingFilter>> GetBookings
+            (PaginationDTO<BookingDTO, BookingFilter> paginationDTO)
         {
-            IQueryable<BookingEntity> bookings = _bookingRepository.GetAll(null);
+            Expression<Func<BookingDTO, bool>> expression = paginationDTO.Filter.GetFilter();
+            Expression<Func<BookingEntity, bool>> where =
+                Map<Expression<Func<BookingDTO, bool>>, Expression<Func<BookingEntity, bool>>>
+                (expression);
+            IQueryable<BookingEntity> bookings = _bookingRepository.GetAll(where);
+
             bookings = bookings.Include(p => p.Package)
                                    .ThenInclude(v => v.Venue)
                                .Include(p => p.Package)

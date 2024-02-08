@@ -7,20 +7,28 @@ using EMS.Service.Extension;
 using EMS.Repository.PackageModule;
 using EMS.Entity;
 using EMS.Shared.Constant;
+using EMS.Service.DTO.Filter;
 
 namespace EMS.Service.PackageModule
 {
     public class PackageService : BaseService<PackageEntity, PackageDTO>, IPackageService
     {
         private readonly IPackageRepository _packageRepository;
-        public PackageService(IMapper mapper, IPackageRepository packageRepository) : base(mapper, packageRepository) => 
+        public PackageService(IMapper mapper, IPackageRepository packageRepository)
+            : base(mapper, packageRepository) => 
             _packageRepository = packageRepository;
 
-        public async Task<PaginationDTO<PackageItemDTO>> GetPackages(PaginationDTO<PackageItemDTO> paginationDTO, int CurrentUser)   
+        public async Task<PaginationDTO<PackageItemDTO, PackageItemFilter>> GetPackages
+            (PaginationDTO<PackageItemDTO, PackageItemFilter> paginationDTO,
+            int CurrentUser)   
         {
             IQueryable<PackageEntity> packages = CurrentUser > 0
-                            ? packages = Repo.GetAll(x => x.IsDraft == true && x.CreatedBy == CurrentUser || x.IsDraft == false)
+                            ? packages = 
+                                Repo.GetAll( x =>
+                                    x.IsDraft == true && x.CreatedBy == CurrentUser
+                                    || x.IsDraft == false )
                             : packages = Repo.GetAll(x => x.IsDraft == false);
+
             packages = packages.Include(v => v.Venue)
                                .Include(p => p.Photography)
                                .Include(d => d.Decoration)
@@ -48,7 +56,8 @@ namespace EMS.Service.PackageModule
             return paginationDTO;
         }
 
-        public override async Task<PaginationDTO<PackageDTO>> GetPageAsync(PaginationDTO<PackageDTO> paginationDTO)
+        public override async Task<PaginationDTO<PackageDTO, F>>
+            GetPageAsync<F>(PaginationDTO<PackageDTO, F> paginationDTO)
         {
             IQueryable<PackageEntity> packages = Repo.GetAll(x => x.IsDraft == false);
             packages = packages.Include(v => v.Venue)

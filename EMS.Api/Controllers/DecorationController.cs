@@ -1,6 +1,7 @@
 ﻿using EMS.Api.Authorization;
 using EMS.Service.DecorationModule;
 using EMS.Service.DTO;
+using EMS.Service.DTO.Filter;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -41,7 +42,7 @@ namespace EMS.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("list")]
-        public async Task<IActionResult> List(PaginationDTO<DecorationDTO> pagination) =>
+        public async Task<IActionResult> List(PaginationDTO<DecorationDTO, DecorationFilter> pagination) =>
             GetResult(await service.GetPageAsync(pagination));
     }
 }

@@ -55,11 +55,12 @@ namespace EMS.Service.Base
             return entity == null ? throw new Exception(ExceptionMessage.RECORD_NOT_FOUND) : ToDTO(entity);
         }
 
-        public virtual async Task<PaginationDTO<D>> GetPageAsync(PaginationDTO<D> paginationDTO)
-        {            
-            //Expression<Func<D, bool>> expression = paginationDTO.FilterDTO.GetFilter();
-            //Expression<Func<T, bool>> where = Map<Expression<Func<D, bool>>, Expression<Func<T, bool>>>(expression);
-            IQueryable<T> query = Repo.GetAll(null);
+        public virtual async Task<PaginationDTO<D,F>>GetPageAsync<F>
+            (PaginationDTO<D,F> paginationDTO) where F : FilterBase<D>
+        {
+            Expression<Func<D, bool>> expression = paginationDTO.Filter.GetFilter();
+            Expression<Func<T, bool>> where = Map<Expression<Func<D, bool>>, Expression<Func<T, bool>>>(expression);
+            IQueryable<T> query = Repo.GetAll(where);
 
             paginationDTO.RecordCount = await query.CountAsync();
             paginationDTO.PageCount = (int)Math.Ceiling(

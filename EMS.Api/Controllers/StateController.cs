@@ -3,6 +3,7 @@ using EMS.Service.StateModule;
 using Microsoft.AspNetCore.Mvc; 
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
+using EMS.Service.DTO.Filter;
 
 namespace EMS.Api.Controllers
 {
@@ -38,7 +39,7 @@ namespace EMS.Api.Controllers
             GetResult(await service.GetByIdAsync(Id));
 
         [HttpPost("list")]
-        public async Task<IActionResult> List(PaginationDTO<StateDTO> pagination) =>
+        public async Task<IActionResult> List(PaginationDTO<StateDTO, StateFilter> pagination) =>
             GetResult(await service.GetPageAsync(pagination));
 
         [AllowAnonymous]

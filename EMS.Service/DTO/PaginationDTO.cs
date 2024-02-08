@@ -1,9 +1,10 @@
 ﻿using EMS.Shared;
+using System.Linq.Expressions;
 
 namespace EMS.Service.DTO
 {
-    
-    public class PaginationDTO<T> where T : BaseDTO
+
+    public class PaginationDTO<D, F> where F : FilterBase<D> where D : BaseDTO
     {
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
@@ -13,17 +14,14 @@ namespace EMS.Service.DTO
         public EnumSortBy SortBy { get; set; } = EnumSortBy.Ascending;
         public string SortByColumns { get; set; } = string.Empty;
 
-        //public FilterDTO<T> FilterDTO { get; set; } = null!;
+        public F Filter { get; set; } = null!;
 
-        public List<T> Data { get; set; } = null!;
+        public List<D> Data { get; set; } = null!;
     }
 
-    //public class PaginationResultDTO<T> where T : BaseDTO
-    //{
-    //    public PaginationResultDTO()
-    //    {
-    //        return await _baseService.GetPageAsync(pagination);
-    //    }
-    ////}
+    public abstract class FilterBase<D> where D : class
+    {
+        public abstract Expression<Func<D, bool>> GetFilter();
+    }
 
 }
