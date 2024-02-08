@@ -7,8 +7,8 @@
         public decimal Price { set; get; }
         public string Description { set; get; } = string.Empty!;
         public bool IsActive { set; get; }
-        public static int MinCapacity { set; get; }
-        public static int MaxCapacity { set; get; }
+        public int MinCapacity { set; get; }
+        public int MaxCapacity { set; get; }
         public int CityId { set; get; }
     }
 }
