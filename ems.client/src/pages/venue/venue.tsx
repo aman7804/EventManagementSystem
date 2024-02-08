@@ -126,11 +126,10 @@ const VenueForm: React.FC<VenueProps> = (props) => {
 
   // handle-child-component
   const handleAddEditVenue = (venueId: number|null) => {
-    
+    getCityDropDownList()
     if (venueId) { //Edit Mode
       setIsEditVenue(true);
       getVenue(venueId);
-      getCityDropDownList()
     }
     else { //Add Mode
       setIsEditVenue(false);
@@ -255,12 +254,12 @@ const VenueForm: React.FC<VenueProps> = (props) => {
       getRequest(payload);
     }
   };
-  const getCityDropDownList = async () => {
+  const getCityDropDownList = async (stateId?: number) => {
       const { cityDropDownListRequest } = props;
   
       if (cityDropDownListRequest) {
         const payload: GetDropDownListPayload = {
-          data: { },
+          data: { id: stateId },
           callback: onCityListSuccess,
         };
         console.log("sending request payload: ",payload)

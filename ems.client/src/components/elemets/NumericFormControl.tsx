@@ -5,14 +5,11 @@ interface CustomProps {
   onChange: (event: { target: { name: string; value: string } }) => void;
   name: string;
 }
-
 const prefix = "₹"
   
 export const removeNumberFormatting = (value: string): Number => {
   const prefixRegex = new RegExp(prefix, "g");
-  value = value.replace(prefixRegex, "");
-  value = value.replace(/,/g, "");
-  
+  value = value.replace(prefixRegex, "").replace(/,/g, "");
   return parseFloat(value);
 }
 
@@ -22,6 +19,14 @@ const NumericFormControl: React.FC<CustomProps> = (props) => {
     <NumericFormat
       {...other}
       thousandSeparator
+      onValueChange={(values)=>{
+        onChange({
+          target:{
+            name: props.name, 
+            value: values.floatValue?.toString() || ""
+          }
+        })
+      }}
       prefix={prefix}
     />
   );
