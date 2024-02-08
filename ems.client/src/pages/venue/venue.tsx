@@ -131,7 +131,6 @@ const VenueForm: React.FC<VenueProps> = (props) => {
       setIsEditVenue(true);
       getVenue(venueId);
       getCityDropDownList()
-      // setEditVenueId(venueId); 
     }
     else { //Add Mode
       setIsEditVenue(false);
@@ -140,7 +139,6 @@ const VenueForm: React.FC<VenueProps> = (props) => {
   };
   const handleVenueClose = () => {
     setShowScreen(false);
-    // setEditVenueId(0)
   }
   const handleVenueDeleteModal = (venueId: number) => {
     setDeleteVenueId(venueId);
@@ -158,7 +156,6 @@ const VenueForm: React.FC<VenueProps> = (props) => {
 
   // callbacks
   const onVenueListSuccess = (response: GENERIC.IApiSuccessResponse<IVenuePagination>) => {
-    // setVenueList(response.data?.data);
     setVenueListMeta(response.data);
   };
   const onDeleteVenueSuccess = (response: GENERIC.IApiSuccessResponse<IVenue>) => {
@@ -426,7 +423,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
                               <MenuItem
                                 key={pageSize.value}
                                 value={pageSize.value}
-                                selected={pageSize?.selected} //why selected? and why only for 5 pageSize
+                                selected={pageSize?.selected}
                               >
                                 {pageSize.label}
                               </MenuItem>

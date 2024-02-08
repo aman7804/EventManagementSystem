@@ -22,7 +22,6 @@ const NumericFormControl: React.FC<CustomProps> = (props) => {
     <NumericFormat
       {...other}
       thousandSeparator
-      // valueIsNumericString
       prefix={prefix}
     />
   );

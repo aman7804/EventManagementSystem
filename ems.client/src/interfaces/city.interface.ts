@@ -1,11 +1,7 @@
-
-import * as GENERIC from "interfaces/generic.interface"
-
 /* Model */
 export interface ICity {
   id: number;
   name: string;
-  // stateId?: number|null;
 }
 
 export interface GetDropDownListPayload {
@@ -13,16 +9,6 @@ export interface GetDropDownListPayload {
   callback: any;
   message?:string;
 }
-
-// export interface GetDropDownListSuccessResponse {
-//   message?:string;
-//   data?: GENERIC;
-// }
-
-// export interface GetSuccessResponse<GENERIC.IKeyValuePair> {
-//   data: GENERIC.IKeyValuePair | null;
-//   message?:string;
-// }
 
 /* Dispatch Container Model */
 export interface ICityContainerDispatch {

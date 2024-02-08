@@ -2,13 +2,7 @@ import {
   Box,
   Button,
   Card,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
   Grid,
-  InputLabel,
-  MenuItem,
-  Select,
   TextField,
   Typography,
 } from "@mui/material";
@@ -270,9 +264,8 @@ console.log(currentVenueData)
               </Button>
               <Box style={{
                 position: "absolute",
-                // bottom: 1,
                 right: 0,
-                margin: "10px", // Adjust the margin as needed
+                margin: "10px",
               }}>
                 <CheckBox
                   label="active"
