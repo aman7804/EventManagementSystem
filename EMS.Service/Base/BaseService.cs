@@ -62,6 +62,9 @@ namespace EMS.Service.Base
             IQueryable<T> query = Repo.GetAll(null);
 
             paginationDTO.RecordCount = await query.CountAsync();
+            paginationDTO.PageCount = (int)Math.Ceiling(
+                (double)paginationDTO.RecordCount / paginationDTO.PageSize
+            );
 
             if (!string.IsNullOrWhiteSpace(paginationDTO.SortByColumns))
                 if (paginationDTO.SortBy == EnumSortBy.Descending)
