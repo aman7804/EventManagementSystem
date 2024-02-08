@@ -1,6 +1,6 @@
-﻿using EMS.Entity;
-using EMS.Service.CityModule;
+﻿using EMS.Service.CityModule;
 using EMS.Service.DTO;
+using EMS.Service.DTO.Filter;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -39,7 +39,7 @@ namespace EMS.Api.Controllers
             GetResult(await service.GetByIdAsync(Id));
 
         [HttpPost("list")]
-        public async Task<IActionResult> List(PaginationDTO<CityDTO> pagination) =>
+        public async Task<IActionResult> List(PaginationDTO<CityDTO, CityFilter> pagination) =>
             GetResult(await service.GetPageAsync(pagination));
 
         [AllowAnonymous]

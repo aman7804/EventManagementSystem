@@ -1,6 +1,7 @@
 ﻿using EMS.Api.Authorization;
 using EMS.Service.BookingModule;
 using EMS.Service.DTO;
+using EMS.Service.DTO.Filter;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -86,7 +87,7 @@ namespace EMS.Api.Controllers
         }
 
         [HttpPost("list")]
-        public async Task<IActionResult> List(PaginationDTO<BookingDTO> pagination) =>
+        public async Task<IActionResult> List(PaginationDTO<BookingDTO,BookingFilter> pagination) =>
             GetResult(await service.GetBookings(pagination));
     }
 }

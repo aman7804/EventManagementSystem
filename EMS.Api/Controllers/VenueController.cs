@@ -1,5 +1,6 @@
 ﻿using EMS.Api.Authorization;
 using EMS.Service.DTO;
+using EMS.Service.DTO.Filter;
 using EMS.Service.VenueModule;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -40,7 +41,7 @@ namespace EMS.Api.Controllers
 
         [AllowAnonymous]
         [HttpPost("list")]
-        public async Task<IActionResult> List(PaginationDTO<VenueDTO> pagination) =>
+        public async Task<IActionResult> List(PaginationDTO<VenueDTO, VenueFilter> pagination) =>
             GetResult(await service.GetPageAsync(pagination));
     }
 }
