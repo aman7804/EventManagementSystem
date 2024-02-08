@@ -11,4 +11,11 @@ export const getVenueListSelector = createSelector(
   (list) => list
 );
 
+const getCurrentVenue = (state: RootState) => 
+  get(state, "venue.current");
+
+export const getCurrentVenueSelector = createSelector(
+  getCurrentVenue,
+  (current) => current
+)
 

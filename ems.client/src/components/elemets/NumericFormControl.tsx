@@ -1,5 +1,5 @@
 import React from 'react';
-import { NumericFormat, NumericFormatProps } from 'react-number-format';
+import { NumericFormat } from 'react-number-format';
 
 interface CustomProps {
   onChange: (event: { target: { name: string; value: string } }) => void;
@@ -21,14 +21,6 @@ const NumericFormControl: React.FC<CustomProps> = (props) => {
   return (
     <NumericFormat
       {...other}
-      onValueChange={(values) => {
-        onChange({
-          target: {
-            name: props.name,
-            value: values.floatValue?.toString() || "",
-          },
-        });
-      }}
       thousandSeparator
       // valueIsNumericString
       prefix={prefix}

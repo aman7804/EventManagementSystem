@@ -6,13 +6,13 @@ import {
   getByIdRequest,
   listRequest,
 } from "store/venue/actions";
-import {dropDownListRequest as cityDropDownlistRequest} from "store/city/actions"
+import {dropDownListRequest as cityDropDownListRequest} from "store/city/actions"
 import {
   IVenueContainerDispatch,
   IVenue,
 } from "interfaces/venue.interface";
 import { RootState } from "store/root/root.reducer";
-import { getVenueListSelector } from "store/venue/selectors";
+import { getCurrentVenueSelector, getVenueListSelector } from "store/venue/selectors";
 
 const mapDispatchToProps: MapDispatchToProps<
   IVenueContainerDispatch,
@@ -22,12 +22,13 @@ const mapDispatchToProps: MapDispatchToProps<
   saveRequest: saveRequest,
   getRequest: getByIdRequest,
   deleteRequest: deleteRequest,
-  cityDropDownlistRequest: cityDropDownlistRequest
+  cityDropDownListRequest: cityDropDownListRequest
 };
 
 const mapStateToProps = (state:RootState) => {
   return {
-    list: getVenueListSelector(state)
+    list: getVenueListSelector(state),
+    current: getCurrentVenueSelector(state),
   };  
 }
 

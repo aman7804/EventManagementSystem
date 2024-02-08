@@ -14,8 +14,8 @@ interface IDropDownProps {
 }
 
 const DropDownSelect = (props: IDropDownProps) => {
-  const {key, label, value, list, helperText, error} = props;
-  const [selectedValue,setSelectedValue] = useState<string|undefined>(value?.toString()||undefined);
+  const {key, label, onChange, value, list, helperText, error} = props;
+  const [selectedValue,setSelectedValue] = useState<string|undefined>(value?.toString());
 
   console.log("dropDownComp",list)
   return (
@@ -27,16 +27,14 @@ const DropDownSelect = (props: IDropDownProps) => {
           id="demo-simple-select"
           value={selectedValue}
           label="Age"
-          onChange={(e)=>{
+          onChange={(e) => {
             setSelectedValue(e.target.value);
+            if (onChange) onChange(e);
           }}
-          // onChange={onChange}
         >
-          {
-            list?.map((item) => {
-              return <MenuItem key={item.id} value={item.id}>{item.name}</MenuItem>
-            })
-          }
+          {list?.map((item) => 
+              <MenuItem value={item.id}>{item.name}</MenuItem>
+          )}
         </Select>
         <FormHelperText>{helperText}</FormHelperText>
       </FormControl>

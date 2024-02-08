@@ -30,11 +30,12 @@ export interface IVenueContainerDispatch {
   saveRequest: (payload: GENERIC.SaveRequestPayload<IVenue>) => {};
   getRequest: (payload: GENERIC.GetRequestPayload) => {};
   deleteRequest: (payload: GENERIC.DeleteRequestPayload) => {};
-  cityDropDownlistRequest: (payload: GetDropDownListPayload) => {};
+  cityDropDownListRequest: (payload: GetDropDownListPayload) => {};
 }
 
 /* State Container Model */
 export interface IVenueContainerState {
-  list: any;
+  list: IVenue[];
+  current: IVenue;
 }
 

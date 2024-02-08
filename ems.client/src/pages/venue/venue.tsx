@@ -43,6 +43,7 @@ import AddEditVenue from "components/venue/venue.create";
 import projectTheme from "App.theme";
 import * as GENERIC from "interfaces/generic.interface";
 import { GetDropDownListPayload } from "interfaces/city.interface";
+import { get } from "lodash";
 
 const ArrowBackIcon = () =>
   <img src={arrowBackwardIcon} alt="arrow-backward" />;
@@ -100,7 +101,6 @@ export type VenueProps = IVenueContainerState &
   IVenueContainerDispatch;
 
 const VenueForm: React.FC<VenueProps> = (props) => {
-  const [venueList, setVenueList] = useState<IVenue[] | null>();
   const [venueListMeta, setVenueListMeta] = useState<IVenuePagination | null>();
   const [page, setPage] = useState<string>("5");
   const [pageNo, setPageNo] = useState<number>(1);
@@ -109,10 +109,8 @@ const VenueForm: React.FC<VenueProps> = (props) => {
   const [showScreen, setShowScreen] = useState<boolean>(false);
   const [searchText, setSearchText] = useState<string>("");
   const [isEditVenue, setIsEditVenue] = useState<boolean>(false);
-  const [editVenueId, setEditVenueId] = useState<number>(0);
   const [isOpenVenueDeleteModal, setIsOpenVenueDeleteModal] = useState(false);
   const [deleteVenueId, setDeleteVenueId] = useState<number>();
-  const [currentVenueData, setCurrentVenueData] = useState<any>();
   const [cityDropDownList, setCityDropDownList] = useState<GENERIC.IKeyValuePair[]|null>();
   
   const handleRequestSort = useCallback(
@@ -127,18 +125,22 @@ const VenueForm: React.FC<VenueProps> = (props) => {
   );
 
   // handle-child-component
-  const handleVenue = (isEdit: boolean, venueId: number|null) => {
-    setIsEditVenue(isEdit);
-    if (venueId) 
-      setEditVenueId(venueId);
-    else {
-      setCurrentVenueData(null);
+  const handleAddEditVenue = (venueId: number|null) => {
+    
+    if (venueId) { //Edit Mode
+      setIsEditVenue(true);
+      getVenue(venueId);
+      getCityDropDownList()
+      // setEditVenueId(venueId); 
+    }
+    else { //Add Mode
+      setIsEditVenue(false);
       setShowScreen(true);
     }
   };
   const handleVenueClose = () => {
     setShowScreen(false);
-    setEditVenueId(0)
+    // setEditVenueId(0)
   }
   const handleVenueDeleteModal = (venueId: number) => {
     setDeleteVenueId(venueId);
@@ -149,31 +151,14 @@ const VenueForm: React.FC<VenueProps> = (props) => {
     setIsOpenVenueDeleteModal(false);
   };
 
-  // useEffects
-  useEffect(()=>{
-    if(editVenueId) {
-      getVenue();
-      getCityDropDownList();
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[editVenueId])
-
   useEffect(() => {
-  //   AOS.init({
-  //     easing: "ease-in",
-  //     duration: 500,
-  //     startEvent: "load",
-  //     offset: 50,
-  //     once: true,
-  //   });
-  //   AOS.refresh();
     getVenueList(); 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, pageNo, order, orderBy]);
 
   // callbacks
   const onVenueListSuccess = (response: GENERIC.IApiSuccessResponse<IVenuePagination>) => {
-    setVenueList(response.data?.data);
+    // setVenueList(response.data?.data);
     setVenueListMeta(response.data);
   };
   const onDeleteVenueSuccess = (response: GENERIC.IApiSuccessResponse<IVenue>) => {
@@ -197,7 +182,6 @@ const VenueForm: React.FC<VenueProps> = (props) => {
     }
   };
   const onEditVenueSuccess = (response: GENERIC.IApiSuccessResponse<IVenue>) => {
-    setCurrentVenueData(response.data)
     setShowScreen(true);
   };
   const onCityListSuccess = (response: GENERIC.GetSuccessResponse<GENERIC.IKeyValuePair[]> | null) => {
@@ -240,18 +224,17 @@ const VenueForm: React.FC<VenueProps> = (props) => {
       deleteRequest(payload);
     }
   };
-  const handleAddVenue = (formData: IVenue) => {
-    debugger;
+  const handleSaveVenue = (formData: IVenue) => {
     const { saveRequest } = props;
     if (saveRequest) {
       showLoader();
       const payload: GENERIC.SaveRequestPayload<IVenue> = {
         data: {
-          id: editVenueId,
+          id: formData.id,
           name: formData.name,
           address: formData.address,
           description: formData.description,
-          isActive: false,
+          isActive: formData.isActive,
           minCapacity: formData.minCapacity,
           maxCapacity: formData.maxCapacity,
           price: formData.price,
@@ -259,33 +242,32 @@ const VenueForm: React.FC<VenueProps> = (props) => {
         },
         callback: onAddVenueSuccess,
       };
+      console.log("edited payload",payload)
       saveRequest(payload);
     }
   };
-  const getVenue = () => {
+  const getVenue = (id: number) => {
     const { getRequest } = props;
 
     if (getRequest) {
       showLoader();
       const payload = {
-        data: {
-          id: editVenueId
-        },
+        data: {id},
         callback: onEditVenueSuccess,
       };
       getRequest(payload);
     }
   };
   const getCityDropDownList = async () => {
-      const { cityDropDownlistRequest } = props;
+      const { cityDropDownListRequest } = props;
   
-      if (cityDropDownlistRequest) {
+      if (cityDropDownListRequest) {
         const payload: GetDropDownListPayload = {
           data: { },
           callback: onCityListSuccess,
         };
         console.log("sending request payload: ",payload)
-        cityDropDownlistRequest(payload);
+        cityDropDownListRequest(payload);
       }
   }
 
@@ -326,6 +308,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
 
 
   const getListingScreen = () => {
+    const list = get(props, "list.data", []);
     return <>
               <Grid
                 container
@@ -391,7 +374,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {venueList?.map((row) => (
+                          {list && list?.map((row: IVenue) => (
                             // eslint-disable-next-line react/no-array-index-key
                             <TableRow key={row?.id}>
                               <TableCell component="th" scope="row">
@@ -409,7 +392,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
                               <TableCell align="center">
                                 <div className="table-actions">
                                   <IconButton
-                                    onClick={() => handleVenue(true, row?.id)}
+                                    onClick={() => handleAddEditVenue(row?.id)}
                                   >
                                     <img src={editIcon} alt="edit" />
                                   </IconButton>
@@ -425,7 +408,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
                         </TableBody>
                       </Table>
                     </TableContainer>
-                    {venueList && venueList.length > 0 ? (
+                    {list && list.length > 0 ? (
                       <Box className="custom-pagination">
                         <Box className="custom-rowperpage">
                           <Typography variant="body2" component="span">
@@ -491,7 +474,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
           {!showScreen && 
             <Button
               variant="contained"
-              onClick={() => handleVenue(false, null)}
+              onClick={() => handleAddEditVenue(null)}
               className="btn-add"
             >
               <img src={plusLightIcon} alt="plus" />
@@ -507,14 +490,9 @@ const VenueForm: React.FC<VenueProps> = (props) => {
               isEditVenue={isEditVenue}
               showScreen={showScreen}
               handleVenueClose={handleVenueClose}
-              handleAddVenue={handleAddVenue}
+              handleAddVenue={handleSaveVenue}
               cityDropDownList={cityDropDownList}
-              // getVenue={getVenue}
-              // handleSaveClick={
-              //   isEditVenue ? getVenue : handleAddVenue
-              // }
-              // editVenueData={editVenueData}
-              currentVenueData={currentVenueData}
+              currentVenueData={isEditVenue ? {...props.current} : undefined}
             />)
         }            
       </div>

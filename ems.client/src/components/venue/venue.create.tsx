@@ -2,7 +2,9 @@ import {
   Box,
   Button,
   Card,
+  Checkbox,
   FormControl,
+  FormControlLabel,
   Grid,
   InputLabel,
   MenuItem,
@@ -16,17 +18,15 @@ import { IVenue } from "interfaces/venue.interface";
 import { useEffect } from "react";
 import NumericFormControl, { removeNumberFormatting } from "components/elemets/NumericFormControl";
 import * as GENERIC from "interfaces/generic.interface";
-import DropDownSelect from "components/dropdown/DropDownSelect";
+import DropDownSelect from "components/elemets/DropDownSelect";
+import CheckBox from "components/elemets/CheckBox";
 
 interface IAddEditVenueProps {
   isEditVenue: boolean;
   showScreen: boolean;
   handleVenueClose: any;
-  // handleSaveClick: any;
   handleAddVenue: any;
-  // handleEditVenue: any;
-  // currentVenueData?: IVenue;
-  currentVenueData: IVenue
+  currentVenueData?: IVenue
   cityDropDownList: GENERIC.IKeyValuePair[] | null | undefined
 }
 
@@ -58,7 +58,7 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
     reset,
     setValue,
     getValues,
-    formState: { errors },
+    formState: { errors }
   } = useForm<IVenue>();
 
   const onModalClose = () => {
@@ -97,30 +97,16 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
         return getErrorMessage(fieldName, errors.minCapacity?.type);
       case "maxCapacity":
         return getErrorMessage(fieldName, errors.maxCapacity?.type);
+      case "cityId":
+        return getErrorMessage(fieldName, errors.cityId?.type);
       default:
         return "field cannot be empty";
     }
     
   };
 
-  
   useEffect(() => {
-      if (isEditVenue && currentVenueData) {
-        setValue("name", currentVenueData.name);
-        setValue("address", currentVenueData.address)
-        setValue("description", currentVenueData.description)
-        setValue("price", currentVenueData.price)
-        setValue("cityId", currentVenueData.cityId)
-        // setValue("minCapacity", currentVenueData.minCapacity)
-        // setValue("maxCapacity", currentVenueData.  )
-      } else {
-        setValue("name", "");
-        setValue("address", "")
-        setValue("description", "")
-        setValue("price", 0)
-        setValue("cityId", 0)
-
-      }
+      reset(currentVenueData)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEditVenue, setValue, showScreen, currentVenueData]);
   
@@ -128,6 +114,7 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
     data.price = removeNumberFormatting(data.price.toString());
     handleAddVenue(data);
   }
+console.log(currentVenueData)
   return (
     <Grid
       container
@@ -136,7 +123,7 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
     >
       <Grid item xs={12}>
         <Card>
-          <Box className="content-header">
+          <Box className="content-header">  
             <Typography variant="h4">
               {isEditVenue ? "Edit Venue" : "Add Venue"}
             </Typography>       
@@ -168,7 +155,7 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                 fullWidth
                 variant="outlined"
                 multiline
-                error={!!errors.name}
+                error={!!errors.address}
                 helperText={getError("address")}
                 {...register("address", {
                   required: true,
@@ -184,7 +171,7 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                 fullWidth
                 variant="outlined"
                 multiline
-                error={!!errors.name}
+                error={!!errors.description}
                 helperText={getError("description")}
                 {...register("description", {
                   required: true,
@@ -202,7 +189,7 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                     fullWidth
                     variant="outlined"
                     multiline
-                    error={!!errors.name}
+                    error={!!errors.price}
                     helperText={getError("price")}
                     {...register("price", {
                       required: true
@@ -222,17 +209,12 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                     label="City"                
                     value={currentVenueData?.cityId}
                     list={cityDropDownList}
-                    error={!!errors.name}
+                    error={!!errors.cityId}
                     helperText={getError("cityId")}
                     {...register("cityId", {
                       required: true,
                     })}
-                    onChange={(e) => {
-                      setValue("cityId", Number(e.target.value));
-                      if (currentVenueData) {
-                        currentVenueData.cityId = Number(e.target.value)
-                      }
-                    }}
+                    onChange={e => setValue("cityId", Number(e.target.value))}
                   />
                 </Grid>
                 <Grid item xs={12} xl={4} md={6}>
@@ -246,7 +228,7 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                     fullWidth
                     variant="outlined"
                     multiline
-                    error={!!errors.name}
+                    error={!!errors.minCapacity}
                     helperText={getError("minCapacity")}
                     {...register("minCapacity", {
                       required: true,
@@ -265,7 +247,7 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                     fullWidth
                     variant="outlined"
                     multiline
-                    error={!!errors.name}
+                    error={!!errors.maxCapacity}
                     helperText={getError("maxCapacity")}
                     {...register("maxCapacity", {
                       required: true,
@@ -286,7 +268,21 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
               >
                 Cancel
               </Button>
-            
+              <Box style={{
+                position: "absolute",
+                // bottom: 1,
+                right: 0,
+                margin: "10px", // Adjust the margin as needed
+              }}>
+                <CheckBox
+                  label="active"
+                  isChecked={
+                    currentVenueData ? currentVenueData.isActive : true
+                  }
+                  {...register("isActive")}
+                  onChange={e => setValue("isActive", e.target.checked)}
+                />
+            </Box>
             </form>             
         </Card>
       </Grid>
