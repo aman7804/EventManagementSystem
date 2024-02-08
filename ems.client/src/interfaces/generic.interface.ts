@@ -1,4 +1,4 @@
-export interface GenericState<Type> {
+  export interface GenericState<Type> {
     pending: boolean;
     list: Type[] | null;
     current: Type | null;
@@ -27,6 +27,11 @@ export interface GenericState<Type> {
     message?:string;
   }
   
+  export interface IKeyValuePair{
+    id: number
+    name: string
+  }
+
   export interface ListFailureResponse {
     message: string;
     data?: any;
@@ -88,7 +93,7 @@ export interface GenericState<Type> {
   export interface IApiSuccessResponse<Type> {
     code: number;
     message: string;
-    data: Type | null;
+    data: Type|null;
     isSuccessStatusCode: boolean;
     isValid: boolean;
   }

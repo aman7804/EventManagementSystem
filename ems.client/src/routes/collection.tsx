@@ -3,6 +3,7 @@ import Layout from "pages/layout";
 import Dashboard from "pages/dashboard";
 import Login from "pages/auth/login.container";
 import Registration from "pages/auth/registration.container";
+import adminPrivateRoutes from "./admin";
 
 export const router = createBrowserRouter([
   {
@@ -14,7 +15,8 @@ export const router = createBrowserRouter([
         index: true,
         path: "/dashboard",
         Component: Dashboard
-      },      
+      },
+      ...adminPrivateRoutes()      
     ]
   },
   {

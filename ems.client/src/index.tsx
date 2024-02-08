@@ -1,26 +1,39 @@
 import { StrictMode, Suspense } from "react";
-import ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider } from "@emotion/react";
 import projectTheme from "App.theme";
 import { Provider } from "react-redux";
-import store from "store/root/root.store";
+import store, {persistStorage} from "store/root/root.store";
 import Loader from "components/loader";
+import { ToastContainer } from "react-toastify";
+import { PersistGate } from "redux-persist/integration/react";
+import "../node_modules/aos/dist/aos.css";
+import "react-toastify/dist/ReactToastify.css";
 
-
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement,
-);
-root.render(
+ReactDOM.render(
   <StrictMode>
     <Suspense fallback={<Loader />} >
-      <Provider store={store}>
+      <Provider store={store} >
         <ThemeProvider theme={projectTheme}>
-          <App />
+          <PersistGate loading={null} persistor={persistStorage}>
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
+            <App />
+          </PersistGate>
         </ThemeProvider>
       </Provider>
     </Suspense>
   </StrictMode>,
+  document.getElementById("root")
 );
