@@ -27,6 +27,7 @@ import { toast } from "react-toastify";
 import { EMAIL_PATTERN, MOBILE_NO, PASSWORD_PATTERN } from "utils/constants";
 import { useForm } from "react-hook-form";
 import {Link} from "react-router-dom"
+import { showLoader } from "utils/helper";
 
 export type RegistrationProps = IRegistrationContainerDispatch;
 
@@ -110,7 +111,7 @@ export const RegistrationForm = (props: RegistrationProps) => {
   const onSubmit = async (data: IRegistration) => {
     const { registrationRequest } = props;
     if (registrationRequest) {
-      // showLoader();
+      showLoader();
       const payload = {
         values: {
           firstName: data.firstName,
