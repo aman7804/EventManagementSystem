@@ -48,7 +48,7 @@ import {
     const maxNameLength = 25;
     const minDescriptionLength = 20;
     const maxDescriptionLength = 200;
-    const maxPrice = 1111111111111999
+    const maxPrice = 9999999999999999.99
     // const maxPriceLength = 16
 
     const onModalClose = () => {
@@ -97,7 +97,7 @@ import {
       reset,
       setValue,
       formState: { errors, isValid }
-    } = useForm<IPhotography>({mode: 'onChange'});
+    } = useForm<IPhotography>();
   
     useEffect(() => {
         reset(currentPhotographyData)
@@ -184,10 +184,7 @@ import {
                   {...register("price", {
                     required: true,
                     max: maxPrice,
-                  }
-                  )
-                    
-                  }
+                  })}
                   InputProps={{
                     inputComponent: NumericFormControl as any,
                   }}
