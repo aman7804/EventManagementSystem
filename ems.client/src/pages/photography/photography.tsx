@@ -39,10 +39,9 @@ import { toast } from "react-toastify";
 import { PAGE_SIZES, SOMETHING_WENT_WRONG } from "utils/constants";
 import { Order } from "utils/enums";
 import DeleteConfirmationModal from "components/modals/delete.confirm";
-import AddEditPhotography from "components/photography/photography.create";
+import AddEditPhotography from "components/photography.create";
 import projectTheme from "App.theme";
 import * as GENERIC from "interfaces/generic.interface";
-import { GetDropDownListPayload } from "interfaces/city.interface";
 import { get } from "lodash";
 
 const ArrowBackIcon = () =>
