@@ -71,12 +71,14 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
     (newOrderBy: keyof IPhotography) => (event: React.MouseEvent<unknown>) =>
       onRequestSort(event, newOrderBy);
 
-  const columnDisplayName:{[key in keyof IPhotography]: string} = {
+  interface ColumnDisplayName{
+    [key: string] : string;    
+  }
+
+  const columnDisplayName: ColumnDisplayName = {
     name: "Name",
     description: "Description",
     price: "Price",
-    isActive: "",
-    id: "",
   }
   
   return (
@@ -107,7 +109,6 @@ const PhotographyForm: React.FC<PhotographyProps> = (props) => {
   const [isEditPhotography, setIsEditPhotography] = useState<boolean>(false);
   const [isOpenPhotographyDeleteModal, setIsOpenPhotographyDeleteModal] = useState(false);
   const [deletePhotographyId, setDeletePhotographyId] = useState<number>();
-  const [cityDropDownList, setCityDropDownList] = useState<GENERIC.IKeyValuePair[]|null>();
   
   const handleRequestSort = useCallback(
     (event: React.MouseEvent<unknown>, newOrderBy: keyof IPhotography) => {
@@ -122,7 +123,6 @@ const PhotographyForm: React.FC<PhotographyProps> = (props) => {
 
   // handle-child-component
   const handleAddEditPhotography = (photographyId: number|null) => {
-    getCityDropDownList()
     if (photographyId) { //Edit Mode
       setIsEditPhotography(true);
       getPhotography(photographyId);
@@ -162,7 +162,7 @@ const PhotographyForm: React.FC<PhotographyProps> = (props) => {
       toast.error(SOMETHING_WENT_WRONG);
     }
   };
-  const onAddPhotographySuccess = (response: GENERIC.IApiSuccessResponse<IPhotography>) => {
+  const onSavePhotographySuccess = (response: GENERIC.IApiSuccessResponse<IPhotography>) => {
     if (response.isSuccessStatusCode) {
       toast.success
       (`Photography ${isEditPhotography ? "updated" : "added"} successfully.`)
@@ -174,14 +174,9 @@ const PhotographyForm: React.FC<PhotographyProps> = (props) => {
       toast.error(SOMETHING_WENT_WRONG);
     }
   };
-  const onEditPhotographySuccess = (response:
-    GENERIC.IApiSuccessResponse<IPhotography>) => {
+  const onGetPhotographySuccess = (response: GENERIC.IApiSuccessResponse<IPhotography>) => {
     setShowScreen(true);
   };
-  const onCityListSuccess = (response:
-    GENERIC.GetSuccessResponse<GENERIC.IKeyValuePair[]> | null) => {
-    setCityDropDownList(response?.data) 
-  }
 
   // action-dispatches
   const getPhotographyList = async () => {
@@ -231,7 +226,7 @@ const PhotographyForm: React.FC<PhotographyProps> = (props) => {
           isActive: formData.isActive,
           price: formData.price,
         },
-        callback: onAddPhotographySuccess,
+        callback: onSavePhotographySuccess,
       };
       saveRequest(payload);
     }
@@ -243,23 +238,11 @@ const PhotographyForm: React.FC<PhotographyProps> = (props) => {
       showLoader();
       const payload = {
         data: {id},
-        callback: onEditPhotographySuccess,
+        callback: onGetPhotographySuccess,
       };
       getRequest(payload);
     }
   };
-  const getCityDropDownList = async (stateId?: number) => {
-      const { cityDropDownListRequest } = props;
-  
-      if (cityDropDownListRequest) {
-        const payload: GetDropDownListPayload = {
-          data: { id: stateId },
-          callback: onCityListSuccess,
-        };
-        console.log("sending request payload: ",payload)
-        cityDropDownListRequest(payload);
-      }
-  }
 
   // search
   const handlePhotographySearch = (event: any) => {
@@ -271,6 +254,7 @@ const PhotographyForm: React.FC<PhotographyProps> = (props) => {
       getPhotographyList();
     }
   };
+  
   // pagination
   const handleChange = (event: SelectChangeEvent) => {
     setPage(event.target.value);
@@ -471,7 +455,6 @@ const PhotographyForm: React.FC<PhotographyProps> = (props) => {
               showScreen={showScreen}
               handlePhotographyClose={handlePhotographyClose}
               handleAddPhotography={handleSavePhotography}
-              cityDropDownList={cityDropDownList}
               currentPhotographyData={isEditPhotography ? {...props.current} : {
                 id: 0,
                 description: "",

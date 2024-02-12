@@ -10,9 +10,10 @@ import {
   import { useForm } from "react-hook-form";
   import { IPhotography } from "interfaces/photography.interface";
   import { useEffect } from "react";
-  import NumericFormControl, { removeNumberFormatting } from "components/elemets/NumericFormControl";
-  import * as GENERIC from "interfaces/generic.interface";
-  import CheckBox from "components/elemets/CheckBox";
+  import NumericFormControl, { CustomNumericFormatProps, removeNumberFormatting } from "components/elements/NumericFormControl";
+  import CheckBox from "components/elements/CheckBox";
+  import React from "react";
+import { NumericFormatProps } from "react-number-format";
   
   interface IAddEditPhotographyProps {
     isEditPhotography: boolean;
@@ -20,7 +21,6 @@ import {
     handlePhotographyClose: any;
     handleAddPhotography: any;
     currentPhotographyData?: IPhotography
-    cityDropDownList: GENERIC.IKeyValuePair[] | null | undefined
   }
   
   export interface IIndexable {
@@ -29,28 +29,27 @@ import {
   
   const fieldNames : IIndexable = {
     name: "Photography Name",
-    address: "Photography Address",
     description: "Photography Description",
-    price: "Photography Price",
-    minCapacity: "Minimum Capacity",
-    maxCapacity: "Maximum Capacity"
+    price: "Photography Price"
   }
   
+  
+  const maxPrice = 9999999999999999.99;
+  const CustomPriceComponent =
+  React.forwardRef<NumericFormatProps, CustomNumericFormatProps>((props, ref ) =>
+    <NumericFormControl {...props} min={0} max={maxPrice}/>)
+
   const AddEditPhotography: React.FC<IAddEditPhotographyProps> = ({
     isEditPhotography,
     showScreen,
     handlePhotographyClose,
-    handleAddPhotography,
+    handleAddPhotography: handleSavePhotography,
     currentPhotographyData,
-    cityDropDownList
   }) => {
     const minNameLength = 5;
     const maxNameLength = 25;
     const minDescriptionLength = 20;
     const maxDescriptionLength = 200;
-    const maxPrice = 9999999999999999.99
-    // const maxPriceLength = 16
-
     const onModalClose = () => {
       reset();
       handlePhotographyClose();
@@ -62,8 +61,6 @@ import {
         switch (type) {
           case "required":
             return `${fieldNames[fieldName]} is required.`;
-          case "max":
-            return `${fieldNames[fieldName]} range not supported`;
           case "minLength":
             return  `Minimum length of ${fieldNames[fieldName].toLowerCase()} is
               ${fieldName === "description" ? minDescriptionLength : minNameLength}.`;
@@ -88,7 +85,6 @@ import {
         default:
           return "field cannot be empty";
       }
-      
     };
 
     const {
@@ -96,7 +92,7 @@ import {
       handleSubmit,
       reset,
       setValue,
-      formState: { errors, isValid }
+      formState: { errors }
     } = useForm<IPhotography>();
   
     useEffect(() => {
@@ -106,9 +102,8 @@ import {
     
     const beginSubmit = async (data: any) => {
       data.price = removeNumberFormatting(data.price.toString());
-      handleAddPhotography(data);
+      handleSavePhotography(data);
     }
-    console.log(errors)
     return (
       <Grid
         container
@@ -177,24 +172,25 @@ import {
                   </>
                   }
                   fullWidth
+                  autoComplete="off"
                   variant="outlined"
-                  multiline
                   error={!!errors.price}
                   helperText={getError("price")}
-                  {...register("price", {
-                    required: true,
-                    max: maxPrice,
-                  })}
+                  {...register("price", { required: true })}
                   InputProps={{
-                    inputComponent: NumericFormControl as any,
+                    inputComponent: CustomPriceComponent as any,
                   }}
                   value={isEditPhotography
                     ? currentPhotographyData?.price || "" : undefined
-                  }                    
+                  }       
                 />
                 </Grid>
                 </Grid>
-                <Button variant="contained" disabled={!isValid} className="btn-save" type="submit">
+                <Button
+                  variant="contained"
+                  className="btn-save"
+                  type="submit"
+                >
                   <img src={saveIcon} alt="save" />
                   Save
                 </Button>
@@ -212,8 +208,8 @@ import {
                 }}>
                   <CheckBox
                     label="Active"
-                    isChecked={
-                      currentPhotographyData ? currentPhotographyData.isActive : true
+                    isChecked={currentPhotographyData 
+                      ? currentPhotographyData.isActive : true
                     }
                     {...register("isActive")}
                     onChange={e => setValue("isActive", e.target.checked)}

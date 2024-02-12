@@ -13,7 +13,6 @@ import * as ACTION_TYPE from "./action.types";
 import service from "services/photography.service";
 import { IPhotography, IPhotographyPagination } from "interfaces/photography.interface";
 import { IApiSuccessResponse } from "interfaces/generic.interface";
-import * as StackTraceParser from "stacktrace-parser"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function* listSaga(action: any) {

@@ -1,5 +1,6 @@
 import { StrictMode, Suspense } from "react";
 import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client"
 import "./index.css";
 import App from "./App";
 import { ThemeProvider } from "@emotion/react";
@@ -12,7 +13,11 @@ import { PersistGate } from "redux-persist/integration/react";
 import "../node_modules/aos/dist/aos.css";
 import "react-toastify/dist/ReactToastify.css";
 
-ReactDOM.render(
+const root = createRoot(
+  document.getElementById("root") as HTMLElement
+)
+
+root.render(
   <StrictMode>
     <Suspense fallback={<Loader />} >
       <Provider store={store} >
@@ -34,6 +39,5 @@ ReactDOM.render(
         </ThemeProvider>
       </Provider>
     </Suspense>
-  </StrictMode>,
-  document.getElementById("root")
+  </StrictMode>
 );
