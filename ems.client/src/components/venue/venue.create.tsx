@@ -10,10 +10,10 @@ import { saveIcon } from "assets/images";
 import { useForm } from "react-hook-form";
 import { IVenue } from "interfaces/venue.interface";
 import { useEffect } from "react";
-import NumericFormControl, { removeNumberFormatting } from "components/elemets/NumericFormControl";
+import NumericFormControl, { removeNumberFormatting } from "components/elements/NumericFormControl";
 import * as GENERIC from "interfaces/generic.interface";
-import DropDownSelect from "components/elemets/DropDownSelect";
-import CheckBox from "components/elemets/CheckBox";
+import DropDownSelect from "components/elements/DropDownSelect";
+import CheckBox from "components/elements/CheckBox";
 
 interface IAddEditVenueProps {
   isEditVenue: boolean;

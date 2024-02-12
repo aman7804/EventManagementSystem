@@ -20,7 +20,7 @@ import {
           </Typography>
         }
         <List className="sidebar-menu">
-          <ListItemButton>
+          <ListItemButton key={"dashboard"}>
             <NavLink to="/dashboard">
               <img src={dashboardIcon} alt="Dashboard" />
               Dashboard
@@ -28,7 +28,7 @@ import {
           </ListItemButton>
           {isAuthenticated && (
             menuList.map(item => {
-              return <ListItemButton>
+              return <ListItemButton key={item.text}>
                       <NavLink to={item.route}>
                         <img src={item.icon} alt={item.text} />
                         {item.text}

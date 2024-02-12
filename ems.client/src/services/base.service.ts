@@ -55,11 +55,10 @@ axios.interceptors.response.use(
       case HttpStatusCodes.InternalServerError:
         if (Config.env.NodeEnv === NODE_ENV_TYPES.Development) {
           console.log(INTERNAL_SERVER_ERROR);
-          toast.error(
-            error.response?.data?.toString().split("\n")[0] || error.message
-          );
+          toast.error(INTERNAL_SERVER_ERROR);
         } else {
           console.log(SOMETHING_WENT_WRONG);
+          toast.error(SOMETHING_WENT_WRONG);
         }
         break;
       default:
