@@ -6,6 +6,7 @@ import venueReducer from "../venue/reducer"
 import cityReducer from "../city/reducer"
 import photographyReducer from "../photography/reducer"
 import decorationReducer from "../decoration/reducer"
+import cateringReducer from "../catering/reducer"
 
 const rootReducer = combineReducers<unknown>({
   auth: persistReducer(
@@ -18,7 +19,8 @@ const rootReducer = combineReducers<unknown>({
   city: cityReducer,
   venue: venueReducer,
   photography: photographyReducer,
-  decoration: decorationReducer
+  decoration: decorationReducer,
+  catering: cateringReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
