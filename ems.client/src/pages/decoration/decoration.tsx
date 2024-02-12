@@ -29,20 +29,19 @@ import React, { useCallback, useEffect, useState } from "react";
 // import AOS from "aos";
 import "aos/dist/aos.css";
 import {
-  IVenue,
-  IVenueContainerDispatch,
-  IVenueContainerState,
-  IVenuePagination,
-} from "interfaces/venue.interface";
+  IDecoration,
+  IDecorationContainerDispatch,
+  IDecorationContainerState,
+  IDecorationPagination,
+} from "interfaces/decoration.interface";
 import { showLoader } from "utils/helper";
 import { toast } from "react-toastify";
 import { PAGE_SIZES, SOMETHING_WENT_WRONG } from "utils/constants";
 import { Order } from "utils/enums";
 import DeleteConfirmationModal from "components/modals/delete.confirm";
-import AddEditVenue from "components/venue.create";
+import AddEditDecoration from "components/decoration.create";
 import projectTheme from "App.theme";
 import * as GENERIC from "interfaces/generic.interface";
-import { GetDropDownListPayload } from "interfaces/city.interface";
 import { get } from "lodash";
 
 const ArrowBackIcon = () =>
@@ -58,29 +57,27 @@ const capitalization = (str: string): string =>
 interface EnhancedTableProps {
   onRequestSort: (
     event: React.MouseEvent<unknown>,
-    newOrderBy: keyof IVenue
+    newOrderBy: keyof IDecoration
   ) => void;
   order: Order;
   orderBy: string;
   columnHeader: string;
-  columnName: keyof IVenue;
+  columnName: keyof IDecoration;
 }
 const EnhancedTableHead = (props: EnhancedTableProps) => {
   const { order, orderBy, onRequestSort } = props;
   const createSortHandler =
-    (newOrderBy: keyof IVenue) => (event: React.MouseEvent<unknown>) =>
+    (newOrderBy: keyof IDecoration) => (event: React.MouseEvent<unknown>) =>
       onRequestSort(event, newOrderBy);
 
-  const columnDisplayName:{[key in keyof IVenue]: string} = {
+  interface ColumnDisplayName{
+    [key: string] : string;    
+  }
+
+  const columnDisplayName: ColumnDisplayName = {
     name: "Name",
-    address: "Address",
-    minCapacity: "Minimum-capacity",
-    maxCapacity: "Maximum-capacity",
-    id: "",
-    description: "",
-    price: "",
-    isActive: "",
-    cityId: ""
+    description: "Description",
+    price: "Price",
   }
   
   return (
@@ -97,24 +94,23 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
 };
 
 
-export type VenueProps = IVenueContainerState &
-  IVenueContainerDispatch;
+export type DecorationProps = IDecorationContainerState &
+  IDecorationContainerDispatch;
 
-const VenueForm: React.FC<VenueProps> = (props) => {
-  const [venueListMeta, setVenueListMeta] = useState<IVenuePagination | null>();
+const DecorationForm: React.FC<DecorationProps> = (props) => {
+  const [decorationListMeta, setDecorationListMeta] = useState<IDecorationPagination | null>();
   const [page, setPage] = useState<string>("5");
   const [pageNo, setPageNo] = useState<number>(1);
   const [order, setOrder] = useState<Order>("asc");
-  const [orderBy, setOrderBy] = useState<keyof IVenue>("name");
+  const [orderBy, setOrderBy] = useState<keyof IDecoration>("name");
   const [showScreen, setShowScreen] = useState<boolean>(false);
   const [searchText, setSearchText] = useState<string>("");
-  const [isEditVenue, setIsEditVenue] = useState<boolean>(false);
-  const [isOpenVenueDeleteModal, setIsOpenVenueDeleteModal] = useState(false);
-  const [deleteVenueId, setDeleteVenueId] = useState<number>();
-  const [cityDropDownList, setCityDropDownList] = useState<GENERIC.IKeyValuePair[]|null>();
+  const [isEditDecoration, setIsEditDecoration] = useState<boolean>(false);
+  const [isOpenDecorationDeleteModal, setIsOpenDecorationDeleteModal] = useState(false);
+  const [deleteDecorationId, setDeleteDecorationId] = useState<number>();
   
   const handleRequestSort = useCallback(
-    (event: React.MouseEvent<unknown>, newOrderBy: keyof IVenue) => {
+    (event: React.MouseEvent<unknown>, newOrderBy: keyof IDecoration) => {
       const isAsc = orderBy === newOrderBy && order === "asc";
       const toggledOrder = isAsc ? "desc" : "asc";
       setOrder(toggledOrder);
@@ -125,72 +121,69 @@ const VenueForm: React.FC<VenueProps> = (props) => {
   );
 
   // handle-child-component
-  const handleAddEditVenue = (venueId: number|null) => {
-    getCityDropDownList()
-    if (venueId) { //Edit Mode
-      setIsEditVenue(true);
-      getVenue(venueId);
+  const handleAddEditDecoration = (decorationId: number|null) => {
+    if (decorationId) { //Edit Mode
+      setIsEditDecoration(true);
+      getDecoration(decorationId);
     }
     else { //Add Mode
-      setIsEditVenue(false);
+      setIsEditDecoration(false);
       setShowScreen(true);
     }
   };
-  const handleVenueClose = () => {
+  const handleDecorationClose = () => {
     setShowScreen(false);
   }
-  const handleVenueDeleteModal = (venueId: number) => {
-    setDeleteVenueId(venueId);
-    setIsOpenVenueDeleteModal(true);
+  const handleDecorationDeleteModal = (decorationId: number) => {
+    setDeleteDecorationId(decorationId);
+    setIsOpenDecorationDeleteModal(true);
   };
-  const handleVenueDeleteCloseModal = () => {
-    setDeleteVenueId(0);
-    setIsOpenVenueDeleteModal(false);
+  const handleDecorationDeleteCloseModal = () => {
+    setDeleteDecorationId(0);
+    setIsOpenDecorationDeleteModal(false);
   };
 
   useEffect(() => {
-    getVenueList(); 
+    getDecorationList(); 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, pageNo, order, orderBy]);
 
   // callbacks
-  const onVenueListSuccess = (response: GENERIC.IApiSuccessResponse<IVenuePagination>) => {
-    setVenueListMeta(response.data);
+  const onDecorationListSuccess = (response: GENERIC.IApiSuccessResponse<IDecorationPagination>) => {
+    setDecorationListMeta(response.data);
   };
-  const onDeleteVenueSuccess = (response: GENERIC.IApiSuccessResponse<IVenue>) => {
+  const onDeleteDecorationSuccess = (response: GENERIC.IApiSuccessResponse<IDecoration>) => {
     if (response.isSuccessStatusCode) {
-      toast.success("Venue deleted successfully.");
-      handleVenueDeleteCloseModal();
-      getVenueList();
+      toast.success("Decoration deleted successfully.");
+      handleDecorationDeleteCloseModal();
+      getDecorationList();
     } else {
       toast.error(SOMETHING_WENT_WRONG);
     }
   };
-  const onAddVenueSuccess = (response: GENERIC.IApiSuccessResponse<IVenue>) => {
+  const onSaveDecorationSuccess = (response: GENERIC.IApiSuccessResponse<IDecoration>) => {
     if (response.isSuccessStatusCode) {
-      toast.success("Venue added successfully.");
-      handleVenueClose();
-      getVenueList();
+      toast.success
+      (`Decoration ${isEditDecoration ? "updated" : "added"} successfully.`)
+      handleDecorationClose();
+      getDecorationList();
     } else if (response.message) {
       toast.warning(response.message);
     } else {
       toast.error(SOMETHING_WENT_WRONG);
     }
   };
-  const onEditVenueSuccess = (response: GENERIC.IApiSuccessResponse<IVenue>) => {
+  const onGetDecorationSuccess = (response: GENERIC.IApiSuccessResponse<IDecoration>) => {
     setShowScreen(true);
   };
-  const onCityListSuccess = (response: GENERIC.GetSuccessResponse<GENERIC.IKeyValuePair[]> | null) => {
-    setCityDropDownList(response?.data) 
-  }
 
   // action-dispatches
-  const getVenueList = async () => {
+  const getDecorationList = async () => {
     const { listRequest } = props;
     
     if (listRequest) {
       showLoader();
-      const payload: GENERIC.ListRequestPayload<IVenuePagination> = {
+      const payload: GENERIC.ListRequestPayload<IDecorationPagination> = {
         data: {
           sortByColumns: capitalization(orderBy),
           sortBy: order==="asc"  ? 0 : 1,
@@ -200,83 +193,67 @@ const VenueForm: React.FC<VenueProps> = (props) => {
             search: searchText
           },
         },
-        callback: onVenueListSuccess,
+        callback: onDecorationListSuccess,
       };
       listRequest(payload);
     }
   };
-  const handleDeleteVenue = () => {
+  const handleDeleteDecoration = () => {
     const { deleteRequest } = props;
 
     if (deleteRequest) {
       showLoader();
       const payload = {
         data: {
-          id: Number(deleteVenueId),
+          id: Number(deleteDecorationId),
         },
-        callback: onDeleteVenueSuccess,
+        callback: onDeleteDecorationSuccess,
       };
 
       deleteRequest(payload);
     }
   };
-  const handleSaveVenue = (formData: IVenue) => {
+  const handleSaveDecoration = (formData: IDecoration) => {
     const { saveRequest } = props;
     if (saveRequest) {
       showLoader();
-      const payload: GENERIC.SaveRequestPayload<IVenue> = {
+      const payload: GENERIC.SaveRequestPayload<IDecoration> = {
         data: {
           id: formData.id,
           name: formData.name,
-          address: formData.address,
           description: formData.description,
           isActive: formData.isActive,
-          minCapacity: formData.minCapacity,
-          maxCapacity: formData.maxCapacity,
           price: formData.price,
-          cityId: formData.cityId,
         },
-        callback: onAddVenueSuccess,
+        callback: onSaveDecorationSuccess,
       };
-      console.log("edited payload",payload)
       saveRequest(payload);
     }
   };
-  const getVenue = (id: number) => {
+  const getDecoration = (id: number) => {
     const { getRequest } = props;
 
     if (getRequest) {
       showLoader();
       const payload = {
         data: {id},
-        callback: onEditVenueSuccess,
+        callback: onGetDecorationSuccess,
       };
       getRequest(payload);
     }
   };
-  const getCityDropDownList = async (stateId?: number) => {
-      const { cityDropDownListRequest } = props;
-  
-      if (cityDropDownListRequest) {
-        const payload: GetDropDownListPayload = {
-          data: { id: stateId },
-          callback: onCityListSuccess,
-        };
-        console.log("sending request payload: ",payload)
-        cityDropDownListRequest(payload);
-      }
-  }
 
   // search
-  const handleVenueSearch = (event: any) => {
+  const handleDecorationSearch = (event: any) => {
     setSearchText(event.target.value);
   };
-  const handleVenueSearchKeyDown = (e: any) => {
+  const handleDecorationSearchKeyDown = (e: any) => {
     if (e?.key === "Enter") {
       setPageNo(1);
-      getVenueList();
+      getDecorationList();
     }
   };
+  
   // pagination
   const handleChange = (event: SelectChangeEvent) => {
     setPage(event.target.value);
@@ -288,15 +265,15 @@ const VenueForm: React.FC<VenueProps> = (props) => {
   const getPaginationDetailText = () => {
     let rangeText = "";
 
-    if (venueListMeta) {
+    if (decorationListMeta) {
       const minRange = (Number(pageNo) - 1) * Number(page) + 1;
 
       let maxRange = Number(pageNo) * Number(page);
-      if (maxRange > Number(venueListMeta?.recordCount)) {
-        maxRange = Number(venueListMeta?.recordCount);
+      if (maxRange > Number(decorationListMeta?.recordCount)) {
+        maxRange = Number(decorationListMeta?.recordCount);
       }
       const rangeString = `${minRange} - ${maxRange}`;
-      rangeText = `Showing ${rangeString} of ${venueListMeta?.recordCount} entries`;
+      rangeText = `Showing ${rangeString} of ${decorationListMeta?.recordCount} entries`;
     }
 
     return rangeText;
@@ -318,10 +295,10 @@ const VenueForm: React.FC<VenueProps> = (props) => {
                         id="search"
                         variant="outlined"
                         className="search-input"
-                        placeholder="Search"
+                        placeholder="Search by Name"
                         value={searchText}
-                        onChange={handleVenueSearch}
-                        onKeyDown={handleVenueSearchKeyDown}
+                        onChange={handleDecorationSearch}
+                        onKeyDown={handleDecorationSearchKeyDown}
                       />
                     </Box>
                     <TableContainer>
@@ -333,27 +310,20 @@ const VenueForm: React.FC<VenueProps> = (props) => {
                               orderBy={orderBy}
                               onRequestSort={handleRequestSort}
                               columnName="name"
-                              columnHeader="Venue"
+                              columnHeader="Decoration"
                             />
                             <EnhancedTableHead
                               order={order}
                               orderBy={orderBy}
                               onRequestSort={handleRequestSort}
-                              columnName="address"
-                              columnHeader="Location"
-                            />
-                            <EnhancedTableHead
-                              order={order}
-                              orderBy={orderBy}
-                              onRequestSort={handleRequestSort}
-                              columnName="minCapacity"
+                              columnName="description"
                               columnHeader="From Capacity"
                             />
                             <EnhancedTableHead
                               order={order}
                               orderBy={orderBy}
                               onRequestSort={handleRequestSort}
-                              columnName="maxCapacity"
+                              columnName="price"
                               columnHeader="To Capacity"
                             />
                             <TableCell
@@ -370,30 +340,27 @@ const VenueForm: React.FC<VenueProps> = (props) => {
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {list && list?.map((row: IVenue) => (
+                          {list && list?.map((row: IDecoration) => (
                             // eslint-disable-next-line react/no-array-index-key
                             <TableRow key={row?.id}>
                               <TableCell component="th" scope="row">
                                 {row?.name}
                               </TableCell>
                               <TableCell component="th" scope="row">
-                                {row?.address}
+                                {row?.description}
                               </TableCell>
                               <TableCell component="th" scope="row">
-                                {row?.minCapacity}
-                              </TableCell>
-                              <TableCell component="th" scope="row">
-                                {row?.maxCapacity}
+                                {row?.price?.toLocaleString()}
                               </TableCell>
                               <TableCell align="center">
                                 <div className="table-actions">
                                   <IconButton
-                                    onClick={() => handleAddEditVenue(row?.id)}
+                                    onClick={() => handleAddEditDecoration(row?.id)}
                                   >
                                     <img src={editIcon} alt="edit" />
                                   </IconButton>
                                   <IconButton
-                                    onClick={() => handleVenueDeleteModal(row?.id)}
+                                    onClick={() => handleDecorationDeleteModal(row?.id)}
                                   >
                                     <img src={deleteIcon} alt="delete" />
                                   </IconButton>
@@ -433,7 +400,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
                           </Typography>{" "}
                         </Box>
                         <Pagination
-                          count={venueListMeta?.pageCount}
+                          count={decorationListMeta?.pageCount}
                           variant="outlined"
                           shape="rounded"
                           page={pageNo}
@@ -465,12 +432,12 @@ const VenueForm: React.FC<VenueProps> = (props) => {
       <div>
         <Box className="content-header">
           <Typography variant="h2" className="heading">
-            Venues
+            Decorations
           </Typography>
           {!showScreen && 
             <Button
               variant="contained"
-              onClick={() => handleAddEditVenue(null)}
+              onClick={() => handleAddEditDecoration(null)}
               className="btn-add"
             >
               <img src={plusLightIcon} alt="plus" />
@@ -482,24 +449,29 @@ const VenueForm: React.FC<VenueProps> = (props) => {
         {!showScreen ? 
           getListingScreen()
           :
-          (<AddEditVenue
-              isEditVenue={isEditVenue}
+          (<AddEditDecoration
+              isEditDecoration={isEditDecoration}
               showScreen={showScreen}
-              handleVenueClose={handleVenueClose}
-              handleAddVenue={handleSaveVenue}
-              cityDropDownList={cityDropDownList}
-              currentVenueData={isEditVenue ? {...props.current} : undefined}
+              handleDecorationClose={handleDecorationClose}
+              handleAddDecoration={handleSaveDecoration}
+              currentDecorationData={isEditDecoration ? {...props.current} : {
+                id: 0,
+                description: "",
+                name: "",
+                price: undefined,
+                isActive: true,
+              }}
             />)
         }            
       </div>
       <DeleteConfirmationModal
-        isOpenDeleteConfirmationModal={isOpenVenueDeleteModal}
-        handleDeleteConfirmationModalClose={handleVenueDeleteCloseModal}
-        deleteConfirmationMessage="Are you sure you want to delete venue?"
-        handleYesClick={handleDeleteVenue}
+        isOpenDeleteConfirmationModal={isOpenDecorationDeleteModal}
+        handleDeleteConfirmationModalClose={handleDecorationDeleteCloseModal}
+        deleteConfirmationMessage="Are you sure you want to delete decoration?"
+        handleYesClick={handleDeleteDecoration}
       />
     </>
   );
 };
 
-export default VenueForm;
+export default DecorationForm;

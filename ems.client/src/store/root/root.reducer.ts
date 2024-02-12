@@ -5,6 +5,7 @@ import { persistReducer } from "redux-persist";
 import venueReducer from "../venue/reducer"
 import cityReducer from "../city/reducer"
 import photographyReducer from "../photography/reducer"
+import decorationReducer from "../decoration/reducer"
 
 const rootReducer = combineReducers<unknown>({
   auth: persistReducer(
@@ -14,9 +15,10 @@ const rootReducer = combineReducers<unknown>({
     },
     authReducer,
     ),
-  venue: venueReducer,
   city: cityReducer,
-  photography: photographyReducer
+  venue: venueReducer,
+  photography: photographyReducer,
+  decoration: decorationReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

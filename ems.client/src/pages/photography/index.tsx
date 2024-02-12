@@ -6,7 +6,6 @@ import {
   getByIdRequest,
   listRequest,
 } from "store/photography/actions";
-import {dropDownListRequest as cityDropDownListRequest} from "store/city/actions"
 import {
   IPhotographyContainerDispatch,
   IPhotography,
@@ -22,7 +21,6 @@ const mapDispatchToProps: MapDispatchToProps<
   saveRequest: saveRequest,
   getRequest: getByIdRequest,
   deleteRequest: deleteRequest,
-  cityDropDownListRequest: cityDropDownListRequest
 };
 
 const mapStateToProps = (state:RootState) => {

@@ -1,4 +1,3 @@
-import { GetDropDownListPayload } from './city.interface';
 import * as GENERIC from './generic.interface'
 
 /* Model */
@@ -26,7 +25,6 @@ export interface IPhotographyContainerDispatch {
   saveRequest: (payload: GENERIC.SaveRequestPayload<IPhotography>) => {};
   getRequest: (payload: GENERIC.GetRequestPayload) => {};
   deleteRequest: (payload: GENERIC.DeleteRequestPayload) => {};
-  cityDropDownListRequest: (payload: GetDropDownListPayload) => {};
 }
 
 /* State Container Model */
