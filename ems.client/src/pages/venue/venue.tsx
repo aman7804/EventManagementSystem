@@ -318,7 +318,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
                         id="search"
                         variant="outlined"
                         className="search-input"
-                        placeholder="Search"
+                        placeholder="Search by Name, Address or Description"
                         value={searchText}
                         onChange={handleVenueSearch}
                         onKeyDown={handleVenueSearchKeyDown}
@@ -488,7 +488,17 @@ const VenueForm: React.FC<VenueProps> = (props) => {
               handleVenueClose={handleVenueClose}
               handleAddVenue={handleSaveVenue}
               cityDropDownList={cityDropDownList}
-              currentVenueData={isEditVenue ? {...props.current} : undefined}
+              currentVenueData={isEditVenue ? {...props.current} : {
+                id: 0,
+                description: "",
+                name: "",
+                address: "",
+                minCapacity: undefined,
+                maxCapacity: undefined,
+                cityId: undefined,
+                price: undefined,
+                isActive: true,
+              }}
             />)
         }            
       </div>
