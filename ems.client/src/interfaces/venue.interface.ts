@@ -7,11 +7,11 @@ export interface IVenue {
   name: string;
   address: string;
   description: string;
-  price: number;
+  price: number | undefined;
   isActive: boolean;
-  cityId: number;
-  minCapacity: number;
-  maxCapacity: number;
+  cityId: number | undefined;
+  minCapacity: number | undefined;
+  maxCapacity: number | undefined;
 }
 
 /* Search Model */

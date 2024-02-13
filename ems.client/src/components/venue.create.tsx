@@ -2,7 +2,9 @@ import {
   Box,
   Button,
   Card,
+  FormControl,
   Grid,
+  InputLabel,
   TextField,
   Typography,
 } from "@mui/material";
@@ -10,10 +12,12 @@ import { saveIcon } from "assets/images";
 import { useForm } from "react-hook-form";
 import { IVenue } from "interfaces/venue.interface";
 import { useEffect } from "react";
-import NumericFormControl, { removeNumberFormatting } from "components/elements/NumericFormControl";
+import NumericFormControl, { CustomNumericFormatProps, removeNumberFormatting } from "components/elements/NumericFormControl";
 import * as GENERIC from "interfaces/generic.interface";
 import DropDownSelect from "components/elements/DropDownSelect";
 import CheckBox from "components/elements/CheckBox";
+import { NumericFormat, NumericFormatProps } from "react-number-format";
+import React from "react";
 
 interface IAddEditVenueProps {
   isEditVenue: boolean;
@@ -32,10 +36,16 @@ const fieldNames : IIndexable = {
   name: "Venue Name",
   address: "Venue Address",
   description: "Venue Description",
+  cityId: "Venue City",
   price: "Venue Rent/Price",
   minCapacity: "Minimum Capacity",
   maxCapacity: "Maximum Capacity"
 }
+
+const maxPrice = 9999999999999999.99;
+  const CustomPriceComponent =
+  React.forwardRef<NumericFormatProps, CustomNumericFormatProps>((props, ref ) =>
+    <NumericFormControl {...props} min={0} max={maxPrice}/>)
 
 const AddEditVenue: React.FC<IAddEditVenueProps> = ({
   isEditVenue,
@@ -46,12 +56,20 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
   cityDropDownList
 }) => {
 
+  const minNameLength = 5;
+  const maxNameLength = 25;
+  const minAddressLength = 10;
+  const maxAddressLength = 100;
+  const minDescriptionLength = 20;
+  const maxDescriptionLength = 200;
+
   const {
     register,
     handleSubmit,
     reset,
     setValue,
     getValues,
+    trigger,
     formState: { errors }
   } = useForm<IVenue>();
 
@@ -62,10 +80,23 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
 
   const getErrorMessage = (fieldName: string, type: string|undefined): string => {
     if (type) {
-      console.log(fieldName);      
       switch (type) {
         case "required":
           return `${fieldNames[fieldName]} is required.`;
+        case "minLength":
+          switch(fieldName){
+            case "name": return `Must be at least ${minNameLength} characters.`;
+            case "address": return `Must be at least ${minAddressLength} characters.`;
+            case "description": return `Must be at least ${minDescriptionLength} characters.`;
+          }
+          break;
+        case "maxLength":
+          switch(fieldName){
+            case "name": return  `Cannot exceed ${maxNameLength} characters.`;
+            case "address": return `Cannot exceed ${maxAddressLength} characters.`;
+            case "description": return `Cannot exceed ${maxDescriptionLength} characters.`;
+          }
+          break;
         case "min":
           return `${fieldNames[fieldName]} cannot be less than Minimum Capacity.`;
         case "max":
@@ -81,7 +112,7 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
     switch (fieldName) {
       case "name":
         return getErrorMessage(fieldName, errors.name?.type);
-      case "address":
+        case "address":
         return getErrorMessage(fieldName, errors.address?.type);
       case "description":
         return getErrorMessage(fieldName, errors.description?.type);
@@ -98,7 +129,27 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
     }
     
   };
-
+  // const CustomPriceComponent =
+  // React.forwardRef<NumericFormatProps, CustomNumericFormatProps>((props, ref ) =>
+  //   <NumericFormControl {...props} min={0} max={maxPrice}/>)
+const maxCapacity = 2147483647
+  const CapacityControlElement = 
+    React.forwardRef((props, ref ) =>
+      <NumericFormat
+        {...props}
+        getInputRef={ref}
+        allowNegative={false}
+        isAllowed={(values)=>{
+          const {floatValue} = values;
+          return floatValue === undefined ||
+            (
+              floatValue >= 0 &&
+              floatValue <=  maxCapacity &&
+              Number.isInteger(floatValue)
+            )
+        }}
+      />
+    )
   useEffect(() => {
       reset(currentVenueData)
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -108,7 +159,6 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
     data.price = removeNumberFormatting(data.price.toString());
     handleAddVenue(data);
   }
-console.log(currentVenueData)
   return (
     <Grid
       container
@@ -133,10 +183,16 @@ console.log(currentVenueData)
                 fullWidth
                 variant="outlined"
                 multiline
-                error={!!errors.name}
+                error={
+                  errors.name?.type !== "minLength" &&
+                  errors.name?.type !== "maxLength" 
+                    ? !!errors.name : false
+                }
                 helperText={getError("name")}
                 {...register("name", {
                   required: true,
+                  minLength: minNameLength,
+                  maxLength: maxNameLength
                 })}
               />
               <TextField
@@ -149,11 +205,32 @@ console.log(currentVenueData)
                 fullWidth
                 variant="outlined"
                 multiline
-                error={!!errors.address}
+                error={
+                  errors.address?.type !== "minLength" &&
+                  errors.address?.type !== "maxLength" 
+                    ? !!errors.address : false
+                }
                 helperText={getError("address")}
                 {...register("address", {
                   required: true,
+                  minLength: minAddressLength,
+                  maxLength: maxAddressLength
                 })}
+              />
+              <DropDownSelect
+                label="City"
+                value={currentVenueData?.cityId}
+                list={cityDropDownList}
+                error={!!errors.cityId}
+                helperText={getError("cityId")}
+                {...register("cityId", {
+                  required: true
+                })}
+                onChange={e => {
+                  setValue("cityId", Number(e.target.value))
+                  trigger("cityId")
+                  console.log("getValue:", getValues());  
+                }}
               />
               <TextField
                 id="description"
@@ -165,10 +242,16 @@ console.log(currentVenueData)
                 fullWidth
                 variant="outlined"
                 multiline
-                error={!!errors.description}
+                error={
+                  errors.description?.type !== "minLength" &&
+                  errors.description?.type !== "maxLength" 
+                    ? !!errors.description : false
+                }
                 helperText={getError("description")}
                 {...register("description", {
                   required: true,
+                  minLength: minDescriptionLength,
+                  maxLength: maxDescriptionLength
                 })}
               />
               <Grid container spacing={2}>
@@ -189,7 +272,7 @@ console.log(currentVenueData)
                       required: true
                     })}
                     InputProps={{
-                      inputComponent: NumericFormControl as any,
+                      inputComponent: CustomPriceComponent as any,
                     }}
                     value={
                       isEditVenue 
@@ -198,20 +281,7 @@ console.log(currentVenueData)
                       }                    
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <DropDownSelect
-                    label="City"                
-                    value={currentVenueData?.cityId}
-                    list={cityDropDownList}
-                    error={!!errors.cityId}
-                    helperText={getError("cityId")}
-                    {...register("cityId", {
-                      required: true,
-                    })}
-                    onChange={e => setValue("cityId", Number(e.target.value))}
-                  />
-                </Grid>
-                <Grid item xs={12} xl={4} md={6}>
+                <Grid item xs={12} xl={4} md={6}>                
                   <TextField
                     id="minCapacity"
                     label={
@@ -221,13 +291,16 @@ console.log(currentVenueData)
                     }
                     fullWidth
                     variant="outlined"
-                    multiline
+                    type="number"
                     error={!!errors.minCapacity}
                     helperText={getError("minCapacity")}
                     {...register("minCapacity", {
                       required: true,
                       max: Number(getValues("maxCapacity"))
                     })}
+                    InputProps={{
+                      inputComponent: CapacityControlElement as any
+                    }}
                   />
                 </Grid>
                 <Grid item xs={12} xl={4} md={6}>
@@ -239,14 +312,17 @@ console.log(currentVenueData)
                       </>
                     }
                     fullWidth
+                    type="number"
                     variant="outlined"
-                    multiline
                     error={!!errors.maxCapacity}
                     helperText={getError("maxCapacity")}
                     {...register("maxCapacity", {
                       required: true,
-                      min: Number(getValues("minCapacity"))
+                      min: Number(getValues("minCapacity")),
                     })}
+                    InputProps={{
+                      inputComponent: CapacityControlElement as any
+                    }}
                   />
                 </Grid>
               </Grid>

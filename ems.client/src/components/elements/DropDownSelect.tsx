@@ -15,7 +15,7 @@ interface IDropDownProps {
 
 const DropDownSelect = (props: IDropDownProps) => {
   const {key, label, onChange, value, list, helperText, error} = props;
-  const [selectedValue,setSelectedValue] = useState<string|undefined>(value?.toString());
+  const [selectedValue,setSelectedValue] = useState<string|undefined>(value?.toString() || "");
 
   console.log("dropDownComp",list)
   return (
