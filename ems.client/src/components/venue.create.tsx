@@ -21,7 +21,7 @@ interface IAddEditVenueProps {
   isEditVenue: boolean;
   showScreen: boolean;
   handleVenueClose: any;
-  handleAddVenue: any;
+  handleSaveVenue: any;
   currentVenueData?: IVenue
   cityDropDownList: GENERIC.IKeyValuePair[] | null | undefined
 }
@@ -45,27 +45,18 @@ const maxPrice = 9999999999999999.99;
   React.forwardRef<NumericFormatProps, CustomNumericFormatProps>((props, ref ) =>
     <NumericFormControl {...props} min={0} max={maxPrice}/>)
 
+
 const maxCapacity = 2147483647
 const CustomCapacityComponent = 
   React.forwardRef<NumericFormatProps, CustomNumericFormatProps>((props, ref) => {
-    const {value, onChange} = props;
-    const [ numericValue, setNumericValue] = useState<Number | undefined>(Number(value))
+    const {onChange} = props;
     return (
       <NumericFormat
         {...props}
         getInputRef={ref}
         allowNegative={false}
         name={props.name}
-        value={numericValue?.toString()}
-        onValueChange={(values) => {
-          onChange({
-            target: {
-              name: props.name,
-              value: values.floatValue?.toString() || "",
-            },
-          });
-          setNumericValue(values.floatValue); 
-        }}
+        onChange={onChange}
         isAllowed={(values)=>{
           const {floatValue} = values;
           return floatValue === undefined ||
@@ -84,7 +75,7 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
   isEditVenue,
   showScreen,
   handleVenueClose,
-  handleAddVenue,
+  handleSaveVenue,
   currentVenueData,
   cityDropDownList
 }) => {
@@ -101,10 +92,7 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
     handleSubmit,
     reset,
     setValue,
-    getValues,
     trigger,
-    setError,
-    watch,
     formState: { errors }
   } = useForm<IVenue>();
 
@@ -112,6 +100,12 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
     reset();
     handleVenueClose();
   };
+
+  interface ICapacityRange{
+    min: number | undefined;
+    max: number | undefined;
+  }
+  const [capacityRange, setCapacityRange] = useState<ICapacityRange>({min: 0, max: maxCapacity})
 
   const getErrorMessage = (fieldName: string, type: string|undefined): string => {
     if (type) {
@@ -172,7 +166,7 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
   
   const beginSubmit = (data: any) => {
     data.price = removeNumberFormatting(data.price.toString());
-    handleAddVenue(data);
+    handleSaveVenue(data);
   }
   return (
     <Grid
@@ -276,20 +270,16 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                       </>
                     }
                     fullWidth
-                    variant="outlined"
-                    multiline
+                    variant="outlined"  
+                    autoComplete="off"
                     error={!!errors.price}
                     helperText={getError("price")}
-                    {...register("price", {
-                      required: true
-                    })}
+                    {...register("price", { required: true })}
                     InputProps={{
                       inputComponent: CustomPriceComponent as any,
                     }}
-                    value={
-                      isEditVenue 
-                        ? currentVenueData?.price || ""
-                        : undefined
+                    value={isEditVenue 
+                        ? currentVenueData?.price || "" : undefined
                       }                    
                   />
                 </Grid>
@@ -308,13 +298,18 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                     helperText={getError("minCapacity")}
                     {...register("minCapacity", {
                       required: true,
-                      max: Number(getValues("maxCapacity")),
+                      max: capacityRange.max,
                     })}
+                    onChange={(e)=>{
+                      const range = {...capacityRange,
+                        min: Number(e.target.value)|| maxCapacity}
+                      setCapacityRange(range)
+                    }}
                     InputProps={{
                       inputComponent: CustomCapacityComponent as any
                     }}
                     value={currentVenueData?.minCapacity}
-                  />
+                    />
                 </Grid>
                 <Grid item xs={12} xl={4} md={6}>
                   <TextField
@@ -331,8 +326,13 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                     helperText={getError("maxCapacity")}
                     {...register("maxCapacity", {
                       required: true,
-                      min: Number(getValues("minCapacity"))
+                      min: capacityRange.min
                     })}
+                    onChange={(e)=>{
+                      const range = {...capacityRange,
+                        max: Number(e.target.value) || maxCapacity}
+                      setCapacityRange(range)
+                    }}
                     InputProps={{
                       inputComponent: CustomCapacityComponent as any
                     }}
@@ -357,14 +357,14 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                 right: 0,
                 margin: "10px",
               }}>
-                <CheckBox
-                  label="active"
-                  isChecked={
-                    currentVenueData ? currentVenueData.isActive : true
-                  }
-                  {...register("isActive")}
-                  onChange={e => setValue("isActive", e.target.checked)}
-                />
+              <CheckBox
+                label="Active"
+                isChecked={
+                  currentVenueData ? currentVenueData.isActive : true
+                }
+                {...register("isActive")}
+                onChange={e => setValue("isActive", e.target.checked)}
+              />
             </Box>
             </form>             
         </Card>

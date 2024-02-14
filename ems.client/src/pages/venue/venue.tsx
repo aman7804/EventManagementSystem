@@ -70,17 +70,15 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
   const createSortHandler =
     (newOrderBy: keyof IVenue) => (event: React.MouseEvent<unknown>) =>
       onRequestSort(event, newOrderBy);
-
-  const columnDisplayName:{[key in keyof IVenue]: string} = {
+  
+  interface ColumnDisplayName{
+    [key: string] : string;    
+  }
+  const columnDisplayName: ColumnDisplayName = {
     name: "Name",
     address: "Address",
     minCapacity: "Minimum-capacity",
-    maxCapacity: "Maximum-capacity",
-    id: "",
-    description: "",
-    price: "",
-    isActive: "",
-    cityId: ""
+    maxCapacity: "Maximum-capacity"
   }
   
   return (
@@ -166,9 +164,10 @@ const VenueForm: React.FC<VenueProps> = (props) => {
       toast.error(SOMETHING_WENT_WRONG);
     }
   };
-  const onAddVenueSuccess = (response: GENERIC.IApiSuccessResponse<IVenue>) => {
+  const onSaveVenueSuccess = (response: GENERIC.IApiSuccessResponse<IVenue>) => {
     if (response.isSuccessStatusCode) {
-      toast.success("Venue added successfully.");
+      toast.success
+      (`Venue ${isEditVenue ? "updated" : "added"} successfully.`);
       handleVenueClose();
       getVenueList();
     } else if (response.message) {
@@ -177,7 +176,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
       toast.error(SOMETHING_WENT_WRONG);
     }
   };
-  const onEditVenueSuccess = (response: GENERIC.IApiSuccessResponse<IVenue>) => {
+  const onGetVenueSuccess = (response: GENERIC.IApiSuccessResponse<IVenue>) => {
     setShowScreen(true);
   };
   const onCityListSuccess = (response: GENERIC.GetSuccessResponse<GENERIC.IKeyValuePair[]> | null) => {
@@ -236,7 +235,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
           price: formData.price,
           cityId: formData.cityId,
         },
-        callback: onAddVenueSuccess,
+        callback: onSaveVenueSuccess,
       };
       console.log("edited payload",payload)
       saveRequest(payload);
@@ -249,7 +248,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
       showLoader();
       const payload = {
         data: {id},
-        callback: onEditVenueSuccess,
+        callback: onGetVenueSuccess,
       };
       getRequest(payload);
     }
@@ -486,7 +485,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
               isEditVenue={isEditVenue}
               showScreen={showScreen}
               handleVenueClose={handleVenueClose}
-              handleAddVenue={handleSaveVenue}
+              handleSaveVenue={handleSaveVenue}
               cityDropDownList={cityDropDownList}
               currentVenueData={isEditVenue ? {...props.current} : {
                 id: 0,
