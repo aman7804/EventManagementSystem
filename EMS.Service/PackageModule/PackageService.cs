@@ -8,6 +8,7 @@ using EMS.Repository.PackageModule;
 using EMS.Entity;
 using EMS.Shared.Constant;
 using EMS.Service.DTO.Filter;
+using System.Linq.Expressions;
 
 namespace EMS.Service.PackageModule
 {
@@ -66,8 +67,14 @@ namespace EMS.Service.PackageModule
                                .Include(c => c.Catering);
 
             //Apply condition for each filter
+            Expression<Func<PackageDTO, bool>> expression = paginationDTO.Filter.GetFilter();
+            Expression<Func<PackageEntity, bool>> where = Map<Expression<Func<PackageDTO, bool>>, Expression<Func<PackageEntity, bool>>>(expression);
+            packages = packages.Where(where);
 
             paginationDTO.RecordCount = await packages.CountAsync();
+            paginationDTO.PageCount = (int)Math.Ceiling(
+                (double)paginationDTO.RecordCount / paginationDTO.PageSize
+            );
 
             if (!string.IsNullOrWhiteSpace(paginationDTO.SortByColumns))
             {
