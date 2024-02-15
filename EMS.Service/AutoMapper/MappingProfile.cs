@@ -10,6 +10,9 @@ namespace EMS.Service.AutoMapper
         {
             CreateMap<UserEntity, UserDTO>().ReverseMap();
             CreateMap<RegisterDTO, UserEntity>();
+            CreateMap<RegisterDTO, UserDTO>();
+            CreateMap<SaveUserDTO, UserDTO>();
+            CreateMap<SaveUserDTO, RegisterDTO>();
             CreateMap<StateEntity, StateDTO>().ReverseMap();
             CreateMap<CityEntity, CityDTO>().ReverseMap();
             CreateMap<VenueEntity, VenueDTO>().ReverseMap();
