@@ -14,11 +14,6 @@ const CheckBox = (props: ICheckBoxProps) => {
   return (
     <>
     <FormControlLabel
-        sx={{
-            position:"absolute",
-            right: "80px",
-            bottom: "20px"
-        }}
         control={
             <Checkbox
                 checked={IsChecked}

@@ -257,7 +257,7 @@ const projectTheme = createTheme({
         },
         outlinedPrimary: {
           "&:hover": {
-            boxShadow: "inset 0 0 0 50px #821C6B",
+            boxShadow: "inset 0 0 0 50px #1fb4fb",
             color: "#FFFFFF",
           },
           "&.MuiButton-sizeMedium": {

@@ -21,7 +21,9 @@ const DropDownSelect = (props: IDropDownProps) => {
   return (
     <>
       <FormControl fullWidth error={error}>
-        <InputLabel id={key || `dropdown${label.replaceAll(" ", "_")}`}>{label}</InputLabel>
+        <InputLabel id={key || `dropdown${label.replaceAll(" ", "_")}`}>
+          {label}
+        </InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"

@@ -82,10 +82,9 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
 
   const minNameLength = 5;
   const maxNameLength = 25;
-  const minAddressLength = 10;
+  const minAddressLength = 5;
   const maxAddressLength = 100;
-  const minDescriptionLength = 20;
-  const maxDescriptionLength = 200;
+  const maxDescriptionLength = 100;
 
   const {
     register,
@@ -116,7 +115,6 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
           switch(fieldName){
             case "name": return `Must be at least ${minNameLength} characters.`;
             case "address": return `Must be at least ${minAddressLength} characters.`;
-            case "description": return `Must be at least ${minDescriptionLength} characters.`;
           }
           break;
         case "maxLength":
@@ -182,86 +180,98 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
             </Typography>       
           </Box>              
             <form onSubmit={handleSubmit(beginSubmit)}>           
-              <TextField
-                id="name"
-                label={
-                  <>
-                    Venue Name <span className="color-red">*</span>
-                  </>
-                }
-                fullWidth
-                variant="outlined"
-                multiline
-                error={
-                  errors.name?.type !== "minLength" &&
-                  errors.name?.type !== "maxLength" 
-                    ? !!errors.name : false
-                }
-                helperText={getError("name")}
-                {...register("name", {
-                  required: true,
-                  minLength: minNameLength,
-                  maxLength: maxNameLength
-                })}
-              />
-              <TextField
-                id="address"
-                label={
-                  <>
-                    Address <span className="color-red">*</span>
-                  </>
-                }
-                fullWidth
-                variant="outlined"
-                multiline
-                error={
-                  errors.address?.type !== "minLength" &&
-                  errors.address?.type !== "maxLength" 
-                    ? !!errors.address : false
-                }
-                helperText={getError("address")}
-                {...register("address", {
-                  required: true,
-                  minLength: minAddressLength,
-                  maxLength: maxAddressLength
-                })}
-              />
-              <DropDownSelect
-                label="City"
-                value={currentVenueData?.cityId}
-                list={cityDropDownList}
-                error={!!errors.cityId}
-                helperText={getError("cityId")}
-                {...register("cityId", { required: true })}
-                onChange={e => {
-                  setValue("cityId", Number(e.target.value))
-                  trigger("cityId")
-                }}
-              />
-              <TextField
-                id="description"
-                label={
-                  <>
-                    Description <span className="color-red">*</span>
-                  </>
-                }
-                fullWidth
-                variant="outlined"
-                multiline
-                error={
-                  errors.description?.type !== "minLength" &&
-                  errors.description?.type !== "maxLength" 
-                    ? !!errors.description : false
-                }
-                helperText={getError("description")}
-                {...register("description", {
-                  required: true,
-                  minLength: minDescriptionLength,
-                  maxLength: maxDescriptionLength
-                })}
-              />
               <Grid container spacing={2}>
-                <Grid item xs={12} xl={4} md={12}>
+                <Grid item xs={8} md={8} xl={8}>
+                  <TextField
+                    id="name"
+                    label={
+                      <>
+                        Venue Name <span className="color-red">*</span>
+                      </>
+                    }
+                    fullWidth
+                    variant="outlined"
+                    multiline
+                    error={
+                      errors.name?.type !== "minLength" &&
+                      errors.name?.type !== "maxLength" 
+                        ? !!errors.name : false
+                    }
+                    helperText={getError("name")}
+                    {...register("name", {
+                      required: true,
+                      minLength: minNameLength,
+                      maxLength: maxNameLength
+                    })}
+                  />
+                </Grid>
+                <Grid item xs={4} xl={4} md={4} mt={2} alignContent={"center"}>
+                  <CheckBox
+                    label="Active"  
+                    isChecked={
+                      currentVenueData ? currentVenueData.isActive : true
+                    }
+                    {...register("isActive")}
+                    onChange={e => setValue("isActive", e.target.checked)}
+                  />
+                </Grid>
+                <Grid item xs={12} md={12} xl={12}>
+                  <TextField
+                    id="address"
+                    label={
+                      <>
+                        Address <span className="color-red">*</span>
+                      </>
+                    }
+                    fullWidth
+                    variant="outlined"
+                    multiline
+                    error={
+                      errors.address?.type !== "minLength" &&
+                      errors.address?.type !== "maxLength" 
+                        ? !!errors.address : false
+                    }
+                    helperText={getError("address")}
+                    {...register("address", {
+                      required: true,
+                      minLength: minAddressLength,
+                      maxLength: maxAddressLength
+                    })}
+                  />
+                </Grid>
+                <Grid item xs={12} md={12} xl={12}>
+                  <DropDownSelect
+                    label="City"
+                    value={currentVenueData?.cityId}
+                    list={cityDropDownList}
+                    error={!!errors.cityId}
+                    helperText={getError("cityId")}
+                    {...register("cityId", { required: true })}
+                    onChange={e => {
+                      setValue("cityId", Number(e.target.value))
+                      trigger("cityId")
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12} md={12} xl={12}>
+                <TextField
+                  id="description"
+                  label={
+                    <>
+                      Description <span className="color-red">*</span>
+                    </>
+                  }
+                  fullWidth
+                  variant="outlined"
+                  multiline
+                  error={!!errors.description}
+                  helperText={getError("description")}
+                  {...register("description", {
+                    maxLength: maxDescriptionLength
+                  })}
+                />
+                </Grid>
+                <Grid item xs={12} md={6} xl={4}>
                   <TextField
                     id="price"
                     label={
@@ -293,7 +303,6 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                     }
                     fullWidth
                     variant="outlined"
-                    type="number"
                     error={!!errors.minCapacity}  
                     helperText={getError("minCapacity")}
                     {...register("minCapacity", {
@@ -302,7 +311,7 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                     })}
                     onChange={(e)=>{
                       const range = {...capacityRange,
-                        min: Number(e.target.value)|| maxCapacity}
+                        min: Number(e.target.value) || maxCapacity}
                       setCapacityRange(range)
                     }}
                     InputProps={{
@@ -320,7 +329,6 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                       </>
                     }
                     fullWidth
-                    type="number"
                     variant="outlined"
                     error={!!errors.maxCapacity}
                     helperText={getError("maxCapacity")}
@@ -340,32 +348,23 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                   />
                 </Grid>
               </Grid>
-            
-              <Button variant="contained" className="btn-save" type="submit">
-                <img src={saveIcon} alt="save" />
-                Save
-              </Button>
-              <Button
-                variant="outlined"
-                className="btn-cancel"
-                onClick={onModalClose}
-              >
-                Cancel
-              </Button>
-              <Box style={{
-                position: "absolute",
-                right: 0,
-                margin: "10px",
-              }}>
-              <CheckBox
-                label="Active"
-                isChecked={
-                  currentVenueData ? currentVenueData.isActive : true
-                }
-                {...register("isActive")}
-                onChange={e => setValue("isActive", e.target.checked)}
-              />
-            </Box>
+              <Grid container spacing={2}>
+                <Grid item>
+                  <Button variant="contained" className="btn-save" type="submit">
+                    <img src={saveIcon} alt="save" />
+                    Save
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    variant="outlined"
+                    className="btn-cancel"
+                    onClick={onModalClose}
+                    >
+                    Cancel
+                  </Button>
+                </Grid>
+              </Grid>
             </form>             
         </Card>
       </Grid>
