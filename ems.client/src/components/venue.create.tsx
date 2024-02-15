@@ -55,6 +55,7 @@ const CustomCapacityComponent =
         {...props}
         getInputRef={ref}
         allowNegative={false}
+        decimalScale={0}
         name={props.name}
         onChange={onChange}
         isAllowed={(values)=>{
@@ -80,10 +81,8 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
   cityDropDownList
 }) => {
 
-  const minNameLength = 5;
-  const maxNameLength = 25;
-  const minAddressLength = 5;
-  const maxAddressLength = 100;
+  const maxNameLength = 100;
+  const maxAddressLength = 200;
   const maxDescriptionLength = 100;
 
   const {
@@ -111,12 +110,6 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
       switch (type) {
         case "required":
           return `${fieldNames[fieldName]} is required.`;
-        case "minLength":
-          switch(fieldName){
-            case "name": return `Must be at least ${minNameLength} characters.`;
-            case "address": return `Must be at least ${minAddressLength} characters.`;
-          }
-          break;
         case "maxLength":
           switch(fieldName){
             case "name": return  `Cannot exceed ${maxNameLength} characters.`;
@@ -192,15 +185,10 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                     fullWidth
                     variant="outlined"
                     multiline
-                    error={
-                      errors.name?.type !== "minLength" &&
-                      errors.name?.type !== "maxLength" 
-                        ? !!errors.name : false
-                    }
+                    error={!!errors.name}
                     helperText={getError("name")}
                     {...register("name", {
                       required: true,
-                      minLength: minNameLength,
                       maxLength: maxNameLength
                     })}
                   />
@@ -226,15 +214,10 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                     fullWidth
                     variant="outlined"
                     multiline
-                    error={
-                      errors.address?.type !== "minLength" &&
-                      errors.address?.type !== "maxLength" 
-                        ? !!errors.address : false
-                    }
+                    error={!!errors.address}
                     helperText={getError("address")}
                     {...register("address", {
                       required: true,
-                      minLength: minAddressLength,
                       maxLength: maxAddressLength
                     })}
                   />
