@@ -16,6 +16,7 @@ import DropDownSelect from "components/elements/DropDownSelect";
 import CheckBox from "components/elements/CheckBox";
 import { NumericFormat, NumericFormatProps } from "react-number-format";
 import React from "react";
+import { current } from "@reduxjs/toolkit";
 
 interface IAddEditVenueProps {
   isEditVenue: boolean;
@@ -84,6 +85,7 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
   const maxNameLength = 100;
   const maxAddressLength = 200;
   const maxDescriptionLength = 100;
+  const [priceValue, setPriceValue] = useState(currentVenueData?.price);
 
   const {
     register,
@@ -335,9 +337,14 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                     InputProps={{
                       inputComponent: CustomPriceComponent as any,
                     }}
-                    value={isEditVenue 
-                        ? currentVenueData?.price || "" : undefined
-                      }                    
+                    value={isEditVenue ? priceValue : undefined } 
+                    onBlur={(e) => {
+                      if (e.target.value === '')
+                        setPriceValue(undefined)
+                      else 
+                        setPriceValue(Number(e.target.value))
+                    }}
+                    InputLabelProps={{shrink:  priceValue !== undefined }}
                   />
                 </Grid>
               </Grid>
