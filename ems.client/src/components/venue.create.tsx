@@ -237,19 +237,19 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                   />
                 </Grid>
                 <Grid item xs={12} md={12} xl={12}>
-                <TextField
-                  id="description"
-                  label="Description"
-                  fullWidth
-                  variant="outlined"
-                  multiline
-                  error={!!errors.description}
-                  helperText={getError("description")}
-                  {...register("description", {
-                    maxLength: maxDescriptionLength
-                  })}
-                />
-                </Grid>
+                  <TextField
+                    id="description"
+                    label="Description"
+                    fullWidth
+                    variant="outlined"
+                    multiline
+                    error={!!errors.description}
+                    helperText={getError("description")}
+                    {...register("description", {
+                      maxLength: maxDescriptionLength
+                    })}
+                  />
+                  </Grid>
                 <Grid item xs={12} md={6} xl={4}>
                   <TextField
                     id="price"
@@ -290,7 +290,7 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                     })}
                     onChange={(e)=>{
                       const range = {...capacityRange,
-                        min: Number(e.target.value) || maxCapacity}
+                        min: Number(e.target.value) || 0}
                       setCapacityRange(range)
                     }}
                     InputProps={{
@@ -301,7 +301,7 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                 </Grid>
                 <Grid item xs={12} xl={4} md={6}>
                   <TextField
-                    id="maxCapcity"
+                    id="maxCapacity"
                     label={
                       <>
                         Maximum Capacity <span className="color-red">*</span>

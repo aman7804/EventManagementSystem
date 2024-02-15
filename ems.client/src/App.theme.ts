@@ -214,7 +214,7 @@ const projectTheme = createTheme({
       styleOverrides: {
         root: {
           marginLeft: 0,
-          transiton: "all 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms",
+          transition: "all 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms",
           "& .MuiFormControlLabel-label": {
             color: "#424242",
           },
