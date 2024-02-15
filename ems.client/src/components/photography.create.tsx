@@ -46,10 +46,10 @@ import { NumericFormatProps } from "react-number-format";
     handleAddPhotography: handleSavePhotography,
     currentPhotographyData,
   }) => {
-    const minNameLength = 5;
-    const maxNameLength = 25;
-    const minDescriptionLength = 20;
-    const maxDescriptionLength = 200;
+
+    const maxNameLength = 100;
+    const maxDescriptionLength = 250;
+
     const onModalClose = () => {
       reset();
       handlePhotographyClose();
@@ -61,9 +61,6 @@ import { NumericFormatProps } from "react-number-format";
         switch (type) {
           case "required":
             return `${fieldNames[fieldName]} is required.`;
-          case "minLength":
-            return  `Minimum length of ${fieldNames[fieldName].toLowerCase()} is
-              ${fieldName === "description" ? minDescriptionLength : minNameLength}.`;
           case "maxLength":
             return  `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
               ${fieldName === "description" ? maxDescriptionLength : maxNameLength}.`;
@@ -118,103 +115,94 @@ import { NumericFormatProps } from "react-number-format";
               </Typography>       
             </Box>              
               <form onSubmit={handleSubmit(beginSubmit)}>           
-                <TextField
-                  id="name"
-                  label={
-                    <>
-                      Photography Name <span className="color-red">*</span>
-                    </>
-                  }
-                  fullWidth
-                  variant="outlined"
-                  multiline
-                  error={
-                    errors.name?.type !== "minLength"
-                    && errors.name?.type !== "maxLength"
-                      ? !!errors.name : false
-                  }
-                  helperText={getError("name")}
-                  {...register("name", {
-                    required: true,
-                    maxLength: maxNameLength,
-                    minLength: minNameLength,
-                  })}
-                />
-                <TextField
-                  id="description"
-                  label={
-                    <>
-                      Description <span className="color-red">*</span>
-                    </>
-                  }
-                  fullWidth
-                  variant="outlined"
-                  multiline
-                  error={
-                    errors.description?.type !== "minLength"
-                    && errors.description?.type !== "maxLength"
-                      ? !!errors.description : false
-                  }
-                  helperText={getError("description")}
-                  {...register("description", {
-                    required: true,
-                    minLength: minDescriptionLength,
-                    maxLength: maxDescriptionLength 
-                  })}
-                />
                 <Grid container spacing={2}>
-                <Grid item xs={12} xl={4} md={12}>
-                <TextField
-                  id="price"
-                  label={
-                  <>
-                    Price <span className="color-red">*</span>
-                  </>
-                  }
-                  fullWidth
-                  autoComplete="off"
-                  variant="outlined"
-                  error={!!errors.price}
-                  helperText={getError("price")}
-                  {...register("price", { required: true })}
-                  InputProps={{
-                    inputComponent: CustomPriceComponent as any,
-                  }}
-                  value={isEditPhotography
-                    ? currentPhotographyData?.price || "" : undefined
-                  }       
-                />
+                  <Grid item xs={8} md={8} xl={8}>       
+                    <TextField
+                      id="name"
+                      label={
+                        <>
+                          Photography Name <span className="color-red">*</span>
+                        </>
+                      }
+                      fullWidth
+                      variant="outlined"
+                      multiline
+                      error={!!errors.name}
+                      helperText={getError("name")}
+                      {...register("name", {
+                        required: true,
+                        maxLength: maxNameLength,
+                      })}
+                    />
+                  </Grid>
+                  <Grid item xs={4} xl={4} md={4} mt={2} alignContent={"center"}>
+                    <CheckBox
+                      label="Active"  
+                      isChecked={
+                        currentPhotographyData ? currentPhotographyData.isActive : true
+                      }
+                      {...register("isActive")}
+                      onChange={e => setValue("isActive", e.target.checked)}
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={12} xl={12}>
+                    <TextField
+                      id="description"
+                      label="Description"
+                      fullWidth
+                      variant="outlined"
+                      multiline
+                      error={!!errors.description}
+                      helperText={getError("description")}
+                      {...register("description", {
+                        maxLength: maxDescriptionLength 
+                      })}
+                    />
+                  </Grid>
+                  <Grid item xs={12} xl={4} md={6}>
+                    <TextField
+                      id="price"
+                      label={
+                      <>
+                        Price <span className="color-red">*</span>
+                      </>
+                      }
+                      fullWidth
+                      autoComplete="off"
+                      variant="outlined"
+                      error={!!errors.price}
+                      helperText={getError("price")}
+                      {...register("price", { required: true })}
+                      InputProps={{
+                        inputComponent: CustomPriceComponent as any,
+                      }}
+                      value={isEditPhotography
+                        ? currentPhotographyData?.price || "" : undefined
+                      }       
+                    />
+                  </Grid>
                 </Grid>
+                <Grid container spacing={2}>
+                  <Grid item>
+                    <Button
+                      variant="contained"
+                      className="btn-save"
+                      type="submit"
+                    >
+                      <img src={saveIcon} alt="save" />
+                        Save
+                    </Button>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      variant="outlined"
+                      className="btn-cancel"
+                      onClick={onModalClose}
+                    >
+                      Cancel
+                    </Button>
+                  </Grid>
                 </Grid>
-                <Button
-                  variant="contained"
-                  className="btn-save"
-                  type="submit"
-                >
-                  <img src={saveIcon} alt="save" />
-                  Save
-                </Button>
-                <Button
-                  variant="outlined"
-                  className="btn-cancel"
-                  onClick={onModalClose}
-                >
-                  Cancel
-                </Button>
-                <Box style={{
-                  position: "absolute",
-                  right: 0,
-                  margin: "10px",
-                }}>
-                  <CheckBox
-                    label="Active"
-                    isChecked={currentPhotographyData 
-                      ? currentPhotographyData.isActive : true
-                    }
-                    {...register("isActive")}
-                    onChange={e => setValue("isActive", e.target.checked)}
-                  />
-              </Box>
               </form>             
           </Card>
         </Grid>

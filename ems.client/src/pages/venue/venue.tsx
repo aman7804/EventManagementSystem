@@ -44,6 +44,7 @@ import projectTheme from "App.theme";
 import * as GENERIC from "interfaces/generic.interface";
 import { GetDropDownListPayload } from "interfaces/city.interface";
 import { get } from "lodash";
+import { RUPEE_SYMBOL } from "utils/constants";
 
 const ArrowBackIcon = () =>
   <img src={arrowBackwardIcon} alt="arrow-backward" />;
@@ -64,9 +65,11 @@ interface EnhancedTableProps {
   orderBy: string;
   columnHeader: string;
   columnName: keyof IVenue;
+  align?: "left" | "center" | "right" | "justify" | "inherit" | undefined;
+  width?: string | number | undefined;
 }
 const EnhancedTableHead = (props: EnhancedTableProps) => {
-  const { order, orderBy, onRequestSort } = props;
+  const { order, orderBy, onRequestSort, align, width } = props;
   const createSortHandler =
     (newOrderBy: keyof IVenue) => (event: React.MouseEvent<unknown>) =>
       onRequestSort(event, newOrderBy);
@@ -77,16 +80,17 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
   const columnDisplayName: ColumnDisplayName = {
     name: "Name",
     address: "Address",
-    minCapacity: "Minimum-capacity",
-    maxCapacity: "Maximum-capacity"
+    minCapacity: "Capacity",
+    price: "Price"
   }
   
   return (
     <TableCell
       key={props.columnHeader}
-      align="left"
+      align={align || "left"}
       onClick={createSortHandler(props.columnName)}
       sortDirection={orderBy === props.columnName ? order : false}
+      width={width}
     >
       {columnDisplayName[props.columnName]}
       <Box component="span" className="sorting-icon" />
@@ -346,14 +350,18 @@ const VenueForm: React.FC<VenueProps> = (props) => {
                               orderBy={orderBy}
                               onRequestSort={handleRequestSort}
                               columnName="minCapacity"
-                              columnHeader="From Capacity"
+                              columnHeader="Capacity"
+                              align="center"
+                              width={150}
                             />
                             <EnhancedTableHead
                               order={order}
                               orderBy={orderBy}
                               onRequestSort={handleRequestSort}
-                              columnName="maxCapacity"
-                              columnHeader="To Capacity"
+                              columnName="price"
+                              columnHeader="Price"
+                              align="right"
+                              width={100}
                             />
                             <TableCell
                               align="center"
@@ -378,11 +386,11 @@ const VenueForm: React.FC<VenueProps> = (props) => {
                               <TableCell component="th" scope="row">
                                 {row?.address}
                               </TableCell>
-                              <TableCell component="th" scope="row">
-                                {row?.minCapacity}
+                              <TableCell component="th" scope="row" align="center">
+                                {row?.minCapacity}-{row?.maxCapacity}
                               </TableCell>
-                              <TableCell component="th" scope="row">
-                                {row?.maxCapacity}
+                              <TableCell component="th" scope="row" align="right">
+                              {RUPEE_SYMBOL} {row?.price}
                               </TableCell>
                               <TableCell align="center">
                                 <div className="table-actions">
