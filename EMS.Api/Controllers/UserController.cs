@@ -1,4 +1,5 @@
 ﻿using EMS.Service.DTO;
+using EMS.Service.DTO.Filter;
 using EMS.Service.UserModule;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,5 +34,9 @@ namespace EMS.Api.Controllers
                 return Unauthorized(new { message = "Unauthorized" });
             return GetResult(await service.GetByIdAsync(Id));
         }
+
+        [HttpPost("list")]
+        public async Task<IActionResult> List(PaginationDTO<UserDTO, UserFilter> pagination) =>
+            GetResult(await service.GetPageAsync(pagination));
     }
 }
