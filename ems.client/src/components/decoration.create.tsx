@@ -9,7 +9,7 @@ import {
 import { saveIcon } from "assets/images";
 import { useForm } from "react-hook-form";
 import { IDecoration } from "interfaces/decoration.interface";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import NumericFormControl, { CustomNumericFormatProps, removeNumberFormatting } from "components/elements/NumericFormControl";
 import CheckBox from "components/elements/CheckBox";
 import React from "react";
@@ -49,6 +49,8 @@ const AddEditDecoration: React.FC<IAddEditDecorationProps> = ({
 
   const maxNameLength = 100;
   const maxDescriptionLength = 250;
+  const [priceValue, setPriceValue] = useState(currentDecorationData?.price);
+
 
   const onModalClose = () => {
     reset();
@@ -184,9 +186,14 @@ const AddEditDecoration: React.FC<IAddEditDecorationProps> = ({
                     InputProps={{
                       inputComponent: CustomPriceComponent as any,
                     }}
-                    value={isEditDecoration
-                      ? currentDecorationData?.price || "" : undefined
-                    }       
+                    value={isEditDecoration ? priceValue : undefined } 
+                    onBlur={(e) => {
+                      if (e.target.value === '')
+                        setPriceValue(undefined)
+                      else 
+                        setPriceValue(Number(e.target.value))
+                    }}
+                    InputLabelProps={{shrink:  priceValue !== undefined }}
                   />
                 </Grid>
               </Grid>

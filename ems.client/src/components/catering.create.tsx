@@ -9,7 +9,7 @@ import {
 import { saveIcon } from "assets/images";
 import { useForm } from "react-hook-form";
 import { ICatering } from "interfaces/catering.interface";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import NumericFormControl, { CustomNumericFormatProps, removeNumberFormatting } from "components/elements/NumericFormControl";
 import CheckBox from "components/elements/CheckBox";
 import React from "react";
@@ -49,6 +49,7 @@ const AddEditCatering: React.FC<IAddEditCateringProps> = ({
 
   const maxNameLength = 100;
   const maxDescriptionLength = 250;
+  const [priceValue, setPriceValue] = useState(currentCateringData?.price);
 
   const onModalClose = () => {
     reset();
@@ -176,7 +177,6 @@ const AddEditCatering: React.FC<IAddEditCateringProps> = ({
                     </>
                     }
                     fullWidth
-                    InputLabelProps={{shrink: true}}
                     autoComplete="off"
                     variant="outlined"
                     error={!!errors.price}
@@ -185,9 +185,14 @@ const AddEditCatering: React.FC<IAddEditCateringProps> = ({
                     InputProps={{
                       inputComponent: CustomPriceComponent as any,
                     }}
-                    value={isEditCatering
-                      ? currentCateringData?.price || "" : undefined
-                    }       
+                    value={isEditCatering ? priceValue : undefined } 
+                    onBlur={(e) => {
+                      if (e.target.value === '')
+                        setPriceValue(undefined)
+                      else 
+                        setPriceValue(Number(e.target.value))
+                    }}
+                    InputLabelProps={{shrink:  priceValue !== undefined }}       
                   />
                 </Grid>
               </Grid>

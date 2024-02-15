@@ -9,7 +9,7 @@ import {
   import { saveIcon } from "assets/images";
   import { useForm } from "react-hook-form";
   import { IPhotography } from "interfaces/photography.interface";
-  import { useEffect } from "react";
+  import { useEffect, useState } from "react";
   import NumericFormControl, { CustomNumericFormatProps, removeNumberFormatting } from "components/elements/NumericFormControl";
   import CheckBox from "components/elements/CheckBox";
   import React from "react";
@@ -49,6 +49,7 @@ import { NumericFormatProps } from "react-number-format";
 
     const maxNameLength = 100;
     const maxDescriptionLength = 250;
+    const [priceValue, setPriceValue] = useState(currentPhotographyData?.price);
 
     const onModalClose = () => {
       reset();
@@ -139,7 +140,6 @@ import { NumericFormatProps } from "react-number-format";
                       })}
                     />
                   </Grid>
-
                   {
                     isEditPhotography  && (
                       <Grid item xs={4} xl={4} md={4} mt={2} alignContent={"center"}>
@@ -185,9 +185,14 @@ import { NumericFormatProps } from "react-number-format";
                       InputProps={{
                         inputComponent: CustomPriceComponent as any,
                       }}
-                      value={isEditPhotography
-                        ? currentPhotographyData?.price || "" : undefined
-                      }       
+                      value={isEditPhotography ? priceValue : undefined } 
+                      onBlur={(e) => {
+                        if (e.target.value === '')
+                          setPriceValue(undefined)
+                        else 
+                          setPriceValue(Number(e.target.value))
+                      }}
+                      InputLabelProps={{shrink:  priceValue !== undefined }}
                     />
                   </Grid>
                 </Grid>
