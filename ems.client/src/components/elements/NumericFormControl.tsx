@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { NumberFormatValues, NumericFormat, NumericFormatProps } from 'react-number-format';
+import { RUPEE_SYMBOL } from 'utils/constants';
 
 export interface CustomNumericFormatProps extends NumericFormatProps {
   onChange: (event: { target: { name: string; value: string } }) => void;
@@ -7,8 +8,8 @@ export interface CustomNumericFormatProps extends NumericFormatProps {
   min: number | undefined
   max: number | undefined
 }
-const prefix = "₹"
-  
+const prefix = RUPEE_SYMBOL
+
 export const removeNumberFormatting = (value: string): Number => {
   const prefixRegex = new RegExp(prefix, "g");
   value = value.replace(prefixRegex, "").replace(/,/g, "");

@@ -11,7 +11,7 @@ import {
   IDecoration,
 } from "interfaces/decoration.interface";
 import { RootState } from "store/root/root.reducer";
-import { getCurrentDecorationSelector, getDecorationListSelector } from "store/decoration/selectors";
+import { getCurrentDecorationSelector, getDecorationListSelector } from "store/decoration/selector";
 
 const mapDispatchToProps: MapDispatchToProps<
   IDecorationContainerDispatch,

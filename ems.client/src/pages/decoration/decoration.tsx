@@ -36,7 +36,7 @@ import {
 } from "interfaces/decoration.interface";
 import { showLoader } from "utils/helper";
 import { toast } from "react-toastify";
-import { PAGE_SIZES, SOMETHING_WENT_WRONG } from "utils/constants";
+import { PAGE_SIZES, RUPEE_SYMBOL, SOMETHING_WENT_WRONG } from "utils/constants";
 import { Order } from "utils/enums";
 import DeleteConfirmationModal from "components/modals/delete.confirm";
 import AddEditDecoration from "components/decoration.create";
@@ -63,9 +63,11 @@ interface EnhancedTableProps {
   orderBy: string;
   columnHeader: string;
   columnName: keyof IDecoration;
+  align?: "left" | "center" | "right" | "justify" | "inherit" | undefined;
+  width?: string | number | undefined;
 }
 const EnhancedTableHead = (props: EnhancedTableProps) => {
-  const { order, orderBy, onRequestSort } = props;
+  const { order, orderBy, onRequestSort, align, width } = props;
   const createSortHandler =
     (newOrderBy: keyof IDecoration) => (event: React.MouseEvent<unknown>) =>
       onRequestSort(event, newOrderBy);
@@ -83,9 +85,10 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
   return (
     <TableCell
       key={props.columnHeader}
-      align="left"
+      align={align || "left"}
       onClick={createSortHandler(props.columnName)}
       sortDirection={orderBy === props.columnName ? order : false}
+      width={width}
     >
       {columnDisplayName[props.columnName]}
       <Box component="span" className="sorting-icon" />
@@ -317,14 +320,16 @@ const DecorationForm: React.FC<DecorationProps> = (props) => {
                               orderBy={orderBy}
                               onRequestSort={handleRequestSort}
                               columnName="description"
-                              columnHeader="From Capacity"
+                              columnHeader="Description"
                             />
                             <EnhancedTableHead
                               order={order}
                               orderBy={orderBy}
                               onRequestSort={handleRequestSort}
                               columnName="price"
-                              columnHeader="To Capacity"
+                              columnHeader="Price"
+                              align="right"
+                              width={200}
                             />
                             <TableCell
                               align="center"
@@ -349,8 +354,8 @@ const DecorationForm: React.FC<DecorationProps> = (props) => {
                               <TableCell component="th" scope="row">
                                 {row?.description}
                               </TableCell>
-                              <TableCell component="th" scope="row">
-                                {row?.price?.toLocaleString()}
+                              <TableCell component="th" scope="row" align="right">
+                                {RUPEE_SYMBOL} {row?.price}
                               </TableCell>
                               <TableCell align="center">
                                 <div className="table-actions">
@@ -432,7 +437,7 @@ const DecorationForm: React.FC<DecorationProps> = (props) => {
       <div>
         <Box className="content-header">
           <Typography variant="h2" className="heading">
-            Decorations
+            Decoration
           </Typography>
           {!showScreen && 
             <Button
