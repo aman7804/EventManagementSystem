@@ -44,6 +44,7 @@ import projectTheme from "App.theme";
 import * as GENERIC from "interfaces/generic.interface";
 import { GetDropDownListPayload } from "interfaces/city.interface";
 import { get } from "lodash";
+import { RUPEE_SYMBOL } from "utils/constants";
 
 const ArrowBackIcon = () =>
   <img src={arrowBackwardIcon} alt="arrow-backward" />;
@@ -64,31 +65,32 @@ interface EnhancedTableProps {
   orderBy: string;
   columnHeader: string;
   columnName: keyof IVenue;
+  align?: "left" | "center" | "right" | "justify" | "inherit" | undefined;
+  width?: string | number | undefined;
 }
 const EnhancedTableHead = (props: EnhancedTableProps) => {
-  const { order, orderBy, onRequestSort } = props;
+  const { order, orderBy, onRequestSort, align, width } = props;
   const createSortHandler =
     (newOrderBy: keyof IVenue) => (event: React.MouseEvent<unknown>) =>
       onRequestSort(event, newOrderBy);
-
-  const columnDisplayName:{[key in keyof IVenue]: string} = {
+  
+  interface ColumnDisplayName{
+    [key: string] : string;    
+  }
+  const columnDisplayName: ColumnDisplayName = {
     name: "Name",
     address: "Address",
-    minCapacity: "Minimum-capacity",
-    maxCapacity: "Maximum-capacity",
-    id: "",
-    description: "",
-    price: "",
-    isActive: "",
-    cityId: ""
+    minCapacity: "Capacity",
+    price: "Price"
   }
   
   return (
     <TableCell
       key={props.columnHeader}
-      align="left"
+      align={align || "left"}
       onClick={createSortHandler(props.columnName)}
       sortDirection={orderBy === props.columnName ? order : false}
+      width={width}
     >
       {columnDisplayName[props.columnName]}
       <Box component="span" className="sorting-icon" />
@@ -126,7 +128,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
 
   // handle-child-component
   const handleAddEditVenue = (venueId: number|null) => {
-    handleGetCityDropDownList()
+    getCityDropDownList()
     if (venueId) { //Edit Mode
       setIsEditVenue(true);
       getVenue(venueId);
@@ -168,7 +170,8 @@ const VenueForm: React.FC<VenueProps> = (props) => {
   };
   const onSaveVenueSuccess = (response: GENERIC.IApiSuccessResponse<IVenue>) => {
     if (response.isSuccessStatusCode) {
-      toast.success("Venue added successfully.");
+      toast.success
+      (`Venue ${isEditVenue ? "updated" : "added"} successfully.`);
       handleVenueClose();
       getVenueList();
     } else if (response.message) {
@@ -254,7 +257,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
       getRequest(payload);
     }
   };
-  const handleGetCityDropDownList = async (stateId?: number) => {
+  const getCityDropDownList = async (stateId?: number) => {
       const { cityDropDownListRequest } = props;
   
       if (cityDropDownListRequest) {
@@ -318,7 +321,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
                         id="search"
                         variant="outlined"
                         className="search-input"
-                        placeholder="Search"
+                        placeholder="Search by Name, Address or Description"
                         value={searchText}
                         onChange={handleVenueSearch}
                         onKeyDown={handleVenueSearchKeyDown}
@@ -347,14 +350,18 @@ const VenueForm: React.FC<VenueProps> = (props) => {
                               orderBy={orderBy}
                               onRequestSort={handleRequestSort}
                               columnName="minCapacity"
-                              columnHeader="From Capacity"
+                              columnHeader="Capacity"
+                              align="center"
+                              width={150}
                             />
                             <EnhancedTableHead
                               order={order}
                               orderBy={orderBy}
                               onRequestSort={handleRequestSort}
-                              columnName="maxCapacity"
-                              columnHeader="To Capacity"
+                              columnName="price"
+                              columnHeader="Price"
+                              align="right"
+                              width={100}
                             />
                             <TableCell
                               align="center"
@@ -379,11 +386,11 @@ const VenueForm: React.FC<VenueProps> = (props) => {
                               <TableCell component="th" scope="row">
                                 {row?.address}
                               </TableCell>
-                              <TableCell component="th" scope="row">
-                                {row?.minCapacity}
+                              <TableCell component="th" scope="row" align="center">
+                                {row?.minCapacity}-{row?.maxCapacity}
                               </TableCell>
-                              <TableCell component="th" scope="row">
-                                {row?.maxCapacity}
+                              <TableCell component="th" scope="row" align="right">
+                              {RUPEE_SYMBOL} {row?.price}
                               </TableCell>
                               <TableCell align="center">
                                 <div className="table-actions">
@@ -488,7 +495,17 @@ const VenueForm: React.FC<VenueProps> = (props) => {
               handleVenueClose={handleVenueClose}
               handleSaveVenue={handleSaveVenue}
               cityDropDownList={cityDropDownList}
-              currentVenueData={isEditVenue ? {...props.current} : undefined}
+              currentVenueData={isEditVenue ? {...props.current} : {
+                id: 0,
+                description: "",
+                name: "",
+                address: "",
+                minCapacity: undefined,
+                maxCapacity: undefined,
+                cityId: undefined,
+                price: undefined,
+                isActive: true,
+              }}
             />)
         }            
       </div>

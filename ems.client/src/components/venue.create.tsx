@@ -180,7 +180,11 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
           </Box>              
             <form onSubmit={handleSubmit(beginSubmit)}>           
               <Grid container spacing={2}>
-                <Grid item xs={8} md={8} xl={8}>
+              <Grid item
+                  xs={isEditVenue ? 8 : 12}
+                  md={isEditVenue ? 8 : 12}
+                  xl={isEditVenue ? 8 : 12}
+                >
                   <TextField
                     id="name"
                     label={
@@ -199,16 +203,20 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                     })}
                   />
                 </Grid>
-                <Grid item xs={4} xl={4} md={4} mt={2} alignContent={"center"}>
-                  <CheckBox
-                    label="Active"  
-                    isChecked={
-                      currentVenueData ? currentVenueData.isActive : true
-                    }
-                    {...register("isActive")}
-                    onChange={e => setValue("isActive", e.target.checked)}
-                  />
-                </Grid>
+                  {
+                    isEditVenue  && (
+                      <Grid item xs={4} xl={4} md={4} mt={2} alignContent={"center"}>
+                        <CheckBox
+                          label="Active"  
+                          isChecked={
+                            currentVenueData ? currentVenueData.isActive : true
+                          }
+                          {...register("isActive")}
+                          onChange={e => setValue("isActive", e.target.checked)}
+                          />
+                      </Grid>
+                    )
+                  }
                 <Grid item xs={12} md={12} xl={12}>
                   <TextField
                     id="address"

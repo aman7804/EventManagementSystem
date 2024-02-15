@@ -116,7 +116,11 @@ import { NumericFormatProps } from "react-number-format";
             </Box>              
               <form onSubmit={handleSubmit(beginSubmit)}>           
                 <Grid container spacing={2}>
-                  <Grid item xs={8} md={8} xl={8}>       
+                <Grid item
+                  xs={isEditPhotography ? 8 : 12}
+                  md={isEditPhotography ? 8 : 12}
+                  xl={isEditPhotography ? 8 : 12}
+                >       
                     <TextField
                       id="name"
                       label={
@@ -135,16 +139,20 @@ import { NumericFormatProps } from "react-number-format";
                       })}
                     />
                   </Grid>
-                  <Grid item xs={4} xl={4} md={4} mt={2} alignContent={"center"}>
-                    <CheckBox
-                      label="Active"  
-                      isChecked={
-                        currentPhotographyData ? currentPhotographyData.isActive : true
-                      }
-                      {...register("isActive")}
-                      onChange={e => setValue("isActive", e.target.checked)}
-                    />
-                  </Grid>
+                  {
+                    isEditPhotography  && (
+                      <Grid item xs={4} xl={4} md={4} mt={2} alignContent={"center"}>
+                        <CheckBox
+                          label="Active"  
+                          isChecked={
+                            currentPhotographyData ? currentPhotographyData.isActive : true
+                          }
+                          {...register("isActive")}
+                          onChange={e => setValue("isActive", e.target.checked)}
+                        />
+                      </Grid>
+                    )
+                  }
                   <Grid item xs={12} md={12} xl={12}>
                     <TextField
                       id="description"
