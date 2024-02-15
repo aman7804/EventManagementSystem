@@ -395,13 +395,13 @@ input[type="number"] {
   height: 1px;
   width: 0;
   border-radius: 1px;
-  background-color: #821c6b;
+  background-color: #1fb4fb;
   transition: all 0.5s ease;
   opacity: 0;
 }
 
 .login-card .forgot-pwd:hover:not(:focus, :active) {
-  color: #821c6b;
+  color: #1fb4fb;
 }
 
 .login-card .forgot-pwd:hover:not(:focus, :active)::after {
@@ -560,7 +560,7 @@ main {
   max-width: 260px;
   width: 100%;
   flex: 0 0 260px;
-  background-color: #821c6b;
+  background-color: #1fb4fb;
   color: #ffffff;
 }
 
@@ -1113,13 +1113,13 @@ main {
 .MuiTableHead-root
   .MuiTableCell-root[aria-sort="descending"]
   .sorting-icon:after {
-  border-color: #821c6b transparent transparent transparent;
+  border-color: #1fb4fb transparent transparent transparent;
 }
 
 .MuiTableHead-root
   .MuiTableCell-root[aria-sort="ascending"]
   .sorting-icon:before {
-  border-color: transparent transparent #821c6b transparent;
+  border-color: transparent transparent #1fb4fb transparent;
 }
 
 .MuiTableHead-root .MuiTableCell-root .sorting-icon:before {

@@ -214,7 +214,7 @@ const projectTheme = createTheme({
       styleOverrides: {
         root: {
           marginLeft: 0,
-          transiton: "all 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms",
+          transition: "all 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms",
           "& .MuiFormControlLabel-label": {
             color: "#424242",
           },
@@ -257,7 +257,7 @@ const projectTheme = createTheme({
         },
         outlinedPrimary: {
           "&:hover": {
-            boxShadow: "inset 0 0 0 50px #821C6B",
+            boxShadow: "inset 0 0 0 50px #1fb4fb",
             color: "#FFFFFF",
           },
           "&.MuiButton-sizeMedium": {

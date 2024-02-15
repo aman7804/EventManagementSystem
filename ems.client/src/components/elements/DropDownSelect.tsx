@@ -15,13 +15,15 @@ interface IDropDownProps {
 
 const DropDownSelect = (props: IDropDownProps) => {
   const {key, label, onChange, value, list, helperText, error} = props;
-  const [selectedValue,setSelectedValue] = useState<string|undefined>(value?.toString());
+  const [selectedValue,setSelectedValue] = useState<string|undefined>(value?.toString() || "");
 
   console.log("dropDownComp",list)
   return (
     <>
       <FormControl fullWidth error={error}>
-        <InputLabel id={key || `dropdown${label.replaceAll(" ", "_")}`}>{label}</InputLabel>
+        <InputLabel id={key || `dropdown${label.replaceAll(" ", "_")}`}>
+          {label} <span className="color-red">*</span>
+        </InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
