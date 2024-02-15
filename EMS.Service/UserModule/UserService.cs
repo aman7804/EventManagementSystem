@@ -3,6 +3,7 @@ using EMS.Entity;
 using EMS.Repository.UserModule;
 using EMS.Service.Base;
 using EMS.Service.DTO;
+using EMS.Shared.Constant;
 
 namespace EMS.Service.UserModule
 {
