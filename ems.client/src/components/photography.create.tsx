@@ -139,6 +139,7 @@ import { NumericFormatProps } from "react-number-format";
                       })}
                     />
                   </Grid>
+
                   {
                     isEditPhotography  && (
                       <Grid item xs={4} xl={4} md={4} mt={2} alignContent={"center"}>

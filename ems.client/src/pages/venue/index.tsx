@@ -12,7 +12,7 @@ import {
   IVenue,
 } from "interfaces/venue.interface";
 import { RootState } from "store/root/root.reducer";
-import { getCurrentVenueSelector, getVenueListSelector } from "store/venue/selectors";
+import { getCurrentVenueSelector, getVenueListSelector } from "store/venue/selector";
 
 const mapDispatchToProps: MapDispatchToProps<
   IVenueContainerDispatch,

@@ -11,7 +11,7 @@ import {
   IPhotography,
 } from "interfaces/photography.interface";
 import { RootState } from "store/root/root.reducer";
-import { getCurrentPhotographySelector, getPhotographyListSelector } from "store/photography/selectors";
+import { getCurrentPhotographySelector, getPhotographyListSelector } from "store/photography/selector";
 
 const mapDispatchToProps: MapDispatchToProps<
   IPhotographyContainerDispatch,

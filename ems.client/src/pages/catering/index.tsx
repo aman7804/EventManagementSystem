@@ -11,7 +11,7 @@ import {
   ICatering,
 } from "interfaces/catering.interface";
 import { RootState } from "store/root/root.reducer";
-import { getCurrentCateringSelector, getCateringListSelector } from "store/catering/selectors";
+import { getCurrentCateringSelector, getCateringListSelector } from "store/catering/selector";
 
 const mapDispatchToProps: MapDispatchToProps<
   ICateringContainerDispatch,
