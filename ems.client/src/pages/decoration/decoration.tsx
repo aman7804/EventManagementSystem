@@ -432,7 +432,7 @@ const DecorationForm: React.FC<DecorationProps> = (props) => {
       <div>
         <Box className="content-header">
           <Typography variant="h2" className="heading">
-            Decorations
+            Decoration
           </Typography>
           {!showScreen && 
             <Button

@@ -329,7 +329,7 @@ const PhotographyForm: React.FC<PhotographyProps> = (props) => {
                               columnName="price"
                               columnHeader="Price"
                               align="right"
-                              width={100}
+                              width={200}
                             />
                             <TableCell
                               align="center"
@@ -437,7 +437,7 @@ const PhotographyForm: React.FC<PhotographyProps> = (props) => {
       <div>
         <Box className="content-header">
           <Typography variant="h2" className="heading">
-            Photographys
+            Photography
           </Typography>
           {!showScreen && 
             <Button

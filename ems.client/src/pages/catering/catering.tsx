@@ -432,7 +432,7 @@ const CateringForm: React.FC<CateringProps> = (props) => {
       <div>
         <Box className="content-header">
           <Typography variant="h2" className="heading">
-            Caterings
+            Catering
           </Typography>
           {!showScreen && 
             <Button
