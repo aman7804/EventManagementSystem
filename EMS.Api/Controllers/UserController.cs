@@ -53,7 +53,7 @@ namespace EMS.Api.Controllers
             }
             else
             {
-                return GetResult(new Exception("INVALID CREDENTIALS"));
+                return GetResult<UserDTO>(null, HttpStatusCode.BadRequest, new Exception("INVALID CREDENTIALS"));
             }
         }
 
