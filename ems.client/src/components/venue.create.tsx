@@ -250,28 +250,6 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                     })}
                   />
                   </Grid>
-                <Grid item xs={12} md={6} xl={4}>
-                  <TextField
-                    id="price"
-                    label={
-                      <>
-                        Price <span className="color-red">*</span>
-                      </>
-                    }
-                    fullWidth
-                    variant="outlined"  
-                    autoComplete="off"
-                    error={!!errors.price}
-                    helperText={getError("price")}
-                    {...register("price", { required: true })}
-                    InputProps={{
-                      inputComponent: CustomPriceComponent as any,
-                    }}
-                    value={isEditVenue 
-                        ? currentVenueData?.price || "" : undefined
-                      }                    
-                  />
-                </Grid>
                 <Grid item xs={12} xl={4} md={6}>                
                   <TextField
                     id="minCapacity"
@@ -324,6 +302,28 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                       inputComponent: CustomCapacityComponent as any
                     }}
                     value={currentVenueData?.maxCapacity}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6} xl={4}>
+                  <TextField
+                    id="price"
+                    label={
+                      <>
+                        Price <span className="color-red">*</span>
+                      </>
+                    }
+                    fullWidth
+                    variant="outlined"  
+                    autoComplete="off"
+                    error={!!errors.price}
+                    helperText={getError("price")}
+                    {...register("price", { required: true })}
+                    InputProps={{
+                      inputComponent: CustomPriceComponent as any,
+                    }}
+                    value={isEditVenue 
+                        ? currentVenueData?.price || "" : undefined
+                      }                    
                   />
                 </Grid>
               </Grid>
