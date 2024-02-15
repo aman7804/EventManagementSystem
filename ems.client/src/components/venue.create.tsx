@@ -112,9 +112,15 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
           return `${fieldNames[fieldName]} is required.`;
         case "maxLength":
           switch(fieldName){
-            case "name": return  `Cannot exceed ${maxNameLength} characters.`;
-            case "address": return `Cannot exceed ${maxAddressLength} characters.`;
-            case "description": return `Cannot exceed ${maxDescriptionLength} characters.`;
+            case "name":
+              return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
+                ${maxNameLength}.`;
+            case "address":
+              return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
+                ${maxAddressLength}.`;
+            case "description":
+              return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
+                ${maxDescriptionLength}.`;
           }
           break;
         case "min":
