@@ -256,11 +256,7 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                 <Grid item xs={12} md={12} xl={12}>
                 <TextField
                   id="description"
-                  label={
-                    <>
-                      Description <span className="color-red">*</span>
-                    </>
-                  }
+                  label="Description"
                   fullWidth
                   variant="outlined"
                   multiline
