@@ -55,7 +55,7 @@ namespace EMS.Service.Base
             return entity == null ? throw new Exception(ExceptionMessage.RECORD_NOT_FOUND) : ToDTO(entity);
         }
 
-        public virtual async Task<PaginationDTO<D,F>>GetPageAsync<F>
+        public virtual async Task<PaginationDTO<D,F>> GetPageAsync<F>
             (PaginationDTO<D,F> paginationDTO) where F : FilterBase<D>
         {
             Expression<Func<D, bool>> expression = paginationDTO.Filter.GetFilter();
