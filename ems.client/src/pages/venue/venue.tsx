@@ -129,7 +129,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
     handleGetCityDropDownList()
     if (venueId) { //Edit Mode
       setIsEditVenue(true);
-      handleGetVenue(venueId);
+      getVenue(venueId);
     }
     else { //Add Mode
       setIsEditVenue(false);
@@ -149,7 +149,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
   };
 
   useEffect(() => {
-    handleGetVenueList(); 
+    getVenueList(); 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, pageNo, order, orderBy]);
 
@@ -161,7 +161,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
     if (response.isSuccessStatusCode) {
       toast.success("Venue deleted successfully.");
       handleVenueDeleteCloseModal();
-      handleGetVenueList();
+      getVenueList();
     } else {
       toast.error(SOMETHING_WENT_WRONG);
     }
@@ -170,7 +170,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
     if (response.isSuccessStatusCode) {
       toast.success("Venue added successfully.");
       handleVenueClose();
-      handleGetVenueList();
+      getVenueList();
     } else if (response.message) {
       toast.warning(response.message);
     } else {
@@ -185,7 +185,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
   }
 
   // action-dispatches
-  const handleGetVenueList = async () => {
+  const getVenueList = async () => {
     const { listRequest } = props;
     
     if (listRequest) {
@@ -242,7 +242,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
       saveRequest(payload);
     }
   };
-  const handleGetVenue = (id: number) => {
+  const getVenue = (id: number) => {
     const { getRequest } = props;
 
     if (getRequest) {
@@ -274,7 +274,7 @@ const VenueForm: React.FC<VenueProps> = (props) => {
   const handleVenueSearchKeyDown = (e: any) => {
     if (e?.key === "Enter") {
       setPageNo(1);
-      handleGetVenueList();
+      getVenueList();
     }
   };
   // pagination
