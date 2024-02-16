@@ -24,7 +24,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { LoginSuccessPayload } from "store/auth/types";
 import { toast } from "react-toastify";
-import { EMAIL_PATTERN, MOBILE_NO, PASSWORD_PATTERN } from "utils/constants";
+import { EMAIL_PATTERN, MOBILE_PATTERN, PASSWORD_PATTERN } from "utils/constants";
 import { useForm } from "react-hook-form";
 import {Link} from "react-router-dom"
 import { showLoader } from "utils/helper";
@@ -206,7 +206,7 @@ export const RegistrationForm = (props: RegistrationProps) => {
                         helperText={getMobileNoError()}
                         {...register("mobileNo", {
                           required: true,
-                          pattern: MOBILE_NO
+                          pattern: MOBILE_PATTERN
                         })}
                         InputProps={{
                           startAdornment: (
