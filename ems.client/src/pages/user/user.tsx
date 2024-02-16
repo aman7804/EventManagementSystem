@@ -289,7 +289,6 @@ const UserForm: React.FC<UserProps> = (props) => {
 
   const getListingScreen = () => {
     const list = get(props, "list.data", []);
-    console.log(list)
     return <>
               <Grid
                 container
@@ -319,6 +318,7 @@ const UserForm: React.FC<UserProps> = (props) => {
                               onRequestSort={handleRequestSort}
                               columnName="firstName"
                               columnHeader="FirstName"
+                              width={200}
                             />
                             <EnhancedTableHead
                               order={order}
@@ -326,6 +326,7 @@ const UserForm: React.FC<UserProps> = (props) => {
                               onRequestSort={handleRequestSort}
                               columnName="address"
                               columnHeader="Address"
+                              width={250}
                             />
                             <EnhancedTableHead
                               order={order}
@@ -333,13 +334,15 @@ const UserForm: React.FC<UserProps> = (props) => {
                               onRequestSort={handleRequestSort}
                               columnName="emailId"
                               columnHeader="EmailId"
-                            />
+                              width={200}
+                              />
                             <EnhancedTableHead
                               order={order}
                               orderBy={orderBy}
                               onRequestSort={handleRequestSort}
                               columnName="mobileNo"
                               columnHeader="MobileNo"
+                              width={100}
                             />
                             <TableCell
                               align="center"
@@ -359,7 +362,7 @@ const UserForm: React.FC<UserProps> = (props) => {
                             // eslint-disable-next-line react/no-array-index-key
                             <TableRow key={row?.id}>
                               <TableCell component="th" scope="row">
-                                {row?.firstName}-{row?.lastName}
+                                {row?.firstName} {row?.lastName}
                               </TableCell>
                               <TableCell component="th" scope="row">
                                 {row?.address}
