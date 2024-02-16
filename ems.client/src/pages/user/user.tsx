@@ -450,7 +450,7 @@ const UserForm: React.FC<UserProps> = (props) => {
       <div>
         <Box className="content-header">
           <Typography variant="h2" className="heading">
-            User
+            Users
           </Typography>
           {!showScreen && 
             <Button
