@@ -97,7 +97,6 @@ export const RegistrationForm = (props: RegistrationProps) => {
     toast.success("Registration successfull");
   };
 
-  let cityID = 1;
   const onSubmit = async (data: IRegistration) => {
     const { registrationRequest } = props;
     if (registrationRequest) {
@@ -107,7 +106,6 @@ export const RegistrationForm = (props: RegistrationProps) => {
           firstName: data.firstName,
           lastName: data.lastName,
           address: data.address,
-          cityId: cityID,
           mobileNo: data.mobileNo,
           emailId: data.emailId,
           password: data.password,
@@ -203,24 +201,6 @@ export const RegistrationForm = (props: RegistrationProps) => {
                           ),
                         }}
                       />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <FormControl
-                        variant="outlined"
-                        fullWidth
-                      >
-                        <InputLabel id="demo-select-small-label">
-                          City
-                        </InputLabel>
-                        <Select
-                          labelId="demo-select-small-label"
-                          id="cityId"
-                          value={cityID}
-                          label="City"
-                        >
-                          <MenuItem value={cityID}>Ahemedabad</MenuItem>
-                        </Select>
-                      </FormControl>
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
