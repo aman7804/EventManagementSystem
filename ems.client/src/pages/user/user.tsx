@@ -299,7 +299,7 @@ const UserForm: React.FC<UserProps> = (props) => {
                         id="search"
                         variant="outlined"
                         className="search-input"
-                        placeholder="Search by Name, Address or Description"
+                        placeholder="Search by Name, Email or Mobile"
                         value={searchText}
                         onChange={handleUserSearch}
                         onKeyDown={handleUserSearchKeyDown}
