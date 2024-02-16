@@ -42,9 +42,7 @@ import DeleteConfirmationModal from "components/modals/delete.confirm";
 import AddEditUser from "components/user.create";
 import projectTheme from "App.theme";
 import * as GENERIC from "interfaces/generic.interface";
-import { GetDropDownListPayload } from "interfaces/city.interface";
 import { get } from "lodash";
-import { RUPEE_SYMBOL } from "utils/constants";
 
 const ArrowBackIcon = () =>
   <img src={arrowBackwardIcon} alt="arrow-backward" />;
