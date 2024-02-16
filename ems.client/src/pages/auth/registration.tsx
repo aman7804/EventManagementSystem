@@ -28,6 +28,7 @@ import { EMAIL_PATTERN, MOBILE_PATTERN, PASSWORD_PATTERN } from "utils/constants
 import { useForm } from "react-hook-form";
 import {Link} from "react-router-dom"
 import { showLoader } from "utils/helper";
+import { IIndexable } from "components/venue.create";
 
 export type RegistrationProps = IRegistrationContainerDispatch;
 
@@ -56,50 +57,39 @@ export const RegistrationForm = (props: RegistrationProps) => {
     AOS.refresh();
   }, []);
 
-  const getEmailError = (): string => {
-    if (errors.emailId) {
-      if (errors.emailId.type === "required") {
-        return "Email is required";
-      }
-      if (errors.emailId.type === "pattern") {
-        return "Enter valid email";
-      }
-    }
-    return "";
-  };
+  const fieldNames : IIndexable = {
+    
+  }
 
-  const getUserNameError = (): string => {
-    if (errors.firstName) {
-      if (errors.firstName.type === "required")
-        return "FirstName is required";
-    }
-    if (errors.lastName) {
-      if (errors.lastName.type === "required")
-        return "LastName is required";
-    }
-    return "";
-  };
-
-  const getPasswordError = (): string => {
-    if (errors.password) {
-      if (errors.password.type === "required") {
-        return "Password is required";
+  const getErrorMessage = (fieldName: keyof IRegistration, type: string|undefined): string => {
+    if(type){
+      switch(type){
+        case "required":
+          return `${fieldNames[fieldName]} is required.`
+        case "pattern":
+          return `Invalid ${fieldNames[fieldName].toLowerCase()}.`
+        default:
+          return ""
       }
-      if (errors.password.type === "pattern") {
-        return "Password must have at least 8 characters that include at least one uppercase character, one number, and  one special character.";
-      }
-    }
-    return "";
-  };
-
-  const getMobileNoError = (): string => {
-    if(errors.mobileNo){
-      if(errors.mobileNo.type === "required")
-        return "Mobile number is required"
-      if(errors.mobileNo.type === "pattern")
-        return  "Invalid mobile number"
     }
     return ""
+  }
+
+  const getError = (fieldName: keyof IRegistration): string => {
+    switch(fieldName){
+      case "firstName":
+        return getErrorMessage(fieldName, errors?.firstName?.type);
+      case "lastName":
+        return getErrorMessage(fieldName, errors?.lastName?.type);
+      case "emailId":
+        return getErrorMessage(fieldName, errors?.emailId?.type);
+      case "password":
+        return getErrorMessage(fieldName, errors?.password?.type);
+      case "mobileNo":
+        return getErrorMessage(fieldName, errors?.mobileNo?.type);
+      default:
+        return "field cannot be empty";
+    }
   }
 
   const onRegistrationSuccess = async (response: LoginSuccessPayload) => {
@@ -162,13 +152,12 @@ export const RegistrationForm = (props: RegistrationProps) => {
                         id="firstName"
                         label={
                           <>
-                            FirstName{" "}
-                            <span className="color-red">*</span>
+                            FirstName <span className="color-red">*</span>
                           </>
                         }
                         fullWidth
                         variant="outlined"
-                        helperText={getUserNameError()}
+                        helperText={getError("firstName")}
                         {...register("firstName", {
                           required: true,
                         })}
@@ -179,13 +168,12 @@ export const RegistrationForm = (props: RegistrationProps) => {
                         id="lastName"
                         label={
                           <>
-                            LastName{" "}
-                            <span className="color-red">*</span>
+                            LastName <span className="color-red">*</span>
                           </>
                         }
                         fullWidth
                         variant="outlined"
-                        helperText={getUserNameError()}
+                        helperText={getError("lastName")}
                         {...register("lastName", {
                           required: true,
                         })}
@@ -196,14 +184,13 @@ export const RegistrationForm = (props: RegistrationProps) => {
                         id="mobileNo"
                         label={
                           <>
-                            MobileNo{" "}
-                            <span className="color-red">*</span>
+                            Mobile <span className="color-red">*</span>
                           </>
                         }
                         fullWidth
                         variant="outlined"
                         error={!!errors.mobileNo}
-                        helperText={getMobileNoError()}
+                        helperText={getError("mobileNo")}
                         {...register("mobileNo", {
                           required: true,
                           pattern: MOBILE_PATTERN
@@ -240,14 +227,13 @@ export const RegistrationForm = (props: RegistrationProps) => {
                         id="address"
                         label={
                           <>
-                            Address{" "}
-                            <span className="color-red">*</span>
+                            Address <span className="color-red">*</span>
                           </>
                         }
                         fullWidth
                         variant="outlined"
                         error={!!errors.emailId}
-                        helperText={getEmailError()}
+                        helperText={getError("address")}
                         {...register("address", {
                           required: true,
                         })}
@@ -265,7 +251,7 @@ export const RegistrationForm = (props: RegistrationProps) => {
                         fullWidth
                         variant="outlined"
                         error={!!errors.emailId}
-                        helperText={getEmailError()}
+                        helperText={getError("emailId")}
                         {...register("emailId", {
                           required: true,
                           pattern: EMAIL_PATTERN,
@@ -320,7 +306,7 @@ export const RegistrationForm = (props: RegistrationProps) => {
                         />
                         {!!errors.password && (
                           <FormHelperText error>
-                            {getPasswordError()}
+                            {getError("password")}
                           </FormHelperText>
                         )}
                       </FormControl>
