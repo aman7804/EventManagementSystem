@@ -37,21 +37,19 @@ namespace EMS.Api.Controllers
         [HttpPost("save")]
         public async Task<IActionResult> SaveUser(SaveUserDTO dto)
         {
-
-            if (dto.Id > 0 && dto.Password == "")
+            if(dto.Id == 0)
+            {
+                RegisterDTO userDto = service.Map<SaveUserDTO, RegisterDTO>(dto);
+                userDto.Password = _authService.GeneratePassword();
+                return GetResult(new AuthenticateResponseDTO(await _authService.RegisterUser(userDto), null));
+            }
+            else
             {
                 UserDTO userDto = service.Map<SaveUserDTO, UserDTO>(dto);
                 UserDTO user = await service.GetByIdAsync(userDto.Id, true);
-                if(user != null)
-                    await service.UpdateAsync(userDto);
+                if(user != null)  await service.UpdateAsync(userDto);
                 return GetResult<UserDTO>(null, HttpStatusCode.OK);
             }
-            else if(dto.Id == 0 && dto.Password != "")
-            {
-                RegisterDTO userDto = service.Map<SaveUserDTO, RegisterDTO>(dto);
-                return GetResult(new AuthenticateResponseDTO(await _authService.RegisterUser(userDto), null));
-            }
-           return GetResult<UserDTO>(null, HttpStatusCode.BadRequest, new Exception("INVALID CREDENTIALS"));
         }
 
         [Authorize(Roles = "Admin")]
