@@ -22,7 +22,7 @@ const rootReducer = combineReducers<unknown>({
   photography: photographyReducer,
   decoration: decorationReducer,
   catering: cateringReducer,
-  userReducer: userReducer
+  user: userReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
