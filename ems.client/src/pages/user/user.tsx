@@ -80,15 +80,15 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
   const columnDisplayName: ColumnDisplayName = {
     firstName: "Name",
     address: "Address",
-    minCapacity: "Capacity",
-    price: "Price"
+    emailId: "Email",
+    mobileNo: "Mobile"
   }
   
   return (
     <TableCell
       key={props.columnHeader}
       align={align || "left"}
-      onClick={createSortHandler(props.columnName)}
+      onClick={createSortHandler(props.columnName)} 
       sortDirection={orderBy === props.columnName ? order : false}
       width={width}
     >
@@ -324,6 +324,13 @@ const UserForm: React.FC<UserProps> = (props) => {
                               order={order}
                               orderBy={orderBy}
                               onRequestSort={handleRequestSort}
+                              columnName="address"
+                              columnHeader="Address"
+                            />
+                            <EnhancedTableHead
+                              order={order}
+                              orderBy={orderBy}
+                              onRequestSort={handleRequestSort}
                               columnName="emailId"
                               columnHeader="EmailId"
                             />
@@ -333,13 +340,6 @@ const UserForm: React.FC<UserProps> = (props) => {
                               onRequestSort={handleRequestSort}
                               columnName="mobileNo"
                               columnHeader="MobileNo"
-                            />
-                            <EnhancedTableHead
-                              order={order}
-                              orderBy={orderBy}
-                              onRequestSort={handleRequestSort}
-                              columnName="password"
-                              columnHeader="Password"
                             />
                             <TableCell
                               align="center"
@@ -364,10 +364,10 @@ const UserForm: React.FC<UserProps> = (props) => {
                               <TableCell component="th" scope="row">
                                 {row?.address}
                               </TableCell>
-                              <TableCell component="th" scope="row" align="center">
+                              <TableCell component="th" scope="row">
                                 {row?.emailId}
                               </TableCell>
-                              <TableCell component="th" scope="row" align="center">
+                              <TableCell component="th" scope="row">
                                 {row?.mobileNo}
                               </TableCell>
                               <TableCell align="center">
