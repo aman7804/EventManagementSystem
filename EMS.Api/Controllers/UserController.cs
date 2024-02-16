@@ -49,12 +49,10 @@ namespace EMS.Api.Controllers
             else if(dto.Id == 0 && dto.Password != "")
             {
                 RegisterDTO userDto = service.Map<SaveUserDTO, RegisterDTO>(dto);
+                userDto.Role = Shared.EnumRole.Customer;
                 return GetResult(new AuthenticateResponseDTO(await _authService.RegisterUser(userDto), null));
             }
-            else
-            {
-                return GetResult<UserDTO>(null, HttpStatusCode.BadRequest, new Exception("INVALID CREDENTIALS"));
-            }
+           return GetResult<UserDTO>(null, HttpStatusCode.BadRequest, new Exception("INVALID CREDENTIALS"));
         }
 
         [Authorize(Roles = "Admin")]
