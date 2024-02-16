@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import { CustomNumericFormatProps } from "components/elements/NumericFormControl";
 import { NumericFormat, NumericFormatProps } from "react-number-format";
 import React from "react";
-import { EMAIL_PATTERN, MOBILE_PATTERN, PASSWORD_PATTERN } from "utils/constants";
+import { EMAIL_PATTERN, MOBILE_PATTERN } from "utils/constants";
 
 interface IAddEditUserProps {
   isEditUser: boolean;
@@ -131,8 +131,6 @@ const AddEditUser: React.FC<IAddEditUserProps> = ({
         return getErrorMessage(fieldName, errors.lastName?.type);
       case "emailId":
         return getErrorMessage(fieldName, errors.emailId?.type);
-      case "cityId":
-        return getErrorMessage(fieldName, errors.cityId?.type);
       case "password":
         return getErrorMessage(fieldName, errors.password?.type);
       case "mobileNo":
@@ -241,26 +239,6 @@ const AddEditUser: React.FC<IAddEditUserProps> = ({
                   })}
                 />
               </Grid>
-              {!isEditUser && (
-                <Grid item xs={12} xl={6} md={6}>
-                  <TextField
-                    id="password"
-                    label={
-                      <>
-                        Password <span className="color-red">*</span>
-                      </>
-                    }
-                    fullWidth
-                    variant="outlined"
-                    error={!!errors.password}
-                    helperText={getError("password")}
-                    {...register("password", {
-                      required: true,
-                      pattern: PASSWORD_PATTERN,
-                    })}
-                  />
-                </Grid>
-              )}
               <Grid item xs={12} xl={6} md={6}>
                 <TextField
                   id="mobileNo"

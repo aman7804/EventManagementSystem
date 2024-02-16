@@ -229,7 +229,6 @@ const UserForm: React.FC<UserProps> = (props) => {
           emailId: formData.emailId,
           password: formData.password,
           mobileNo: formData.mobileNo,
-          cityId: 1,
         },
         callback: onSaveUserSuccess,
       };
@@ -481,7 +480,6 @@ const UserForm: React.FC<UserProps> = (props) => {
                 mobileNo: "",
                 password: "",
                 address: "",
-                cityId: 0,
               }}
             />)
         }            

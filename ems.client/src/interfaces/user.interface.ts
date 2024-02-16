@@ -9,7 +9,6 @@ export interface IUser {
     mobileNo: string;
     password?: string;
     address: string;
-    cityId: number;
 }
 
 /* Search Model */
