@@ -4,6 +4,7 @@ using EMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EMS.Data.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    partial class SqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240216112401_user_email_unique")]
+    partial class user_email_unique
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,7 +129,7 @@ namespace EMS.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2024, 2, 16, 17, 48, 9, 227, DateTimeKind.Local).AddTicks(3920),
+                            CreateDate = new DateTime(2024, 2, 16, 16, 54, 0, 985, DateTimeKind.Local).AddTicks(3220),
                             CreatedBy = 1,
                             Description = "15 Items: (2 soups, 3 salad, 2 sweets, 2 sabji, 2 farsan, 2 types of roti, dal, rice)",
                             IsActive = true,
@@ -176,7 +179,7 @@ namespace EMS.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2024, 2, 16, 17, 48, 9, 227, DateTimeKind.Local).AddTicks(3876),
+                            CreateDate = new DateTime(2024, 2, 16, 16, 54, 0, 985, DateTimeKind.Local).AddTicks(3111),
                             CreatedBy = 1,
                             Name = "Ahmedabad",
                             StateId = 1
@@ -230,7 +233,7 @@ namespace EMS.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2024, 2, 16, 17, 48, 9, 227, DateTimeKind.Local).AddTicks(3940),
+                            CreateDate = new DateTime(2024, 2, 16, 16, 54, 0, 985, DateTimeKind.Local).AddTicks(3238),
                             CreatedBy = 1,
                             Description = "Balloon Gate, Cake, Floor, Stage, Welcome Statue",
                             IsActive = true,
@@ -307,7 +310,7 @@ namespace EMS.Data.Migrations
                         {
                             Id = 1,
                             CateringId = 1,
-                            CreateDate = new DateTime(2024, 2, 16, 17, 48, 9, 227, DateTimeKind.Local).AddTicks(3977),
+                            CreateDate = new DateTime(2024, 2, 16, 16, 54, 0, 985, DateTimeKind.Local).AddTicks(3273),
                             CreatedBy = 1,
                             IsActive = true,
                             IsDraft = false,
@@ -364,7 +367,7 @@ namespace EMS.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2024, 2, 16, 17, 48, 9, 227, DateTimeKind.Local).AddTicks(3957),
+                            CreateDate = new DateTime(2024, 2, 16, 16, 54, 0, 985, DateTimeKind.Local).AddTicks(3255),
                             CreatedBy = 1,
                             Description = "20 page album (Karzima), 60 minutes 4K, 10 mins Drone Shot",
                             IsActive = true,
@@ -409,7 +412,7 @@ namespace EMS.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2024, 2, 16, 17, 48, 9, 227, DateTimeKind.Local).AddTicks(3851),
+                            CreateDate = new DateTime(2024, 2, 16, 16, 54, 0, 985, DateTimeKind.Local).AddTicks(3090),
                             CreatedBy = 1,
                             Name = "Gujarat"
                         });
@@ -427,6 +430,9 @@ namespace EMS.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
@@ -470,6 +476,8 @@ namespace EMS.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CityId");
+
                     b.HasIndex("EmailId")
                         .IsUnique();
 
@@ -480,7 +488,8 @@ namespace EMS.Data.Migrations
                         {
                             Id = 1,
                             Address = "string",
-                            CreateDate = new DateTime(2024, 2, 16, 17, 48, 9, 227, DateTimeKind.Local).AddTicks(3583),
+                            CityId = 1,
+                            CreateDate = new DateTime(2024, 2, 16, 16, 54, 0, 985, DateTimeKind.Local).AddTicks(2886),
                             CreatedBy = 0,
                             EmailId = "nms.nt1986@gmail.com",
                             FirstName = "Nimesh",
@@ -556,7 +565,7 @@ namespace EMS.Data.Migrations
                             Id = 1,
                             Address = "Bapunagar, Ahmedabad",
                             CityId = 1,
-                            CreateDate = new DateTime(2024, 2, 16, 17, 48, 9, 227, DateTimeKind.Local).AddTicks(3902),
+                            CreateDate = new DateTime(2024, 2, 16, 16, 54, 0, 985, DateTimeKind.Local).AddTicks(3193),
                             CreatedBy = 1,
                             Description = "Nothing",
                             IsActive = true,
@@ -624,6 +633,17 @@ namespace EMS.Data.Migrations
                     b.Navigation("Photography");
 
                     b.Navigation("Venue");
+                });
+
+            modelBuilder.Entity("EMS.Entity.UserEntity", b =>
+                {
+                    b.HasOne("EMS.Entity.CityEntity", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("EMS.Entity.VenueEntity", b =>

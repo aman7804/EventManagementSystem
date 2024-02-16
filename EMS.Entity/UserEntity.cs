@@ -2,9 +2,11 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using EMS.Entity.Base;
 using EMS.Shared;
+using Microsoft.EntityFrameworkCore;
 
 namespace EMS.Entity
 {
+    [Index(nameof(EmailId), IsUnique = true)]
     public class UserEntity : BaseEntity
     {
         [Required, StringLength(50)]
@@ -24,10 +26,6 @@ namespace EMS.Entity
 
         [Required, StringLength(500)]
         public string Address { get; set; } = string.Empty!;
-
-        [Required, ForeignKey("City")]
-        public int CityId { get; set; }
-        public virtual CityEntity City { get; set; } = null!;
         public EnumRole? Role { get; set; }
     }
 }
