@@ -47,6 +47,7 @@ namespace EMS.Service.UserModule
 
         public async Task<UserDTO> RegisterUser(RegisterDTO registerDTO)
         {
+            registerDTO.Role = Shared.EnumRole.Customer;
             UserEntity user = Mapper.Map<RegisterDTO, UserEntity>(registerDTO);
             user.Password = Encrypt(registerDTO.Password);
             await Repo.AddAsync(user);
