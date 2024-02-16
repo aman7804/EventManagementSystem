@@ -11,16 +11,9 @@ import { saveIcon } from "assets/images";
 import { useForm } from "react-hook-form";
 import { IUser } from "interfaces/user.interface";
 import { useEffect, useState } from "react";
-import NumericFormControl, {
-  CustomNumericFormatProps,
-  removeNumberFormatting,
-} from "components/elements/NumericFormControl";
-import * as GENERIC from "interfaces/generic.interface";
-import DropDownSelect from "components/elements/DropDownSelect";
-import CheckBox from "components/elements/CheckBox";
+import { CustomNumericFormatProps } from "components/elements/NumericFormControl";
 import { NumericFormat, NumericFormatProps } from "react-number-format";
 import React from "react";
-import { current } from "@reduxjs/toolkit";
 import { EMAIL_PATTERN, MOBILE_PATTERN, PASSWORD_PATTERN } from "utils/constants";
 
 interface IAddEditUserProps {
@@ -57,9 +50,6 @@ const CustomMobileComponent = React.forwardRef<
       decimalScale={0}
       name={props.name}
       onChange={onChange}
-      // isAllowed={(values)=>
-      //     values.floatValue ? ((values.floatValue <= 16) ? true : false) : true
-      // }f
     />
   );
 });
@@ -75,7 +65,6 @@ const AddEditUser: React.FC<IAddEditUserProps> = ({
   const maxLastNameLength = 50;
   const maxEmailIdLength = 256;
   const maxPasswordLength = 256;
-  // const maxMobileNoLength = 16;
   const maxAddressLength = 500;
   const [mobileNoValue, setMobileNoValue] = useState(currentUserData?.mobileNo);
 
@@ -114,9 +103,6 @@ const AddEditUser: React.FC<IAddEditUserProps> = ({
             case "emailId":
               return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
                   ${maxEmailIdLength}.`;
-            //   case "mobileNo":
-            //     return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
-            //       ${maxMobileNoLength}.`;
             case "password":
               return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
                   ${maxPasswordLength}.`;
@@ -284,7 +270,6 @@ const AddEditUser: React.FC<IAddEditUserProps> = ({
                   error={!!errors.mobileNo}
                   helperText={getError("mobileNo")}
                   {...register("mobileNo", {
-                    // max: maxMobileNoLength,
                     pattern: MOBILE_PATTERN,
                   })}
                   value={isEditUser ? mobileNoValue : undefined } 
