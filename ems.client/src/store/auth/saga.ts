@@ -52,7 +52,6 @@ function* registrationSaga(action: any){
       firstName: action.payload.values.firstName,
       lastName: action.payload.values.lastName,
       address: action.payload.values.address,
-      cityId: action.payload.values.cityId,
       mobileNo: action.payload.values.mobileNo,
       emailId: action.payload.values.emailId,
       password: action.payload.values.password
@@ -62,6 +61,7 @@ function* registrationSaga(action: any){
         user: response.data
       })
     );
+    action.payload.callback(response.data)
   }
   catch(e: any){
     yield put(

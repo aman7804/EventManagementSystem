@@ -16,7 +16,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import * as images from "../../assets/images";
 import { IRegistration, IRegistrationContainerDispatch } from "../../interfaces/auth.interface";
 import { useNavigate } from "react-router";
@@ -28,11 +28,30 @@ import { EMAIL_PATTERN, MOBILE_PATTERN, PASSWORD_PATTERN } from "utils/constants
 import { useForm } from "react-hook-form";
 import {Link} from "react-router-dom"
 import { showLoader } from "utils/helper";
+import { IIndexable } from "components/venue.create";
+import { CustomMobileComponent } from "components/user.create";
 
 export type RegistrationProps = IRegistrationContainerDispatch;
 
+const fieldNames : IIndexable = {
+  firstName: "First Name",
+  lastName: "Last Name",
+  emailId: "Email",
+  password: "Password",
+  mobileNo: "Mobile Number",
+  address: "Address"
+}
+
 export const RegistrationForm = (props: RegistrationProps) => {
   const [showPassword, setShowPassword] = React.useState(false);
+  
+
+  const maxFirstNameLength = 50;
+  const maxLastNameLength = 50;
+  const maxEmailIdLength = 256;
+  const maxPasswordLength = 256;
+  const maxAddressLength = 500; 
+  const [mobileNoValue, setMobileNoValue] = useState<string|undefined>("");
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -56,58 +75,64 @@ export const RegistrationForm = (props: RegistrationProps) => {
     AOS.refresh();
   }, []);
 
-  const getEmailError = (): string => {
-    if (errors.emailId) {
-      if (errors.emailId.type === "required") {
-        return "Email is required";
-      }
-      if (errors.emailId.type === "pattern") {
-        return "Enter valid email";
-      }
-    }
-    return "";
-  };
 
-  const getUserNameError = (): string => {
-    if (errors.firstName) {
-      if (errors.firstName.type === "required")
-        return "FirstName is required";
-    }
-    if (errors.lastName) {
-      if (errors.lastName.type === "required")
-        return "LastName is required";
-    }
-    return "";
-  };
-
-  const getPasswordError = (): string => {
-    if (errors.password) {
-      if (errors.password.type === "required") {
-        return "Password is required";
+  const getErrorMessage = (fieldName: keyof IRegistration, type: string|undefined): string => {
+    if(type){
+      switch(type){
+        case "required":
+          return `${fieldNames[fieldName]} is required.`
+        case "pattern":
+          return `Invalid ${fieldNames[fieldName].toLowerCase()}.`
+          case "maxLength":
+            switch (fieldName) {
+              case "firstName":
+                return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
+                    ${maxFirstNameLength}.`;
+              case "lastName":
+                return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
+                    ${maxLastNameLength}.`;
+              case "address":
+                return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
+                    ${maxAddressLength}.`;
+              case "emailId":
+                return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
+                    ${maxEmailIdLength}.`;
+              case "password":
+                return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
+                    ${maxPasswordLength}.`;
+            }
+            break;
+        default:
+          return ""
       }
-      if (errors.password.type === "pattern") {
-        return "Password must have at least 8 characters that include at least one uppercase character, one number, and  one special character.";
-      }
-    }
-    return "";
-  };
-
-  const getMobileNoError = (): string => {
-    if(errors.mobileNo){
-      if(errors.mobileNo.type === "required")
-        return "Mobile number is required"
-      if(errors.mobileNo.type === "pattern")
-        return  "Invalid mobile number"
     }
     return ""
   }
 
+  const getError = (fieldName: keyof IRegistration): string => {
+    switch(fieldName){
+      case "firstName":
+        return getErrorMessage(fieldName, errors?.firstName?.type);
+      case "lastName":
+        return getErrorMessage(fieldName, errors?.lastName?.type);
+      case "emailId":
+        return getErrorMessage(fieldName, errors?.emailId?.type);
+      case "password":
+        return getErrorMessage(fieldName, errors?.password?.type);
+      case "mobileNo":
+        return getErrorMessage(fieldName, errors?.mobileNo?.type);
+      case "address":
+        return getErrorMessage(fieldName, errors?.address?.type);
+      default:
+        return "field cannot be empty";
+    }
+  }
+
   const onRegistrationSuccess = async (response: LoginSuccessPayload) => {
     navigate("/login");
-    toast.success("Registration successfull");
+    toast.success("Registration successful");
   };
 
-  let cityID = 1;
   const onSubmit = async (data: IRegistration) => {
     const { registrationRequest } = props;
     if (registrationRequest) {
@@ -117,11 +142,9 @@ export const RegistrationForm = (props: RegistrationProps) => {
           firstName: data.firstName,
           lastName: data.lastName,
           address: data.address,
-          cityId: cityID,
           mobileNo: data.mobileNo,
           emailId: data.emailId,
           password: data.password,
-          // rememberMe: data.rememberMe,
         },
         callback: onRegistrationSuccess,
       };
@@ -162,15 +185,16 @@ export const RegistrationForm = (props: RegistrationProps) => {
                         id="firstName"
                         label={
                           <>
-                            FirstName{" "}
-                            <span className="color-red">*</span>
+                            FirstName <span className="color-red">*</span>
                           </>
                         }
                         fullWidth
                         variant="outlined"
-                        helperText={getUserNameError()}
+                        error={!!errors.firstName}
+                        helperText={getError("firstName")}
                         {...register("firstName", {
                           required: true,
+                          maxLength: maxFirstNameLength,
                         })}
                       />
                     </Grid>
@@ -179,77 +203,35 @@ export const RegistrationForm = (props: RegistrationProps) => {
                         id="lastName"
                         label={
                           <>
-                            LastName{" "}
-                            <span className="color-red">*</span>
+                            LastName <span className="color-red">*</span>
                           </>
                         }
                         fullWidth
                         variant="outlined"
-                        helperText={getUserNameError()}
+                        error={!!errors.lastName}
+                        helperText={getError("lastName")}
                         {...register("lastName", {
                           required: true,
+                          maxLength: maxLastNameLength
                         })}
                       />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        id="mobileNo"
-                        label={
-                          <>
-                            MobileNo{" "}
-                            <span className="color-red">*</span>
-                          </>
-                        }
-                        fullWidth
-                        variant="outlined"
-                        error={!!errors.mobileNo}
-                        helperText={getMobileNoError()}
-                        {...register("mobileNo", {
-                          required: true,
-                          pattern: MOBILE_PATTERN
-                        })}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              +91
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <FormControl
-                        variant="outlined"
-                        fullWidth
-                      >
-                        <InputLabel id="demo-select-small-label">
-                          City
-                        </InputLabel>
-                        <Select
-                          labelId="demo-select-small-label"
-                          id="cityId"
-                          value={cityID}
-                          label="City"
-                        >
-                          <MenuItem value={cityID}>Ahemedabad</MenuItem>
-                        </Select>
-                      </FormControl>
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
                         id="address"
                         label={
                           <>
-                            Address{" "}
-                            <span className="color-red">*</span>
+                            Address <span className="color-red">*</span>
                           </>
                         }
                         fullWidth
+                        multiline
                         variant="outlined"
-                        error={!!errors.emailId}
-                        helperText={getEmailError()}
+                        error={!!errors.address}
+                        helperText={getError("address")}
                         {...register("address", {
                           required: true,
+                          maxLength: maxAddressLength
                         })}
                       />
                     </Grid>
@@ -258,14 +240,13 @@ export const RegistrationForm = (props: RegistrationProps) => {
                         id="email"
                         label={
                           <>
-                            Email{" "}
-                            <span className="color-red">*</span>
+                            Email <span className="color-red">*</span>
                           </>
                         }
                         fullWidth
                         variant="outlined"
                         error={!!errors.emailId}
-                        helperText={getEmailError()}
+                        helperText={getError("emailId")}
                         {...register("emailId", {
                           required: true,
                           pattern: EMAIL_PATTERN,
@@ -320,30 +301,44 @@ export const RegistrationForm = (props: RegistrationProps) => {
                         />
                         {!!errors.password && (
                           <FormHelperText error>
-                            {getPasswordError()}
+                            {getError("password")}
                           </FormHelperText>
                         )}
                       </FormControl>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        id="mobileNo"
+                        label="Mobile"
+                        fullWidth
+                        variant="outlined"
+                        error={!!errors.mobileNo}
+                        helperText={getError("mobileNo")}
+                        {...register("mobileNo", {
+                          pattern: MOBILE_PATTERN,
+                        })}
+                        value={mobileNoValue} 
+                        onBlur={(e) => {
+                          if (e.target.value === '')
+                            setMobileNoValue(undefined)
+                          else 
+                            setMobileNoValue(e.target.value)
+                        }}
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment sx={{marginLeft: 2}} position="start">
+                              +91
+                            </InputAdornment>
+                          ),
+                          inputComponent: CustomMobileComponent as any,
+                        }}
+                      />
                     </Grid>
                   </Grid>
                 </div>
               </CardContent>
               <CardActions>
                 <Box className="login-links" sx={{ mt:4, mb: 2 }}>
-                  {/* <FormControlLabel
-                      control={
-                        <Checkbox
-                          disableFocusRipple
-                          disableRipple
-                          icon={<CheckBoxIcon />}
-                          checkedIcon={<CheckedBoxIcon />}
-                          id="rememberMe"
-                          {...register("rememberMe")}
-                        />
-                      }
-                      label="Remember me"
-                      labelPlacement="end"
-                    /> */}
                   <Link
                       to="/login"
                       title="login"

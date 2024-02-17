@@ -60,7 +60,6 @@ import {
       firstName:string,
       lastName:string,
       address: string,
-      cityId: number,
       mobileNo: string,
       emailId:string,
       password:string
