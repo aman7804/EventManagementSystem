@@ -37,7 +37,7 @@ const fieldNames: IIndexable = {
   address: "User Address",
 };
 
-const CustomMobileComponent = React.forwardRef<
+export const CustomMobileComponent = React.forwardRef<
   NumericFormatProps,
   CustomNumericFormatProps
 >((props, ref) => {

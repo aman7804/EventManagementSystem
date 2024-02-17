@@ -61,6 +61,7 @@ function* registrationSaga(action: any){
         user: response.data
       })
     );
+    action.payload.callback(response.data)
   }
   catch(e: any){
     yield put(
