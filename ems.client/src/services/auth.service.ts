@@ -3,6 +3,7 @@ import {
   ILogin,
   ILoginResponse,
   IRegistration,
+  IChangePassword,
   IRegistrationResponse,
 } from "../interfaces/auth.interface";
 import { IApiSuccessResponse } from "../interfaces/generic.interface";
@@ -27,6 +28,9 @@ const registration = async(
     `${baseLoginUrl}/signup`, requestBody
   );
 
+const changePassword = async( payload: IChangePassword) =>
+  baseService.post(`${baseLoginUrl}/signup`, payload);
+
 
 const signOut = (): void => {
   localStorage.clear();
@@ -40,4 +44,5 @@ export default {
   login,  
   registration,
   signOut,
+  changePassword
 };

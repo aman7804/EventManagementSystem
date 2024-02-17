@@ -1,4 +1,3 @@
-import * as GENERIC from "interfaces/generic.interface";
 import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
@@ -55,7 +54,6 @@ import {
       token: string;
     };
   }
-
   export interface LoginFailurePayload {
     error: string;
   }
@@ -81,7 +79,7 @@ import {
   export interface RegistrationFailurePayload{
     error: string;
   }
-  
+
   
   export interface ChangePasswordPayload{
     values: {

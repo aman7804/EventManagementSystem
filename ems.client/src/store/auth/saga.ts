@@ -1,6 +1,8 @@
 import { all, call, put, takeEvery } from "redux-saga/effects";
 
 import {
+  changePasswordFailure,
+  changePasswordSuccess,
   loginFailure,
   loginSuccess,
   registrationFailure,
@@ -8,12 +10,14 @@ import {
 } from "./actions";
 
 import {
+  CHANGE_PASSWORD_REQUEST,
   LOGIN_REQUEST, REGISTRATION_REQUEST,
 } from "./action.types";
 import authService from "services/auth.service";
 import {
   LoginResponse, RegistrationResponse,
 } from "./types";
+import { IApiSuccessResponse } from "interfaces/generic.interface";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function* loginSaga(action: any) {
@@ -72,11 +76,33 @@ function* registrationSaga(action: any){
   }
 }
 
+function* changePasswordSaga(action: any){
+  try{
+    const response: IApiSuccessResponse<null> = yield call(authService.changePassword,{
+      email: action.payload.values.email,
+      oldPassword: action.payload.values.oldPassword,
+      newPassword: action.payload.values.newPassword,
+    })
+    yield put(
+      changePasswordSuccess({...response})
+    );
+    action.payload.callback(response)
+  }
+  catch(e: any){
+    yield put(
+      changePasswordFailure({
+        error: e.response.data.split("\n")[0] || e.message
+      })
+    )
+  }
+}
+
 
 function* authSaga() {
   yield all([
     takeEvery(LOGIN_REQUEST, loginSaga),
-    takeEvery(REGISTRATION_REQUEST, registrationSaga)
+    takeEvery(REGISTRATION_REQUEST, registrationSaga),
+    takeEvery(CHANGE_PASSWORD_REQUEST, changePasswordSaga)
   ]);
 }
 

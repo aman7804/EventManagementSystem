@@ -14,6 +14,11 @@ import {
     emailId:string,
     password:string
   }
+  export interface IChangePassword{
+    email: string,
+    oldPassword: string,
+    newPassword: string
+  }
   
   export interface ILoginResponse {
     firstName: string;
