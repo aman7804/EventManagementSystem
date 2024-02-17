@@ -79,7 +79,7 @@ function* registrationSaga(action: any){
 function* changePasswordSaga(action: any){
   try{
     const response: IApiSuccessResponse<null> = yield call(authService.changePassword,{
-      email: action.payload.values.email,
+      emailId: action.payload.values.emailId,
       oldPassword: action.payload.values.oldPassword,
       newPassword: action.payload.values.newPassword,
     })
