@@ -60,7 +60,9 @@ import {
       authService.signOut();
       navigate("/login");
     };
-  
+    const goToChangePassword = () => {
+      window.open("/change-password", "_blank")
+    }
     return (
       <AppBar position="static" className="header">
         <Toolbar
@@ -123,7 +125,7 @@ import {
               </Button>
             </MenuItem>
             <MenuItem onClick={handleProfileClose} title="Profile">
-              <Button onClick={handleReset}>
+              <Button onClick={goToChangePassword}>
                 <img src={lockIcon} alt="Change password" />
                 <span>Change Password</span>
               </Button>
