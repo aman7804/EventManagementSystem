@@ -17,7 +17,7 @@ import {
   }
   export interface IChangePassword{
     emailId: string,
-    oldPassword: string,
+    currentPassword: string,
     newPassword: string
   }
   
