@@ -28,7 +28,7 @@ import { get } from "lodash";
 export type ChangePasswordProps = IChangePasswordContainerDispatch;
 
 const fieldNames : IIndexable = {
-  currentPassword: "Old Password",
+  oldPassword: "Old Password",
   newPassword: "New Password",
   confirmPassword: "Confirm Password"
 }
@@ -48,7 +48,7 @@ export const ChangePasswordForm = (props: ChangePasswordProps) => {
   };
 
   interface IChangePasswordForm{
-    currentPassword: string;
+    oldPassword: string;
     newPassword: string;
     confirmPassword: string;
   }
@@ -71,6 +71,12 @@ const maxPasswordLength = 16
         case "pattern":
           return `Invalid Password.`
         case "validate":
+          switch(fieldName){
+            case "newPassword":
+              return errors.newPassword?.message || ""
+            case "confirmPassword":
+              return errors.confirmPassword?.message || ""
+          }
           return "Password must be different from older"
         case "maxLength": 
           return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
@@ -83,8 +89,8 @@ const maxPasswordLength = 16
   }
   const getError = (fieldName: string): string => {
     switch(fieldName){
-      case "currentPassword":
-        return getErrorMessage(fieldName, errors?.currentPassword?.type);
+      case "oldPassword":
+        return getErrorMessage(fieldName, errors?.oldPassword?.type);
       case "newPassword":
         return getErrorMessage(fieldName, errors?.newPassword?.type);
       case "confirmPassword":
@@ -112,7 +118,7 @@ const maxPasswordLength = 16
       const payload: ChangePasswordPayload = {
         values: {
           emailId: currentUserEmailId,
-          currentPassword: data.currentPassword,
+          oldPassword: data.oldPassword,
           newPassword: data.newPassword
         },
         callback: onChangePasswordSuccess,
@@ -120,7 +126,6 @@ const maxPasswordLength = 16
       changePasswordRequest(payload);
     }
   };
-  console.log(errors)
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid
@@ -145,12 +150,12 @@ const maxPasswordLength = 16
                   >
                     <InputLabel
                       htmlFor="password"
-                      error={!!errors.currentPassword}
+                      error={!!errors.oldPassword}
                     >
                       Current Password <span className="color-red">*</span>
                     </InputLabel>
                     <OutlinedInput
-                      id="currentPassword"
+                      id="oldPassword"
                       className="with-icon"
                       type={showOldPassword ? "text" : "password"}
                       endAdornment={
@@ -177,16 +182,16 @@ const maxPasswordLength = 16
                         </InputAdornment>
                       }
                       label="Password"
-                      error={!!errors.currentPassword}
-                      {...register("currentPassword", {
+                      error={!!errors.oldPassword}
+                      {...register("oldPassword", {
                         required: true,
                         maxLength: maxPasswordLength,
                         pattern: PASSWORD_PATTERN,
                       })}
                     />
-                    {!!errors.currentPassword && (
+                    {!!errors.oldPassword && (
                       <FormHelperText error>
-                        {getError("currentPassword")}
+                        {getError("oldPassword")}
                       </FormHelperText>
                     )}
                   </FormControl>
@@ -235,9 +240,13 @@ const maxPasswordLength = 16
                         required: true,
                         maxLength: maxPasswordLength,
                         pattern: PASSWORD_PATTERN,
-                        validate:(value)=>
-                          value === getValues("currentPassword")
-                            ? false : true
+                        validate:(value)=>{
+                          if(value === getValues("oldPassword"))
+                            return "New Password should be different from Current Password";
+                          if(value !== getValues("confirmPassword"))
+                            return "New Password should be same as Confirm Password"
+                          return true
+                        }
                       })}
                     />
                     {!!errors.newPassword && (
@@ -291,9 +300,13 @@ const maxPasswordLength = 16
                         required: true,
                         maxLength: maxPasswordLength,
                         pattern: PASSWORD_PATTERN,
-                        validate:(value)=>
-                          value === getValues("newPassword")
-                            ? true : false
+                        validate:(value)=>{
+                          if(value === getValues("oldPassword"))
+                            return "Confirm Password should be different from Current Password";
+                          if(value !== getValues("newPassword"))
+                            return "Confirm Password should be same as New Password"
+                          return true
+                        }
                       })}
                     />
                     {!!errors.confirmPassword && (
@@ -303,12 +316,10 @@ const maxPasswordLength = 16
                     )}
                   </FormControl>
                 </Grid>
-                <Typography color={()=>{
-                  const isNewPassValid = errors?.newPassword?.type === "pattern";
-                  const isOldPassValid = errors?.currentPassword?.type === "pattern";
-                  return isNewPassValid || isOldPassValid
-                  ? "red" : "gray"
-                }
+                <Typography color={()=>
+                  errors?.newPassword?.type !== "pattern" &&
+                  errors?.oldPassword?.type !== "pattern"
+                  ? "gray" : "red"
                 }
                 m={2}
                 >

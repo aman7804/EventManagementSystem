@@ -29,7 +29,6 @@ const registration = async(
   );
 
 const changePassword = async( payload: IChangePassword) =>{
-  debugger;
   return baseService.put(`${baseLoginUrl}/change-password`, payload);
 
 }

@@ -84,7 +84,7 @@ import {
   export interface ChangePasswordPayload{
     values: {
       emailId: string,
-      currentPassword: string,
+      oldPassword: string,
       newPassword: string
     };
     callback: any;

@@ -80,7 +80,7 @@ function* changePasswordSaga(action: any){
   try{
     const response: IApiSuccessResponse<null> = yield call(authService.changePassword,{
       emailId: action.payload.values.emailId,
-      currentPassword: action.payload.values.currentPassword,
+      oldPassword: action.payload.values.oldPassword,
       newPassword: action.payload.values.newPassword,
     })
     yield put(
