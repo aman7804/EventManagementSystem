@@ -35,24 +35,32 @@ const fieldNames : IIndexable = {
 
 export const ChangePasswordForm = (props: ChangePasswordProps) => {
 
-  const [showOldPassword, setShowOldPassword] = React.useState(false);
-  const [showNewPassword, setShowNewPassword] = React.useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
-  const navigate = useNavigate();
-
-  const handleClickShowOldPassword = () => setShowOldPassword((show) => !show);
-  const handleClickShowNewPassword = () => setShowNewPassword((show) => !show);
-  const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
   const handleMouseDownPassword = (event: { preventDefault: () => void }) => {
     event.preventDefault();
   };
+
+  interface PasswordVisibility {
+    oldPassword: boolean;
+    newPassword: boolean;
+    confirmPassword: boolean;
+  }
+  const [passwordVisibility, setPasswordVisibility] = React.useState({
+    oldPassword: false,
+    newPassword: false,
+    confirmPassword: false
+  })
+  const togglePasswordVisibility = (fieldName: keyof PasswordVisibility) => {
+    setPasswordVisibility((prevState)=>({
+      ...prevState,
+      [fieldName]: !prevState[fieldName]
+    }))
+  }
 
   interface IChangePasswordForm{
     oldPassword: string;
     newPassword: string;
     confirmPassword: string;
   }
-
   const {
     register,
     handleSubmit,
@@ -102,7 +110,7 @@ const maxPasswordLength = 16
 
   const onChangePasswordSuccess = async (response: LoginSuccessPayload) => {
     navigate("/");
-    toast.success("ChangePassword successful");
+    toast.success("Change-password successful");
   };
   
   const onModalClose = () => {
@@ -130,6 +138,7 @@ const maxPasswordLength = 16
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid
         container
+        bgcolor="#f5edf4"
         direction="column"
         alignItems="center"
         justifyContent="center"
@@ -159,17 +168,17 @@ const maxPasswordLength = 16
                     <OutlinedInput
                       id="oldPassword"
                       className="with-icon"
-                      type={showOldPassword ? "text" : "password"}
+                      type={passwordVisibility.oldPassword ? "text" : "password"}
                       endAdornment={
                         <InputAdornment position="end">
                           <IconButton
-                            onClick={handleClickShowOldPassword}
+                            onClick={()=>togglePasswordVisibility("oldPassword")}
                             onMouseDown={handleMouseDownPassword}
                             edge="end"
                             disableFocusRipple
                             disableRipple
                           >
-                            {showOldPassword ? (
+                            {passwordVisibility.oldPassword ? (
                               <img
                                 src={images.eyeOpen}
                                 alt="show"
@@ -212,17 +221,17 @@ const maxPasswordLength = 16
                     <OutlinedInput
                       id="newPassword"
                       className="with-icon"
-                      type={showNewPassword ? "text" : "password"}
+                      type={passwordVisibility.newPassword ? "text" : "password"}
                       endAdornment={
                         <InputAdornment position="end">
                           <IconButton
-                            onClick={handleClickShowNewPassword}
+                            onClick={()=>togglePasswordVisibility("newPassword")}
                             onMouseDown={handleMouseDownPassword}
                             edge="end"
                             disableFocusRipple
                             disableRipple
                           >
-                            {showNewPassword ? (
+                            {passwordVisibility.newPassword ? (
                               <img
                                 src={images.eyeOpen}
                                 alt="show"
@@ -243,10 +252,13 @@ const maxPasswordLength = 16
                         maxLength: maxPasswordLength,
                         pattern: PASSWORD_PATTERN,
                         validate:(value)=>{
-                          if(value === getValues("oldPassword"))
-                            return "New Password should be different from Current Password";
-                          if(value !== getValues("confirmPassword"))
-                            return "New Password should be same as Confirm Password"
+                          const [oldPassValue, confirmPassValue] = getValues(["oldPassword", "confirmPassword"])
+                          if(value === oldPassValue && value !== confirmPassValue)
+                            return `New Password should be different from Current Password and same as Confirm Password.`
+                          if(value === oldPassValue)
+                            return "New Password should be different from Current Password.";
+                          if(value !== confirmPassValue)
+                            return "New Password should be same as Confirm Password."
                           return true
                         }
                       })}
@@ -272,17 +284,17 @@ const maxPasswordLength = 16
                     <OutlinedInput
                       id="confirmPassword"
                       className="with-icon"
-                      type={showConfirmPassword ? "text" : "password"}
+                      type={passwordVisibility.confirmPassword ? "text" : "password"}
                       endAdornment={
                         <InputAdornment position="end">
                           <IconButton
-                            onClick={handleClickShowConfirmPassword}
+                            onClick={()=>togglePasswordVisibility("confirmPassword")}
                             onMouseDown={handleMouseDownPassword}
                             edge="end"
                             disableFocusRipple
                             disableRipple
                           >
-                            {showConfirmPassword ? (
+                            {passwordVisibility.confirmPassword ? (
                               <img
                                 src={images.eyeOpen}
                                 alt="show"
@@ -303,9 +315,12 @@ const maxPasswordLength = 16
                         maxLength: maxPasswordLength,
                         pattern: PASSWORD_PATTERN,
                         validate:(value)=>{
-                          if(value === getValues("oldPassword"))
+                          const [oldPassValue, newPasswordValue] = getValues(["oldPassword", "newPassword"])
+                          if(value === oldPassValue && value !== newPasswordValue)
+                            return `Confirm Password should be different from Current Password and same as Confirm Password.`
+                          if(value === oldPassValue)
                             return "Confirm Password should be different from Current Password";
-                          if(value !== getValues("newPassword"))
+                          if(value !== newPasswordValue)
                             return "Confirm Password should be same as New Password"
                           return true
                         }
@@ -319,9 +334,10 @@ const maxPasswordLength = 16
                   </FormControl>
                 </Grid>
                 <Typography color={()=>
-                  errors?.newPassword?.type !== "pattern" &&
-                  errors?.oldPassword?.type !== "pattern"
-                  ? "gray" : "red"
+                  errors?.oldPassword?.type === "pattern" ||
+                  errors?.newPassword?.type === "pattern" ||
+                  errors?.confirmPassword?.type === "pattern"
+                  ? "red" : "gray"
                 }
                 m={2}
                 >
