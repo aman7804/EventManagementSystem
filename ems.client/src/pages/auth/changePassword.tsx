@@ -133,9 +133,11 @@ const maxPasswordLength = 16
         direction="column"
         alignItems="center"
         justifyContent="center"
-        style={{ minHeight: '100vh' }}
+        style={{ minHeight: '100vh'
+        // , minWidth: '100vh'
+      }}
       >
-      <Box>
+      <Box width={500}>
         <Card>
           <CardContent>
             <Typography variant="h2" className="card-heading" mb={2}>
