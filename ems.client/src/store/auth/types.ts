@@ -5,6 +5,9 @@ import {
     REGISTRATION_REQUEST,
     REGISTRATION_SUCCESS,
     REGISTRATION_FAILURE,
+    CHANGE_PASSWORD_REQUEST,
+    CHANGE_PASSWORD_SUCCESS,
+    CHANGE_PASSWORD_FAILURE,
   } from "./action.types";
   
   
@@ -34,7 +37,7 @@ import {
       emailId: string;
     };
   }
-
+  
   export interface LoginPayload {
     values: { 
       email: string; 
@@ -77,6 +80,24 @@ import {
     error: string;
   }
 
+  
+  export interface ChangePasswordPayload{
+    values: {
+      emailId: string,
+      oldPassword: string,
+      newPassword: string
+    };
+    callback: any;
+  }
+  export interface ChangePasswordSuccessPayload {
+    isValid: boolean;
+    message: string;
+    data?: any;
+  }
+  export interface ChangePasswordFailurePayload{
+    error: string;
+  }
+
   export interface LoginRequest {
     type: typeof LOGIN_REQUEST;
     payload: LoginPayload;
@@ -103,6 +124,19 @@ import {
     payload: RegistrationFailurePayload; 
   }
 
+  export type ChangePasswordRequest = {
+    type: typeof  CHANGE_PASSWORD_REQUEST,
+    payload: ChangePasswordPayload
+  }
+  export type ChangePasswordSuccess = {
+    type: typeof CHANGE_PASSWORD_SUCCESS,
+    payload: ChangePasswordSuccessPayload
+  }
+  export type ChangePasswordFailure = {
+    type: typeof CHANGE_PASSWORD_FAILURE,
+    payload: ChangePasswordFailurePayload
+  }
+
   export type AuthActions =
     | LoginRequest
     | LoginSuccess
@@ -110,3 +144,6 @@ import {
     | RegistrationRequest
     | RegistrationSuccess
     | RegistrationFailure
+    | ChangePasswordRequest
+    | ChangePasswordSuccess
+    | ChangePasswordFailure

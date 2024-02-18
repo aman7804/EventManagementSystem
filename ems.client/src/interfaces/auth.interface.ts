@@ -1,4 +1,5 @@
 import {
+  ChangePasswordPayload,
     LoginPayload, RegistrationPayload,
   } from "store/auth/types";
   
@@ -13,6 +14,11 @@ import {
     mobileNo: string,
     emailId:string,
     password:string
+  }
+  export interface IChangePassword{
+    emailId: string,
+    oldPassword: string,
+    newPassword: string
   }
   
   export interface ILoginResponse {
@@ -39,4 +45,7 @@ import {
   }
   export interface IRegistrationContainerDispatch {
     registrationRequest: (payload: RegistrationPayload) => {};
+  }
+  export interface IChangePasswordContainerDispatch {
+    changePasswordRequest: (payload: ChangePasswordPayload) => {};
   }

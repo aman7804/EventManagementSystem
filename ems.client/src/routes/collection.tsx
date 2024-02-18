@@ -4,6 +4,7 @@ import Dashboard from "pages/dashboard";
 import Login from "pages/auth/login.container";
 import Registration from "pages/auth/registration.container";
 import adminPrivateRoutes from "./admin";
+import ChangePassword from "pages/auth/changPassword.container";
 
 export const router = createBrowserRouter([
   {
@@ -28,5 +29,10 @@ export const router = createBrowserRouter([
     id: "signup",
     path: "/signup",
     Component: Registration
+  },
+  {
+    id: "change-password",
+    path: "/change-password",
+    Component: ChangePassword
   }
 ])
