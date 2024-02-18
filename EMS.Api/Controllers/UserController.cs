@@ -44,7 +44,7 @@ namespace EMS.Api.Controllers
                 return GetResult(new AuthenticateResponseDTO(await _authService.RegisterUser(userDto), null));
             }
             else
-            {
+            {   
                 UserDTO userDto = service.Map<SaveUserDTO, UserDTO>(dto);
                 UserDTO user = await service.GetByIdAsync(userDto.Id, true);
                 if(user != null)  await service.UpdateAsync(userDto);

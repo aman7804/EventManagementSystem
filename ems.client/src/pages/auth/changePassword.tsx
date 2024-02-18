@@ -254,10 +254,12 @@ const maxPasswordLength = 16
                           </FormHelperText>
                         )}
                       </FormControl>
-                      <Typography color={
-                        errors?.newPassword?.type === "pattern" ||
-                        errors?.oldPassword?.type === "pattern"
+                      <Typography color={()=>{
+                        const isNewPassValid = errors?.newPassword?.type === "pattern";
+                        const isOldPassValid = errors?.oldPassword?.type === "pattern";
+                        return isNewPassValid || isOldPassValid
                         ? "red" : "gray"
+                      }
                       }
                       m={2}
                       >
@@ -270,7 +272,7 @@ const maxPasswordLength = 16
               </CardContent>
               <CardActions>
               <Grid container spacing={2}>
-                <Grid item xl={6} md={6} xs={6}>
+                <Grid item>
                 <Button
                   type="submit"
                   variant="contained"
