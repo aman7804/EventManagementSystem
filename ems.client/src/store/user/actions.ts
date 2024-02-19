@@ -90,3 +90,42 @@ export const deleteFailure = (
   type: ACTION_TYPE.DELETE_FAILURE,
   payload,
 });
+
+export const getProfileRequest = () => ({
+  type: ACTION_TYPE.GET_PROFILE_REQUEST
+})
+
+export const getProfileSuccess = (
+  payload: GENERIC.GetSuccessResponse<typeModal>
+): TYPES.GetProfileSuccess => ({
+  type: ACTION_TYPE.GET_PROFILE_SUCCESS,
+  payload
+})
+
+export const getProfileFailure = (
+  payload: GENERIC.GetFailureResponse
+): TYPES.GetProfileFailure => ({
+  type: ACTION_TYPE.GET_PROFILE_FAILURE,
+  payload
+})
+
+export const updateProfileRequest = (
+  payload: GENERIC.SaveRequestPayload<typeModal>
+): TYPES.UpdateProfileRequest => ({
+  type: ACTION_TYPE.UPDATE_PROFILE_REQUEST,
+  payload,
+});
+
+export const updateProfileSuccess = (
+  payload: GENERIC.SaveSuccessResponse
+): TYPES.UpdateProfileSuccess => ({
+  type: ACTION_TYPE.UPDATE_PROFILE_SUCCESS,
+  payload,
+});
+
+export const updateProfileFailure = (
+  payload: GENERIC.SaveFailureResponse
+): TYPES.UpdateProfileFailure => ({
+  type: ACTION_TYPE.UPDATE_PROFILE_FAILURE,
+  payload,
+});

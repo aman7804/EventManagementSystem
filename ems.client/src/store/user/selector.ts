@@ -12,3 +12,6 @@ export const getUserListSelector =
 export const getCurrentUserSelector =
   createSelector( getState, (state) => get(state, "user.current") )
 
+export const getUserProfileSelector =
+  createSelector( getState, (state) => get(state, "user.profile") )
+
