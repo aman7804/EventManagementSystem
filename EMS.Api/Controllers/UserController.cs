@@ -65,12 +65,12 @@ namespace EMS.Api.Controllers
         public async Task<IActionResult> Index(int Id) =>
             GetResult(await service.GetByIdAsync(Id));
 
-        [HttpGet("{Id}")]
-        public async Task<IActionResult> GetProfile(int Id)
+        [HttpGet("profile")]
+        public async Task<IActionResult> GetProfile()
         {
-            if (Id != CurrentUser)
+            if (CurrentUser <= 0)
                 return Unauthorized(new { message = "Unauthorized" });
-            return GetResult(await service.GetByIdAsync(Id));
+            return GetResult(await service.GetByIdAsync(CurrentUser));
         }
 
         [Authorize(Roles = "Admin")]
