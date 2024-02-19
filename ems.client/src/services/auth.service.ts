@@ -28,11 +28,8 @@ const registration = async(
     `${baseLoginUrl}/signup`, requestBody
   );
 
-const changePassword = async( payload: IChangePassword) =>{
-  return baseService.put(`${baseLoginUrl}/change-password`, payload);
-
-}
-
+const changePassword = async( payload: IChangePassword) =>
+  baseService.put(`${baseLoginUrl}/change-password`, payload);
 
 const signOut = (): void => {
   localStorage.clear();

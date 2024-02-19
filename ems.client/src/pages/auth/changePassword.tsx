@@ -15,10 +15,8 @@ import {
 } from "@mui/material";
 import React from "react";
 import * as images from "../../assets/images";
-import { IChangePassword, IChangePasswordContainerDispatch } from "../../interfaces/auth.interface";
-import { useNavigate } from "react-router";
+import { IChangePasswordContainerDispatch } from "../../interfaces/auth.interface";
 import { ChangePasswordPayload, LoginSuccessPayload } from "store/auth/types";
-import { toast } from "react-toastify";
 import { PASSWORD_PATTERN } from "utils/constants";
 import { useForm } from "react-hook-form";
 import { showLoader } from "utils/helper";
@@ -34,7 +32,6 @@ const fieldNames : IIndexable = {
 }
 
 export const ChangePasswordForm = (props: ChangePasswordProps) => {
-
   const handleMouseDownPassword = (event: { preventDefault: () => void }) => {
     event.preventDefault();
   };
@@ -107,18 +104,20 @@ const maxPasswordLength = 16
         return "field cannot be empty";
     }
   }
+  
+  const bc = new BroadcastChannel("change_password")
 
   const onChangePasswordSuccess = async (response: LoginSuccessPayload) => {
-    navigate("/");
-    toast.success("Change-password successful");
+    bc.postMessage("Change-password successful")
+    window.close();
   };
   
   const onModalClose = () => {
     reset();
-    navigate("/dashboard")
+    window.close();
   };
 
-  const currentUserEmailId = get(props, "user.emailId", "")
+  const currentUserEmailId = get(props, "userEmailId", "")
   const onSubmit = async (data: IChangePasswordForm) => {
     const { changePasswordRequest } = props;
     if (changePasswordRequest) {
@@ -142,9 +141,7 @@ const maxPasswordLength = 16
         direction="column"
         alignItems="center"
         justifyContent="center"
-        style={{ minHeight: '100vh'
-        // , minWidth: '100vh'
-      }}
+        style={{ minHeight: '100vh'}}
       >
       <Box width={500}>
         <Card>

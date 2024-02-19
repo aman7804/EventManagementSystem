@@ -3,7 +3,7 @@ import { changePasswordRequest } from "store/auth/actions";
 import { IChangePassword, IChangePasswordContainerDispatch } from "../../interfaces/auth.interface";
 import ChangePasswordForm, { ChangePasswordProps } from "./changePassword";
 import { RootState } from "store/root/root.reducer";
-import { getUserSelector } from "store/auth/selector";
+import { getUserEmailSelector } from "store/auth/selector";
 
 const mapDispatchToProps: MapDispatchToProps<IChangePasswordContainerDispatch, IChangePassword> =
   {
@@ -11,7 +11,7 @@ const mapDispatchToProps: MapDispatchToProps<IChangePasswordContainerDispatch, I
   };
 const mapStateToProps = (state:RootState) => {
   return {
-    user: getUserSelector(state),
+    userEmailId: getUserEmailSelector(state),
   };  
 }
 const connector = connect(mapStateToProps, mapDispatchToProps); 
