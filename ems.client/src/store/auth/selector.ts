@@ -17,5 +17,8 @@ export const getErrorSelector =
 export const getUserSelector =
     createSelector(getState, (state) => get(state, "auth.user"));
 
+export const getUserEmailSelector =
+    createSelector(getState, (state) => get(state, "auth.user.emailId"));
+
 export const checkIsAuthenticated =
     createSelector(getState, (state) => !!get(state, "auth.token"));
