@@ -2,6 +2,22 @@
   text-align: center;
 }
 
+.main-loader{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
+}
+
+.loaderHide{
+  display: none;
+}
+
+.loaderShow{
+  display: block;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
