@@ -51,17 +51,27 @@ export const setLoginDetails = async (loginDetails: LoginSuccessPayload) => {
 
 export const showLoader = (): void => {
   const loaderDiv = document.getElementById("loaderForAPICall");
-
-  if (loaderDiv) {
+  const wrapper = document.getElementById("wrapper");
+  
+  
+  if (loaderDiv && wrapper) {
     loaderDiv.classList.add("loaderShow");
     loaderDiv.classList.remove("loaderHide");
+    
+    wrapper.classList.add("reduced-opacity-wrapper")
+    wrapper.classList.remove("wrapper")
+    
   }
 };
 
 export const hideLoader = (): void => {
   const loaderDiv = document.getElementById("loaderForAPICall");
-  if (loaderDiv) {
+  const wrapper = document.getElementById("wrapper");
+  if (loaderDiv && wrapper) {
     loaderDiv.classList.remove("loaderShow");
     loaderDiv.classList.add("loaderHide");
+    
+    wrapper.classList.add("wrapper")
+    wrapper.classList.remove("reduced-opacity-wrapper")
   }
 };

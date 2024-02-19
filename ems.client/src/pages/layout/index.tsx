@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 
 function Layout() {
   return (
-    <div className="wrapper">
+    <div id="wrapper" className="wrapper">
       <Box
         className="overlay"
         onClick={() => document.body.classList.toggle("sidebar-toggle")}
