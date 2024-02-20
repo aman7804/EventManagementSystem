@@ -45,6 +45,9 @@ const Header: React.FC = () => {
     const goToChangePassword = () => {
       window.open("/change-password", "_blank")
     }
+    const goToProfile = () => {
+      navigate("admin/profile")
+    }
     return (
       <AppBar position="static" className="header">
         <Toolbar
@@ -101,7 +104,7 @@ const Header: React.FC = () => {
               <Typography variant="h6">Admin</Typography>
             </MenuItem>
             <MenuItem onClick={handleProfileClose} title="Profile">
-              <Button>
+              <Button onClick={goToProfile}>
                 <img src={profileIcon} alt="Profile" />
                 <span>Profile</span>
               </Button>
