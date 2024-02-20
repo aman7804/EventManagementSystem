@@ -8,9 +8,6 @@ import {
   getByIdSuccess,
   listFailure,
   listSuccess,
-  getProfileSuccess,
-  getProfileFailure,
-  updateProfileSuccess,
 } from "./actions";
 import * as ACTION_TYPE from "./action.types";
 import service from "services/user.service";
@@ -99,49 +96,11 @@ function* deleteSaga(action: any) {
   }
 }
 
-function* getProfileSaga(action: any) {
-  try {
-    const response: IApiSuccessResponse<IUser> = yield call( service.getProfile );
-    yield put(
-      getProfileSuccess(response)
-    );
-    action.payload.callback(response);
-  } catch (e: any) {
-    yield put(
-      getProfileFailure({
-        message: e.response?.data?.split("\n")[0] || e.message
-      })
-    );
-  }
-}
-
-function* updateProfileSaga(action: any) {
-  try {
-    const response: IApiSuccessResponse<IUser> = yield call(
-      service.updateProfile, action.payload.data
-    );
-    yield put(
-      updateProfileSuccess(response)
-    );
-    action.payload.callback(response);
-  } catch (e: any) {
-    yield put(
-      getProfileFailure({
-        message: e.response?.data?.split("\n")[0] || e.message
-      })
-    );
-  }
-}
-
 function* userSaga() {
-  yield all([
-    takeLatest(ACTION_TYPE.LIST_REQUEST, listSaga),
-    takeLatest(ACTION_TYPE.SAVE_REQUEST, saveSaga),
-    takeLatest(ACTION_TYPE.GET_REQUEST, getByIdSaga),
-    takeLatest(ACTION_TYPE.DELETE_REQUEST, deleteSaga),
-    takeLatest(ACTION_TYPE.GET_PROFILE_REQUEST, getProfileSaga),
-    takeLatest(ACTION_TYPE.UPDATE_PROFILE_REQUEST, updateProfileSaga)
-  ]);
+  yield all([takeLatest(ACTION_TYPE.LIST_REQUEST, listSaga)]);
+  yield all([takeLatest(ACTION_TYPE.SAVE_REQUEST, saveSaga)]);
+  yield all([takeLatest(ACTION_TYPE.GET_REQUEST, getByIdSaga)]);
+  yield all([takeLatest(ACTION_TYPE.DELETE_REQUEST, deleteSaga)]);
 }
 
 export default userSaga;

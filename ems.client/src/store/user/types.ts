@@ -65,34 +65,6 @@ export type DeleteFailure = {
   payload: GENERIC.DeleteFailureResponse;
 };
 
-export type GetProfileRequest = {
-  type: typeof ACTION_TYPE.GET_PROFILE_REQUEST;
-  payload: GENERIC.GetRequestPayload;
-}
-export type GetProfileSuccess = {
-  type: typeof ACTION_TYPE.GET_PROFILE_SUCCESS;
-  payload: GENERIC.GetSuccessResponse<typeModal>;
-}
-export type GetProfileFailure = {
-  type: typeof ACTION_TYPE.GET_PROFILE_FAILURE;
-  payload: GENERIC.GetFailureResponse;
-}
-
-export type UpdateProfileRequest = {
-  type: typeof ACTION_TYPE.UPDATE_PROFILE_REQUEST;
-  payload: GENERIC.SaveRequestPayload<typeModal>;
-}
-
-export type UpdateProfileSuccess = {
-  type: typeof ACTION_TYPE.UPDATE_PROFILE_SUCCESS;
-  payload: GENERIC.SaveSuccessResponse;
-};
-
-export type UpdateProfileFailure = {
-  type: typeof ACTION_TYPE.UPDATE_PROFILE_FAILURE;
-  payload: GENERIC.SaveFailureResponse;
-};
-
 export type UserActions =
   | ListRequest
   | ListSuccess
@@ -105,10 +77,4 @@ export type UserActions =
   | GetFailure
   | DeleteRequest
   | DeleteSuccess
-  | DeleteFailure
-  | GetProfileRequest
-  | GetProfileSuccess
-  | GetProfileFailure
-  | UpdateProfileRequest
-  | UpdateProfileSuccess
-  | UpdateProfileFailure;
+  | DeleteFailure;

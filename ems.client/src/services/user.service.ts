@@ -18,18 +18,10 @@ const getById = async ( payload: { id: number }) =>
 const deleteById = async (payload: { id: number }) =>
   baseService.delete(`${userBaseUrl}/delete/${payload.id}`);
 
-const getProfile = async () =>
-  baseService.delete(`${userBaseUrl}/profile`);
-
-const updateProfile = async (payload: IUser) =>
-  baseService.put(`${userBaseUrl}/profile/update`, payload);
-
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getList,
   save,
   getById,
   deleteById,
-  getProfile,
-  updateProfile
 };

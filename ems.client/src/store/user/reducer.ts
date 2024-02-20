@@ -22,32 +22,32 @@ const reducers = (state = initialState, action: UserActions): unknown => {
       return {
         ...state,
         pending: false,
-        list: action.payload?.data,
+        list: action.payload.data,
         error: null,
       };
     case ACTION_TYPE.LIST_FAILURE:
       return {
-    ...state,
-    pending: false,
-    error: action.payload?.message,
-  };
-  case ACTION_TYPE.SAVE_REQUEST:
-    return {
-      ...state,
-      pending: true,
-    };
+        ...state,
+        pending: false,
+        error: action.payload.message,
+      };
+    case ACTION_TYPE.SAVE_REQUEST:
+      return {
+        ...state,
+        pending: true,
+      };
     case ACTION_TYPE.SAVE_SUCCESS:
       return {
         ...state,
         pending: false,
-        success: action.payload?.message,
+        success: action.payload.message,
         error: null,
       };
-      case ACTION_TYPE.SAVE_FAILURE:
+    case ACTION_TYPE.SAVE_FAILURE:
       return {
         ...state,
         pending: false,
-        error: action.payload?.message,
+        error: action.payload.message,
       };
     case ACTION_TYPE.GET_REQUEST:
       return {
@@ -58,14 +58,14 @@ const reducers = (state = initialState, action: UserActions): unknown => {
       return {
         ...state,
         pending: false,
-        current: action.payload?.data,
+        current: action.payload.data,
         error: null,
       };
     case ACTION_TYPE.GET_FAILURE:
       return {
         ...state,
         pending: false,
-        error: action.payload?.message,
+        error: action.payload.message,
       };
     case ACTION_TYPE.DELETE_REQUEST:
       return {
@@ -83,43 +83,7 @@ const reducers = (state = initialState, action: UserActions): unknown => {
       return {
         ...state,
         pending: false,
-        error: action.payload?.message,
-      };
-    case ACTION_TYPE.GET_PROFILE_REQUEST:
-      return {
-        ...state,
-        pending: true,
-      }
-    case ACTION_TYPE.GET_PROFILE_SUCCESS:
-      return {
-        ...state,
-        pending: false,
-        profile: action.payload?.data,
-        error: null
-      }
-    case ACTION_TYPE.GET_PROFILE_FAILURE:
-      return {
-        ...state,
-        pending: false,
-        error: action.payload?.message
-      }
-    case ACTION_TYPE.UPDATE_PROFILE_REQUEST:
-      return {
-        ...state,
-        pending: true,
-      };
-    case ACTION_TYPE.UPDATE_PROFILE_SUCCESS:
-      return {
-        ...state,
-        pending: false,
-        success: action.payload?.message,
-        error: null,
-      };
-    case ACTION_TYPE.UPDATE_PROFILE_FAILURE:
-      return {
-        ...state,
-        pending: false,
-        error: action.payload?.message,
+        error: action.payload.message,
       };
     default:
       return state;
