@@ -280,7 +280,7 @@ const ProfileComponent: React.FC<ProfileProps> = ({
               <Grid item>
                 <Button variant="contained" className="btn-save" type="submit">
                   <img src={saveIcon} alt="save" />
-                  Save
+                  Update
                 </Button>
               </Grid>
               <Grid item>
@@ -289,7 +289,7 @@ const ProfileComponent: React.FC<ProfileProps> = ({
                   className="btn-cancel"
                   onClick={onProfileClose}
                 >
-                  Cancel
+                  Back
                 </Button>
               </Grid>
             </Grid>
