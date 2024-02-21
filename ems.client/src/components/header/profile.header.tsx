@@ -1,4 +1,4 @@
-import { arrowProfileIcon, profile } from "assets/images";
+import { arrowProfileIcon, accountIcon} from "assets/images";
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import { IRegistrationResponse } from "../../interfaces/auth.interface";
 
@@ -23,7 +23,7 @@ const UserProfileSection = ({ user, ...props }: UserProfileSectionProps) => {
         className="btn-profile"
         disableElevation
       >
-        <Avatar src={profile} alt="profile" />
+        <Avatar src={accountIcon} alt="profile" />
         <Box className="profile-info">
           <Box>
             <Typography variant="h5" ml={1}> 

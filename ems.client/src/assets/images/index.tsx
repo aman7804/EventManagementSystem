@@ -7,6 +7,7 @@ export const headerLogo = require("./header-logo.svg").default;
 export const mobileLogo = require("./ic-dashboard.svg");
 export const arrowDownIcon = require("./ic-arrow-down.svg").default;
 export const arrowProfileIcon = require("./ic-arrow-profile.svg").default;
+export const accountIcon = require("./account.svg").default;
 export const coursesIcon = require("./ic-courses.svg").default;
 export const dashboardIcon = require("./ic-dashboard.svg").default;
 export const editIcon = require("./ic-edit.svg").default;
