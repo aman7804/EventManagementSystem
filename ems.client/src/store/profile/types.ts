@@ -1,6 +1,6 @@
 import * as ACTION_TYPE from "./action.types";
 import * as GENERIC from "interfaces/generic.interface";
-import { IProfile } from "interfaces/user.interface";
+import { IProfile } from "interfaces/profile.interface";
 
 type typeModal = IProfile;
 

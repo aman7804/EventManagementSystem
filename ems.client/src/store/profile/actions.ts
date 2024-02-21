@@ -1,4 +1,4 @@
-import { IProfile } from "interfaces/user.interface";
+import { IProfile } from "interfaces/profile.interface";
 import * as ACTION_TYPE from "./action.types";
 import * as TYPES from "./types";
 import * as GENERIC from "interfaces/generic.interface";

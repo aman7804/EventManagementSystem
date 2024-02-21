@@ -4,6 +4,7 @@ import { ProfileActions } from "./types";
 import { ProfileState } from "interfaces/profile.interface";
 
 const initialState: ProfileState= {
+  pending: false,
   user: null
 };
 

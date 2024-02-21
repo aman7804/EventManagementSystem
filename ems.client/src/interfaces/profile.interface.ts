@@ -10,18 +10,20 @@ import * as GENERIC from './generic.interface'
 }
 
   export interface ProfileState{
-    user: IProfile | null
+    pending: boolean;
+    user: IProfile | null;
   }
 
 /* Dispatch Container Model */
 export interface IProfileContainerDispatch {
-  getRequest: (payload: GENERIC.GetRequestPayload) => {};
+  getRequest: () => {};
   updateRequest: (payload: GENERIC.SaveRequestPayload<IProfile>) => {};
-}
+} 
 
 /* State Container Model */
 export interface IProfileContainerState {
-  profile: IProfile
+  profile: IProfile,
+  pending: boolean
 }
 
 

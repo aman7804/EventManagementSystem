@@ -20,7 +20,7 @@ import {
   import authService from "services/auth.service";
   import { Link, useNavigate } from "react-router-dom";
   import UserProfileSection from "./profile.header";
-import { toast } from "react-toastify";
+  import { toast } from "react-toastify";
   
 const bc = new BroadcastChannel("change_password")
 bc.onmessage=(e)=>{
@@ -31,12 +31,17 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   
   const [profileMenu, setProfileMenu] = React.useState<null | HTMLElement>(null);
-    const profileOpen = Boolean(profileMenu);
-    const handleProfileClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const [profileOpen, setProfileOpen] = React.useState<boolean>(false);
+
+  const handleProfileClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       setProfileMenu(event.currentTarget);
+      setProfileOpen(true)
     };
+    console.log("profileMenu: ",profileMenu)
+    console.log("profileOpen: ",profileOpen)
     const handleProfileClose = () => {
       setProfileMenu(null);
+      setProfileOpen(false)
     };
     const logOutClick = () => {
       authService.signOut();
@@ -46,7 +51,7 @@ const Header: React.FC = () => {
       window.open("/change-password", "_blank")
     }
     const goToProfile = () => {
-      navigate("admin/profile")
+      navigate("User/profile")
     }
     return (
       <AppBar position="static" className="header">
@@ -126,5 +131,5 @@ const Header: React.FC = () => {
       </AppBar>
     );
   };
-  
+   
   export default Header;

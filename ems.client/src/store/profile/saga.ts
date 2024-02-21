@@ -8,7 +8,7 @@ import {
 import * as ACTION_TYPE from "./action.types";
 import service from "services/profile.service";
 import { IApiSuccessResponse } from "interfaces/generic.interface";
-import { IProfile } from "interfaces/user.interface";
+import { IProfile } from "interfaces/profile.interface";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function* updateSaga(action: any) {
@@ -35,7 +35,6 @@ function* getSaga(action: any) {
     yield put(
       getSuccess(response)
     );
-    action.payload.callback(response);
   } catch (e: any) {
     yield put(
       getFailure({

@@ -23,8 +23,8 @@ namespace EMS.Api.Controllers
                 _authService = authService;
             }
 
-        [HttpPut("update")]
-        public async Task<IActionResult> Update(UserDTO dto)
+        [HttpPut("update-profile")]
+        public async Task<IActionResult> UpdateProfile(UserDTO dto)
         {
             if (dto.Id != CurrentUser)
                 return Unauthorized(new { message = "Unauthorized" });
