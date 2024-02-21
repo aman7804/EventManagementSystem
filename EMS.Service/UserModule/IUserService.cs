@@ -4,5 +4,8 @@ using EMS.Service.DTO;
 
 namespace EMS.Service.UserModule
 {
-    public interface IUserService : IBaseService<UserEntity, UserDTO> { }
+    public interface IUserService : IBaseService<UserEntity, UserDTO> {
+    Task UpdateProfileAsync(UserDTO dto);
+
+    }
 }
