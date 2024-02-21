@@ -8,18 +8,16 @@ import {
   Typography,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 import { CustomNumericFormatProps } from "components/elements/NumericFormControl";
 import { NumericFormat, NumericFormatProps } from "react-number-format";
 import React from "react";
 import { EMAIL_PATTERN, MOBILE_PATTERN } from "utils/constants";
-import { get } from "lodash";
 import * as GENERIC from "interfaces/generic.interface"
 import { IProfile, IProfileContainerDispatch, IProfileContainerState } from "interfaces/profile.interface";
 import { saveIcon } from "assets/images";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import profileHeader from "components/header/profile.header";
 import { showLoader } from "utils/helper";
 
 export type ProfileProps = IProfileContainerState &
@@ -70,7 +68,6 @@ const ProfileComponent: React.FC<ProfileProps> = ({
     register,
     handleSubmit,
     reset,
-    setValue,
     formState: { errors },
   } = useForm<IProfile>();
 

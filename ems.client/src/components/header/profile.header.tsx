@@ -1,9 +1,6 @@
 import { arrowProfileIcon, profile } from "assets/images";
 import { Avatar, Box, Button, Typography } from "@mui/material";
-import { connect } from "react-redux";
-import { getUserSelector } from "store/auth/selector";
-import { RootState } from "store/root/root.reducer";
-import { ILoginResponse, IRegistrationResponse } from "../../interfaces/auth.interface";
+import { IRegistrationResponse } from "../../interfaces/auth.interface";
 
 export type CustomProps = {
   profileOpen: boolean;
@@ -11,7 +8,7 @@ export type CustomProps = {
 };
 
 export type UserProfileSectionProps = {
-  user: IRegistrationResponse;
+  user: IRegistrationResponse | null;
 } & CustomProps;
 
 const UserProfileSection = ({ user, ...props }: UserProfileSectionProps) => {
@@ -41,10 +38,4 @@ const UserProfileSection = ({ user, ...props }: UserProfileSectionProps) => {
   );
 };
 
-const mapStateToProps = (state: RootState) => {
-  return {
-    user: getUserSelector(state),
-  };
-};
-
-export default connect(mapStateToProps)(UserProfileSection);  
+export default UserProfileSection;

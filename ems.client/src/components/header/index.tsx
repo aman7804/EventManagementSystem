@@ -1,33 +1,37 @@
 import {
-    headerLogo,
-    lockIcon,
-    logoutIcon,
-    MenuIcon,
-    mobileLogo,
-    profileIcon,
-  } from "assets/images";
-  import {
-    AppBar,
-    Box,
-    Button,
-    IconButton,
-    Menu,
-    MenuItem,
-    Toolbar,
-    Typography,
-  } from "@mui/material";
-  import React from "react";
-  import authService from "services/auth.service";
-  import { Link, useNavigate } from "react-router-dom";
-  import UserProfileSection from "./profile.header";
-  import { toast } from "react-toastify";
+  headerLogo,
+  lockIcon,
+  logoutIcon,
+  MenuIcon,
+  mobileLogo,
+  profileIcon,
+} from "assets/images";
+import {
+  AppBar,
+  Box,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import React from "react";
+import authService from "services/auth.service";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { checkIsAuthenticated, getUserSelector } from "store/auth/selector";
+import { connect, useSelector } from "react-redux";
+import { RootState } from "store/root/root.reducer";
+import { IRegistrationResponse } from "interfaces/auth.interface";
+import UserProfileSection from "./profile.header";
   
 const bc = new BroadcastChannel("change_password")
 bc.onmessage=(e)=>{
   toast.success(e.data)
 }  
 
-const Header: React.FC = () => {
+const Header: React.FC<IGetUserProp> = ({user}) => {
   const navigate = useNavigate();
   
   const [profileMenu, setProfileMenu] = React.useState<null | HTMLElement>(null);
@@ -51,14 +55,17 @@ const Header: React.FC = () => {
     navigate("/login");
   };
   
-  const goToChangePassword = () => {
+  const goToChangePassword = () => 
     window.open("/change-password", "_blank")
-  }
-  
-  const goToProfile = () => {
+  const goToProfile = () => 
     navigate("User/profile")
-  }
+  const goToLogin = () => 
+    navigate("login")
+  const goToSignup = () => 
+    navigate("signup")
+
   
+  const isAuthenticated = useSelector(checkIsAuthenticated);
   return (
     <AppBar position="static" className="header">
       <Toolbar
@@ -92,10 +99,25 @@ const Header: React.FC = () => {
             />
           </Link>
         </Box>
-        <UserProfileSection
-          profileOpen={profileOpen}
-          handleProfileClick={handleProfileClick}
-        />
+        {
+          isAuthenticated ?
+          (<UserProfileSection
+            user={user}
+            profileOpen={profileOpen}
+            handleProfileClick={handleProfileClick}
+          />)
+          : 
+          (<>
+          <Box sx={{ display: "flex", alignItems:"center" }}>
+            <Button onClick={goToLogin}>
+              <span>Login</span>
+            </Button>
+            <Button onClick={goToSignup}>
+              <span>Signup</span>
+            </Button>
+          </Box>
+          </>)
+        }
         <Menu
           id="profile-menu"
           anchorEl={profileMenu}
@@ -111,7 +133,7 @@ const Header: React.FC = () => {
             sx={{ display: { xs: "flex", md: "none" } }}
             className="profile-info"
           >
-            <Typography variant="h5">James Henry</Typography>
+            <Typography variant="h5">{user?.fullName}</Typography>
             <Typography variant="h6">Admin</Typography>
           </MenuItem>
           <MenuItem onClick={handleProfileClose} title="Profile">
@@ -137,5 +159,15 @@ const Header: React.FC = () => {
     </AppBar>
   );
 };
-  
-export default Header;
+
+interface IGetUserProp{
+  user: IRegistrationResponse | null
+}
+
+const mapStateToProps = (state: RootState) => {
+  return {
+    user: getUserSelector(state),
+  };
+};
+
+export default connect(mapStateToProps)(Header);
