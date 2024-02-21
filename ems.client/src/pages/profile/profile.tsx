@@ -60,7 +60,6 @@ const ProfileComponent: React.FC<ProfileProps> = ({
 
   const maxFirstNameLength = 50;
   const maxLastNameLength = 50;
-  const maxEmailIdLength = 256;
   const maxPasswordLength = 256;
   const maxAddressLength = 500; 
 
@@ -102,9 +101,6 @@ const ProfileComponent: React.FC<ProfileProps> = ({
             case "address":
               return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
                   ${maxAddressLength}.`;
-            case "emailId":
-              return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
-                  ${maxEmailIdLength}.`;
             case "password":
               return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
                   ${maxPasswordLength}.`;
@@ -130,8 +126,6 @@ const ProfileComponent: React.FC<ProfileProps> = ({
         return getErrorMessage(fieldName, errors.lastName?.type);
       case "address":
         return getErrorMessage(fieldName, errors.address?.type);
-      case "emailId":
-        return getErrorMessage(fieldName, errors.emailId?.type);
       case "mobileNo":
         return getErrorMessage(fieldName, errors.mobileNo?.type);
       default:
@@ -243,14 +237,12 @@ const ProfileComponent: React.FC<ProfileProps> = ({
                     </>
                   }
                   fullWidth
+                  value={profile.emailId}
                   variant="outlined"
                   multiline
-                  error={!!errors.emailId}
-                  helperText={getError("emailId")}
-                  {...register("emailId", {
-                    required: true,
-                    pattern: EMAIL_PATTERN,
-                  })}
+                  InputProps={{
+                    readOnly: true,
+                  }}
                 />
               </Grid>
               <Grid item xs={12} xl={6} md={6}>
