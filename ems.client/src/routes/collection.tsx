@@ -5,12 +5,9 @@ import Login from "pages/auth/login.container";
 import Registration from "pages/auth/registration.container";
 import adminPrivateRoutes from "./admin";
 import ChangePassword from "pages/auth/changPassword.container";
-import { lazy } from "react";
 import ProtectedRoute from "./protected";
+import Profile from "pages/profile";
 
-const Profile = lazy(
-  () => import("pages/profile")
-)
 
 export const router = createBrowserRouter([
   {
