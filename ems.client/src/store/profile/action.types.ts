@@ -1,0 +1,9 @@
+const MODULE = 'PROFILE';
+
+export const GET_REQUEST = `GET_${MODULE}_REQUEST`;
+export const GET_SUCCESS = `GET_${MODULE}_SUCCESS`;
+export const GET_FAILURE = `GET_${MODULE}_FAILURE`;
+
+export const UPDATE_REQUEST = `UPDATE_${MODULE}_REQUEST`;
+export const UPDATE_SUCCESS = `UPDATE_${MODULE}_SUCCESS`;
+export const UPDATE_FAILURE = `UPDATE_${MODULE}_FAILURE`;

@@ -83,7 +83,6 @@ namespace EMS.Service.Base
             return paginationDTO;
         }
 
-
         #region Protected Methods
         protected virtual D ToDTO(T entity) => Mapper.Map<D>(entity);
         protected virtual T ToEntity(D dto) => Mapper.Map<T>(dto);

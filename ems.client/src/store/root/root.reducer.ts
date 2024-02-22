@@ -8,6 +8,7 @@ import photographyReducer from "../photography/reducer"
 import decorationReducer from "../decoration/reducer"
 import cateringReducer from "../catering/reducer"
 import userReducer from "../user/reducer"
+import profileReducer from "../profile/reducer"
 
 const rootReducer = combineReducers<unknown>({
   auth: persistReducer(
@@ -22,9 +23,9 @@ const rootReducer = combineReducers<unknown>({
   photography: photographyReducer,
   decoration: decorationReducer,
   catering: cateringReducer,
-  user: userReducer
+  user: userReducer,
+  profile: profileReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
-
 export default rootReducer;

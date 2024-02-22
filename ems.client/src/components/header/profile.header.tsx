@@ -1,9 +1,6 @@
-import { arrowProfileIcon, profile } from "assets/images";
+import { arrowProfileIcon, accountIcon} from "assets/images";
 import { Avatar, Box, Button, Typography } from "@mui/material";
-import { connect } from "react-redux";
-import { getUserSelector } from "store/auth/selector";
-import { RootState } from "store/root/root.reducer";
-import { ILoginResponse } from "../../interfaces/auth.interface";
+import { IRegistrationResponse } from "../../interfaces/auth.interface";
 
 export type CustomProps = {
   profileOpen: boolean;
@@ -11,7 +8,7 @@ export type CustomProps = {
 };
 
 export type UserProfileSectionProps = {
-  user: ILoginResponse;
+  user: IRegistrationResponse | null;
 } & CustomProps;
 
 const UserProfileSection = ({ user, ...props }: UserProfileSectionProps) => {
@@ -26,13 +23,13 @@ const UserProfileSection = ({ user, ...props }: UserProfileSectionProps) => {
         className="btn-profile"
         disableElevation
       >
-        <Avatar src={profile} alt="profile" />
+        <Avatar src={accountIcon} alt="profile" />
         <Box className="profile-info">
           <Box>
-            <Typography variant="h5">
-              {user?.firstName} {user?.lastName}
+            <Typography variant="h5" ml={1}> 
+              {user?.fullName}
             </Typography>
-            <Typography variant="h6">{user?.roleName}</Typography>
+            {/* <Typography variant="h6">{user?.roleName}</Typography> */}
           </Box>
           <img src={arrowProfileIcon} alt="arrow" />
         </Box>
@@ -41,10 +38,4 @@ const UserProfileSection = ({ user, ...props }: UserProfileSectionProps) => {
   );
 };
 
-const mapStateToProps = (state: RootState) => {
-  return {
-    user: getUserSelector(state),
-  };
-};
-
-export default connect(mapStateToProps)(UserProfileSection);
+export default UserProfileSection;

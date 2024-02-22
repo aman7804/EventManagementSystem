@@ -1,4 +1,5 @@
-﻿using EMS.Service.DTO;
+﻿using EMS.Entity;
+using EMS.Service.DTO;
 using EMS.Service.DTO.Filter;
 using EMS.Service.UserModule;
 using EMS.Shared.Constant;
@@ -23,13 +24,13 @@ namespace EMS.Api.Controllers
                 _authService = authService;
             }
 
-        [HttpPut("update")]
-        public async Task<IActionResult> Update(UserDTO dto)
+        [HttpPut("update-profile")]
+        public async Task<IActionResult> UpdateProfile(UserDTO dto)
         {
             if (dto.Id != CurrentUser)
                 return Unauthorized(new { message = "Unauthorized" });
 
-            await service.UpdateAsync(dto);
+            await service.UpdateProfileAsync(dto);
             return GetResult<UserDTO>(null, HttpStatusCode.OK);
         }
 
@@ -65,12 +66,12 @@ namespace EMS.Api.Controllers
         public async Task<IActionResult> Index(int Id) =>
             GetResult(await service.GetByIdAsync(Id));
 
-        [HttpGet("{Id}")]
-        public async Task<IActionResult> GetProfile(int Id)
+        [HttpGet("profile")]
+        public async Task<IActionResult> GetProfile()
         {
-            if (Id != CurrentUser)
+            if (CurrentUser <= 0)
                 return Unauthorized(new { message = "Unauthorized" });
-            return GetResult(await service.GetByIdAsync(Id));
+            return GetResult(await service.GetByIdAsync(CurrentUser));
         }
 
         [Authorize(Roles = "Admin")]

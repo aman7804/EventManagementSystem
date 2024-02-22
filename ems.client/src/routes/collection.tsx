@@ -5,6 +5,9 @@ import Login from "pages/auth/login.container";
 import Registration from "pages/auth/registration.container";
 import adminPrivateRoutes from "./admin";
 import ChangePassword from "pages/auth/changPassword.container";
+import ProtectedRoute from "./protected";
+import Profile from "pages/profile";
+
 
 export const router = createBrowserRouter([
   {
@@ -17,7 +20,12 @@ export const router = createBrowserRouter([
         path: "/dashboard",
         Component: Dashboard
       },
-      ...adminPrivateRoutes()      
+      ...adminPrivateRoutes(),
+      {
+        index: true,
+        path: "/User/profile",
+        element: <ProtectedRoute outlet={<Profile/>}/>
+      }
     ]
   },
   {

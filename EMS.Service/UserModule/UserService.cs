@@ -7,6 +7,8 @@ using EMS.Shared;
 using EMS.Service.Extension;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using EMS.Data.Migrations;
+using EMS.Shared.Constant;
 
 namespace EMS.Service.UserModule
 {
@@ -44,5 +46,24 @@ namespace EMS.Service.UserModule
 
             return paginationDTO;
         }
+
+        public async Task UpdateProfileAsync(UserDTO dto)
+        {
+            if (dto == null)
+                throw new ArgumentNullException(nameof(dto), "DTO cannot be null");
+
+            UserEntity user = await Repo.GetByIdAsync(dto.Id, true)
+                ?? throw new Exception(ExceptionMessage.RECORD_NOT_FOUND);
+            
+            UserEntity userEntity = Map<UserDTO, UserEntity>(dto);
+
+            userEntity.Password = user.Password;
+            userEntity.CreateDate = user.CreateDate;
+            userEntity.CreatedBy = user.CreatedBy;
+            userEntity.Role = user.Role;
+
+            await Repo.UpdateAsync(userEntity); 
+        }
+
     }
 }

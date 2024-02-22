@@ -1,127 +1,173 @@
 import {
-    headerLogo,
-    lockIcon,
-    logoutIcon,
-    MenuIcon,
-    mobileLogo,
-    profileIcon,
-  } from "assets/images";
-  import {
-    AppBar,
-    Box,
-    Button,
-    IconButton,
-    Menu,
-    MenuItem,
-    Toolbar,
-    Typography,
-  } from "@mui/material";
-  import React from "react";
-  import authService from "services/auth.service";
-  import { Link, useNavigate } from "react-router-dom";
-  import UserProfileSection from "./profile.header";
+  headerLogo,
+  lockIcon,
+  logoutIcon,
+  MenuIcon,
+  mobileLogo,
+  profileIcon,
+} from "assets/images";
+import {
+  AppBar,
+  Box,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import React from "react";
+import authService from "services/auth.service";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { checkIsAuthenticated, getUserSelector } from "store/auth/selector";
+import { connect, useSelector } from "react-redux";
+import { RootState } from "store/root/root.reducer";
+import { IRegistrationResponse } from "interfaces/auth.interface";
+import UserProfileSection from "./profile.header";
   
 const bc = new BroadcastChannel("change_password")
 bc.onmessage=(e)=>{
   toast.success(e.data)
 }  
 
-const Header: React.FC = () => {
+const Header: React.FC<IGetUserProp> = ({user}) => {
   const navigate = useNavigate();
   
   const [profileMenu, setProfileMenu] = React.useState<null | HTMLElement>(null);
-    const profileOpen = Boolean(profileMenu);
-    const handleProfileClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      setProfileMenu(event.currentTarget);
-    };
-    const handleProfileClose = () => {
-      setProfileMenu(null);
-    };
-    const logOutClick = () => {
-      authService.signOut();
-      navigate("/login");
-    };
-    const goToChangePassword = () => {
-      window.open("/change-password", "_blank")
-    }
-    return (
-      <AppBar position="static" className="header">
-        <Toolbar
-          disableGutters
-          sx={{ flexWrap: "wrap" }}
-          className="header-container"
-        >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <IconButton
-              size="large"
-              onClick={() => document.body.classList.toggle("sidebar-toggle")}
-              sx={{ display: { xs: "flex", md: "none" } }}
-              className="btn-menu"
-            >
-              <img src={MenuIcon} alt="menu" />
-            </IconButton>
-            <Link
-              to="/dashboard"
-              className="header-logo"
-              title="Event Management System"
-            >
-              <img
-                src={headerLogo}
-                alt="Event Management System"
-                className="desktop"
-              />
-              <img
-                src={mobileLogo}
-                alt="Event Management System"
-                className="mobile"
-              />
-            </Link>
-          </Box>
-          <UserProfileSection
-            profileOpen={profileOpen}
-            handleProfileClick={handleProfileClick}
-          />
-          <Menu
-            id="profile-menu"
-            anchorEl={profileMenu}
-            open={profileOpen}
-            onClose={handleProfileClose}
-            MenuListProps={{
-              "aria-labelledby": "profile-button",
-            }}
-            className="profile-menu"
-          >
-            <MenuItem
-              onClick={handleProfileClose}
-              sx={{ display: { xs: "flex", md: "none" } }}
-              className="profile-info"
-            >
-              <Typography variant="h5">James Henry</Typography>
-              <Typography variant="h6">Admin</Typography>
-            </MenuItem>
-            <MenuItem onClick={handleProfileClose} title="Profile">
-              <Button>
-                <img src={profileIcon} alt="Profile" />
-                <span>Profile</span>
-              </Button>
-            </MenuItem>
-            <MenuItem onClick={handleProfileClose} title="Profile">
-              <Button onClick={goToChangePassword}>
-                <img src={lockIcon} alt="Change password" />
-                <span>Change Password</span>
-              </Button>
-            </MenuItem>
-            <MenuItem onClick={handleProfileClose} title="Logout">
-              <Button onClick={logOutClick}>
-                <img src={logoutIcon} alt="Logout" />
-                <span>Logout</span>
-              </Button>
-            </MenuItem>
-          </Menu>
-        </Toolbar>
-      </AppBar>
-    );
+  const [profileOpen, setProfileOpen] = React.useState<boolean>(false);
+
+  const handleProfileClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setProfileMenu(event.currentTarget);
+    setProfileOpen(true)
+  };
+
+  console.log("profileMenu: ",profileMenu)
+  console.log("profileOpen: ",profileOpen)
+  
+  const handleProfileClose = () => {  
+    setProfileMenu(null);
+    setProfileOpen(false)
   };
   
-  export default Header;
+  const logOutClick = () => {
+    authService.signOut();
+    navigate("/login");
+  };
+  
+  const goToChangePassword = () => 
+    window.open("/change-password", "_blank")
+  const goToProfile = () => 
+    navigate("User/profile")
+  const goToLogin = () => 
+    navigate("login")
+  const goToSignup = () => 
+    navigate("signup")
+
+  
+  const isAuthenticated = useSelector(checkIsAuthenticated);
+  return (
+    <AppBar position="static" className="header">
+      <Toolbar
+        disableGutters
+        sx={{ flexWrap: "wrap" }}
+        className="header-container"
+      >
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <IconButton
+            size="large"
+            onClick={() => document.body.classList.toggle("sidebar-toggle")}
+            sx={{ display: { xs: "flex", md: "none" } }}
+            className="btn-menu"
+          >
+            <img src={MenuIcon} alt="menu" />
+          </IconButton>
+          <Link
+            to="/dashboard"
+            className="header-logo"
+            title="Event Management System"
+          >
+            <img
+              src={headerLogo}
+              alt="Event Management System"
+              className="desktop"
+            />
+            <img
+              src={mobileLogo}
+              alt="Event Management System"
+              className="mobile"
+            />
+          </Link>
+        </Box>
+        {
+          isAuthenticated ?
+          (<UserProfileSection
+            user={user}
+            profileOpen={profileOpen}
+            handleProfileClick={handleProfileClick}
+          />)
+          : 
+          (<>
+          <Box sx={{ display: "flex", alignItems:"center" }}>
+            <Button onClick={goToLogin}>
+              <span>Login</span>
+            </Button>
+            <Button onClick={goToSignup}>
+              <span>Signup</span>
+            </Button>
+          </Box>
+          </>)
+        }
+        <Menu
+          id="profile-menu"
+          anchorEl={profileMenu}
+          open={profileOpen}
+          onClose={handleProfileClose}
+          MenuListProps={{
+            "aria-labelledby": "profile-button",
+          }}
+          className="profile-menu"
+        >
+          <MenuItem
+            onClick={handleProfileClose}
+            sx={{ display: { xs: "flex", md: "none" } }}
+            className="profile-info"
+          >
+            <Typography variant="h5">{user?.fullName}</Typography>
+            <Typography variant="h6">Admin</Typography>
+          </MenuItem>
+          <MenuItem onClick={handleProfileClose} title="Profile">
+            <Button onClick={goToProfile}>
+              <img src={profileIcon} alt="Profile" />
+              <span>Profile</span>
+            </Button>
+          </MenuItem>
+          <MenuItem onClick={handleProfileClose} title="ChangePassword">
+            <Button onClick={goToChangePassword}>
+              <img src={lockIcon} alt="Change password" />
+              <span>Change Password</span>
+            </Button>
+          </MenuItem>
+          <MenuItem onClick={handleProfileClose} title="Logout">
+            <Button onClick={logOutClick}>
+              <img src={logoutIcon} alt="Logout" />
+              <span>Logout</span>
+            </Button>
+          </MenuItem>
+        </Menu>
+      </Toolbar>
+    </AppBar>
+  );
+};
+
+interface IGetUserProp{
+  user: IRegistrationResponse | null
+}
+
+const mapStateToProps = (state: RootState) => {
+  return {
+    user: getUserSelector(state),
+  };
+};
+
+export default connect(mapStateToProps)(Header);

@@ -7,6 +7,7 @@ import photographySaga from "store/photography/saga";
 import decorationSaga from "store/decoration/saga";
 import cateringSaga from "store/catering/saga";
 import userSaga from "store/user/saga";
+import profileSaga from "store/profile/saga";
 
 export function* rootSaga() {
   yield all([
@@ -17,5 +18,6 @@ export function* rootSaga() {
     fork(decorationSaga),
     fork(cateringSaga),
     fork(userSaga),
+    fork(profileSaga)
   ]);
 }
