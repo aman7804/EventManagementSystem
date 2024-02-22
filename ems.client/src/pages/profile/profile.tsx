@@ -237,7 +237,7 @@ const ProfileComponent: React.FC<ProfileProps> = ({
                     </>
                   }
                   fullWidth
-                  value={profile.emailId}
+                  value={!pending ? profile?.emailId : undefined}
                   variant="outlined"
                   multiline
                   InputProps={{
