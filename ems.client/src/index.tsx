@@ -12,6 +12,10 @@ import { ToastContainer } from "react-toastify";
 import { PersistGate } from "redux-persist/integration/react";
 import "../node_modules/aos/dist/aos.css";
 import "react-toastify/dist/ReactToastify.css";
+import { loaderStateSelector } from "store/loader/selector";
+import { RootState } from "store/root/root.reducer";
+
+const loaderState: boolean = loaderStateSelector(store.getState())
 
 const root = createRoot(
   document.getElementById("root") as HTMLElement
@@ -34,7 +38,7 @@ root.render(
               draggable
               pauseOnHover
             />
-            <Loader />
+            <Loader className={loaderState ? "loaderShow" : "loaderHide"}/>
             <App />
           </PersistGate>
         </ThemeProvider>
@@ -42,3 +46,5 @@ root.render(
     </Suspense>
   </StrictMode>
 );
+
+ 
