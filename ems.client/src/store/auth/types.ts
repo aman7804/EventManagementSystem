@@ -67,14 +67,7 @@ import * as GENERIC from "interfaces/generic.interface";
     }
     callback: any
   }
-  export interface RegistrationSuccessPayload{
-    user: {
-      id: number;
-      fullName: string;
-      emailId: string;
-    };
-  }
-  
+
   export interface ChangePasswordPayload{
     values: {
       emailId: string,
