@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import { CustomNumericFormatProps } from "components/elements/NumericFormControl";
 import { NumericFormat, NumericFormatProps } from "react-number-format";
 import React from "react";
-import { EMAIL_PATTERN, MOBILE_PATTERN } from "utils/constants";
+import { MOBILE_PATTERN } from "utils/constants";
 import * as GENERIC from "interfaces/generic.interface"
 import { IProfile, IProfileContainerDispatch, IProfileContainerState } from "interfaces/profile.interface";
 import { saveIcon } from "assets/images";

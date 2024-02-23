@@ -82,7 +82,7 @@ const maxPasswordLength = 16
             case "confirmPassword":
               return errors.confirmPassword?.message || ""
           }
-          return "Password must be different from older"
+          break;
         case "maxLength": 
           return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
             ${maxPasswordLength}.`;
