@@ -1,9 +1,7 @@
 import { SHOW_LOADER, HIDE_LOADER} from "./action.types";
 import { LoaderActions } from "./types";
+import { ILoader } from "interfaces/loader.interface"
 
-interface ILoader{
-  togglerLoader: boolean;
-}
 const initialState: ILoader = {
   togglerLoader: false 
 };

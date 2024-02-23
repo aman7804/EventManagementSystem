@@ -7,7 +7,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 import Config, { NODE_ENV_TYPES } from "config";
-import { getCookie, hideLoader } from "utils/helper";
+import { getCookie, hideLoader, showLoader } from "utils/helper";
 import { toast } from "react-toastify";
 
 axios.defaults.baseURL = Config.env.BaseUrl;
@@ -16,6 +16,7 @@ axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 axios.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    showLoader()
     console.log(config);
     let isTokenRequired = true;
     if (config.url?.includes("/login")) {
@@ -34,10 +35,11 @@ axios.interceptors.request.use(
       config.headers.Pragma = "no-cache";
       config.headers.Expires = "0";
     }
-
+    hideLoader()
     return config;
   },
   (error: AxiosError) => {
+    hideLoader();
     return Promise.reject(error);
   },
 );

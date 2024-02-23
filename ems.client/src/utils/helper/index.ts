@@ -2,6 +2,9 @@ import { JWTToken } from "../../interfaces/jwtToken.interface";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 import { LoginSuccessPayload } from "store/auth/types";
+import { Dispatch } from "redux";
+import { showLoader as showLoading, hideLoader as hideLoading } from "store/loader/actions"
+import store from "store/root/root.store";
 
 export const setCookie = (name: string, value: string) => {
   Cookies.set(name, value);
@@ -50,28 +53,31 @@ export const setLoginDetails = async (loginDetails: LoginSuccessPayload) => {
 };
 
 export const showLoader = (): void => {
-  const loaderDiv = document.getElementById("loaderForAPICall");
-  const wrapper = document.getElementById("wrapper");
+  // const loaderDiv = document.getElementById("loaderForAPICall");
+  // const wrapper = document.getElementById("wrapper");
   
   
-  if (loaderDiv && wrapper) {
-    loaderDiv.classList.add("loaderShow");
-    loaderDiv.classList.remove("loaderHide");
+  // if (loaderDiv && wrapper) {
+  //   loaderDiv.classList.add("loaderShow");
+  //   loaderDiv.classList.remove("loaderHide");
     
-    wrapper.classList.add("reduced-opacity-wrapper")
-    wrapper.classList.remove("wrapper")
+  //   wrapper.classList.add("reduced-opacity-wrapper")
+  //   wrapper.classList.remove("wrapper")
     
-  }
+  // }
+  store.dispatch(showLoading())
+  
 };
 
 export const hideLoader = (): void => {
-  const loaderDiv = document.getElementById("loaderForAPICall");
-  const wrapper = document.getElementById("wrapper");
-  if (loaderDiv && wrapper) {
-    loaderDiv.classList.remove("loaderShow");
-    loaderDiv.classList.add("loaderHide");
+  // const loaderDiv = document.getElementById("loaderForAPICall");
+  // const wrapper = document.getElementById("wrapper");
+  // if (loaderDiv && wrapper) {
+  //   loaderDiv.classList.remove("loaderShow");
+  //   loaderDiv.classList.add("loaderHide");
     
-    wrapper.classList.add("wrapper")
-    wrapper.classList.remove("reduced-opacity-wrapper")
-  }
+  //   wrapper.classList.add("wrapper")
+  //   wrapper.classList.remove("reduced-opacity-wrapper")
+  // }
+  store.dispatch(hideLoading())
 };
