@@ -12,9 +12,7 @@ import {
   InputLabel,
   OutlinedInput,
   TextField,
-  Typography,
-  Select,
-  MenuItem,
+  Typography
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import * as images from "../../assets/images";
@@ -22,7 +20,6 @@ import { IRegistration, IRegistrationContainerDispatch } from "../../interfaces/
 import { useNavigate } from "react-router";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { LoginSuccessPayload } from "store/auth/types";
 import { toast } from "react-toastify";
 import { EMAIL_PATTERN, MOBILE_PATTERN, PASSWORD_PATTERN } from "utils/constants";
 import { useForm } from "react-hook-form";

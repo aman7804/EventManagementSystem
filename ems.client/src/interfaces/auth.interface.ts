@@ -30,11 +30,6 @@ import {
     roleName: string;
     id: number;
   }
-  export interface IRegistrationResponse{
-    id: number,
-    fullName: string,
-    emailId: string,
-  }
   
   export interface ILoginContainerState {
     rememberMe: boolean;

@@ -3,8 +3,7 @@ import {
   ILogin,
   ILoginResponse,
   IRegistration,
-  IChangePassword,
-  IRegistrationResponse,
+  IChangePassword
 } from "../interfaces/auth.interface";
 import { IApiSuccessResponse } from "../interfaces/generic.interface";
 import baseService from "./base.service";
@@ -23,8 +22,8 @@ const login = async (
 
 const registration = async(
   requestBody: IRegistration,
-): Promise<AxiosResponse<IApiSuccessResponse<IRegistrationResponse>>> =>
-  baseService.post<IApiSuccessResponse<IRegistrationResponse>>(
+): Promise<AxiosResponse<IApiSuccessResponse<null>>> =>
+  baseService.post<IApiSuccessResponse<null>>(
     `${baseLoginUrl}/signup`, requestBody
   );
 

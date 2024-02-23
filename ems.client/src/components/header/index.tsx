@@ -23,7 +23,7 @@ import { toast } from "react-toastify";
 import { checkIsAuthenticated, getUserSelector } from "store/auth/selector";
 import { connect, useSelector } from "react-redux";
 import { RootState } from "store/root/root.reducer";
-import { IRegistrationResponse } from "interfaces/auth.interface";
+import { ILoginResponse } from "interfaces/auth.interface";
 import UserProfileSection from "./profile.header";
   
 const bc = new BroadcastChannel("change_password")
@@ -133,7 +133,7 @@ const Header: React.FC<IGetUserProp> = ({user}) => {
             sx={{ display: { xs: "flex", md: "none" } }}
             className="profile-info"
           >
-            <Typography variant="h5">{user?.fullName}</Typography>
+            <Typography variant="h5">{user?.firstName} {user?.lastName}</Typography>
             <Typography variant="h6">Admin</Typography>
           </MenuItem>
           <MenuItem onClick={handleProfileClose} title="Profile">
@@ -161,7 +161,7 @@ const Header: React.FC<IGetUserProp> = ({user}) => {
 };
 
 interface IGetUserProp{
-  user: IRegistrationResponse | null
+  user: ILoginResponse | null
 }
 
 const mapStateToProps = (state: RootState) => {
