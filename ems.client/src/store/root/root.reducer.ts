@@ -9,6 +9,7 @@ import decorationReducer from "../decoration/reducer"
 import cateringReducer from "../catering/reducer"
 import userReducer from "../user/reducer"
 import profileReducer from "../profile/reducer"
+import loaderReducer from "../loader/reducer"
 
 const rootReducer = combineReducers<unknown>({
   auth: persistReducer(
@@ -24,7 +25,8 @@ const rootReducer = combineReducers<unknown>({
   decoration: decorationReducer,
   catering: cateringReducer,
   user: userReducer,
-  profile: profileReducer
+  profile: profileReducer,
+  loader: loaderReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
