@@ -26,6 +26,7 @@ import {
   import { useForm } from "react-hook-form";
 import { setLoginDetails, showLoader } from "utils/helper";
 import { Link } from "react-router-dom";
+import { IIndexable } from "interfaces/generic.interface";
   
   export type LoginProps = ILoginContainerDispatch;
   
@@ -54,32 +55,28 @@ import { Link } from "react-router-dom";
       AOS.refresh();
     }, []);
   
-    
-    const getUserNameError = (): string => {
-      if (errors.emailId) {
-        if (errors.emailId.type === "required") {
-          return "Email is required";
-        }
-        if (errors.emailId.type === "pattern") {
-          return "Enter valid email";
+    const fieldNames : IIndexable = {
+      emailId: "Email Id",
+      password: "Password",
+    }
+
+    const getErrorMessage = (fieldName: keyof ILogin, type: string|undefined): string => {
+      if(type){
+        switch(type){
+          case 'required': return `${fieldNames[fieldName]} is required.`;
+          case 'pattern': return `Invalid ${fieldNames[fieldName].toLowerCase()}`;
         }
       }
-  
       return "";
     };
     
     
-    const getPasswordError = (): string => {
-      if (errors.password) {
-        if (errors.password.type === "required") {
-          return "Password is required";
-        }
-        if (errors.password.type === "pattern") {
-          return "Password must have at least 8 characters that include at least one uppercase character, one number, and  one special character.";
-        }
-      }
-  
-      return "";
+    const getError = (fieldName: keyof ILogin): string => {
+      switch(fieldName){
+        case "emailId": return getErrorMessage(fieldName, errors?.emailId?.type);
+        case "password": return getErrorMessage(fieldName, errors?.password?.type);
+        default: return `field cannot be empty.`;
+      } 
     };
   
     const onLoginSuccess = async (response: LoginResponse) => {
@@ -144,7 +141,7 @@ import { Link } from "react-router-dom";
                       fullWidth
                       variant="outlined"
                       error={!!errors.emailId}
-                      helperText={getUserNameError()}
+                      helperText={getError("emailId")}
                       {...register("emailId", {
                         required: true,
                         pattern: EMAIL_PATTERN,
@@ -185,7 +182,7 @@ import { Link } from "react-router-dom";
                       />
                       {!!errors.password && (
                         <FormHelperText error>
-                          {getPasswordError()}
+                          {getError("password")}
                         </FormHelperText>
                       )}
                     </FormControl>

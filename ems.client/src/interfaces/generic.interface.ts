@@ -32,6 +32,10 @@
     name: string
   }
 
+  export interface IIndexable {
+    [key: string]: any;
+  }
+
   export interface FailureResponse {
     message: string;
     data?: any;
