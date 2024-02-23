@@ -20,9 +20,8 @@ import { ChangePasswordPayload } from "store/auth/types";
 import { PASSWORD_PATTERN } from "utils/constants";
 import { useForm } from "react-hook-form";
 import { showLoader } from "utils/helper";
-import { IIndexable } from "components/venue.create";
 import { get } from "lodash";
-import { IApiSuccessResponse } from "interfaces/generic.interface"
+import { IApiSuccessResponse, IIndexable } from "interfaces/generic.interface"
 
 export type ChangePasswordProps = IChangePasswordContainerDispatch;
 

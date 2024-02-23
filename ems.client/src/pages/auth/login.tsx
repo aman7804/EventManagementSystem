@@ -29,7 +29,12 @@ import { Link } from "react-router-dom";
 import { IIndexable } from "interfaces/generic.interface";
   
   export type LoginProps = ILoginContainerDispatch;
-  
+ 
+  const fieldNames : IIndexable = {
+    emailId: "Email Id",
+    password: "Password",
+  }
+   
   export const LoginForm = (props: LoginProps) => {
     const [showPassword, setShowPassword] = React.useState(false);
   
@@ -55,10 +60,6 @@ import { IIndexable } from "interfaces/generic.interface";
       AOS.refresh();
     }, []);
   
-    const fieldNames : IIndexable = {
-      emailId: "Email Id",
-      password: "Password",
-    }
 
     const getErrorMessage = (fieldName: keyof ILogin, type: string|undefined): string => {
       if(type){

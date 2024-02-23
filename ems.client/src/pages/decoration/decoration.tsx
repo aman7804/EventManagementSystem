@@ -72,11 +72,7 @@ const EnhancedTableHead = (props: EnhancedTableProps) => {
     (newOrderBy: keyof IDecoration) => (event: React.MouseEvent<unknown>) =>
       onRequestSort(event, newOrderBy);
 
-  interface ColumnDisplayName{
-    [key: string] : string;    
-  }
-
-  const columnDisplayName: ColumnDisplayName = {
+  const columnDisplayName: GENERIC.IIndexable = {
     name: "Name",
     description: "Description",
     price: "Price",

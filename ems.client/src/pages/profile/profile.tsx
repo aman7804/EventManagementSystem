@@ -13,7 +13,7 @@ import { CustomNumericFormatProps } from "components/elements/NumericFormControl
 import { NumericFormat, NumericFormatProps } from "react-number-format";
 import React from "react";
 import { MOBILE_PATTERN } from "utils/constants";
-import * as GENERIC from "interfaces/generic.interface"
+import {IApiSuccessResponse, SaveRequestPayload, IIndexable} from "interfaces/generic.interface"
 import { IProfile, IProfileContainerDispatch, IProfileContainerState } from "interfaces/profile.interface";
 import { saveIcon } from "assets/images";
 import { useNavigate } from "react-router-dom";
@@ -22,10 +22,6 @@ import { showLoader } from "utils/helper";
 
 export type ProfileProps = IProfileContainerState &
   IProfileContainerDispatch;
-
-export interface IIndexable {
-  [key: string]: any;
-}
 
 const fieldNames: IIndexable = {
   firstName: "First-Name",
@@ -133,7 +129,7 @@ const ProfileComponent: React.FC<ProfileProps> = ({
     }
   };
 
-  const onUpdateProfile = (response: GENERIC.IApiSuccessResponse<IProfile>) => {
+  const onUpdateProfile = (response: IApiSuccessResponse<IProfile>) => {
     toast.success("Profile  Updated Successfully");
   }
   const onProfileClose = () => {
@@ -141,7 +137,7 @@ const ProfileComponent: React.FC<ProfileProps> = ({
   }
 
   const beginSubmit = (formData: IProfile) => {
-    const payload: GENERIC.SaveRequestPayload<IProfile> = {
+    const payload: SaveRequestPayload<IProfile> = {
       data: {
         id: formData.id,
         firstName: formData.firstName,
