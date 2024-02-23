@@ -24,7 +24,7 @@ import {
   import { toast } from "react-toastify";
   import { EMAIL_PATTERN, PASSWORD_PATTERN } from "utils/constants";
   import { useForm } from "react-hook-form";
-import { setLoginDetails, showLoader } from "utils/helper";
+import { setLoginDetails } from "utils/helper";
 import { Link } from "react-router-dom";
   
   export type LoginProps = ILoginContainerDispatch;
@@ -91,7 +91,6 @@ import { Link } from "react-router-dom";
     const onSubmit = async (data: ILogin) => {
       const { loginRequest } = props;
       if (loginRequest) {
-        showLoader();
         const payload = {
           values: {
             email: data.emailId,

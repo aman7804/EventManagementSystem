@@ -34,7 +34,6 @@ import {
   IDecorationContainerState,
   IDecorationPagination,
 } from "interfaces/decoration.interface";
-import { showLoader } from "utils/helper";
 import { toast } from "react-toastify";
 import { PAGE_SIZES, RUPEE_SYMBOL, SOMETHING_WENT_WRONG } from "utils/constants";
 import { Order } from "utils/enums";
@@ -185,7 +184,6 @@ const DecorationForm: React.FC<DecorationProps> = (props) => {
     const { listRequest } = props;
     
     if (listRequest) {
-      showLoader();
       const payload: GENERIC.ListRequestPayload<IDecorationPagination> = {
         data: {
           sortByColumns: capitalization(orderBy),
@@ -205,7 +203,6 @@ const DecorationForm: React.FC<DecorationProps> = (props) => {
     const { deleteRequest } = props;
 
     if (deleteRequest) {
-      showLoader();
       const payload = {
         data: {
           id: Number(deleteDecorationId),
@@ -219,7 +216,6 @@ const DecorationForm: React.FC<DecorationProps> = (props) => {
   const handleSaveDecoration = (formData: IDecoration) => {
     const { saveRequest } = props;
     if (saveRequest) {
-      showLoader();
       const payload: GENERIC.SaveRequestPayload<IDecoration> = {
         data: {
           id: formData.id,
@@ -237,7 +233,6 @@ const DecorationForm: React.FC<DecorationProps> = (props) => {
     const { getRequest } = props;
 
     if (getRequest) {
-      showLoader();
       const payload = {
         data: {id},
         callback: onGetDecorationSuccess,

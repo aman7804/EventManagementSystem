@@ -34,7 +34,6 @@ import {
   IUserContainerState,
   IUserPagination,
 } from "interfaces/user.interface";
-import { showLoader } from "utils/helper";
 import { toast } from "react-toastify";
 import { PAGE_SIZES, SOMETHING_WENT_WRONG } from "utils/constants";
 import { Order } from "utils/enums";
@@ -185,7 +184,6 @@ const UserForm: React.FC<UserProps> = (props) => {
     const { listRequest } = props;
     
     if (listRequest) {
-      showLoader();
       const payload: GENERIC.ListRequestPayload<IUserPagination> = {
         data: {
           sortByColumns: capitalization(orderBy),
@@ -205,7 +203,6 @@ const UserForm: React.FC<UserProps> = (props) => {
     const { deleteRequest } = props;
 
     if (deleteRequest) {
-      showLoader();
       const payload = {
         data: {
           id: Number(deleteUserId),
@@ -219,7 +216,6 @@ const UserForm: React.FC<UserProps> = (props) => {
   const handleSaveUser = (formData: IUser) => {
     const { saveRequest } = props;
     if (saveRequest) {
-      showLoader();
       const payload: GENERIC.SaveRequestPayload<IUser> = {
         data: {
           id: formData.id,
@@ -239,7 +235,6 @@ const UserForm: React.FC<UserProps> = (props) => {
     const { getRequest } = props;
 
     if (getRequest) {
-      showLoader();
       const payload = {
         data: {id},
         callback: onGetUserSuccess,

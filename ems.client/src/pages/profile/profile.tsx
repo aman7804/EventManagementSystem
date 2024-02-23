@@ -18,7 +18,6 @@ import { IProfile, IProfileContainerDispatch, IProfileContainerState } from "int
 import { saveIcon } from "assets/images";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { showLoader } from "utils/helper";
 
 export type ProfileProps = IProfileContainerState &
   IProfileContainerDispatch;
@@ -71,7 +70,6 @@ const ProfileComponent: React.FC<ProfileProps> = ({
   } = useForm<IProfile>();
 
   useEffect(() => {
-    showLoader();
     getRequest(); 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);

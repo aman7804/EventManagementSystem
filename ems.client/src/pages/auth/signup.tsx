@@ -24,7 +24,6 @@ import { toast } from "react-toastify";
 import { EMAIL_PATTERN, MOBILE_PATTERN, PASSWORD_PATTERN } from "utils/constants";
 import { useForm } from "react-hook-form";
 import {Link} from "react-router-dom"
-import { showLoader } from "utils/helper";
 import { IIndexable } from "components/venue.create";
 import { CustomMobileComponent } from "components/user.create";
 import * as GENERIC from "interfaces/generic.interface";
@@ -141,7 +140,6 @@ export const SignupForm = (props: SignupProps) => {
   const onSubmit = async (data: ISignup) => {
     const { signupRequest } = props;
     if (signupRequest) {
-      showLoader();
       const payload = {
         values: {
           firstName: data.firstName,

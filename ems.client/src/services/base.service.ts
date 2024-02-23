@@ -35,7 +35,6 @@ axios.interceptors.request.use(
       config.headers.Pragma = "no-cache";
       config.headers.Expires = "0";
     }
-    hideLoader()
     return config;
   },
   (error: AxiosError) => {

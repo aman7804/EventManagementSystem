@@ -2,7 +2,6 @@ import { JWTToken } from "../../interfaces/jwtToken.interface";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 import { LoginSuccessPayload } from "store/auth/types";
-import { Dispatch } from "redux";
 import { showLoader as showLoading, hideLoader as hideLoading } from "store/loader/actions"
 import store from "store/root/root.store";
 

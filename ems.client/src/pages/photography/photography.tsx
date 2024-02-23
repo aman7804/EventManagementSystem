@@ -34,7 +34,6 @@ import {
   IPhotographyContainerState,
   IPhotographyPagination,
 } from "interfaces/photography.interface";
-import { showLoader } from "utils/helper";
 import { toast } from "react-toastify";
 import { PAGE_SIZES, RUPEE_SYMBOL, SOMETHING_WENT_WRONG } from "utils/constants";
 import { Order } from "utils/enums";
@@ -185,7 +184,6 @@ const PhotographyForm: React.FC<PhotographyProps> = (props) => {
     const { listRequest } = props;
     
     if (listRequest) {
-      showLoader();
       const payload: GENERIC.ListRequestPayload<IPhotographyPagination> = {
         data: {
           sortByColumns: capitalization(orderBy),
@@ -205,7 +203,6 @@ const PhotographyForm: React.FC<PhotographyProps> = (props) => {
     const { deleteRequest } = props;
 
     if (deleteRequest) {
-      showLoader();
       const payload = {
         data: {
           id: Number(deletePhotographyId),
@@ -219,7 +216,6 @@ const PhotographyForm: React.FC<PhotographyProps> = (props) => {
   const handleSavePhotography = (formData: IPhotography) => {
     const { saveRequest } = props;
     if (saveRequest) {
-      showLoader();
       const payload: GENERIC.SaveRequestPayload<IPhotography> = {
         data: {
           id: formData.id,
@@ -237,7 +233,6 @@ const PhotographyForm: React.FC<PhotographyProps> = (props) => {
     const { getRequest } = props;
 
     if (getRequest) {
-      showLoader();
       const payload = {
         data: {id},
         callback: onGetPhotographySuccess,

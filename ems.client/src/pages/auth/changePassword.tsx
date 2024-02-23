@@ -19,7 +19,6 @@ import { IChangePasswordContainerDispatch } from "../../interfaces/auth.interfac
 import { ChangePasswordPayload, LoginSuccessPayload } from "store/auth/types";
 import { PASSWORD_PATTERN } from "utils/constants";
 import { useForm } from "react-hook-form";
-import { showLoader } from "utils/helper";
 import { IIndexable } from "components/venue.create";
 import { get } from "lodash";
 
@@ -121,7 +120,6 @@ const maxPasswordLength = 16
   const onSubmit = async (data: IChangePasswordForm) => {
     const { changePasswordRequest } = props;
     if (changePasswordRequest) {
-      showLoader();
       const payload: ChangePasswordPayload = {
         values: {
           emailId: currentUserEmailId,
