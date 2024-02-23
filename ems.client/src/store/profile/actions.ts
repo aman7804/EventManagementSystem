@@ -18,7 +18,7 @@ export const getSuccess = (
 })
 
 export const getFailure = (
-  payload: GENERIC.GetFailureResponse
+  payload: GENERIC.FailureResponse
 ): TYPES.GetFailure => ({
   type: ACTION_TYPE.GET_FAILURE,
   payload
@@ -39,7 +39,7 @@ export const updateSuccess = (
 });
 
 export const updateFailure = (
-  payload: GENERIC.SaveFailureResponse
+  payload: GENERIC.FailureResponse
 ): TYPES.UpdateFailure => ({
   type: ACTION_TYPE.UPDATE_FAILURE,
   payload,

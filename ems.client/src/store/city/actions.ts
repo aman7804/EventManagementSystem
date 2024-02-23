@@ -18,7 +18,7 @@ export const dropDownListSuccess = (
 });
 
 export const dropDownListFailure = (
-  payload: GENERIC.ListFailureResponse
+  payload: GENERIC.FailureResponse
 ): TYPES.DropDownListFailure => ({
   type: ACTION_TYPE.DROP_DOWN_LIST_FAILURE,
   payload,

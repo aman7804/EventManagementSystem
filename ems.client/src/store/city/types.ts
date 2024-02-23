@@ -14,7 +14,7 @@ export type DropDownListSuccess = {
 
 export type DropDownListFailure = {
   type: typeof ACTION_TYPE.DROP_DOWN_LIST_FAILURE;
-  payload: GENERIC.ListFailureResponse;
+  payload: GENERIC.FailureResponse;
 };
 
 export type CityActions =

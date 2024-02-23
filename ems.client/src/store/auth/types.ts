@@ -9,6 +9,7 @@ import {
     CHANGE_PASSWORD_SUCCESS,
     CHANGE_PASSWORD_FAILURE,
   } from "./action.types";
+import * as GENERIC from "interfaces/generic.interface";
   
   
   export interface IAuth {
@@ -54,9 +55,6 @@ import {
       token: string;
     };
   }
-  export interface LoginFailurePayload {
-    error: string;
-  }
   
   export interface RegistrationPayload{
     values:{
@@ -76,10 +74,6 @@ import {
       emailId: string;
     };
   }
-  export interface RegistrationFailurePayload{
-    error: string;
-  }
-
   
   export interface ChangePasswordPayload{
     values: {
@@ -94,9 +88,6 @@ import {
     message: string;
     data?: any;
   }
-  export interface ChangePasswordFailurePayload{
-    error: string;
-  }
 
   export interface LoginRequest {
     type: typeof LOGIN_REQUEST;
@@ -108,7 +99,7 @@ import {
   };
   export type LoginFailure = {
     type: typeof LOGIN_FAILURE;
-    payload: LoginFailurePayload;
+    payload: GENERIC.FailureResponse;
   };
   
   export interface RegistrationRequest {
@@ -117,11 +108,11 @@ import {
   }
   export type RegistrationSuccess = {
     type: typeof REGISTRATION_SUCCESS,
-    payload: RegistrationSuccessPayload;
+    payload: GENERIC.SaveSuccessResponse;
   }
   export type RegistrationFailure = {
     type: typeof REGISTRATION_FAILURE,
-    payload: RegistrationFailurePayload; 
+    payload: GENERIC.FailureResponse; 
   }
 
   export type ChangePasswordRequest = {
@@ -134,7 +125,7 @@ import {
   }
   export type ChangePasswordFailure = {
     type: typeof CHANGE_PASSWORD_FAILURE,
-    payload: ChangePasswordFailurePayload
+    payload: GENERIC.FailureResponse
   }
 
   export type AuthActions =

@@ -30,6 +30,7 @@ import {Link} from "react-router-dom"
 import { showLoader } from "utils/helper";
 import { IIndexable } from "components/venue.create";
 import { CustomMobileComponent } from "components/user.create";
+import * as GENERIC from "interfaces/generic.interface";
 
 export type RegistrationProps = IRegistrationContainerDispatch;
 
@@ -128,7 +129,7 @@ export const RegistrationForm = (props: RegistrationProps) => {
     }
   }
 
-  const onRegistrationSuccess = async (response: LoginSuccessPayload) => {
+  const onRegistrationSuccess = async (response: GENERIC.IApiSuccessResponse<null>) => {
     navigate("/login");
     toast.success("Registration successful");
   };

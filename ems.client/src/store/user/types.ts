@@ -17,7 +17,7 @@ export type ListSuccess = {
 
 export type ListFailure = {
   type: typeof ACTION_TYPE.LIST_FAILURE;
-  payload: GENERIC.ListFailureResponse;
+  payload: GENERIC.FailureResponse;
 };
 
 export type SaveRequest = {
@@ -32,7 +32,7 @@ export type SaveSuccess = {
 
 export type SaveFailure = {
   type: typeof ACTION_TYPE.SAVE_FAILURE;
-  payload: GENERIC.SaveFailureResponse;
+  payload: GENERIC.FailureResponse;
 };
 
 export type GetRequest = {
@@ -47,7 +47,7 @@ export type GetSuccess = {
 
 export type GetFailure = {
   type: typeof ACTION_TYPE.GET_FAILURE;
-  payload: GENERIC.GetFailureResponse;
+  payload: GENERIC.FailureResponse;
 };
 
 export type DeleteRequest = {
@@ -62,7 +62,7 @@ export type DeleteSuccess = {
 
 export type DeleteFailure = {
   type: typeof ACTION_TYPE.DELETE_FAILURE;
-  payload: GENERIC.DeleteFailureResponse;
+  payload: GENERIC.FailureResponse;
 };
 
 export type UserActions =

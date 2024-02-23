@@ -22,7 +22,7 @@ export const listSuccess = (
 });
 
 export const listFailure = (
-  payload: GENERIC.ListFailureResponse
+  payload: GENERIC.FailureResponse
 ): TYPES.ListFailure => ({
   type: ACTION_TYPE.LIST_FAILURE,
   payload,
@@ -43,7 +43,7 @@ export const saveSuccess = (
 });
 
 export const saveFailure = (
-  payload: GENERIC.SaveFailureResponse
+  payload: GENERIC.FailureResponse
 ): TYPES.SaveFailure => ({
   type: ACTION_TYPE.SAVE_FAILURE,
   payload,
@@ -64,7 +64,7 @@ export const getByIdSuccess = (
 });
 
 export const getByIdFailure = (
-  payload: GENERIC.GetFailureResponse
+  payload: GENERIC.FailureResponse
 ): TYPES.GetFailure => ({
   type: ACTION_TYPE.GET_FAILURE,
   payload,
@@ -85,7 +85,7 @@ export const deleteSuccess = (
 });
 
 export const deleteFailure = (
-  payload: GENERIC.DeleteFailureResponse
+  payload: GENERIC.FailureResponse
 ): TYPES.DeleteFailure => ({
   type: ACTION_TYPE.DELETE_FAILURE,
   payload,

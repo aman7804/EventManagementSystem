@@ -10,63 +10,61 @@ import {
     CHANGE_PASSWORD_FAILURE
 
   } from "./action.types";
-  
-  import {
-    LoginPayload,
-    LoginRequest,
-    LoginSuccess,
-    LoginSuccessPayload,
-    LoginFailure,
-    LoginFailurePayload,
-    RegistrationRequest,
-    RegistrationPayload,
-    RegistrationSuccessPayload,
-    RegistrationSuccess,
-    RegistrationFailurePayload,
-    RegistrationFailure,
-    ChangePasswordRequest,
-    ChangePasswordSuccess,
-    ChangePasswordFailure,
-    ChangePasswordPayload,
-    ChangePasswordSuccessPayload,
-    ChangePasswordFailurePayload
-  } from "./types";
-  
-  export const loginRequest = (payload: LoginPayload): LoginRequest => ({
+  import * as TYPES from "./types";
+  import * as GENERIC from "interfaces/generic.interface";
+  export const loginRequest = (
+    payload: TYPES.LoginPayload
+  ): TYPES.LoginRequest => ({
     type: LOGIN_REQUEST,
     payload,
   });
-  export const loginSuccess = (payload: LoginSuccessPayload): LoginSuccess => ({
+  export const loginSuccess = (
+    payload: TYPES.LoginSuccessPayload
+  ): TYPES.LoginSuccess => ({
     type: LOGIN_SUCCESS,
     payload,
   });
-  export const loginFailure = (payload: LoginFailurePayload): LoginFailure => ({
+  export const loginFailure = (
+    payload: GENERIC.FailureResponse
+  ): TYPES.LoginFailure => ({
     type: LOGIN_FAILURE,
     payload,
   });
 
-  export const registrationRequest = (payload: RegistrationPayload): RegistrationRequest => ({
+  export const registrationRequest = (
+    payload: TYPES.RegistrationPayload
+  ): TYPES.RegistrationRequest => ({
     type: REGISTRATION_REQUEST,
     payload
   })
-  export const registrationSuccess = (payload: RegistrationSuccessPayload): RegistrationSuccess => ({
+  export const registrationSuccess = (
+    payload: GENERIC.SaveSuccessResponse
+  ): TYPES.RegistrationSuccess => ({
     type: REGISTRATION_SUCCESS,
     payload
   })
-  export const registrationFailure = (payload: RegistrationFailurePayload): RegistrationFailure => ({
+  export const registrationFailure = (
+    payload: GENERIC.FailureResponse
+  ): TYPES.RegistrationFailure => ({
     type: REGISTRATION_FAILURE,
     payload
   })
 
-  export const changePasswordRequest = (payload: ChangePasswordPayload): ChangePasswordRequest => ({
+  export const changePasswordRequest = (
+    payload: TYPES.ChangePasswordPayload
+  ): TYPES.ChangePasswordRequest => ({
     type: CHANGE_PASSWORD_REQUEST,
     payload
   })
-  export const changePasswordSuccess = (payload: ChangePasswordSuccessPayload): ChangePasswordSuccess => ({
+  export const changePasswordSuccess = (
+    payload: TYPES.ChangePasswordSuccessPayload
+  ): TYPES.ChangePasswordSuccess => ({
     type: CHANGE_PASSWORD_SUCCESS,
     payload
   })
-  export const changePasswordFailure = (payload: ChangePasswordFailurePayload): ChangePasswordFailure => ({
+  export const changePasswordFailure = (
+    payload: GENERIC.FailureResponse
+  ): TYPES.ChangePasswordFailure => ({
     type: CHANGE_PASSWORD_FAILURE,
     payload
   })

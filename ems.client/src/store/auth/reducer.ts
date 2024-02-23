@@ -38,7 +38,7 @@ import {
           ...state,
           pending: false,
           token: "",
-          error: action.payload.error,
+          error: action.payload.message,
         };    
       // Signup Logic is the same as Login logic but we do not store Token in State
       case REGISTRATION_REQUEST:
@@ -50,13 +50,14 @@ import {
         return {
           ...state,
           pending: false,
-          user: action.payload.user
+          success: action.payload.message, 
+          error: null
         };
       case REGISTRATION_FAILURE:
         return {
           ...state,
           pending: false,
-          error: action.payload.error
+          error: action.payload.message
         }
 
       case CHANGE_PASSWORD_REQUEST:
@@ -75,7 +76,7 @@ import {
         return {
           ...state,
           pending: false,
-          error: action.payload.error
+          error: action.payload.message
         }
       default:
         return state;

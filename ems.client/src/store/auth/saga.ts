@@ -14,9 +14,7 @@ import {
   LOGIN_REQUEST, REGISTRATION_REQUEST,
 } from "./action.types";
 import authService from "services/auth.service";
-import {
-  LoginResponse, RegistrationResponse,
-} from "./types";
+import { LoginResponse } from "./types";
 import { IApiSuccessResponse } from "interfaces/generic.interface";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -44,7 +42,7 @@ function* loginSaga(action: any) {
   } catch (e: any) {
     yield put(
       loginFailure({
-        error: e.message,
+        message: e.response.data.split("\n")[0] || e.message
       }),
     );
   }
@@ -52,7 +50,7 @@ function* loginSaga(action: any) {
 
 function* registrationSaga(action: any){
   try{
-    const response: RegistrationResponse = yield call(authService.registration,{
+    const response: IApiSuccessResponse<null> = yield call(authService.registration,{
       firstName: action.payload.values.firstName,
       lastName: action.payload.values.lastName,
       address: action.payload.values.address,
@@ -61,16 +59,14 @@ function* registrationSaga(action: any){
       password: action.payload.values.password
     })
     yield put(
-      registrationSuccess({
-        user: response.data
-      })
+      registrationSuccess(response)
     );
-    action.payload.callback(response.data)
+    action.payload.callback(response)
   }
   catch(e: any){
     yield put(
       registrationFailure({
-        error: e.response.data.split("\n")[0]
+        message: e.response.data.split("\n")[0] || e.message
       })
     )
   }
@@ -91,7 +87,7 @@ function* changePasswordSaga(action: any){
   catch(e: any){
     yield put(
       changePasswordFailure({
-        error: e.response.data.split("\n")[0] || e.message
+        message: e.response.data.split("\n")[0] || e.message
       })
     )
   }

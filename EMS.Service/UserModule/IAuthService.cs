@@ -9,7 +9,7 @@ namespace EMS.Service.UserModule
         Task<UserDTO> Login(LoginDTO loginDTO);
         Task ChangePassword(ChangePasswordDTO changePasswordDTO);
         Task<UserDTO> GetByEmailId(string emailId);
-        Task<UserDTO> RegisterUser(RegisterDTO registerDTO);
+        Task RegisterUser(RegisterDTO registerDTO);
         string GeneratePassword(int length = 7);
     }
 }
