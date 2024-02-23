@@ -31,13 +31,6 @@ import * as GENERIC from "interfaces/generic.interface";
       id: number;
     };
   }
-  export interface RegistrationResponse{
-    data: {
-      id: number;
-      fullName: string;
-      emailId: string;
-    };
-  }
   
   export interface LoginPayload {
     values: { 
@@ -56,7 +49,7 @@ import * as GENERIC from "interfaces/generic.interface";
     };
   }
   
-  export interface RegistrationPayload{
+  export interface SignupPayload{
     values:{
       firstName:string,
       lastName:string,
@@ -95,15 +88,15 @@ import * as GENERIC from "interfaces/generic.interface";
     payload: GENERIC.FailureResponse;
   };
   
-  export interface RegistrationRequest {
+  export interface SignupRequest {
     type: typeof REGISTRATION_REQUEST,
-    payload: RegistrationPayload;
+    payload: SignupPayload;
   }
-  export type RegistrationSuccess = {
+  export type SignupSuccess = {
     type: typeof REGISTRATION_SUCCESS,
     payload: GENERIC.SaveSuccessResponse;
   }
-  export type RegistrationFailure = {
+  export type SignupFailure = {
     type: typeof REGISTRATION_FAILURE,
     payload: GENERIC.FailureResponse; 
   }
@@ -125,9 +118,9 @@ import * as GENERIC from "interfaces/generic.interface";
     | LoginRequest
     | LoginSuccess
     | LoginFailure
-    | RegistrationRequest
-    | RegistrationSuccess
-    | RegistrationFailure
+    | SignupRequest
+    | SignupSuccess
+    | SignupFailure
     | ChangePasswordRequest
     | ChangePasswordSuccess
     | ChangePasswordFailure

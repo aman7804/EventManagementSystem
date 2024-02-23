@@ -2,7 +2,7 @@
 import {
   ILogin,
   ILoginResponse,
-  IRegistration,
+  ISignup,
   IChangePassword
 } from "../interfaces/auth.interface";
 import { IApiSuccessResponse } from "../interfaces/generic.interface";
@@ -20,8 +20,8 @@ const login = async (
     requestBody,
   );
 
-const registration = async(
-  requestBody: IRegistration,
+const signup = async(
+  requestBody: ISignup,
 ): Promise<AxiosResponse<IApiSuccessResponse<null>>> =>
   baseService.post<IApiSuccessResponse<null>>(
     `${baseLoginUrl}/signup`, requestBody
@@ -40,7 +40,7 @@ const signOut = (): void => {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   login,  
-  registration,
+  signup,
   signOut,
   changePassword
 };

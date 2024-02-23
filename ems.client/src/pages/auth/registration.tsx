@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import * as images from "../../assets/images";
-import { IRegistration, IRegistrationContainerDispatch } from "../../interfaces/auth.interface";
+import { ISignup, ISignupContainerDispatch } from "../../interfaces/auth.interface";
 import { useNavigate } from "react-router";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -29,7 +29,7 @@ import { IIndexable } from "components/venue.create";
 import { CustomMobileComponent } from "components/user.create";
 import * as GENERIC from "interfaces/generic.interface";
 
-export type RegistrationProps = IRegistrationContainerDispatch;
+export type SignupProps = ISignupContainerDispatch;
 
 const fieldNames : IIndexable = {
   firstName: "First Name",
@@ -40,7 +40,7 @@ const fieldNames : IIndexable = {
   address: "Address"
 }
 
-export const RegistrationForm = (props: RegistrationProps) => {
+export const SignupForm = (props: SignupProps) => {
   const [showPassword, setShowPassword] = React.useState(false);
   
 
@@ -62,7 +62,7 @@ export const RegistrationForm = (props: RegistrationProps) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IRegistration>();
+  } = useForm<ISignup>();
 
   useEffect(() => {
     AOS.init({
@@ -74,7 +74,7 @@ export const RegistrationForm = (props: RegistrationProps) => {
   }, []);
 
 
-  const getErrorMessage = (fieldName: keyof IRegistration, type: string|undefined): string => {
+  const getErrorMessage = (fieldName: keyof ISignup, type: string|undefined): string => {
     if(type){
       switch(type){
         case "required":
@@ -114,7 +114,7 @@ export const RegistrationForm = (props: RegistrationProps) => {
     return ""
   }
 
-  const getError = (fieldName: keyof IRegistration): string => {
+  const getError = (fieldName: keyof ISignup): string => {
     switch(fieldName){
       case "firstName":
         return getErrorMessage(fieldName, errors?.firstName?.type);
@@ -133,14 +133,14 @@ export const RegistrationForm = (props: RegistrationProps) => {
     }
   }
 
-  const onRegistrationSuccess = async (response: GENERIC.IApiSuccessResponse<null>) => {
+  const onSignupSuccess = async (response: GENERIC.IApiSuccessResponse<null>) => {
     navigate("/login");
-    toast.success("Registration successful");
+    toast.success("Signup successful");
   };
 
-  const onSubmit = async (data: IRegistration) => {
-    const { registrationRequest } = props;
-    if (registrationRequest) {
+  const onSubmit = async (data: ISignup) => {
+    const { signupRequest } = props;
+    if (signupRequest) {
       showLoader();
       const payload = {
         values: {
@@ -151,10 +151,10 @@ export const RegistrationForm = (props: RegistrationProps) => {
           emailId: data.emailId,
           password: data.password,
         },
-        callback: onRegistrationSuccess,
+        callback: onSignupSuccess,
       };
 
-      registrationRequest(payload);
+      signupRequest(payload);
     }
   };
 
@@ -181,7 +181,7 @@ export const RegistrationForm = (props: RegistrationProps) => {
             >
               <CardContent>
                 <Typography variant="h2" className="card-heading">
-                  Registration
+                  Signup
                 </Typography>
                 <div className="login-content-form">
                   <Grid container rowSpacing={0.1} columnSpacing={2}>
@@ -370,4 +370,4 @@ export const RegistrationForm = (props: RegistrationProps) => {
   );
 };
 
-export default RegistrationForm;
+export default SignupForm;

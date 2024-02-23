@@ -1,17 +1,17 @@
 import { connect, MapDispatchToProps } from "react-redux";
-import { registrationRequest } from "store/auth/actions";
-import { IRegistration, IRegistrationContainerDispatch } from "../../interfaces/auth.interface";
-import RegistrationForm, { RegistrationProps } from "./registration";
+import { signupRequest } from "store/auth/actions";
+import { ISignup, ISignupContainerDispatch } from "../../interfaces/auth.interface";
+import SignupForm, { SignupProps } from "./signup";
 
-const mapDispatchToProps: MapDispatchToProps<IRegistrationContainerDispatch, IRegistration> =
+const mapDispatchToProps: MapDispatchToProps<ISignupContainerDispatch, ISignup> =
   {
-    registrationRequest,
+    signupRequest,
   };
 
 const connector = connect(null, mapDispatchToProps); 
 
-const Registration: React.FC<RegistrationProps> = (props) => {
-  return <RegistrationForm {...props} />;
+const Signup: React.FC<SignupProps> = (props) => {
+  return <SignupForm {...props} />;
 };
 
-export default connector(Registration);
+export default connector(Signup);

@@ -31,21 +31,21 @@ import {
     payload,
   });
 
-  export const registrationRequest = (
-    payload: TYPES.RegistrationPayload
-  ): TYPES.RegistrationRequest => ({
+  export const signupRequest = (
+    payload: TYPES.SignupPayload
+  ): TYPES.SignupRequest => ({
     type: REGISTRATION_REQUEST,
     payload
   })
-  export const registrationSuccess = (
+  export const signupSuccess = (
     payload: GENERIC.SaveSuccessResponse
-  ): TYPES.RegistrationSuccess => ({
+  ): TYPES.SignupSuccess => ({
     type: REGISTRATION_SUCCESS,
     payload
   })
-  export const registrationFailure = (
+  export const signupFailure = (
     payload: GENERIC.FailureResponse
-  ): TYPES.RegistrationFailure => ({
+  ): TYPES.SignupFailure => ({
     type: REGISTRATION_FAILURE,
     payload
   })

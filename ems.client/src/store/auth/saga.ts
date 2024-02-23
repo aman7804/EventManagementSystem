@@ -5,8 +5,8 @@ import {
   changePasswordSuccess,
   loginFailure,
   loginSuccess,
-  registrationFailure,
-  registrationSuccess,
+  signupFailure,
+  signupSuccess,
 } from "./actions";
 
 import {
@@ -48,9 +48,9 @@ function* loginSaga(action: any) {
   }
 }
 
-function* registrationSaga(action: any){
+function* signupSaga(action: any){
   try{
-    const response: IApiSuccessResponse<null> = yield call(authService.registration,{
+    const response: IApiSuccessResponse<null> = yield call(authService.signup,{
       firstName: action.payload.values.firstName,
       lastName: action.payload.values.lastName,
       address: action.payload.values.address,
@@ -59,13 +59,13 @@ function* registrationSaga(action: any){
       password: action.payload.values.password
     })
     yield put(
-      registrationSuccess(response)
+      signupSuccess(response)
     );
     action.payload.callback(response)
   }
   catch(e: any){
     yield put(
-      registrationFailure({
+      signupFailure({
         message: e.response.data.split("\n")[0] || e.message
       })
     )
@@ -97,7 +97,7 @@ function* changePasswordSaga(action: any){
 function* authSaga() {
   yield all([
     takeEvery(LOGIN_REQUEST, loginSaga),
-    takeEvery(REGISTRATION_REQUEST, registrationSaga),
+    takeEvery(REGISTRATION_REQUEST, signupSaga),
     takeEvery(CHANGE_PASSWORD_REQUEST, changePasswordSaga)
   ]);
 }
