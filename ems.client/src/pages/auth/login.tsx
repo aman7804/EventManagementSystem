@@ -25,6 +25,7 @@ import {
   import { EMAIL_PATTERN, PASSWORD_PATTERN } from "utils/constants";
   import { useForm } from "react-hook-form";
 import { setLoginDetails, showLoader } from "utils/helper";
+import { Link } from "react-router-dom";
   
   export type LoginProps = ILoginContainerDispatch;
   
@@ -192,13 +193,20 @@ import { setLoginDetails, showLoader } from "utils/helper";
                 </CardContent>
                 <CardActions>
                   <Box className="login-links">
-                    <a
-                      href="/forgot-password"
+                  <Link
+                      to="/forgot-password"
                       title="Forgot password"
                       className="forgot-pwd"
                     >
                       Forgot password?
-                    </a>
+                    </Link>
+                    <Link
+                      to="/signup"
+                      title="create account"
+                      className="forgot-pwd"
+                    >
+                      create account?
+                    </Link>
                   </Box>
                   <Button
                     variant="contained"
