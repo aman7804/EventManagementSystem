@@ -20,24 +20,18 @@ import { IApiSuccessResponse } from "interfaces/generic.interface";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function* loginSaga(action: any) {
   try {
-    const response: LoginResponse = yield call(authService.login, {
-      emailId: action.payload.values.email,
-      password: action.payload.values.password,
-    });
-    const successPayload = {
-      ...response.data,
-      rememberMe: true //action.payload.values.rememberMe,
-    };
-console.log("response: ",response)
+    const response: LoginResponse = yield call(
+      authService.login, action.payload.values
+    );
     yield put(
       loginSuccess({
-        token: response.data.token,
-        user: successPayload,
+        accessToken: response.data.token,
+        data: response.data,
       }),
     );
     action.payload.callback({
-      token: response.data.token,
-      user: successPayload,
+      accessToken: response.data.token,
+      data: response.data,
     });
   } catch (e: any) {
     yield put(

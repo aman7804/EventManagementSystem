@@ -20,7 +20,7 @@ import {
   import { useNavigate } from "react-router";
   import AOS from "aos";
   import "aos/dist/aos.css";
-  import { LoginSuccessPayload } from "store/auth/types";
+  import { LoginPayload, LoginResponse } from "store/auth/types";
   import { toast } from "react-toastify";
   import { EMAIL_PATTERN, PASSWORD_PATTERN } from "utils/constants";
   import { useForm } from "react-hook-form";
@@ -82,7 +82,7 @@ import { Link } from "react-router-dom";
       return "";
     };
   
-    const onLoginSuccess = async (response: LoginSuccessPayload) => {
+    const onLoginSuccess = async (response: LoginResponse) => {
       setLoginDetails(response)
       navigate("/dashboard");
       toast.success("Logged in successfully");
@@ -92,9 +92,9 @@ import { Link } from "react-router-dom";
       const { loginRequest } = props;
       if (loginRequest) {
         showLoader();
-        const payload = {
+        const payload: LoginPayload = {
           values: {
-            email: data.emailId,
+            emailId: data.emailId,
             password: data.password
             // rememberMe: data.rememberMe,
           },

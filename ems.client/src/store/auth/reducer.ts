@@ -29,8 +29,8 @@ import {
         return {
           ...state,
           pending: false,
-          token: action.payload.token,
-          user: action.payload.user,
+          token: action.payload.accessToken,
+          user: action.payload.data,
           error: null,
         };
       case LOGIN_FAILURE:

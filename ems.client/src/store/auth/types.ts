@@ -35,20 +35,10 @@ import * as GENERIC from "interfaces/generic.interface";
   
   export interface LoginPayload {
     values: { 
-      email: string; 
+      emailId: string; 
       password: string; 
     };
     callback: any;
-  }
-  export interface LoginSuccessPayload {
-    token: string;
-    user: {
-      id: number;
-      firstName: string;
-      lastName: string;
-      emailId: string;
-      token: string;
-    };
   }
   
   export interface SignupPayload{
@@ -83,7 +73,7 @@ import * as GENERIC from "interfaces/generic.interface";
   }
   export type LoginSuccess = {
     type: typeof LOGIN_SUCCESS;
-    payload: LoginSuccessPayload;
+    payload: LoginResponse;
   };
   export type LoginFailure = {
     type: typeof LOGIN_FAILURE;

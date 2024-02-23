@@ -16,12 +16,13 @@ import {
 import React from "react";
 import * as images from "../../assets/images";
 import { IChangePasswordContainerDispatch } from "../../interfaces/auth.interface";
-import { ChangePasswordPayload, LoginSuccessPayload } from "store/auth/types";
+import { ChangePasswordPayload } from "store/auth/types";
 import { PASSWORD_PATTERN } from "utils/constants";
 import { useForm } from "react-hook-form";
 import { showLoader } from "utils/helper";
 import { IIndexable } from "components/venue.create";
 import { get } from "lodash";
+import { IApiSuccessResponse } from "interfaces/generic.interface"
 
 export type ChangePasswordProps = IChangePasswordContainerDispatch;
 
@@ -107,7 +108,7 @@ const maxPasswordLength = 16
   
   const bc = new BroadcastChannel("change_password")
 
-  const onChangePasswordSuccess = async (response: LoginSuccessPayload) => {
+  const onChangePasswordSuccess = async (response: IApiSuccessResponse<null>) => {
     bc.postMessage("Change-password successful")
     window.close();
   };

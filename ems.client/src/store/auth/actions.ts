@@ -19,7 +19,7 @@ import {
     payload,
   });
   export const loginSuccess = (
-    payload: TYPES.LoginSuccessPayload
+    payload: TYPES.LoginResponse
   ): TYPES.LoginSuccess => ({
     type: LOGIN_SUCCESS,
     payload,

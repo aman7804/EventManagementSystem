@@ -12,6 +12,7 @@ export type UserProfileSectionProps = {
 } & CustomProps;
 
 const UserProfileSection = ({ user, ...props }: UserProfileSectionProps) => {
+  console.log(user)
   return (
     <>
       <Button
