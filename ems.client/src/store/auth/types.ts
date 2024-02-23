@@ -2,9 +2,9 @@ import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
-    REGISTRATION_REQUEST,
-    REGISTRATION_SUCCESS,
-    REGISTRATION_FAILURE,
+    SIGNUP_REQUEST,
+    SIGNUP_SUCCESS,
+    SIGNUP_FAILURE,
     CHANGE_PASSWORD_REQUEST,
     CHANGE_PASSWORD_SUCCESS,
     CHANGE_PASSWORD_FAILURE,
@@ -25,7 +25,8 @@ import * as GENERIC from "interfaces/generic.interface";
   export interface LoginResponse {
     accessToken: string;
     data: {
-      fullName: string;
+      firstName: string;
+      lastName: string;
       emailId: string;
       token: string;
       id: number;
@@ -43,7 +44,8 @@ import * as GENERIC from "interfaces/generic.interface";
     token: string;
     user: {
       id: number;
-      fullName: string;
+      firstName: string;
+      lastName: string;
       emailId: string;
       token: string;
     };
@@ -89,15 +91,15 @@ import * as GENERIC from "interfaces/generic.interface";
   };
   
   export interface SignupRequest {
-    type: typeof REGISTRATION_REQUEST,
+    type: typeof SIGNUP_REQUEST,
     payload: SignupPayload;
   }
   export type SignupSuccess = {
-    type: typeof REGISTRATION_SUCCESS,
+    type: typeof SIGNUP_SUCCESS,
     payload: GENERIC.SaveSuccessResponse;
   }
   export type SignupFailure = {
-    type: typeof REGISTRATION_FAILURE,
+    type: typeof SIGNUP_FAILURE,
     payload: GENERIC.FailureResponse; 
   }
 

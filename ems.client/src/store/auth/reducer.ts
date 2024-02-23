@@ -2,9 +2,9 @@ import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
-    REGISTRATION_REQUEST,
-    REGISTRATION_SUCCESS,
-    REGISTRATION_FAILURE,
+    SIGNUP_REQUEST,
+    SIGNUP_SUCCESS,
+    SIGNUP_FAILURE,
     CHANGE_PASSWORD_REQUEST,
     CHANGE_PASSWORD_SUCCESS,
     CHANGE_PASSWORD_FAILURE
@@ -41,19 +41,19 @@ import {
           error: action.payload.message,
         };    
       // Signup Logic is the same as Login logic but we do not store Token in State
-      case REGISTRATION_REQUEST:
+      case SIGNUP_REQUEST:
         return {
           ...state,
           pending: true,
         };
-      case REGISTRATION_SUCCESS:
+      case SIGNUP_SUCCESS:
         return {
           ...state,
           pending: false,
           success: action.payload.message, 
           error: null
         };
-      case REGISTRATION_FAILURE:
+      case SIGNUP_FAILURE:
         return {
           ...state,
           pending: false,

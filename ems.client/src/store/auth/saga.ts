@@ -11,7 +11,7 @@ import {
 
 import {
   CHANGE_PASSWORD_REQUEST,
-  LOGIN_REQUEST, REGISTRATION_REQUEST,
+  LOGIN_REQUEST, SIGNUP_REQUEST,
 } from "./action.types";
 import authService from "services/auth.service";
 import { LoginResponse } from "./types";
@@ -23,12 +23,12 @@ function* loginSaga(action: any) {
     const response: LoginResponse = yield call(authService.login, {
       emailId: action.payload.values.email,
       password: action.payload.values.password,
-    });    
+    });
     const successPayload = {
       ...response.data,
       rememberMe: true //action.payload.values.rememberMe,
     };
-
+console.log("response: ",response)
     yield put(
       loginSuccess({
         token: response.data.token,
@@ -97,7 +97,7 @@ function* changePasswordSaga(action: any){
 function* authSaga() {
   yield all([
     takeEvery(LOGIN_REQUEST, loginSaga),
-    takeEvery(REGISTRATION_REQUEST, signupSaga),
+    takeEvery(SIGNUP_REQUEST, signupSaga),
     takeEvery(CHANGE_PASSWORD_REQUEST, changePasswordSaga)
   ]);
 }

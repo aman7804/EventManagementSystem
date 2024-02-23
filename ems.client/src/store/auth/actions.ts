@@ -2,9 +2,9 @@ import {
     LOGIN_REQUEST,
     LOGIN_FAILURE,
     LOGIN_SUCCESS,
-    REGISTRATION_REQUEST,
-    REGISTRATION_SUCCESS,
-    REGISTRATION_FAILURE,
+    SIGNUP_REQUEST,
+    SIGNUP_SUCCESS,
+    SIGNUP_FAILURE,
     CHANGE_PASSWORD_REQUEST,
     CHANGE_PASSWORD_SUCCESS,
     CHANGE_PASSWORD_FAILURE
@@ -34,19 +34,19 @@ import {
   export const signupRequest = (
     payload: TYPES.SignupPayload
   ): TYPES.SignupRequest => ({
-    type: REGISTRATION_REQUEST,
+    type: SIGNUP_REQUEST,
     payload
   })
   export const signupSuccess = (
     payload: GENERIC.SaveSuccessResponse
   ): TYPES.SignupSuccess => ({
-    type: REGISTRATION_SUCCESS,
+    type: SIGNUP_SUCCESS,
     payload
   })
   export const signupFailure = (
     payload: GENERIC.FailureResponse
   ): TYPES.SignupFailure => ({
-    type: REGISTRATION_FAILURE,
+    type: SIGNUP_FAILURE,
     payload
   })
 

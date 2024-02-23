@@ -192,20 +192,6 @@ import { setLoginDetails, showLoader } from "utils/helper";
                 </CardContent>
                 <CardActions>
                   <Box className="login-links">
-                    {/* <FormControlLabel
-                      control={
-                        <Checkbox
-                          disableFocusRipple
-                          disableRipple
-                          icon={<CheckBoxIcon />}
-                          checkedIcon={<CheckedBoxIcon />}
-                          id="rememberMe"
-                          {...register("rememberMe")}
-                        />
-                      }
-                      label="Remember me"
-                      labelPlacement="end"
-                    /> */}
                     <a
                       href="/forgot-password"
                       title="Forgot password"
