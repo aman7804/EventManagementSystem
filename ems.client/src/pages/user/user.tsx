@@ -43,6 +43,7 @@ import AddEditUser from "components/user.create";
 import projectTheme from "App.theme";
 import * as GENERIC from "interfaces/generic.interface";
 import { get } from "lodash";
+import EnhancedTableHead from "components/elements/EnhancedTableHead";
 
 const ArrowBackIcon = () =>
   <img src={arrowBackwardIcon} alt="arrow-backward" />;
@@ -53,46 +54,12 @@ const ArrowForwardIcon = () =>
 const capitalization = (str: string): string => 
   str.charAt(0).toUpperCase() + str.slice(1);
 
-// child-component
-interface EnhancedTableProps {
-  onRequestSort: (
-    event: React.MouseEvent<unknown>,
-    newOrderBy: keyof IUser
-  ) => void;
-  order: Order;
-  orderBy: string;
-  columnHeader: string;
-  columnName: keyof IUser;
-  align?: "left" | "center" | "right" | "justify" | "inherit" | undefined;
-  width?: string | number | undefined;
+const columnDisplayName: GENERIC.IIndexable<IUser> = {
+  firstName: "Name",
+  address: "Address",
+  emailId: "Email",
+  mobileNo: "Mobile"
 }
-const EnhancedTableHead = (props: EnhancedTableProps) => {
-  const { order, orderBy, onRequestSort, align, width } = props;
-  const createSortHandler =
-    (newOrderBy: keyof IUser) => (event: React.MouseEvent<unknown>) =>
-      onRequestSort(event, newOrderBy);
-  
-  const columnDisplayName: GENERIC.IIndexable = {
-    firstName: "Name",
-    address: "Address",
-    emailId: "Email",
-    mobileNo: "Mobile"
-  }
-  
-  return (
-    <TableCell
-      key={props.columnHeader}
-      align={align || "left"}
-      onClick={createSortHandler(props.columnName)} 
-      sortDirection={orderBy === props.columnName ? order : false}
-      width={width}
-    >
-      {columnDisplayName[props.columnName]}
-      <Box component="span" className="sorting-icon" />
-    </TableCell>    
-  );
-};
-
 
 export type UserProps = IUserContainerState &
   IUserContainerDispatch;
@@ -313,6 +280,7 @@ const UserForm: React.FC<UserProps> = (props) => {
                               columnName="firstName"
                               columnHeader="FirstName"
                               width={200}
+                              columnDisplayName={columnDisplayName}
                             />
                             <EnhancedTableHead
                               order={order}
@@ -321,6 +289,7 @@ const UserForm: React.FC<UserProps> = (props) => {
                               columnName="address"
                               columnHeader="Address"
                               width={250}
+                              columnDisplayName={columnDisplayName}
                             />
                             <EnhancedTableHead
                               order={order}
@@ -329,6 +298,7 @@ const UserForm: React.FC<UserProps> = (props) => {
                               columnName="emailId"
                               columnHeader="EmailId"
                               width={200}
+                              columnDisplayName={columnDisplayName}
                               />
                             <EnhancedTableHead
                               order={order}
@@ -337,6 +307,7 @@ const UserForm: React.FC<UserProps> = (props) => {
                               columnName="mobileNo"
                               columnHeader="MobileNo"
                               width={100}
+                              columnDisplayName={columnDisplayName}
                             />
                             <TableCell
                               align="center"

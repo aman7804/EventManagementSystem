@@ -30,11 +30,11 @@ import { IIndexable } from "interfaces/generic.interface";
   
   export type LoginProps = ILoginContainerDispatch;
  
-  const fieldNames : IIndexable = {
+  const fieldNames : IIndexable<ILogin> = {
     emailId: "Email Id",
     password: "Password",
   }
-   
+
   export const LoginForm = (props: LoginProps) => {
     const [showPassword, setShowPassword] = React.useState(false);
   
@@ -65,7 +65,7 @@ import { IIndexable } from "interfaces/generic.interface";
       if(type){
         switch(type){
           case 'required': return `${fieldNames[fieldName]} is required.`;
-          case 'pattern': return `Invalid ${fieldNames[fieldName].toLowerCase()}`;
+          case 'pattern': return `Invalid ${fieldNames[fieldName]?.toLowerCase()}`;
         }
       }
       return "";
@@ -94,7 +94,6 @@ import { IIndexable } from "interfaces/generic.interface";
           values: {
             emailId: data.emailId,
             password: data.password
-            // rememberMe: data.rememberMe,
           },
           callback: onLoginSuccess,
         };

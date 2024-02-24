@@ -30,7 +30,7 @@ import { IApiSuccessResponse, IIndexable } from "interfaces/generic.interface";
 
 export type SignupProps = ISignupContainerDispatch;
 
-const fieldNames : IIndexable = {
+const fieldNames : IIndexable<ISignup> = {
   firstName: "First Name",
   lastName: "Last Name",
   emailId: "Email",
@@ -81,7 +81,7 @@ export const SignupForm = (props: SignupProps) => {
         case "pattern":
           switch(fieldName){
             case "emailId":
-              return `Invalid ${fieldNames[fieldName].toLowerCase()}.`
+              return `Invalid ${fieldNames[fieldName]?.toLowerCase()}.`
             case "password":
               return `Password must be 8+ characters with a special character,
               number, and uppercase letter.`;
@@ -90,19 +90,19 @@ export const SignupForm = (props: SignupProps) => {
         case "maxLength":
           switch (fieldName) {
             case "firstName":
-              return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
+              return `Maximum length of ${fieldNames[fieldName]?.toLowerCase()} is
                   ${maxFirstNameLength}.`;
             case "lastName":
-              return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
+              return `Maximum length of ${fieldNames[fieldName]?.toLowerCase()} is
                   ${maxLastNameLength}.`;
             case "address":
-              return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
+              return `Maximum length of ${fieldNames[fieldName]?.toLowerCase()} is
                   ${maxAddressLength}.`;
             case "emailId":
-              return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
+              return `Maximum length of ${fieldNames[fieldName]?.toLowerCase()} is
                   ${maxEmailIdLength}.`;
             case "password":
-              return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
+              return `Maximum length of ${fieldNames[fieldName]?.toLowerCase()} is
                   ${maxPasswordLength}.`;
           }
           break;

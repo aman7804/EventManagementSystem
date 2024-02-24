@@ -23,12 +23,11 @@ import { showLoader } from "utils/helper";
 export type ProfileProps = IProfileContainerState &
   IProfileContainerDispatch;
 
-const fieldNames: IIndexable = {
+const fieldNames: IIndexable<IProfile> = {
   firstName: "First-Name",
   lastName: "Last-Name",
   emailId: "EmailId",
   mobileNo: "Mobile Number",
-  password: "Password",
   address: "Address",
 };
 
@@ -56,7 +55,6 @@ const ProfileComponent: React.FC<ProfileProps> = ({
 
   const maxFirstNameLength = 50;
   const maxLastNameLength = 50;
-  const maxPasswordLength = 256;
   const maxAddressLength = 500; 
 
   const {
@@ -79,7 +77,7 @@ const ProfileComponent: React.FC<ProfileProps> = ({
 
 
   const getErrorMessage = (
-    fieldName: string,
+    fieldName: keyof IProfile,
     type: string | undefined
   ): string => {
     if (type) {
@@ -89,17 +87,14 @@ const ProfileComponent: React.FC<ProfileProps> = ({
         case "maxLength":
           switch (fieldName) {
             case "firstName":
-              return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
+              return `Maximum length of ${fieldNames[fieldName]?.toLowerCase()} is
                   ${maxFirstNameLength}.`;
             case "lastName":
-              return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
+              return `Maximum length of ${fieldNames[fieldName]?.toLowerCase()} is
                   ${maxLastNameLength}.`;
             case "address":
-              return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
+              return `Maximum length of ${fieldNames[fieldName]?.toLowerCase()} is
                   ${maxAddressLength}.`;
-            case "password":
-              return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
-                  ${maxPasswordLength}.`;
           }
           break;
         case "min":
@@ -107,7 +102,7 @@ const ProfileComponent: React.FC<ProfileProps> = ({
         case "max":
           return `${fieldNames[fieldName]} cannot be more than Maximum Capacity.`;
         case "pattern":
-          return `Invalid ${(fieldNames[fieldName]).toLowerCase()}`;
+          return `Invalid ${fieldNames[fieldName]?.toLowerCase()}`;
         default:
           return "";
       }

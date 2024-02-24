@@ -32,8 +32,8 @@
     name: string
   }
 
-  export interface IIndexable {
-    [key: string]: any;
+  export type IIndexable<T> = {
+    [key in keyof T]?: string;
   }
 
   export interface FailureResponse {

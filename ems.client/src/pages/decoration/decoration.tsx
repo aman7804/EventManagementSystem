@@ -43,6 +43,7 @@ import AddEditDecoration from "components/decoration.create";
 import projectTheme from "App.theme";
 import * as GENERIC from "interfaces/generic.interface";
 import { get } from "lodash";
+import EnhancedTableHead from "components/elements/EnhancedTableHead";
 
 const ArrowBackIcon = () =>
   <img src={arrowBackwardIcon} alt="arrow-backward" />;
@@ -53,45 +54,11 @@ const ArrowForwardIcon = () =>
 const capitalization = (str: string): string => 
   str.charAt(0).toUpperCase() + str.slice(1);
 
-// child-component
-interface EnhancedTableProps {
-  onRequestSort: (
-    event: React.MouseEvent<unknown>,
-    newOrderBy: keyof IDecoration
-  ) => void;
-  order: Order;
-  orderBy: string;
-  columnHeader: string;
-  columnName: keyof IDecoration;
-  align?: "left" | "center" | "right" | "justify" | "inherit" | undefined;
-  width?: string | number | undefined;
+const columnDisplayName: GENERIC.IIndexable<IDecoration> = {
+  name: "Name",
+  description: "Description",
+  price: "Price",
 }
-const EnhancedTableHead = (props: EnhancedTableProps) => {
-  const { order, orderBy, onRequestSort, align, width } = props;
-  const createSortHandler =
-    (newOrderBy: keyof IDecoration) => (event: React.MouseEvent<unknown>) =>
-      onRequestSort(event, newOrderBy);
-
-  const columnDisplayName: GENERIC.IIndexable = {
-    name: "Name",
-    description: "Description",
-    price: "Price",
-  }
-  
-  return (
-    <TableCell
-      key={props.columnHeader}
-      align={align || "left"}
-      onClick={createSortHandler(props.columnName)}
-      sortDirection={orderBy === props.columnName ? order : false}
-      width={width}
-    >
-      {columnDisplayName[props.columnName]}
-      <Box component="span" className="sorting-icon" />
-    </TableCell>    
-  );
-};
-
 
 export type DecorationProps = IDecorationContainerState &
   IDecorationContainerDispatch;
@@ -310,6 +277,7 @@ const DecorationForm: React.FC<DecorationProps> = (props) => {
                               onRequestSort={handleRequestSort}
                               columnName="name"
                               columnHeader="Decoration"
+                              columnDisplayName={columnDisplayName}
                             />
                             <EnhancedTableHead
                               order={order}
@@ -317,6 +285,7 @@ const DecorationForm: React.FC<DecorationProps> = (props) => {
                               onRequestSort={handleRequestSort}
                               columnName="description"
                               columnHeader="Description"
+                              columnDisplayName={columnDisplayName}
                             />
                             <EnhancedTableHead
                               order={order}
@@ -326,6 +295,7 @@ const DecorationForm: React.FC<DecorationProps> = (props) => {
                               columnHeader="Price"
                               align="right"
                               width={200}
+                              columnDisplayName={columnDisplayName}
                             />
                             <TableCell
                               align="center"
