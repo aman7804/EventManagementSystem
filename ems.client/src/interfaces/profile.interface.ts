@@ -12,6 +12,7 @@ import * as GENERIC from './generic.interface'
   export interface ProfileState{
     pending: boolean;
     user: IProfile | null;
+    error?: string | null;
   }
 
 /* Dispatch Container Model */

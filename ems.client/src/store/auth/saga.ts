@@ -25,12 +25,12 @@ function* loginSaga(action: any) {
     );
     yield put(
       loginSuccess({
-        accessToken: response.data.token,
+        accessToken: response.data?.token,
         data: response.data,
       }),
     );
     action.payload.callback({
-      accessToken: response.data.token,
+      accessToken: response.data?.token,
       data: response.data,
     });
   } catch (e: any) {

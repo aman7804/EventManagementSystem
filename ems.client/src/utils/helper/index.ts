@@ -3,8 +3,8 @@ import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 import { LoginResponse } from "store/auth/types";
 
-export const setCookie = (name: string, value: string) => {
-  Cookies.set(name, value);
+export const setCookie = (name: string, value?: string) => {
+  if(value) Cookies.set(name, value);
 };
 
 export const setCookieWithExpiry = (name: string, value: string) => {
@@ -45,8 +45,8 @@ export const isTokenExpired = (token: string): boolean => {
 };
 
 
-export const setLoginDetails = async (loginDetails: LoginResponse) => {
-    setCookie("auth_token", loginDetails.accessToken);
+export const setLoginDetails = async (loginDetails?: LoginResponse) => {
+    setCookie("auth_token", loginDetails?.accessToken);
 };
 
 export const showLoader = (): void => {

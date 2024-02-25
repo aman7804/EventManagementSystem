@@ -7,7 +7,7 @@ import {
     SIGNUP_FAILURE,
     CHANGE_PASSWORD_REQUEST,
     CHANGE_PASSWORD_SUCCESS,
-    CHANGE_PASSWORD_FAILURE,
+    CHANGE_PASSWORD_FAILURE
   } from "./action.types";
 import * as GENERIC from "interfaces/generic.interface";
   
@@ -18,13 +18,14 @@ import * as GENERIC from "interfaces/generic.interface";
   
   export interface AuthState {
     pending: boolean;
+    user: LoginResponse | null;
     token: string;
     error: string | null;
   }
 
   export interface LoginResponse {
-    accessToken: string;
-    data: {
+    accessToken?: string;
+    data?: {
       firstName: string;
       lastName: string;
       emailId: string;
@@ -61,11 +62,6 @@ import * as GENERIC from "interfaces/generic.interface";
     };
     callback: any;
   }
-  export interface ChangePasswordSuccessPayload {
-    isValid: boolean;
-    message: string;
-    data?: any;
-  }
 
   export interface LoginRequest {
     type: typeof LOGIN_REQUEST;
@@ -99,7 +95,7 @@ import * as GENERIC from "interfaces/generic.interface";
   }
   export type ChangePasswordSuccess = {
     type: typeof CHANGE_PASSWORD_SUCCESS,
-    payload: ChangePasswordSuccessPayload
+    payload: GENERIC.SaveSuccessResponse
   }
   export type ChangePasswordFailure = {
     type: typeof CHANGE_PASSWORD_FAILURE,

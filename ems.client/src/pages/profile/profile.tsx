@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { CustomNumericFormatProps } from "components/elements/NumericFormControl";
 import { NumericFormat, NumericFormatProps } from "react-number-format";
 import React from "react";
@@ -16,7 +16,6 @@ import { MOBILE_PATTERN } from "utils/constants";
 import {IApiSuccessResponse, SaveRequestPayload, IIndexable} from "interfaces/generic.interface"
 import { IProfile, IProfileContainerDispatch, IProfileContainerState } from "interfaces/profile.interface";
 import { saveIcon } from "assets/images";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { showLoader } from "utils/helper";
 
@@ -51,19 +50,15 @@ const CustomMobileComponent = React.forwardRef<
 const ProfileComponent: React.FC<ProfileProps> = ({
   getRequest, updateRequest, profile, pending
 }) => {
-  const navigate = useNavigate() ;
 
   const maxFirstNameLength = 50;
   const maxLastNameLength = 50;
-  const maxAddressLength = 500; 
-  const [mobileNoValue, setMobileNoValue] =
-    useState<string|undefined|null>(profile?.mobileNo)
+  const maxAddressLength = 500;
 
   const {
     register,
     handleSubmit,
     reset,
-    setValue,
     formState: { errors },
   } = useForm<IProfile>();
 
@@ -74,10 +69,7 @@ const ProfileComponent: React.FC<ProfileProps> = ({
   },[]);
 
   useEffect(()=>{
-    if(profile){
-      reset(profile)
-      setMobileNoValue(profile.mobileNo);
-    }
+    if(profile) reset(profile)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[profile])
 
@@ -131,6 +123,7 @@ const ProfileComponent: React.FC<ProfileProps> = ({
 
   const onUpdateProfile = (response: IApiSuccessResponse<IProfile>) => {
     toast.success("Profile  Updated Successfully");
+    getRequest();
   }
 
   const beginSubmit = (formData: IProfile) => {
@@ -249,11 +242,7 @@ const ProfileComponent: React.FC<ProfileProps> = ({
                   {...register("mobileNo", {
                     pattern: MOBILE_PATTERN,
                   })}
-                  value={mobileNoValue}
-                  onChange={e=>{
-                    setMobileNoValue(e.target.value)
-                    setValue("mobileNo", e.target.value)
-                  }}
+                  value={profile?.mobileNo}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment sx={{marginLeft: 2}} position="start">

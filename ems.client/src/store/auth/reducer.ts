@@ -14,6 +14,7 @@ import {
   
   const initialState: AuthState = {
     pending: false,
+    user: null,
     token: "",
     error: null,
   };
@@ -29,8 +30,7 @@ import {
         return {
           ...state,
           pending: false,
-          token: action.payload.accessToken,
-          user: action.payload.data,
+          user: action.payload,
           error: null,
         };
       case LOGIN_FAILURE:

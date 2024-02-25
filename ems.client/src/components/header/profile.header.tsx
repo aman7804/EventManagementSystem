@@ -1,6 +1,7 @@
 import { arrowProfileIcon, accountIcon} from "assets/images";
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import { ILoginResponse } from "../../interfaces/auth.interface";
+import { IProfile } from "interfaces/profile.interface";
 
 export type CustomProps = {
   profileOpen: boolean;
@@ -8,7 +9,7 @@ export type CustomProps = {
 };
 
 export type UserProfileSectionProps = {
-  user: ILoginResponse | null;
+  user: ILoginResponse | IProfile | null;
 } & CustomProps;
 
 const UserProfileSection = ({ user, ...props }: UserProfileSectionProps) => {

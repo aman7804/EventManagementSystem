@@ -25,13 +25,15 @@ import { connect, useSelector } from "react-redux";
 import { RootState } from "store/root/root.reducer";
 import { ILoginResponse } from "interfaces/auth.interface";
 import UserProfileSection from "./profile.header";
+import { IProfile } from "interfaces/profile.interface";
+import { getProfileSelector } from "store/profile/selector";
   
 const bc = new BroadcastChannel("change_password")
 bc.onmessage=(e)=>{
   toast.success(e.data)
 }  
 
-const Header: React.FC<IGetUserProp> = ({user}) => {
+const Header: React.FC<IGetUserProp> = ({userDetails, userProfile}) => {
   const navigate = useNavigate();
   
   const [profileMenu, setProfileMenu] = React.useState<null | HTMLElement>(null);
@@ -41,9 +43,6 @@ const Header: React.FC<IGetUserProp> = ({user}) => {
     setProfileMenu(event.currentTarget);
     setProfileOpen(true)
   };
-
-  console.log("profileMenu: ",profileMenu)
-  console.log("profileOpen: ",profileOpen)
   
   const handleProfileClose = () => {  
     setProfileMenu(null);
@@ -102,7 +101,7 @@ const Header: React.FC<IGetUserProp> = ({user}) => {
         {
           isAuthenticated ?
           (<UserProfileSection
-            user={user}
+            user={userProfile || userDetails}
             profileOpen={profileOpen}
             handleProfileClick={handleProfileClick}
           />)
@@ -133,7 +132,7 @@ const Header: React.FC<IGetUserProp> = ({user}) => {
             sx={{ display: { xs: "flex", md: "none" } }}
             className="profile-info"
           >
-            <Typography variant="h5">{user?.firstName} {user?.lastName}</Typography>
+            <Typography variant="h5">{userDetails?.firstName} {userDetails?.lastName}</Typography>
             <Typography variant="h6">Admin</Typography>
           </MenuItem>
           <MenuItem onClick={handleProfileClose} title="Profile">
@@ -161,12 +160,14 @@ const Header: React.FC<IGetUserProp> = ({user}) => {
 };
 
 interface IGetUserProp{
-  user: ILoginResponse | null
+  userDetails: ILoginResponse | null;
+  userProfile: IProfile | null;
 }
 
 const mapStateToProps = (state: RootState) => {
   return {
-    user: getUserSelector(state),
+    userDetails: getUserSelector(state),
+    userProfile: getProfileSelector(state)
   };
 };
 

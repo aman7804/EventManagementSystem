@@ -57,7 +57,7 @@ import {
     payload
   })
   export const changePasswordSuccess = (
-    payload: TYPES.ChangePasswordSuccessPayload
+    payload: GENERIC.SaveSuccessResponse
   ): TYPES.ChangePasswordSuccess => ({
     type: CHANGE_PASSWORD_SUCCESS,
     payload
