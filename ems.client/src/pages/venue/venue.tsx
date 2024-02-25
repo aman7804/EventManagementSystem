@@ -205,7 +205,6 @@ const VenueForm: React.FC<VenueProps> = (props) => {
         },
         callback: onSaveVenueSuccess,
       };
-      console.log("edited payload",payload)
       saveRequest(payload);
     }
   };
@@ -229,7 +228,6 @@ const VenueForm: React.FC<VenueProps> = (props) => {
           data: { id: stateId },
           callback: onCityListSuccess,
         };
-        console.log("sending request payload: ",payload)
         cityDropDownListRequest(payload);
       }
   }

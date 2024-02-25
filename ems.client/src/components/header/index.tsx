@@ -43,7 +43,7 @@ const Header: React.FC<IGetUserProp> = ({userDetails, userProfile}) => {
     setProfileMenu(event.currentTarget);
     setProfileOpen(true)
   };
-  
+
   const handleProfileClose = () => {  
     setProfileMenu(null);
     setProfileOpen(false)

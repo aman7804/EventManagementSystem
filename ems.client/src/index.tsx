@@ -19,7 +19,7 @@ const root = createRoot(
 
 root.render(
   <StrictMode>
-    <Suspense fallback={<Loader className={"loaderShow"}/>} >
+    <Suspense fallback={<Loader/>} >
       <Provider store={store} >
         <ThemeProvider theme={projectTheme}>
           <PersistGate loading={null} persistor={persistStorage}>

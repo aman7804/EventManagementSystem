@@ -57,8 +57,7 @@ import { NumericFormatProps } from "react-number-format";
     };
 
     const getErrorMessage = (fieldName: string, type: string|undefined): string => {
-      if (type) {
-        console.log(fieldName);      
+      if (type) {    
         switch (type) {
           case "required":
             return `${fieldNames[fieldName]} is required.`;

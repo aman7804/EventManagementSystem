@@ -25,12 +25,10 @@ function* listSaga(action: any) {
         data: response.data,
       })
     );
-    console.log("saga:", response.data)
     action.payload.callback({
       data: response.data
     });
   } catch (e: any) {
-    console.log(e)
     yield put(
       listFailure({
         message: e.response?.data?.split("\n")[0] || e.message
@@ -49,8 +47,6 @@ function* saveSaga(action: any) {
     );
     action.payload.callback(response);
   } catch (e: any) {
-    console.log(e)
-    console.log(e.response?.data || e.message)
     yield put(
       saveFailure({
         message: e.response?.data?.split("\n")[0] || e.message

@@ -47,7 +47,6 @@ function* saveSaga(action: any) {
     );
     action.payload.callback(response);
   } catch (e: any) {
-    console.log(e.response?.data)
     yield put(
       saveFailure({
         message: e.message
