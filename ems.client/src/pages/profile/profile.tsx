@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CustomNumericFormatProps } from "components/elements/NumericFormControl";
 import { NumericFormat, NumericFormatProps } from "react-number-format";
 import React from "react";
@@ -31,7 +31,7 @@ const fieldNames: IIndexable<IProfile> = {
   address: "Address",
 };
 
-export const CustomMobileComponent = React.forwardRef<
+const CustomMobileComponent = React.forwardRef<
   NumericFormatProps,
   CustomNumericFormatProps
 >((props, ref) => { 
@@ -56,11 +56,14 @@ const ProfileComponent: React.FC<ProfileProps> = ({
   const maxFirstNameLength = 50;
   const maxLastNameLength = 50;
   const maxAddressLength = 500; 
+  const [mobileNoValue, setMobileNoValue] =
+    useState<string|undefined|null>(profile?.mobileNo)
 
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<IProfile>();
 
@@ -71,10 +74,12 @@ const ProfileComponent: React.FC<ProfileProps> = ({
   },[]);
 
   useEffect(()=>{
-    if(profile) reset(profile)
+    if(profile){
+      reset(profile)
+      setMobileNoValue(profile.mobileNo);
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[profile])
-
 
   const getErrorMessage = (
     fieldName: keyof IProfile,
@@ -247,7 +252,11 @@ const ProfileComponent: React.FC<ProfileProps> = ({
                   {...register("mobileNo", {
                     pattern: MOBILE_PATTERN,
                   })}
-                  value={profile?.mobileNo || undefined} 
+                  value={mobileNoValue}
+                  onChange={e=>{
+                    setMobileNoValue(e.target.value)
+                    setValue("mobileNo", e.target.value)
+                  }}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment sx={{marginLeft: 2}} position="start">
