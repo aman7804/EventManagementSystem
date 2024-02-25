@@ -132,9 +132,6 @@ const ProfileComponent: React.FC<ProfileProps> = ({
   const onUpdateProfile = (response: IApiSuccessResponse<IProfile>) => {
     toast.success("Profile  Updated Successfully");
   }
-  const onProfileClose = () => {
-    navigate("/")
-  }
 
   const beginSubmit = (formData: IProfile) => {
     const payload: SaveRequestPayload<IProfile> = {
@@ -268,22 +265,11 @@ const ProfileComponent: React.FC<ProfileProps> = ({
                 />
               </Grid>
             </Grid>
-            <Grid container spacing={2}>
-              <Grid item>
-                <Button variant="contained" className="btn-save" type="submit">
-                  <img src={saveIcon} alt="save" />
-                  Update
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  variant="outlined"
-                  className="btn-cancel"
-                  onClick={onProfileClose}
-                >
-                  Back
-                </Button>
-              </Grid>
+            <Grid item>
+              <Button variant="contained" className="btn-save" type="submit">
+                <img src={saveIcon} alt="save" />
+                Update Profile
+              </Button>
             </Grid>
           </form>
           }
