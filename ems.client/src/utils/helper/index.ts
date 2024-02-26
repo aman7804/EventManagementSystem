@@ -2,6 +2,7 @@ import { JWTToken } from "../../interfaces/jwtToken.interface";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 import { LoginResponse } from "store/auth/types";
+import { IJwtTokenMeta } from "interfaces/auth.interface";
 
 export const setCookie = (name: string, value?: string) => {
   if(value) Cookies.set(name, value);
@@ -75,3 +76,12 @@ export const hideLoader = (): void => {
     wrapper.classList.remove("reduced-opacity-wrapper")
   }
 };
+
+export const isTokenForAdmin = (token?: string) => {
+  if (token) {
+    const decodeToken = jwtDecode<IJwtTokenMeta>(token);
+    if (decodeToken) 
+      return decodeToken?.role === "Admin";
+  }
+  return false;
+}

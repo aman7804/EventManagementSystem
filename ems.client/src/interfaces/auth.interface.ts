@@ -1,3 +1,4 @@
+import { JwtPayload } from "jwt-decode";
 import {
   ChangePasswordPayload,
     LoginPayload, SignupPayload,
@@ -32,7 +33,8 @@ import {
   }
   
   export interface ILoginContainerState {
-    rememberMe: boolean;
+    isAdmin: boolean | undefined;
+    isAuthenticated: boolean | undefined;
   }
   
   export interface ILoginContainerDispatch {
@@ -44,3 +46,6 @@ import {
   export interface IChangePasswordContainerDispatch {
     changePasswordRequest: (payload: ChangePasswordPayload) => {};
   }
+  export interface IJwtTokenMeta extends JwtPayload {
+    role: string | undefined;
+  } 

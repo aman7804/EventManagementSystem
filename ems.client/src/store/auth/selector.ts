@@ -2,6 +2,7 @@ import { createSelector } from "reselect";
 import { get } from "lodash";
 
 import { RootState } from "store/root/root.reducer";
+import { isTokenForAdmin } from "utils/helper";
 
 const getState = (state: RootState) => state;
 
@@ -22,3 +23,6 @@ export const getUserEmailSelector =
 
 export const checkIsAuthenticated =
     createSelector(getState, (state) => !!get(state, "auth.token"));
+
+export const checkIsAdmin = 
+    createSelector(getState, (state) => isTokenForAdmin(get(state, "auth.token")));

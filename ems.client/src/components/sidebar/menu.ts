@@ -1,4 +1,5 @@
 import * as Image from "assets/images";
+// import { customerRoutes } from "routes/protectedRoutes";
 
 export interface IMenu {
   icon: any;
@@ -9,12 +10,30 @@ export interface IMenu {
 export const publicMenu : IMenu[] = [
   {
     icon: Image.dashboardIcon,
-    text: 'Dashboard',
-    route: '/dashboard'    
+    text: 'Home',
+    route: ""    
+  },
+  {
+    icon: Image.explorePackage,
+    text: "Explore Packages",
+    route: ""
+  }
+]
+
+export const customerMenu: IMenu[] = [
+  {
+    icon: Image.bookingIcon,
+    text: "My Booking",
+    route: ""
   }
 ]
 
 export const adminMenu : IMenu[] = [
+  {
+    icon: Image.dashboardIcon,
+    text: 'Dashboard',
+    route: '/dashboard'    
+  },
   {
     icon: Image.bookingIcon,
     text: 'Booking',
