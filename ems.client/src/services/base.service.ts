@@ -16,7 +16,6 @@ axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 axios.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    showLoader()
     let isTokenRequired = true;
     if (config.url?.includes("/login")) {
       isTokenRequired = false;

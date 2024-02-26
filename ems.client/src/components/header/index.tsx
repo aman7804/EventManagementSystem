@@ -54,16 +54,11 @@ const Header: React.FC<IGetUserProp> = ({userDetails, userProfile}) => {
     navigate("/login");
   };
   
-  const goToChangePassword = () => 
-    window.open("/change-password", "_blank")
-  const goToProfile = () => 
-    navigate("User/profile")
-  const goToLogin = () => 
-    navigate("login")
-  const goToSignup = () => 
-    navigate("signup")
+  const goToChangePassword = () => window.open("/change-password", "_blank")
+  const goToProfile = () => navigate("User/profile")
+  const goToLogin = () => navigate("login")
+  const goToSignup = () => navigate("signup")
 
-  
   const isAuthenticated = useSelector(checkIsAuthenticated);
   return (
     <AppBar position="static" className="header">
@@ -101,7 +96,10 @@ const Header: React.FC<IGetUserProp> = ({userDetails, userProfile}) => {
         {
           isAuthenticated ?
           (<UserProfileSection
-            user={userProfile || userDetails}
+            user={
+              userProfile?.firstName && userProfile?.lastName
+              ? userProfile : userDetails
+            }
             profileOpen={profileOpen}
             handleProfileClick={handleProfileClick}
           />)

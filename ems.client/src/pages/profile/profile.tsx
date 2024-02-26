@@ -18,6 +18,7 @@ import { IProfile, IProfileContainerDispatch, IProfileContainerState } from "int
 import { saveIcon } from "assets/images";
 import { toast } from "react-toastify";
 import { showLoader } from "utils/helper";
+import ReadonlyTextfield from "components/elements/ReadonlyTextfield";
 
 export type ProfileProps = IProfileContainerState &
   IProfileContainerDispatch;
@@ -212,10 +213,10 @@ const ProfileComponent: React.FC<ProfileProps> = ({
                     required: true,
                     maxLength: maxAddressLength,
                   })}
-                />
+                  />
               </Grid>
               <Grid item xs={12} md={6} xl={6}>
-                <TextField
+                <ReadonlyTextfield
                   id="emailId"
                   label={
                     <>
@@ -226,9 +227,6 @@ const ProfileComponent: React.FC<ProfileProps> = ({
                   value={!pending ? profile?.emailId : undefined}
                   variant="outlined"
                   multiline
-                  InputProps={{
-                    readOnly: true,
-                  }}
                 />
               </Grid>
               <Grid item xs={12} xl={6} md={6}>
