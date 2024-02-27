@@ -20,7 +20,7 @@ import React from "react";
 import authService from "services/auth.service";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { checkIsAuthenticated, getUserSelector } from "store/auth/selector";
+import { checkIsAdmin, checkIsAuthenticated, getUserSelector } from "store/auth/selector";
 import { connect, useSelector } from "react-redux";
 import { RootState } from "store/root/root.reducer";
 import { ILoginResponse } from "interfaces/auth.interface";
@@ -35,7 +35,8 @@ bc.onmessage=(e)=>{
 
 const Header: React.FC<IGetUserProp> = ({userDetails, userProfile}) => {
   const navigate = useNavigate();
-  
+  const isAdmin = useSelector(checkIsAdmin);
+
   const [profileMenu, setProfileMenu] = React.useState<null | HTMLElement>(null);
   const [profileOpen, setProfileOpen] = React.useState<boolean>(false);
 
@@ -130,8 +131,11 @@ const Header: React.FC<IGetUserProp> = ({userDetails, userProfile}) => {
             sx={{ display: { xs: "flex", md: "none" } }}
             className="profile-info"
           >
-            <Typography variant="h5">{userDetails?.firstName} {userDetails?.lastName}</Typography>
-            <Typography variant="h6">Admin</Typography>
+            <Typography variant="h5">
+              {userProfile?.firstName || userDetails?.firstName}{" "}
+              {userProfile?.lastName || userDetails?.lastName}
+            </Typography>
+            <Typography variant="h6">{isAdmin ? "Admin" : "Customer"}</Typography>
           </MenuItem>
           <MenuItem onClick={handleProfileClose} title="Profile">
             <Button onClick={goToProfile}>
