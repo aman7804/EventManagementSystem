@@ -65,6 +65,11 @@ export const adminMenu : IMenu[] = [
     route: '/admin/decoration'    
   },
   {
+    icon: Image.iconDecoration,
+    text: 'Package',
+    route: '/admin/package'    
+  },
+  {
     icon: Image.rolesIcon,
     text: 'User',
     route: '/admin/users'    
