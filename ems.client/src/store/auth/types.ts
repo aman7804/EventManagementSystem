@@ -2,13 +2,14 @@ import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
-    REGISTRATION_REQUEST,
-    REGISTRATION_SUCCESS,
-    REGISTRATION_FAILURE,
+    SIGNUP_REQUEST,
+    SIGNUP_SUCCESS,
+    SIGNUP_FAILURE,
     CHANGE_PASSWORD_REQUEST,
     CHANGE_PASSWORD_SUCCESS,
-    CHANGE_PASSWORD_FAILURE,
+    CHANGE_PASSWORD_FAILURE
   } from "./action.types";
+import * as GENERIC from "interfaces/generic.interface";
   
   
   export interface IAuth {
@@ -17,48 +18,31 @@ import {
   
   export interface AuthState {
     pending: boolean;
+    user: LoginResponse | null;
     token: string;
     error: string | null;
   }
 
   export interface LoginResponse {
-    accessToken: string;
-    data: {
-      fullName: string;
+    accessToken?: string;
+    data?: {
+      firstName: string;
+      lastName: string;
       emailId: string;
       token: string;
       id: number;
-    };
-  }
-  export interface RegistrationResponse{
-    data: {
-      id: number;
-      fullName: string;
-      emailId: string;
     };
   }
   
   export interface LoginPayload {
     values: { 
-      email: string; 
+      emailId: string; 
       password: string; 
     };
     callback: any;
   }
-  export interface LoginSuccessPayload {
-    token: string;
-    user: {
-      id: number;
-      fullName: string;
-      emailId: string;
-      token: string;
-    };
-  }
-  export interface LoginFailurePayload {
-    error: string;
-  }
   
-  export interface RegistrationPayload{
+  export interface SignupPayload{
     values:{
       firstName:string,
       lastName:string,
@@ -69,18 +53,7 @@ import {
     }
     callback: any
   }
-  export interface RegistrationSuccessPayload{
-    user: {
-      id: number;
-      fullName: string;
-      emailId: string;
-    };
-  }
-  export interface RegistrationFailurePayload{
-    error: string;
-  }
 
-  
   export interface ChangePasswordPayload{
     values: {
       emailId: string,
@@ -89,14 +62,6 @@ import {
     };
     callback: any;
   }
-  export interface ChangePasswordSuccessPayload {
-    isValid: boolean;
-    message: string;
-    data?: any;
-  }
-  export interface ChangePasswordFailurePayload{
-    error: string;
-  }
 
   export interface LoginRequest {
     type: typeof LOGIN_REQUEST;
@@ -104,24 +69,24 @@ import {
   }
   export type LoginSuccess = {
     type: typeof LOGIN_SUCCESS;
-    payload: LoginSuccessPayload;
+    payload: LoginResponse;
   };
   export type LoginFailure = {
     type: typeof LOGIN_FAILURE;
-    payload: LoginFailurePayload;
+    payload: GENERIC.FailureResponse;
   };
   
-  export interface RegistrationRequest {
-    type: typeof REGISTRATION_REQUEST,
-    payload: RegistrationPayload;
+  export interface SignupRequest {
+    type: typeof SIGNUP_REQUEST,
+    payload: SignupPayload;
   }
-  export type RegistrationSuccess = {
-    type: typeof REGISTRATION_SUCCESS,
-    payload: RegistrationSuccessPayload;
+  export type SignupSuccess = {
+    type: typeof SIGNUP_SUCCESS,
+    payload: GENERIC.SaveSuccessResponse;
   }
-  export type RegistrationFailure = {
-    type: typeof REGISTRATION_FAILURE,
-    payload: RegistrationFailurePayload; 
+  export type SignupFailure = {
+    type: typeof SIGNUP_FAILURE,
+    payload: GENERIC.FailureResponse; 
   }
 
   export type ChangePasswordRequest = {
@@ -130,20 +95,20 @@ import {
   }
   export type ChangePasswordSuccess = {
     type: typeof CHANGE_PASSWORD_SUCCESS,
-    payload: ChangePasswordSuccessPayload
+    payload: GENERIC.SaveSuccessResponse
   }
   export type ChangePasswordFailure = {
     type: typeof CHANGE_PASSWORD_FAILURE,
-    payload: ChangePasswordFailurePayload
+    payload: GENERIC.FailureResponse
   }
 
   export type AuthActions =
     | LoginRequest
     | LoginSuccess
     | LoginFailure
-    | RegistrationRequest
-    | RegistrationSuccess
-    | RegistrationFailure
+    | SignupRequest
+    | SignupSuccess
+    | SignupFailure
     | ChangePasswordRequest
     | ChangePasswordSuccess
     | ChangePasswordFailure

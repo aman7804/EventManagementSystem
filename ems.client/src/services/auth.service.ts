@@ -1,32 +1,19 @@
 // eslint-disable import/no-cycle 
 import {
   ILogin,
-  ILoginResponse,
-  IRegistration,
-  IChangePassword,
-  IRegistrationResponse,
+  ISignup,
+  IChangePassword
 } from "../interfaces/auth.interface";
-import { IApiSuccessResponse } from "../interfaces/generic.interface";
 import baseService from "./base.service";
-import { AxiosResponse } from "axios";
 import { clearCookie } from "utils/helper";
 
 const baseLoginUrl = "/api/Auth";
 
-const login = async (
-  requestBody: ILogin,
-): Promise<AxiosResponse<IApiSuccessResponse<ILoginResponse>>> =>
-  baseService.post<IApiSuccessResponse<ILoginResponse>>(
-    `${baseLoginUrl}/login`,
-    requestBody,
-  );
+const login = async ( requestBody: ILogin ) =>
+  baseService.post(`${baseLoginUrl}/login`, requestBody );
 
-const registration = async(
-  requestBody: IRegistration,
-): Promise<AxiosResponse<IApiSuccessResponse<IRegistrationResponse>>> =>
-  baseService.post<IApiSuccessResponse<IRegistrationResponse>>(
-    `${baseLoginUrl}/signup`, requestBody
-  );
+const signup = async( requestBody: ISignup ) =>
+  baseService.post(`${baseLoginUrl}/signup`, requestBody);
 
 const changePassword = async( payload: IChangePassword) =>
   baseService.put(`${baseLoginUrl}/change-password`, payload);
@@ -41,7 +28,7 @@ const signOut = (): void => {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   login,  
-  registration,
+  signup,
   signOut,
   changePassword
 };

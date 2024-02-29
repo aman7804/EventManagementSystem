@@ -12,28 +12,25 @@ import {
   InputLabel,
   OutlinedInput,
   TextField,
-  Typography,
-  Select,
-  MenuItem,
+  Typography
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import * as images from "../../assets/images";
-import { IRegistration, IRegistrationContainerDispatch } from "../../interfaces/auth.interface";
+import { ISignup, ISignupContainerDispatch } from "../../interfaces/auth.interface";
 import { useNavigate } from "react-router";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { LoginSuccessPayload } from "store/auth/types";
 import { toast } from "react-toastify";
 import { EMAIL_PATTERN, MOBILE_PATTERN, PASSWORD_PATTERN } from "utils/constants";
 import { useForm } from "react-hook-form";
 import {Link} from "react-router-dom"
 import { showLoader } from "utils/helper";
-import { IIndexable } from "components/venue.create";
 import { CustomMobileComponent } from "components/user.create";
+import { IApiSuccessResponse, IIndexable } from "interfaces/generic.interface";
 
-export type RegistrationProps = IRegistrationContainerDispatch;
+export type SignupProps = ISignupContainerDispatch;
 
-const fieldNames : IIndexable = {
+const fieldNames : IIndexable<ISignup> = {
   firstName: "First Name",
   lastName: "Last Name",
   emailId: "Email",
@@ -42,14 +39,14 @@ const fieldNames : IIndexable = {
   address: "Address"
 }
 
-export const RegistrationForm = (props: RegistrationProps) => {
+export const SignupForm = (props: SignupProps) => {
   const [showPassword, setShowPassword] = React.useState(false);
   
 
   const maxFirstNameLength = 50;
   const maxLastNameLength = 50;
   const maxEmailIdLength = 256;
-  const maxPasswordLength = 256;
+  const maxPasswordLength = 16;
   const maxAddressLength = 500; 
   const [mobileNoValue, setMobileNoValue] = useState<string|undefined>("");
 
@@ -64,7 +61,7 @@ export const RegistrationForm = (props: RegistrationProps) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IRegistration>();
+  } = useForm<ISignup>();
 
   useEffect(() => {
     AOS.init({
@@ -76,32 +73,39 @@ export const RegistrationForm = (props: RegistrationProps) => {
   }, []);
 
 
-  const getErrorMessage = (fieldName: keyof IRegistration, type: string|undefined): string => {
+  const getErrorMessage = (fieldName: keyof ISignup, type: string|undefined): string => {
     if(type){
       switch(type){
         case "required":
           return `${fieldNames[fieldName]} is required.`
         case "pattern":
-          return `Invalid ${fieldNames[fieldName].toLowerCase()}.`
-          case "maxLength":
-            switch (fieldName) {
-              case "firstName":
-                return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
-                    ${maxFirstNameLength}.`;
-              case "lastName":
-                return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
-                    ${maxLastNameLength}.`;
-              case "address":
-                return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
-                    ${maxAddressLength}.`;
-              case "emailId":
-                return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
-                    ${maxEmailIdLength}.`;
-              case "password":
-                return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
-                    ${maxPasswordLength}.`;
-            }
-            break;
+          switch(fieldName){
+            case "emailId":
+              return `Invalid ${fieldNames[fieldName]?.toLowerCase()}.`
+            case "password":
+              return `Password must be 8+ characters with a special character,
+              number, and uppercase letter.`;
+          }
+          break;
+        case "maxLength":
+          switch (fieldName) {
+            case "firstName":
+              return `Maximum length of ${fieldNames[fieldName]?.toLowerCase()} is
+                  ${maxFirstNameLength}.`;
+            case "lastName":
+              return `Maximum length of ${fieldNames[fieldName]?.toLowerCase()} is
+                  ${maxLastNameLength}.`;
+            case "address":
+              return `Maximum length of ${fieldNames[fieldName]?.toLowerCase()} is
+                  ${maxAddressLength}.`;
+            case "emailId":
+              return `Maximum length of ${fieldNames[fieldName]?.toLowerCase()} is
+                  ${maxEmailIdLength}.`;
+            case "password":
+              return `Maximum length of ${fieldNames[fieldName]?.toLowerCase()} is
+                  ${maxPasswordLength}.`;
+          }
+          break;
         default:
           return ""
       }
@@ -109,7 +113,7 @@ export const RegistrationForm = (props: RegistrationProps) => {
     return ""
   }
 
-  const getError = (fieldName: keyof IRegistration): string => {
+  const getError = (fieldName: keyof ISignup): string => {
     switch(fieldName){
       case "firstName":
         return getErrorMessage(fieldName, errors?.firstName?.type);
@@ -128,14 +132,14 @@ export const RegistrationForm = (props: RegistrationProps) => {
     }
   }
 
-  const onRegistrationSuccess = async (response: LoginSuccessPayload) => {
+  const onSignupSuccess = async (response: IApiSuccessResponse<null>) => {
     navigate("/login");
-    toast.success("Registration successful");
+    toast.success("Signup successful");
   };
 
-  const onSubmit = async (data: IRegistration) => {
-    const { registrationRequest } = props;
-    if (registrationRequest) {
+  const onSubmit = async (data: ISignup) => {
+    const { signupRequest } = props;
+    if (signupRequest) {
       showLoader();
       const payload = {
         values: {
@@ -146,10 +150,10 @@ export const RegistrationForm = (props: RegistrationProps) => {
           emailId: data.emailId,
           password: data.password,
         },
-        callback: onRegistrationSuccess,
+        callback: onSignupSuccess,
       };
 
-      registrationRequest(payload);
+      signupRequest(payload);
     }
   };
 
@@ -176,7 +180,7 @@ export const RegistrationForm = (props: RegistrationProps) => {
             >
               <CardContent>
                 <Typography variant="h2" className="card-heading">
-                  Registration
+                  Signup
                 </Typography>
                 <div className="login-content-form">
                   <Grid container rowSpacing={0.1} columnSpacing={2}>
@@ -262,8 +266,7 @@ export const RegistrationForm = (props: RegistrationProps) => {
                           htmlFor="password"
                           error={!!errors.password}
                         >
-                          Password{" "}
-                          <span className="color-red">*</span>
+                          Password <span className="color-red">*</span>
                         </InputLabel>
                         <OutlinedInput
                           id="password"
@@ -297,6 +300,7 @@ export const RegistrationForm = (props: RegistrationProps) => {
                           {...register("password", {
                             required: true,
                             pattern: PASSWORD_PATTERN,
+                            maxLength: maxPasswordLength
                           })}
                         />
                         {!!errors.password && (
@@ -365,4 +369,4 @@ export const RegistrationForm = (props: RegistrationProps) => {
   );
 };
 
-export default RegistrationForm;
+export default SignupForm;

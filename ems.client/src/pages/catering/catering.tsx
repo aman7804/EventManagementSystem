@@ -43,6 +43,7 @@ import AddEditCatering from "components/catering.create";
 import projectTheme from "App.theme";
 import * as GENERIC from "interfaces/generic.interface";
 import { get } from "lodash";
+import EnhancedTableHead from "components/elements/EnhancedTableHead";
 
 const ArrowBackIcon = () =>
   <img src={arrowBackwardIcon} alt="arrow-backward" />;
@@ -53,50 +54,11 @@ const ArrowForwardIcon = () =>
 const capitalization = (str: string): string => 
   str.charAt(0).toUpperCase() + str.slice(1);
 
-// child-component
-interface EnhancedTableProps {
-  onRequestSort: (
-    event: React.MouseEvent<unknown>,
-    newOrderBy: keyof ICatering
-  ) => void;
-  order: Order;
-  orderBy: string;
-  columnHeader: string;
-  columnName: keyof ICatering;
-  align?: "left" | "center" | "right" | "justify" | "inherit" | undefined;
-  width?: string | number | undefined;
+const columnDisplayName: GENERIC.IIndexable<ICatering> = {
+  name: "Name",
+  description: "Description",
+  price: "Price",
 }
-const EnhancedTableHead = (props: EnhancedTableProps) => {
-  const { order, orderBy, onRequestSort, align, width } = props;
-  const createSortHandler =
-    (newOrderBy: keyof ICatering) => (event: React.MouseEvent<unknown>) =>
-      onRequestSort(event, newOrderBy);
-
-  interface ColumnDisplayName{
-    [key: string] : string;    
-  }
-
-  const columnDisplayName: ColumnDisplayName = {
-    name: "Name",
-    description: "Description",
-    price: "Price",
-  }
-  
-  return (
-    <TableCell
-      key={props.columnHeader}
-      align={align || "left"}
-      onClick={createSortHandler(props.columnName)}
-      sortDirection={orderBy === props.columnName ? order : false}
-      width={width}
-    >
-      {columnDisplayName[props.columnName]}
-      <Box component="span" className="sorting-icon" />
-    </TableCell>    
-  );
-};
-
-
 export type CateringProps = ICateringContainerState &
   ICateringContainerDispatch;
 
@@ -314,6 +276,7 @@ const CateringForm: React.FC<CateringProps> = (props) => {
                               onRequestSort={handleRequestSort}
                               columnName="name"
                               columnHeader="Catering"
+                              columnDisplayName={columnDisplayName}
                             />
                             <EnhancedTableHead
                               order={order}
@@ -321,6 +284,7 @@ const CateringForm: React.FC<CateringProps> = (props) => {
                               onRequestSort={handleRequestSort}
                               columnName="description"
                               columnHeader="Description"
+                              columnDisplayName={columnDisplayName}
                             />
                             <EnhancedTableHead
                               order={order}
@@ -330,6 +294,7 @@ const CateringForm: React.FC<CateringProps> = (props) => {
                               columnHeader="Price"
                               align="right"
                               width={200}
+                              columnDisplayName={columnDisplayName}
                             />
                             <TableCell
                               align="center"

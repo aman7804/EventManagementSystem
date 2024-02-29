@@ -22,7 +22,6 @@ function* listSaga(action: any) {
       data: response.data
     });
   } catch (e: any) {
-    console.log("saga error:",e)
     yield put(
       dropDownListFailure({
         message: e.response?.data?.split("\n")[0] || e.message

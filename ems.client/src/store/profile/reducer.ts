@@ -5,10 +5,11 @@ import { ProfileState } from "interfaces/profile.interface";
 
 const initialState: ProfileState= {
   pending: false,
-  user: null
+  user: null,
+  error: null,
 };
 
-const reducers = (state = initialState, action: ProfileActions): unknown => {
+const reducers = (state = initialState, action: ProfileActions) => {
   switch (action.type) {
     case ACTION_TYPE.GET_REQUEST:
       return {

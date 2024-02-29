@@ -1,6 +1,7 @@
 import { arrowProfileIcon, accountIcon} from "assets/images";
 import { Avatar, Box, Button, Typography } from "@mui/material";
-import { IRegistrationResponse } from "../../interfaces/auth.interface";
+import { ILoginResponse } from "../../interfaces/auth.interface";
+import { IProfile } from "interfaces/profile.interface";
 
 export type CustomProps = {
   profileOpen: boolean;
@@ -8,10 +9,11 @@ export type CustomProps = {
 };
 
 export type UserProfileSectionProps = {
-  user: IRegistrationResponse | null;
+  user: ILoginResponse | IProfile | null;
 } & CustomProps;
 
 const UserProfileSection = ({ user, ...props }: UserProfileSectionProps) => {
+  console.log(user)
   return (
     <>
       <Button
@@ -26,8 +28,8 @@ const UserProfileSection = ({ user, ...props }: UserProfileSectionProps) => {
         <Avatar src={accountIcon} alt="profile" />
         <Box className="profile-info">
           <Box>
-            <Typography variant="h5" ml={1}> 
-              {user?.fullName}
+            <Typography variant="h5" ml={1}>
+              {user?.firstName} {user?.lastName}
             </Typography>
             {/* <Typography variant="h6">{user?.roleName}</Typography> */}
           </Box>

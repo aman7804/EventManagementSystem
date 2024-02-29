@@ -12,31 +12,26 @@ import { useEffect } from "react";
 import { CustomNumericFormatProps } from "components/elements/NumericFormControl";
 import { NumericFormat, NumericFormatProps } from "react-number-format";
 import React from "react";
-import { EMAIL_PATTERN, MOBILE_PATTERN } from "utils/constants";
-import * as GENERIC from "interfaces/generic.interface"
+import { MOBILE_PATTERN } from "utils/constants";
+import {IApiSuccessResponse, SaveRequestPayload, IIndexable} from "interfaces/generic.interface"
 import { IProfile, IProfileContainerDispatch, IProfileContainerState } from "interfaces/profile.interface";
 import { saveIcon } from "assets/images";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { showLoader } from "utils/helper";
+import ReadonlyTextfield from "components/elements/ReadonlyTextfield";
 
 export type ProfileProps = IProfileContainerState &
   IProfileContainerDispatch;
 
-export interface IIndexable {
-  [key: string]: any;
-}
-
-const fieldNames: IIndexable = {
+const fieldNames: IIndexable<IProfile> = {
   firstName: "First-Name",
   lastName: "Last-Name",
   emailId: "EmailId",
   mobileNo: "Mobile Number",
-  password: "Password",
   address: "Address",
 };
 
-export const CustomMobileComponent = React.forwardRef<
+const CustomMobileComponent = React.forwardRef<
   NumericFormatProps,
   CustomNumericFormatProps
 >((props, ref) => { 
@@ -56,12 +51,10 @@ export const CustomMobileComponent = React.forwardRef<
 const ProfileComponent: React.FC<ProfileProps> = ({
   getRequest, updateRequest, profile, pending
 }) => {
-  const navigate = useNavigate() ;
 
   const maxFirstNameLength = 50;
   const maxLastNameLength = 50;
-  const maxPasswordLength = 256;
-  const maxAddressLength = 500; 
+  const maxAddressLength = 500;
 
   const {
     register,
@@ -81,9 +74,8 @@ const ProfileComponent: React.FC<ProfileProps> = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[profile])
 
-
   const getErrorMessage = (
-    fieldName: string,
+    fieldName: keyof IProfile,
     type: string | undefined
   ): string => {
     if (type) {
@@ -93,17 +85,14 @@ const ProfileComponent: React.FC<ProfileProps> = ({
         case "maxLength":
           switch (fieldName) {
             case "firstName":
-              return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
+              return `Maximum length of ${fieldNames[fieldName]?.toLowerCase()} is
                   ${maxFirstNameLength}.`;
             case "lastName":
-              return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
+              return `Maximum length of ${fieldNames[fieldName]?.toLowerCase()} is
                   ${maxLastNameLength}.`;
             case "address":
-              return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
+              return `Maximum length of ${fieldNames[fieldName]?.toLowerCase()} is
                   ${maxAddressLength}.`;
-            case "password":
-              return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
-                  ${maxPasswordLength}.`;
           }
           break;
         case "min":
@@ -111,7 +100,7 @@ const ProfileComponent: React.FC<ProfileProps> = ({
         case "max":
           return `${fieldNames[fieldName]} cannot be more than Maximum Capacity.`;
         case "pattern":
-          return `Invalid ${(fieldNames[fieldName]).toLowerCase()}`;
+          return `Invalid ${fieldNames[fieldName]?.toLowerCase()}`;
         default:
           return "";
       }
@@ -133,15 +122,13 @@ const ProfileComponent: React.FC<ProfileProps> = ({
     }
   };
 
-  const onUpdateProfile = (response: GENERIC.IApiSuccessResponse<IProfile>) => {
+  const onUpdateProfile = (response: IApiSuccessResponse<IProfile>) => {
     toast.success("Profile  Updated Successfully");
-  }
-  const onProfileClose = () => {
-    navigate("/")
+    getRequest();
   }
 
   const beginSubmit = (formData: IProfile) => {
-    const payload: GENERIC.SaveRequestPayload<IProfile> = {
+    const payload: SaveRequestPayload<IProfile> = {
       data: {
         id: formData.id,
         firstName: formData.firstName,
@@ -226,10 +213,10 @@ const ProfileComponent: React.FC<ProfileProps> = ({
                     required: true,
                     maxLength: maxAddressLength,
                   })}
-                />
+                  />
               </Grid>
               <Grid item xs={12} md={6} xl={6}>
-                <TextField
+                <ReadonlyTextfield
                   id="emailId"
                   label={
                     <>
@@ -240,9 +227,6 @@ const ProfileComponent: React.FC<ProfileProps> = ({
                   value={!pending ? profile?.emailId : undefined}
                   variant="outlined"
                   multiline
-                  InputProps={{
-                    readOnly: true,
-                  }}
                 />
               </Grid>
               <Grid item xs={12} xl={6} md={6}>
@@ -256,7 +240,7 @@ const ProfileComponent: React.FC<ProfileProps> = ({
                   {...register("mobileNo", {
                     pattern: MOBILE_PATTERN,
                   })}
-                  value={profile?.mobileNo || undefined} 
+                  value={profile?.mobileNo}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment sx={{marginLeft: 2}} position="start">
@@ -268,22 +252,11 @@ const ProfileComponent: React.FC<ProfileProps> = ({
                 />
               </Grid>
             </Grid>
-            <Grid container spacing={2}>
-              <Grid item>
-                <Button variant="contained" className="btn-save" type="submit">
-                  <img src={saveIcon} alt="save" />
-                  Update
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button
-                  variant="outlined"
-                  className="btn-cancel"
-                  onClick={onProfileClose}
-                >
-                  Back
-                </Button>
-              </Grid>
+            <Grid item>
+              <Button variant="contained" className="btn-save" type="submit">
+                <img src={saveIcon} alt="save" />
+                Update Profile
+              </Button>
             </Grid>
           </form>
           }

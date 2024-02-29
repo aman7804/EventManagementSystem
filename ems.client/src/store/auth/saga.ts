@@ -5,54 +5,46 @@ import {
   changePasswordSuccess,
   loginFailure,
   loginSuccess,
-  registrationFailure,
-  registrationSuccess,
+  signupFailure,
+  signupSuccess,
 } from "./actions";
 
 import {
   CHANGE_PASSWORD_REQUEST,
-  LOGIN_REQUEST, REGISTRATION_REQUEST,
+  LOGIN_REQUEST, SIGNUP_REQUEST,
 } from "./action.types";
 import authService from "services/auth.service";
-import {
-  LoginResponse, RegistrationResponse,
-} from "./types";
+import { LoginResponse } from "./types";
 import { IApiSuccessResponse } from "interfaces/generic.interface";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function* loginSaga(action: any) {
   try {
-    const response: LoginResponse = yield call(authService.login, {
-      emailId: action.payload.values.email,
-      password: action.payload.values.password,
-    });    
-    const successPayload = {
-      ...response.data,
-      rememberMe: true //action.payload.values.rememberMe,
-    };
-
+    const response: LoginResponse = yield call(
+      authService.login, action.payload.values
+    );
     yield put(
       loginSuccess({
-        token: response.data.token,
-        user: successPayload,
+        accessToken: response.data?.token,
+        data: response.data,
       }),
     );
     action.payload.callback({
-      token: response.data.token,
-      user: successPayload,
+      accessToken: response.data?.token,
+      data: response.data,
     });
   } catch (e: any) {
     yield put(
       loginFailure({
-        error: e.message,
+        message: e.response.data.split("\n")[0] || e.message
       }),
     );
   }
 }
 
-function* registrationSaga(action: any){
+function* signupSaga(action: any){
   try{
-    const response: RegistrationResponse = yield call(authService.registration,{
+    const response: IApiSuccessResponse<null> = yield call(authService.signup,{
       firstName: action.payload.values.firstName,
       lastName: action.payload.values.lastName,
       address: action.payload.values.address,
@@ -61,16 +53,14 @@ function* registrationSaga(action: any){
       password: action.payload.values.password
     })
     yield put(
-      registrationSuccess({
-        user: response.data
-      })
+      signupSuccess(response)
     );
-    action.payload.callback(response.data)
+    action.payload.callback(response)
   }
   catch(e: any){
     yield put(
-      registrationFailure({
-        error: e.response.data.split("\n")[0]
+      signupFailure({
+        message: e.response.data.split("\n")[0] || e.message
       })
     )
   }
@@ -91,7 +81,7 @@ function* changePasswordSaga(action: any){
   catch(e: any){
     yield put(
       changePasswordFailure({
-        error: e.response.data.split("\n")[0] || e.message
+        message: e.response.data.split("\n")[0] || e.message
       })
     )
   }
@@ -101,7 +91,7 @@ function* changePasswordSaga(action: any){
 function* authSaga() {
   yield all([
     takeEvery(LOGIN_REQUEST, loginSaga),
-    takeEvery(REGISTRATION_REQUEST, registrationSaga),
+    takeEvery(SIGNUP_REQUEST, signupSaga),
     takeEvery(CHANGE_PASSWORD_REQUEST, changePasswordSaga)
   ]);
 }

@@ -1,13 +1,14 @@
+import { JwtPayload } from "jwt-decode";
 import {
   ChangePasswordPayload,
-    LoginPayload, RegistrationPayload,
+    LoginPayload, SignupPayload,
   } from "store/auth/types";
   
   export interface ILogin {
     emailId: string;
     password: string;
   }
-  export interface IRegistration{
+  export interface ISignup{
     firstName:string,
     lastName:string,
     address: string,
@@ -30,22 +31,21 @@ import {
     roleName: string;
     id: number;
   }
-  export interface IRegistrationResponse{
-    id: number,
-    fullName: string,
-    emailId: string,
-  }
   
   export interface ILoginContainerState {
-    rememberMe: boolean;
+    isAdmin: boolean | undefined;
+    isAuthenticated: boolean | undefined;
   }
   
   export interface ILoginContainerDispatch {
     loginRequest: (payload: LoginPayload) => {};
   }
-  export interface IRegistrationContainerDispatch {
-    registrationRequest: (payload: RegistrationPayload) => {};
+  export interface ISignupContainerDispatch {
+    signupRequest: (payload: SignupPayload) => {};
   }
   export interface IChangePasswordContainerDispatch {
     changePasswordRequest: (payload: ChangePasswordPayload) => {};
   }
+  export interface IJwtTokenMeta extends JwtPayload {
+    role: string | undefined;
+  } 

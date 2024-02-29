@@ -1,10 +1,11 @@
 import { JWTToken } from "../../interfaces/jwtToken.interface";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
-import { LoginSuccessPayload } from "store/auth/types";
+import { LoginResponse } from "store/auth/types";
+import { IJwtTokenMeta } from "interfaces/auth.interface";
 
-export const setCookie = (name: string, value: string) => {
-  Cookies.set(name, value);
+export const setCookie = (name: string, value?: string) => {
+  if(value) Cookies.set(name, value);
 };
 
 export const setCookieWithExpiry = (name: string, value: string) => {
@@ -45,8 +46,8 @@ export const isTokenExpired = (token: string): boolean => {
 };
 
 
-export const setLoginDetails = async (loginDetails: LoginSuccessPayload) => {
-    setCookie("auth_token", loginDetails.token);
+export const setLoginDetails = async (loginDetails?: LoginResponse) => {
+    setCookie("auth_token", loginDetails?.accessToken);
 };
 
 export const showLoader = (): void => {
@@ -75,3 +76,12 @@ export const hideLoader = (): void => {
     wrapper.classList.remove("reduced-opacity-wrapper")
   }
 };
+
+export const isTokenForAdmin = (token?: string) => {
+  if (token) {
+    const decodeToken = jwtDecode<IJwtTokenMeta>(token);
+    if (decodeToken) 
+      return decodeToken?.role === "Admin";
+  }
+  return false;
+}

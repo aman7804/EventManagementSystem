@@ -17,14 +17,20 @@ const rootReducer = combineReducers<unknown>({
       storage,
     },
     authReducer,
-    ),
+  ),
   city: cityReducer,
   venue: venueReducer,
   photography: photographyReducer,
   decoration: decorationReducer,
   catering: cateringReducer,
   user: userReducer,
-  profile: profileReducer
+  profile: persistReducer(
+    {
+      key: "profile-details",
+      storage
+    },
+    profileReducer
+  )
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

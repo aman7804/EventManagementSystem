@@ -16,16 +16,22 @@ import {
 import React from "react";
 import * as images from "../../assets/images";
 import { IChangePasswordContainerDispatch } from "../../interfaces/auth.interface";
-import { ChangePasswordPayload, LoginSuccessPayload } from "store/auth/types";
+import { ChangePasswordPayload } from "store/auth/types";
 import { PASSWORD_PATTERN } from "utils/constants";
 import { useForm } from "react-hook-form";
 import { showLoader } from "utils/helper";
-import { IIndexable } from "components/venue.create";
 import { get } from "lodash";
+import { IApiSuccessResponse, IIndexable } from "interfaces/generic.interface"
 
 export type ChangePasswordProps = IChangePasswordContainerDispatch;
 
-const fieldNames : IIndexable = {
+interface PasswordVisibility {
+  oldPassword: boolean;
+  newPassword: boolean;
+  confirmPassword: boolean;
+}
+
+const fieldNames : IIndexable<PasswordVisibility> = {
   oldPassword: "Old Password",
   newPassword: "New Password",
   confirmPassword: "Confirm Password"
@@ -36,11 +42,6 @@ export const ChangePasswordForm = (props: ChangePasswordProps) => {
     event.preventDefault();
   };
 
-  interface PasswordVisibility {
-    oldPassword: boolean;
-    newPassword: boolean;
-    confirmPassword: boolean;
-  }
   const [passwordVisibility, setPasswordVisibility] = React.useState({
     oldPassword: false,
     newPassword: false,
@@ -68,7 +69,7 @@ export const ChangePasswordForm = (props: ChangePasswordProps) => {
 
   
 const maxPasswordLength = 16
-  const getErrorMessage = (fieldName: string, type: string|undefined): string => {
+  const getErrorMessage = (fieldName: keyof PasswordVisibility, type: string|undefined): string => {
     if(type){
       switch(type){
         case "required":
@@ -82,9 +83,9 @@ const maxPasswordLength = 16
             case "confirmPassword":
               return errors.confirmPassword?.message || ""
           }
-          return "Password must be different from older"
+          break;
         case "maxLength": 
-          return `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
+          return `Maximum length of ${fieldNames[fieldName]?.toLowerCase()} is
             ${maxPasswordLength}.`;
         default:
           return ""
@@ -92,7 +93,7 @@ const maxPasswordLength = 16
     }
     return ""
   }
-  const getError = (fieldName: string): string => {
+  const getError = (fieldName: keyof PasswordVisibility): string => {
     switch(fieldName){
       case "oldPassword":
         return getErrorMessage(fieldName, errors?.oldPassword?.type);
@@ -107,7 +108,7 @@ const maxPasswordLength = 16
   
   const bc = new BroadcastChannel("change_password")
 
-  const onChangePasswordSuccess = async (response: LoginSuccessPayload) => {
+  const onChangePasswordSuccess = async (response: IApiSuccessResponse<null>) => {
     bc.postMessage("Change-password successful")
     window.close();
   };

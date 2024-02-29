@@ -20,20 +20,23 @@ import React from "react";
 import authService from "services/auth.service";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { checkIsAuthenticated, getUserSelector } from "store/auth/selector";
+import { checkIsAdmin, checkIsAuthenticated, getUserSelector } from "store/auth/selector";
 import { connect, useSelector } from "react-redux";
 import { RootState } from "store/root/root.reducer";
-import { IRegistrationResponse } from "interfaces/auth.interface";
+import { ILoginResponse } from "interfaces/auth.interface";
 import UserProfileSection from "./profile.header";
+import { IProfile } from "interfaces/profile.interface";
+import { getProfileSelector } from "store/profile/selector";
   
 const bc = new BroadcastChannel("change_password")
 bc.onmessage=(e)=>{
   toast.success(e.data)
 }  
 
-const Header: React.FC<IGetUserProp> = ({user}) => {
+const Header: React.FC<IGetUserProp> = ({userDetails, userProfile}) => {
   const navigate = useNavigate();
-  
+  const isAdmin = useSelector(checkIsAdmin);
+
   const [profileMenu, setProfileMenu] = React.useState<null | HTMLElement>(null);
   const [profileOpen, setProfileOpen] = React.useState<boolean>(false);
 
@@ -42,9 +45,6 @@ const Header: React.FC<IGetUserProp> = ({user}) => {
     setProfileOpen(true)
   };
 
-  console.log("profileMenu: ",profileMenu)
-  console.log("profileOpen: ",profileOpen)
-  
   const handleProfileClose = () => {  
     setProfileMenu(null);
     setProfileOpen(false)
@@ -55,16 +55,11 @@ const Header: React.FC<IGetUserProp> = ({user}) => {
     navigate("/login");
   };
   
-  const goToChangePassword = () => 
-    window.open("/change-password", "_blank")
-  const goToProfile = () => 
-    navigate("User/profile")
-  const goToLogin = () => 
-    navigate("login")
-  const goToSignup = () => 
-    navigate("signup")
+  const goToChangePassword = () => window.open("/change-password", "_blank")
+  const goToProfile = () => navigate("User/profile")
+  const goToLogin = () => navigate("login")
+  const goToSignup = () => navigate("signup")
 
-  
   const isAuthenticated = useSelector(checkIsAuthenticated);
   return (
     <AppBar position="static" className="header">
@@ -102,7 +97,10 @@ const Header: React.FC<IGetUserProp> = ({user}) => {
         {
           isAuthenticated ?
           (<UserProfileSection
-            user={user}
+            user={
+              userProfile?.firstName && userProfile?.lastName
+              ? userProfile : userDetails
+            }
             profileOpen={profileOpen}
             handleProfileClick={handleProfileClick}
           />)
@@ -133,8 +131,11 @@ const Header: React.FC<IGetUserProp> = ({user}) => {
             sx={{ display: { xs: "flex", md: "none" } }}
             className="profile-info"
           >
-            <Typography variant="h5">{user?.fullName}</Typography>
-            <Typography variant="h6">Admin</Typography>
+            <Typography variant="h5">
+              {userProfile?.firstName || userDetails?.firstName}{" "}
+              {userProfile?.lastName || userDetails?.lastName}
+            </Typography>
+            <Typography variant="h6">{isAdmin ? "Admin" : "Customer"}</Typography>
           </MenuItem>
           <MenuItem onClick={handleProfileClose} title="Profile">
             <Button onClick={goToProfile}>
@@ -161,12 +162,14 @@ const Header: React.FC<IGetUserProp> = ({user}) => {
 };
 
 interface IGetUserProp{
-  user: IRegistrationResponse | null
+  userDetails: ILoginResponse | null;
+  userProfile: IProfile | null;
 }
 
 const mapStateToProps = (state: RootState) => {
   return {
-    user: getUserSelector(state),
+    userDetails: getUserSelector(state),
+    userProfile: getProfileSelector(state)
   };
 };
 

@@ -16,7 +16,7 @@ export type GetSuccess = {
 
 export type GetFailure = {
   type: typeof ACTION_TYPE.GET_FAILURE;
-  payload: GENERIC.GetFailureResponse;
+  payload: GENERIC.FailureResponse;
 };
 export type UpdateRequest = {
   type: typeof ACTION_TYPE.UPDATE_REQUEST;
@@ -30,7 +30,7 @@ export type UpdateSuccess = {
 
 export type UpdateFailure = {
   type: typeof ACTION_TYPE.UPDATE_FAILURE;
-  payload: GENERIC.SaveFailureResponse;
+  payload: GENERIC.FailureResponse;
 };
 
 

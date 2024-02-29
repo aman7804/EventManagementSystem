@@ -32,7 +32,11 @@
     name: string
   }
 
-  export interface ListFailureResponse {
+  export type IIndexable<T> = {
+    [key in keyof T]?: string;
+  }
+
+  export interface FailureResponse {
     message: string;
     data?: any;
   }
@@ -45,15 +49,9 @@
   
   export interface SaveSuccessResponse {
     isValid: boolean;
-    message: string;
+    message: string;  
     data?: any;
   }
-  
-  export interface SaveFailureResponse {
-    message: string;
-    data?: any;
-  }
-  
   
   export interface GetRequestPayload {
     data: { id: number};
@@ -66,11 +64,6 @@
     message?:string;
   }
   
-  export interface GetFailureResponse {
-    message: string;
-    data?: any;
-  }
-  
   export interface DeleteRequestPayload {
     data: {
       id: number;
@@ -81,11 +74,6 @@
   
   export interface DeleteSuccessResponse {
     isValid: boolean;
-    message: string;
-    data?: any;
-  }
-  
-  export interface DeleteFailureResponse {
     message: string;
     data?: any;
   }

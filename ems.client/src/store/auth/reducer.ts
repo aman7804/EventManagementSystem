@@ -2,9 +2,9 @@ import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
-    REGISTRATION_REQUEST,
-    REGISTRATION_SUCCESS,
-    REGISTRATION_FAILURE,
+    SIGNUP_REQUEST,
+    SIGNUP_SUCCESS,
+    SIGNUP_FAILURE,
     CHANGE_PASSWORD_REQUEST,
     CHANGE_PASSWORD_SUCCESS,
     CHANGE_PASSWORD_FAILURE
@@ -14,6 +14,7 @@ import {
   
   const initialState: AuthState = {
     pending: false,
+    user: null,
     token: "",
     error: null,
   };
@@ -29,8 +30,7 @@ import {
         return {
           ...state,
           pending: false,
-          token: action.payload.token,
-          user: action.payload.user,
+          user: action.payload,
           error: null,
         };
       case LOGIN_FAILURE:
@@ -38,25 +38,26 @@ import {
           ...state,
           pending: false,
           token: "",
-          error: action.payload.error,
+          error: action.payload.message,
         };    
       // Signup Logic is the same as Login logic but we do not store Token in State
-      case REGISTRATION_REQUEST:
+      case SIGNUP_REQUEST:
         return {
           ...state,
           pending: true,
         };
-      case REGISTRATION_SUCCESS:
+      case SIGNUP_SUCCESS:
         return {
           ...state,
           pending: false,
-          user: action.payload.user
+          success: action.payload.message, 
+          error: null
         };
-      case REGISTRATION_FAILURE:
+      case SIGNUP_FAILURE:
         return {
           ...state,
           pending: false,
-          error: action.payload.error
+          error: action.payload.message
         }
 
       case CHANGE_PASSWORD_REQUEST:
@@ -75,7 +76,7 @@ import {
         return {
           ...state,
           pending: false,
-          error: action.payload.error
+          error: action.payload.message
         }
       default:
         return state;

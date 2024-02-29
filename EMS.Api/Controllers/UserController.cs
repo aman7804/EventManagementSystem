@@ -42,8 +42,9 @@ namespace EMS.Api.Controllers
             {
                 RegisterDTO userDto = service.Map<SaveUserDTO, RegisterDTO>(dto);
                 userDto.Password = _authService.GeneratePassword();
-                return GetResult(new AuthenticateResponseDTO(await _authService.RegisterUser(userDto), null));
-            }
+                await _authService.RegisterUser(userDto);
+				return GetResult<UserDTO>(null, HttpStatusCode.OK);
+			}
             else
             {   
                 UserDTO userDto = service.Map<SaveUserDTO, UserDTO>(dto);

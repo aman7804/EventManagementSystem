@@ -16,7 +16,6 @@ axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 axios.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    console.log(config);
     let isTokenRequired = true;
     if (config.url?.includes("/login")) {
       isTokenRequired = false;
@@ -54,10 +53,8 @@ axios.interceptors.response.use(
         break;
       case HttpStatusCodes.InternalServerError:
         if (Config.env.NodeEnv === NODE_ENV_TYPES.Development) {
-          console.log(INTERNAL_SERVER_ERROR);
           toast.error(INTERNAL_SERVER_ERROR);
         } else {
-          console.log(SOMETHING_WENT_WRONG);
           toast.error(SOMETHING_WENT_WRONG);
         }
         break;
