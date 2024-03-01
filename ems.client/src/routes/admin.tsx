@@ -28,7 +28,7 @@ export default function adminPrivateRoutes() {
     {path: "/admin/decoration", element: <ProtectedRoute outlet={<Decoration />} />},
     {path: "/admin/catering", element: <ProtectedRoute outlet={<Catering />} />},
     {path: "/admin/users", element: <ProtectedRoute outlet={<User />} />},
-    {path: "/admin/package", element: <ProtectedRoute outlet={<Package />} />},
+    {path: "/admin/packages", element: <ProtectedRoute outlet={<Package />} />},
     {path: "/admin/*", element: <Navigate to="/" replace />}
   ]
 }
