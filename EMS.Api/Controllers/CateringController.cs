@@ -43,5 +43,9 @@ namespace EMS.Api.Controllers
         [HttpPost("list")]
         public async Task<IActionResult> List(PaginationDTO<CateringDTO, CateringFilter> pagination) =>
             GetResult(await service.GetPageAsync(pagination));
-    }
+
+		[HttpGet("drop-down-list")]
+		public async Task<IActionResult> GetDropdownList() =>
+			GetResult(await service.GetDropDownList());
+	}
 }

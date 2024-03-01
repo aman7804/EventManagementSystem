@@ -4,5 +4,9 @@ using EMS.Service.DTO;
 
 namespace EMS.Service.CateringModule
 {
-    public interface ICateringService : IBaseService<CateringEntity, CateringDTO> { }
+    public interface ICateringService : IBaseService<CateringEntity, CateringDTO>
+    {
+		Task<List<DropDownDTO>> GetDropDownList();
+
+	}
 }

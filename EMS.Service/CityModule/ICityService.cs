@@ -4,5 +4,8 @@ using EMS.Service.DTO;
 
 namespace EMS.Service.CityModule
 {
-    public interface ICityService : IBaseService<CityEntity, CityDTO> { }
+    public interface ICityService : IBaseService<CityEntity, CityDTO>
+    {
+		Task<List<DropDownDTO>> GetDropDownList();
+	}
 }
