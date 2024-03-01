@@ -4,5 +4,9 @@ using EMS.Service.DTO;
 
 namespace EMS.Service.PhotographyModule
 {
-    public interface IPhotographyService : IBaseService<PhotographyEntity, PhotographyDTO> { }
+    public interface IPhotographyService : IBaseService<PhotographyEntity, PhotographyDTO>
+    {
+		Task<List<DropDownDTO>> GetDropDownList();
+
+	}
 }

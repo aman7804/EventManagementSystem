@@ -4,5 +4,9 @@ using EMS.Service.DTO;
 
 namespace EMS.Service.DecorationModule
 {
-    public interface IDecorationService : IBaseService<DecorationEntity, DecorationDTO> { }
+    public interface IDecorationService : IBaseService<DecorationEntity, DecorationDTO>
+    {
+		Task<List<DropDownDTO>> GetDropDownList();
+
+	}
 }

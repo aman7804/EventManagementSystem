@@ -47,7 +47,7 @@ namespace EMS.Api.Controllers
         public async Task<IActionResult> GetDropdownList(int stateId = 0)
         {
             return stateId == 0
-                ? GetResult(await service.GetAllAsync(null))
+                ? GetResult(await service.GetDropDownList())
                 : GetResult(await service.GetAllAsync(x => x.StateId == stateId));
         }
     }
