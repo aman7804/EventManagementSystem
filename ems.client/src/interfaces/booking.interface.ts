@@ -9,12 +9,16 @@ export interface IBooking {
   totalAmount: number;
   dueAmount: number;
   packageId: number;
-  status: string;
+  packageName: string;
+  customerId: number;
+  customerName: string;
+  status: number;
 }
 
 /* Search Model */
 export interface IBookingSearch {
   search?: string;
+  date?: string;
 }
 
 /* Pagination Model */

@@ -20,6 +20,9 @@ const User = lazy(
 const Package = lazy(
   () => import("pages/package")
 );
+const Booking = lazy(
+  () => import("pages/booking")
+);
 
 export default function adminPrivateRoutes() {
   return [
@@ -29,6 +32,7 @@ export default function adminPrivateRoutes() {
     {path: "/admin/catering", element: <ProtectedRoute outlet={<Catering />} />},
     {path: "/admin/users", element: <ProtectedRoute outlet={<User />} />},
     {path: "/admin/packages", element: <ProtectedRoute outlet={<Package />} />},
+    {path: "/admin/booking", element: <ProtectedRoute outlet={<Booking />} />},
     {path: "/admin/*", element: <Navigate to="/" replace />}
   ]
 }

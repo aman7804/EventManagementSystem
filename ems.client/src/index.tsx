@@ -12,6 +12,8 @@ import { ToastContainer } from "react-toastify";
 import { PersistGate } from "redux-persist/integration/react";
 import "../node_modules/aos/dist/aos.css";
 import "react-toastify/dist/ReactToastify.css";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 const root = createRoot(
   document.getElementById("root") as HTMLElement
@@ -35,7 +37,9 @@ root.render(
               pauseOnHover
             />
             <Loader />
-            <App />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <App />
+            </LocalizationProvider>
           </PersistGate>
         </ThemeProvider>
       </Provider>
