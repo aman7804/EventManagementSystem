@@ -36,7 +36,14 @@ namespace EMS.Service.AutoMapper
                 .ForMember(x => x.PhotographyDescription, opt => opt.MapFrom(y => y.Photography.Description));
             CreateMap<BookingEntity, BookingDTO>()
                 .ForMember(x => x.PackageName, opt => opt.MapFrom(y => y.Package.Name))
-                .ReverseMap();
+                .ForMember(x => x.CustomerFirstName, opt => opt.MapFrom(u => u.Customer.FirstName))
+                .ForMember(x => x.CustomerLastName, opt => opt.MapFrom(u => u.Customer.LastName))
+                .ForMember(x => x.CustomerEmailId, opt => opt.MapFrom(u => u.Customer.EmailId))
+                .ForMember(x => x.CustomerMobileNo, opt => opt.MapFrom(u => u.Customer.MobileNo))
+                .ForMember(x => x.VenueName, opt => opt.MapFrom(p => p.Package.Venue.Name))
+                .ForMember(x => x.PhotographyName, opt => opt.MapFrom(p => p.Package.Photography.Name))
+                .ForMember(x => x.CateringName, opt => opt.MapFrom(p => p.Package.Catering.Name))
+                .ForMember(x => x.DecorationName, opt => opt.MapFrom(p => p.Package.Decoration.Name));
             CreateMap<BookingEntity, GetBookingDTO>()
                 .ForPath(x => x.PackageDetail.VenueName, opt=> opt.MapFrom(y => y.Package.Venue.Name))
                 .ForPath(x => x.PackageDetail.VenueAddress, opt=> opt.MapFrom(y => y.Package.Venue.Address))

@@ -36,11 +36,20 @@ namespace EMS.Service.BookingModule
                 Map<Expression<Func<BookingDTO, bool>>, Expression<Func<BookingEntity, bool>>>
                 (expression);
             IQueryable<BookingEntity> bookings = _bookingRepository.GetAll(where)
-                .Include(p => p.Package);
+                .Include(p => p.Package)
+                // for searching purpose
+                    .ThenInclude(v => v.Venue)
+                .Include(p => p.Package)
+                    .ThenInclude(p => p.Photography)
+                .Include(p => p.Package)
+                    .ThenInclude(v => v.Catering)
+                .Include(p => p.Package)
+                    .ThenInclude(p => p.Decoration)
+                .Include(u => u.Customer);
 
-            //Apply condition for each filter
+			//Apply condition for each filter
 
-            paginationDTO.RecordCount = await bookings.CountAsync();
+			paginationDTO.RecordCount = await bookings.CountAsync();
 
             if (!string.IsNullOrWhiteSpace(paginationDTO.SortByColumns))
             {

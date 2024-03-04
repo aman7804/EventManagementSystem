@@ -8,8 +8,29 @@ namespace EMS.Service.DTO.Filter
 
         public override Expression<Func<BookingDTO, bool>> GetFilter()
         {
-            Expression<Func<BookingDTO, bool>> filter = x => x.Id.Equals(int.Parse(Search));
-            return filter;
+            if(Search != null)
+            {
+                Expression<Func<BookingDTO, bool>> filter;
+
+                if (Search.Length == 10 && int.TryParse(Search, out _))
+                    return x => x.CustomerMobileNo.Equals(int.Parse(Search));
+                else if (int.TryParse(Search, out _))
+                    return x =>
+                        x.MinGuest.Equals(int.Parse(Search)) ||
+                        x.MaxGuest.Equals(int.Parse(Search));
+                else
+                    return filter = x =>
+                        x.PackageName.Contains(Search) ||
+                        x.CustomerFirstName.Contains(Search) ||
+                        x.CustomerLastName.Contains(Search) ||
+                        x.CustomerEmailId.Contains(Search) ||
+                        x.CustomerMobileNo.Contains(Search) ||
+                        x.VenueName.Contains(Search) ||
+                        x.PhotographyName.Contains(Search) ||
+                        x.CateringName.Contains(Search) ||
+                        x.DecorationName.Contains(Search);
+            }
+            return x => true;
         }
 
     }
