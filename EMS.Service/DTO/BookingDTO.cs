@@ -6,6 +6,7 @@ namespace EMS.Service.DTO
     public class BookingDTO : BaseDTO
     {
         public int CustomerId { get; set; }
+        public string CustomerName { get; set; } = string.Empty!;
         public int MinGuest { get; set; }
         public int MaxGuest { get; set; }
         public decimal TotalAmount { get; set; }

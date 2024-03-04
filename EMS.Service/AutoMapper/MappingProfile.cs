@@ -36,6 +36,7 @@ namespace EMS.Service.AutoMapper
                 .ForMember(x => x.PhotographyDescription, opt => opt.MapFrom(y => y.Photography.Description));
             CreateMap<BookingEntity, BookingDTO>()
                 .ForMember(x => x.PackageName, opt => opt.MapFrom(y => y.Package.Name))
+                .ForMember(x => x.CustomerName, opt => opt.MapFrom(n => n.Customer.FirstName + " " + n.Customer.LastName))
                 .ForMember(x => x.CustomerFirstName, opt => opt.MapFrom(u => u.Customer.FirstName))
                 .ForMember(x => x.CustomerLastName, opt => opt.MapFrom(u => u.Customer.LastName))
                 .ForMember(x => x.CustomerEmailId, opt => opt.MapFrom(u => u.Customer.EmailId))
