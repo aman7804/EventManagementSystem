@@ -5,13 +5,36 @@ namespace EMS.Service.DTO.Filter
     public class BookingFilter: FilterBase<BookingDTO>
     {
         public string Search { get; set; } = string.Empty;
+		public DateTime Date { get; set; } = DateTime.MinValue.Date;
 
         public override Expression<Func<BookingDTO, bool>> GetFilter()
         {
-            if(Search != null)
+            if(!string.IsNullOrWhiteSpace(Search) && Date != DateTime.MinValue.Date)
             {
-                Expression<Func<BookingDTO, bool>> filter;
-
+                if (Search.Length == 10 && int.TryParse(Search, out _))
+                    return x => x.CustomerMobileNo.Equals(int.Parse(Search)) && x.DateTime.Date.Equals(Date);
+                else if (int.TryParse(Search, out _))
+                    return x =>
+                        x.DateTime.Date.Equals(Date) &&
+                        (x.MinGuest.Equals(int.Parse(Search)) ||
+                        x.MaxGuest.Equals(int.Parse(Search)));
+                else
+                    return x =>
+                        x.DateTime.Date.Equals(Date) &&
+                        (
+                            x.PackageName.Contains(Search) ||
+                            x.CustomerFirstName.Contains(Search) ||
+                            x.CustomerLastName.Contains(Search) ||
+                            x.CustomerEmailId.Contains(Search) ||
+                            x.CustomerMobileNo.Contains(Search) ||
+                            x.VenueName.Contains(Search) ||
+                            x.PhotographyName.Contains(Search) ||
+                            x.CateringName.Contains(Search) ||
+                            x.DecorationName.Contains(Search)
+                        );
+			}
+            if(!string.IsNullOrWhiteSpace(Search))
+            {
                 if (Search.Length == 10 && int.TryParse(Search, out _))
                     return x => x.CustomerMobileNo.Equals(int.Parse(Search));
                 else if (int.TryParse(Search, out _))
@@ -19,7 +42,7 @@ namespace EMS.Service.DTO.Filter
                         x.MinGuest.Equals(int.Parse(Search)) ||
                         x.MaxGuest.Equals(int.Parse(Search));
                 else
-                    return filter = x =>
+                    return x =>
                         x.PackageName.Contains(Search) ||
                         x.CustomerFirstName.Contains(Search) ||
                         x.CustomerLastName.Contains(Search) ||
@@ -30,6 +53,9 @@ namespace EMS.Service.DTO.Filter
                         x.CateringName.Contains(Search) ||
                         x.DecorationName.Contains(Search);
             }
+            if (Date != DateTime.MinValue.Date)
+                return x => x.DateTime.Date.Equals(Date);
+
             return x => true;
         }
 

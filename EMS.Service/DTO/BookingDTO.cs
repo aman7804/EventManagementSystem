@@ -23,5 +23,6 @@ namespace EMS.Service.DTO
         [JsonIgnore] public string PhotographyName = string.Empty!;
         [JsonIgnore] public string DecorationName = string.Empty!;
         [JsonIgnore] public string CateringName = string.Empty!;
+        [JsonIgnore] public DateTime DateTime;
     }
 }

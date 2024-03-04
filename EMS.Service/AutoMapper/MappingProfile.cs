@@ -44,6 +44,7 @@ namespace EMS.Service.AutoMapper
                 .ForMember(x => x.PhotographyName, opt => opt.MapFrom(p => p.Package.Photography.Name))
                 .ForMember(x => x.CateringName, opt => opt.MapFrom(p => p.Package.Catering.Name))
                 .ForMember(x => x.DecorationName, opt => opt.MapFrom(p => p.Package.Decoration.Name));
+            CreateMap<BookingDTO, BookingEntity>();
             CreateMap<BookingEntity, GetBookingDTO>()
                 .ForPath(x => x.PackageDetail.VenueName, opt=> opt.MapFrom(y => y.Package.Venue.Name))
                 .ForPath(x => x.PackageDetail.VenueAddress, opt=> opt.MapFrom(y => y.Package.Venue.Address))
