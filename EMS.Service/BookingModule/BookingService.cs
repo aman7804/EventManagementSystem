@@ -23,25 +23,20 @@ namespace EMS.Service.BookingModule
         {
             if (Id <= 0) throw new ArgumentNullException(nameof(Id), "Id cannot be null");
             BookingEntity? entity = await Repo.GetByIdAsync(Id);
-            return entity == null ? throw new Exception(ExceptionMessage.RECORD_NOT_FOUND) : Map<BookingEntity, GetBookingDTO>(entity);
+            return entity == null
+                ? throw new Exception(ExceptionMessage.RECORD_NOT_FOUND)
+                : Map<BookingEntity, GetBookingDTO>(entity);
         }
 
-        public async Task<PaginationDTO<BookingDTO, BookingFilter>> GetBookings
-            (PaginationDTO<BookingDTO, BookingFilter> paginationDTO)
+        public async Task<PaginationDTO<BookingDTO, BookingFilter>>
+            GetBookings(PaginationDTO<BookingDTO, BookingFilter> paginationDTO)
         {
             Expression<Func<BookingDTO, bool>> expression = paginationDTO.Filter.GetFilter();
             Expression<Func<BookingEntity, bool>> where =
                 Map<Expression<Func<BookingDTO, bool>>, Expression<Func<BookingEntity, bool>>>
                 (expression);
-            IQueryable<BookingEntity> bookings = _bookingRepository.GetAll(where);
-
-            bookings = bookings.Include(p => p.Package)
-                                   .ThenInclude(v => v.Venue)
-                               .Include(p => p.Package)
-                                   .ThenInclude(p => p.Photography)
-                               .Include(p => p.Package)
-                                   .ThenInclude(v => v.Catering)
-                               .Include(p => p.Package);
+            IQueryable<BookingEntity> bookings = _bookingRepository.GetAll(where)
+                .Include(p => p.Package);
 
             //Apply condition for each filter
 

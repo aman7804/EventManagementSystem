@@ -1,7 +1,8 @@
 import { GenericState } from "interfaces/generic.interface";
 import * as ACTION_TYPE from "./action.types";
+import * as GENERIC from "interfaces/generic.interface";
 
-import { BookingActions } from "./types";
+import { BookingActions, UpdateStatusSuccessPayload } from "./types";
 import { IBooking } from "interfaces/booking.interface";
 
 const initialState: GenericState<IBooking> = {
@@ -29,7 +30,7 @@ const reducers = (state = initialState, action: BookingActions): unknown => {
       return {
         ...state,
         pending: false,
-        error: action.payload.message,
+        error: (action.payload as GENERIC.FailureResponse).message,
       };
     case ACTION_TYPE.CONFIRM_REQUEST:
       return {
@@ -40,14 +41,14 @@ const reducers = (state = initialState, action: BookingActions): unknown => {
       return {
         ...state,
         pending: false,
-        success: action.payload.message,
+        success: (action.payload as UpdateStatusSuccessPayload).message,
         error: null,
       }
     case ACTION_TYPE.CONFIRM_FAILURE:
       return {
         ...state,
         pending: false,
-        error: action.payload.message,
+        error: (action.payload as GENERIC.FailureResponse).message,
       }
     case ACTION_TYPE.REJECT_REQUEST:
       return {
@@ -58,14 +59,14 @@ const reducers = (state = initialState, action: BookingActions): unknown => {
       return {
         ...state,
         pending: false,
-        success: action.payload.message,
+        success: (action.payload as UpdateStatusSuccessPayload).message,
         error: null,
       }
     case ACTION_TYPE.REJECT_FAILURE:
       return {
         ...state,
         pending: false,
-        error: action.payload.message,
+        error: (action.payload as GENERIC.FailureResponse).message,
       }
     case ACTION_TYPE.GET_REQUEST:
       return {
@@ -83,7 +84,7 @@ const reducers = (state = initialState, action: BookingActions): unknown => {
       return {
         ...state,
         pending: false,
-        error: action.payload.message,
+        error: (action.payload as GENERIC.FailureResponse).message,
       };
     case ACTION_TYPE.DELETE_REQUEST:
       return {
@@ -101,7 +102,7 @@ const reducers = (state = initialState, action: BookingActions): unknown => {
       return {
         ...state,
         pending: false,
-        error: action.payload.message,
+        error: (action.payload as GENERIC.FailureResponse).message,
       };
     default:
       return state;

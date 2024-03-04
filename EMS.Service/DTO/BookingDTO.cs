@@ -9,6 +9,7 @@ namespace EMS.Service.DTO
         public decimal TotalAmount { get; set; }
         public decimal DueAmount { get; set; }
         public int PackageId { get; set; }
+        public string PackageName { get; set; } = string.Empty!;
         public EnumBookingStatus Status { get; set; }
     }
 }
