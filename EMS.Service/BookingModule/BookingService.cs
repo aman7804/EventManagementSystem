@@ -51,8 +51,11 @@ namespace EMS.Service.BookingModule
 			//Apply condition for each filter
 
 			paginationDTO.RecordCount = await bookings.CountAsync();
+			paginationDTO.PageCount = (int)Math.Ceiling(
+				(double)paginationDTO.RecordCount / paginationDTO.PageSize
+			);
 
-            if (!string.IsNullOrWhiteSpace(paginationDTO.SortByColumns))
+			if (!string.IsNullOrWhiteSpace(paginationDTO.SortByColumns))
             {
                 if (paginationDTO.SortBy == EnumSortBy.Descending)
                     bookings = bookings.OrderByDescending(paginationDTO.SortByColumns);
