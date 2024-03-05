@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using EMS.Service.DTO.Booking;
 
 namespace EMS.Service.DTO.Filter
 {
@@ -17,8 +18,7 @@ namespace EMS.Service.DTO.Filter
                 else if (int.TryParse(Search, out _))
                     return x =>
                         x.DateTime.Date.Equals(Date.ToLocalTime()) &&
-                        (x.MinGuest.Equals(int.Parse(Search)) ||
-                        x.MaxGuest.Equals(int.Parse(Search)));
+                        x.NumberOfGuests.Equals(int.Parse(Search));
                 else
                     return x =>
                         x.DateTime.Date.Equals(Date.ToLocalTime()) &&
@@ -40,9 +40,8 @@ namespace EMS.Service.DTO.Filter
                     return x => x.CustomerMobileNo.Equals(int.Parse(Search));
                 else if (int.TryParse(Search, out _))
                     return x =>
-                        x.MinGuest.Equals(int.Parse(Search)) ||
-                        x.MaxGuest.Equals(int.Parse(Search));
-                else
+						x.NumberOfGuests.Equals(int.Parse(Search));
+				else
                     return x =>
                         x.PackageName.Contains(Search) ||
                         x.CustomerFirstName.Contains(Search) ||

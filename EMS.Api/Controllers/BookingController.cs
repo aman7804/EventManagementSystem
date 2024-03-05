@@ -1,6 +1,6 @@
-﻿using EMS.Api.Authorization;
-using EMS.Service.BookingModule;
+﻿using EMS.Service.BookingModule;
 using EMS.Service.DTO;
+using EMS.Service.DTO.Booking;
 using EMS.Service.DTO.Filter;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,14 +20,15 @@ namespace EMS.Api.Controllers
 
         [Authorize(Roles = "Customer")]
         [HttpPost("save")]
-        public async Task<IActionResult> SaveBooking(BookingDTO dto)
+        public async Task<IActionResult> SaveBooking(SaveBookingDTO dto)
         {
             dto.Status = Shared.EnumBookingStatus.Pending;
+            dto.CustomerId = CurrentUser;
             if (dto.Id == 0)
                 await service.AddAsync(dto);
             else
                 await service.UpdateAsync(dto);
-            return GetResult<BookingDTO>(null, HttpStatusCode.OK);
+            return GetResult<SaveBookingDTO>(null, HttpStatusCode.OK);
         }
 
         [HttpGet("index/{Id}")]
@@ -39,51 +40,51 @@ namespace EMS.Api.Controllers
         public async Task<IActionResult> DeleteBooking(int Id)
         {
             await service.DeleteAsync(Id);
-            return GetResult<BookingDTO>(null, HttpStatusCode.OK);
+            return GetResult<SaveBookingDTO>(null, HttpStatusCode.OK);
         }
 
         [Authorize(Roles = "Customer")]
         [HttpGet("payment/{Id}")]
         public async Task<IActionResult> BookingPaymentDone(int Id)
         {
-            BookingDTO dto = await service.GetByIdAsync(Id, true);
+            SaveBookingDTO dto = await service.GetByIdAsync(Id, true);
             dto.Status = Shared.EnumBookingStatus.Paid;
             await service.UpdateAsync(dto);
 
-            return GetResult<BookingDTO>(null, HttpStatusCode.OK);
+            return GetResult<SaveBookingDTO>(null, HttpStatusCode.OK);
         }
 
         [Authorize(Roles = "Admin")]
         [HttpGet("confirmBooking/{Id}")]
         public async Task<IActionResult> ConfirmBooking(int Id)
         {
-            BookingDTO dto = await service.GetByIdAsync(Id, true);
+            SaveBookingDTO dto = await service.GetByIdAsync(Id, true);
             dto.Status = Shared.EnumBookingStatus.Confirmed;
             await service.UpdateAsync(dto);
 
-            return GetResult<BookingDTO>(null, HttpStatusCode.OK);
+            return GetResult<SaveBookingDTO>(null, HttpStatusCode.OK);
         }
 
         [Authorize(Roles = "Customer")]
         [HttpGet("cancel/{Id}")]
         public async Task<IActionResult> CancelBooking(int Id)
         {
-            BookingDTO dto = await service.GetByIdAsync(Id, true);
+			SaveBookingDTO dto = await service.GetByIdAsync(Id, true);
             dto.Status = Shared.EnumBookingStatus.Cancelled;
             await service.UpdateAsync(dto);
 
-            return GetResult<BookingDTO>(null, HttpStatusCode.OK);
+            return GetResult<SaveBookingDTO>(null, HttpStatusCode.OK);
         }
 
         [Authorize(Roles = "Admin")]
         [HttpGet("reject/{Id}")]
         public async Task<IActionResult> RejectBooking(int Id)
         {
-            BookingDTO dto = await service.GetByIdAsync(Id, true);
+            SaveBookingDTO dto = await service.GetByIdAsync(Id, true);
             dto.Status = Shared.EnumBookingStatus.Rejected;
             await service.UpdateAsync(dto);
 
-            return GetResult<BookingDTO>(null, HttpStatusCode.OK);
+            return GetResult<SaveBookingDTO>(null, HttpStatusCode.OK);
         }
 
         [HttpPost("list")]

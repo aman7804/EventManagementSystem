@@ -1,16 +1,15 @@
 ﻿using EMS.Shared;
 using System.Text.Json.Serialization;
 
-namespace EMS.Service.DTO
+namespace EMS.Service.DTO.Booking
 {
     public class BookingDTO : BaseDTO
     {
         public int CustomerId { get; set; }
         public string CustomerName { get; set; } = string.Empty!;
-        public int MinGuest { get; set; }
-        public int MaxGuest { get; set; }
+        public int NumberOfGuests { get; set; }
         public decimal TotalAmount { get; set; }
-        public decimal DueAmount { get; set; }
+        public decimal PaidAmount { get; set; }
         public int PackageId { get; set; }
         public string PackageName { get; set; } = string.Empty!;
         public EnumBookingStatus Status { get; set; }

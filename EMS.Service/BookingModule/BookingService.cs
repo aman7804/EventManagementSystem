@@ -9,10 +9,11 @@ using EMS.Repository.BookingModule;
 using EMS.Entity;
 using EMS.Service.DTO.Filter;
 using System.Linq.Expressions;
+using EMS.Service.DTO.Booking;
 
 namespace EMS.Service.BookingModule
 {
-    public class BookingService : BaseService<BookingEntity, BookingDTO>, IBookingService
+    public class BookingService : BaseService<BookingEntity, SaveBookingDTO>, IBookingService
     {
         private readonly IBookingRepository _bookingRepository;
         public BookingService(IMapper mapper, IBookingRepository bookingRepositoty)
