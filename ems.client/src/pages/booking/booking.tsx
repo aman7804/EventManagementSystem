@@ -89,7 +89,7 @@ const BookingForm: React.FC<BookingProps> = (props) => {
   const [isEditBooking, setIsEditBooking] = useState<boolean>(false);
   const [isOpenBookingDeleteModal, setIsOpenBookingDeleteModal] = useState(false);
   const [deleteBookingId, setDeleteBookingId] = useState<number>();
-  const [searchBookingByDate, setSearchByBookingDate] = useState<string>();
+  const [searchBookingByDate, setSearchByBookingDate] = useState<Date>();
   
   const handleRequestSort = useCallback(
     (event: React.MouseEvent<unknown>, newOrderBy: keyof IBooking) => {
@@ -262,10 +262,19 @@ const BookingForm: React.FC<BookingProps> = (props) => {
     return rangeText;
   };
 
-  const handleDatePicker = (date: Date | null) => {
-    console.log("dateOBJ:", date)
-    setSearchByBookingDate(date?.toISOString() || undefined)
+  const handleDatePicker = (date: any) => {
+    const newDate: Date = date?.toDate();
+    if(date && !isNaN(newDate.getTime()))
+      setSearchByBookingDate(newDate)
   }
+
+  useEffect(()=>{
+    if(searchBookingByDate){
+      setPageNo(1);
+      getBookingList();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[searchBookingByDate])
 
   const getListingScreen = () => {
     const list = get(props, "list.data", []);
@@ -278,27 +287,35 @@ const BookingForm: React.FC<BookingProps> = (props) => {
                 <Grid item xs={12}>
                   <Card>
                     <Box className="table-card-header">
-                      <TextField
-                        id="search"
-                        variant="outlined"
-                        className="search-input"
-                        placeholder="Search by Name"
-                        value={searchText}
-                        onChange={handleBookingSearch}
-                        onKeyDown={handleBookingSearchKeyDown}
-                      />
-                      <DatePicker
-                        sx={{ width: 260 }}
-                        on
-                        onBlur={handleDatePicker}
-                        slotProps={{
-                          field: {
-                            clearable: true,
-                            onClear: () =>
-                              setSearchByBookingDate(undefined),
-                            },
-                          }}
-                      />
+                      <Grid item spacing={2}>
+                        <Grid item xs={12} xl={6} md={6}>
+                          <TextField
+                            id="search"
+                            variant="outlined"
+                            className="search-input"
+                            placeholder="Search by Name"
+                            value={searchText}
+                            onChange={handleBookingSearch}
+                            onKeyDown={handleBookingSearchKeyDown}
+                          />
+                        </Grid>
+                        <Grid item xs={12} xl={6} md={6}>
+                          <DatePicker
+                            sx={{ width: 260 }}
+                            onChange={handleDatePicker}
+                            slotProps={{
+                              field: {
+                                clearable: true,
+                                onClear: () =>
+                                  setSearchByBookingDate(undefined),
+                              },
+                              textField:{
+                                onKeyDown: handleBookingSearchKeyDown,
+                              }
+                            }}
+                          />
+                        </Grid>
+                      </Grid>
                     </Box>
                     <TableContainer>
                       <Table>

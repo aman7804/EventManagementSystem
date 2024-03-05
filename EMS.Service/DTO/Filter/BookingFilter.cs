@@ -12,15 +12,16 @@ namespace EMS.Service.DTO.Filter
             if(!string.IsNullOrWhiteSpace(Search) && Date != DateTime.MinValue.Date)
             {
                 if (Search.Length == 10 && int.TryParse(Search, out _))
-                    return x => x.CustomerMobileNo.Equals(int.Parse(Search)) && x.DateTime.Date.Equals(Date);
+                    return x => x.CustomerMobileNo.Equals(int.Parse(Search)) &&
+                                x.DateTime.ToLocalTime().Date.Equals(Date.ToLocalTime());
                 else if (int.TryParse(Search, out _))
                     return x =>
-                        x.DateTime.Date.Equals(Date) &&
+                        x.DateTime.Date.Equals(Date.ToLocalTime()) &&
                         (x.MinGuest.Equals(int.Parse(Search)) ||
                         x.MaxGuest.Equals(int.Parse(Search)));
                 else
                     return x =>
-                        x.DateTime.Date.Equals(Date) &&
+                        x.DateTime.Date.Equals(Date.ToLocalTime()) &&
                         (
                             x.PackageName.Contains(Search) ||
                             x.CustomerFirstName.Contains(Search) ||
@@ -54,9 +55,9 @@ namespace EMS.Service.DTO.Filter
                         x.DecorationName.Contains(Search);
             }
             if (Date != DateTime.MinValue.Date)
-                return x => x.DateTime.Date.Equals(Date);
-
-            return x => true;
+                return x => x.DateTime.Date.Equals(Date.ToLocalTime());
+            
+            return x => true;   
         }
 
     }

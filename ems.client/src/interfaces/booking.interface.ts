@@ -18,7 +18,7 @@ export interface IBooking {
 /* Search Model */
 export interface IBookingSearch {
   search?: string;
-  date?: string;
+  date?: Date;
 }
 
 /* Pagination Model */
