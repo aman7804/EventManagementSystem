@@ -16,7 +16,7 @@ export const getErrorSelector =
     createSelector(getState, (state) => get(state, "auth.error"));
 
 export const getUserSelector =
-    createSelector(getState, (state) => get(state, "auth.user"));
+    createSelector(getState, (state) => get(state, "auth.user.data"));
 
 export const getUserEmailSelector =
     createSelector(getState, (state) => get(state, "auth.user.emailId"));
