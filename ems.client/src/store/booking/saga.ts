@@ -13,7 +13,7 @@ import {
 } from "./actions";
 import * as ACTION_TYPE from "./action.types";
 import service from "services/booking.service";
-import { IBooking, IBookingPagination } from "interfaces/booking.interface";
+import { IBooking, IBookingPagination, IGetByIdBooking } from "interfaces/booking.interface";
 import { IApiSuccessResponse } from "interfaces/generic.interface";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -77,8 +77,8 @@ function* rejectSaga(action: any) {
 
 function* getByIdSaga(action: any) {
   try {
-    const response: IApiSuccessResponse<IBooking> = yield call(
-      service.getById,action.payload.data
+    const response: IApiSuccessResponse<IGetByIdBooking> = yield call(
+      service.getById, action.payload.data
     );
     yield put(
       getByIdSuccess(response)

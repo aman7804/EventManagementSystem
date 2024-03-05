@@ -1,8 +1,7 @@
 import * as ACTION_TYPE from "./action.types";
 import * as GENERIC from "interfaces/generic.interface";
-import { IBooking, IBookingPagination } from "interfaces/booking.interface";
+import { IBookingPagination, IGetByIdBooking } from "interfaces/booking.interface";
 
-type typeModal = IBooking;
 type typeModalPagination = IBookingPagination;
 
 export interface UpdateStatusRequestPayload{
@@ -60,7 +59,7 @@ export type GetRequest = {
 }
 export type GetSuccess = {
   type: typeof ACTION_TYPE.GET_SUCCESS;
-  payload: GENERIC.GetSuccessResponse<typeModal>;
+  payload: GENERIC.GetSuccessResponse<IGetByIdBooking>;
 };
 export type GetFailure = {
   type: typeof ACTION_TYPE.GET_FAILURE;

@@ -4,15 +4,36 @@ import * as GENERIC from './generic.interface'
 /* Model */
 export interface IBooking {
   id: number;
-  minGuest: number;
-  maxGuest: number;
+  numberOfGuests: number; 
   totalAmount: number;
-  dueAmount: number;
+  paidAmount: number;
   packageId: number;
   packageName: string;
   customerId: number;
   customerName: string;
   status: number;
+  dateTime: any;
+}
+
+export interface IGetByIdBooking extends IBooking{
+  packageDetails: {
+        venueName : string,
+        venueAddress : string,
+        venuePrice : number,
+        venueDescription : string,
+        minCapacity : number,
+        maxCapacity : number,
+        cityId : number,
+        photographyName : string,
+        photographyPrice : number,
+        photographyDescription : string,
+        decorationName : string,
+        decorationPrice : number,
+        decorationDescription : string,
+        cateringName : string,
+        cateringPrice : number,
+        cateringDescription : string,
+  }
 }
 
 /* Search Model */

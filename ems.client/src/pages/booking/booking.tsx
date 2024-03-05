@@ -56,12 +56,11 @@ const capitalization = (str: string): string =>
   str.charAt(0).toUpperCase() + str.slice(1);
 
 const columnDisplayName: GENERIC.IIndexable<IBooking> = {
-  minGuest: "No of Guests",
+  dateTime: "Booking Date",
+  numberOfGuests: "Number of Guests",
   totalAmount: "Total Amount",
-  dueAmount: "Due Amount",
-  packageName: "Package",
+  paidAmount: "Due Amount",
   customerName: "Customer",
-  status: "Status",
 }
 
 interface bookingStatus{
@@ -276,8 +275,15 @@ const BookingForm: React.FC<BookingProps> = (props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[searchBookingByDate])
 
+  const formateDate = (date: Date) => {
+    const day = date.getDate().toString().padStart(2, '0'); // Get day and pad with zero if needed
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Get month (+1 because months are zero-based) and pad with zero if needed
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
+
   const getListingScreen = () => {
-    const list = get(props, "list.data", []);
+    const list: IBooking[] = get(props, "list.data", [], );
     return <>
               <Grid
                 container
@@ -325,16 +331,26 @@ const BookingForm: React.FC<BookingProps> = (props) => {
                               order={order}
                               orderBy={orderBy}
                               onRequestSort={handleRequestSort}
-                              columnName="packageName"
-                              columnHeader="PackageName"
+                              columnName="customerName"
+                              columnHeader="CustomerName"
+                              width={200}
                               columnDisplayName={columnDisplayName}
                             />
                             <EnhancedTableHead
                               order={order}
                               orderBy={orderBy}
                               onRequestSort={handleRequestSort}
-                              columnName="minGuest"
-                              columnHeader="NoOfGuests"
+                              columnName="dateTime"
+                              columnHeader="DateTime"
+                              width={200}
+                              columnDisplayName={columnDisplayName}
+                            />
+                            <EnhancedTableHead
+                              order={order}
+                              orderBy={orderBy}
+                              onRequestSort={handleRequestSort}
+                              columnName="numberOfGuests"
+                              columnHeader="NumberOfGuests"
                               columnDisplayName={columnDisplayName}
                             />
                             <EnhancedTableHead
@@ -350,28 +366,9 @@ const BookingForm: React.FC<BookingProps> = (props) => {
                               order={order}
                               orderBy={orderBy}
                               onRequestSort={handleRequestSort}
-                              columnName="dueAmount"
-                              columnHeader="DueAmount"
+                              columnName="paidAmount"
+                              columnHeader="PaidAmount"
                               width={150}
-                              columnDisplayName={columnDisplayName}
-                            />
-                            <EnhancedTableHead
-                              order={order}
-                              orderBy={orderBy}
-                              onRequestSort={handleRequestSort}
-                              columnName="customerName"
-                              columnHeader="CustomerName"
-                              // align="right"
-                              width={200}
-                              columnDisplayName={columnDisplayName}
-                            />
-                            <EnhancedTableHead
-                              order={order}
-                              orderBy={orderBy}
-                              onRequestSort={handleRequestSort}
-                              columnName="status"
-                              columnHeader="BookingStatus"
-                              // align="right"
                               columnDisplayName={columnDisplayName}
                             />
                             <TableCell
@@ -392,22 +389,19 @@ const BookingForm: React.FC<BookingProps> = (props) => {
                             // eslint-disable-next-line react/no-array-index-key
                             <TableRow key={row?.id}>
                               <TableCell component="th" scope="row">
-                                {row?.packageName}
+                                {row?.customerName}
                               </TableCell>
                               <TableCell component="th" scope="row">
-                                {row?.minGuest} - {row?.maxGuest}
+                                {formateDate(new Date(row?.dateTime))}
+                              </TableCell>
+                              <TableCell component="th" scope="row">
+                                {row?.numberOfGuests}
                               </TableCell>
                               <TableCell component="th" scope="row">
                                 {RUPEE_SYMBOL} {row?.totalAmount}
                               </TableCell>
                               <TableCell component="th" scope="row">
-                                {RUPEE_SYMBOL} {row?.dueAmount}
-                              </TableCell>
-                              <TableCell component="th" scope="row">
-                                {row?.customerName}
-                              </TableCell>
-                              <TableCell component="th" scope="row">
-                                {BookingStatus[row?.status]}
+                                {RUPEE_SYMBOL} {row?.paidAmount}
                               </TableCell>
                               <TableCell align="center">
                                 <div className="table-actions">

@@ -12,6 +12,7 @@ namespace EMS.Service.DTO.Booking
         public decimal PaidAmount { get; set; }
         public int PackageId { get; set; }
         public string PackageName { get; set; } = string.Empty!;
+        public DateTime DateTime { get; set; }
         public EnumBookingStatus Status { get; set; }
 
         // for searching purpose
@@ -23,6 +24,5 @@ namespace EMS.Service.DTO.Booking
         [JsonIgnore] public string PhotographyName = string.Empty!;
         [JsonIgnore] public string DecorationName = string.Empty!;
         [JsonIgnore] public string CateringName = string.Empty!;
-        [JsonIgnore] public DateTime DateTime;
     }
 }

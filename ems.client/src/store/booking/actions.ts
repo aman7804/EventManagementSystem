@@ -1,10 +1,8 @@
-import { IBooking, IBookingPagination } from "interfaces/booking.interface";
+import { IGetByIdBooking, IBookingPagination } from "interfaces/booking.interface";
 import * as ACTION_TYPE from "./action.types";
 import * as TYPES from "./types";
 import * as GENERIC from "interfaces/generic.interface";
 
-
-type typeModal = IBooking;
 type typeModalPagination = IBookingPagination;
 
 export const listRequest = (
@@ -71,7 +69,7 @@ export const getByIdRequest = (
   payload,
 });
 export const getByIdSuccess = (
-  payload: GENERIC.GetSuccessResponse<typeModal>
+  payload: GENERIC.GetSuccessResponse<IGetByIdBooking>
 ): TYPES.GetSuccess => ({
   type: ACTION_TYPE.GET_SUCCESS,
   payload,

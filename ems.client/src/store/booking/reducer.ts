@@ -1,11 +1,17 @@
-import { GenericState } from "interfaces/generic.interface";
 import * as ACTION_TYPE from "./action.types";
 import * as GENERIC from "interfaces/generic.interface";
 
 import { BookingActions, UpdateStatusSuccessPayload } from "./types";
-import { IBooking } from "interfaces/booking.interface";
+import { IBooking, IGetByIdBooking } from "interfaces/booking.interface";
 
-const initialState: GenericState<IBooking> = {
+interface BookingInitialState{
+  pending: boolean;
+  list: IBooking[] | null;
+  current: IGetByIdBooking | null;
+  message: string | null;
+}
+
+const initialState: BookingInitialState = {
   pending: false,
   list: [],
   message: null,
