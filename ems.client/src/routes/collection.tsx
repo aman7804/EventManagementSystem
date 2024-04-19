@@ -6,6 +6,8 @@ import adminPrivateRoutes from "./admin";
 import ChangePassword from "pages/auth/changPassword.container";
 import ProtectedRoute from "./protected";
 import Profile from "pages/profile";
+import Home from "pages/home";
+import Dashboard from "pages/dashboard/dashboard";
 
 
 export const router = createBrowserRouter([
@@ -14,6 +16,16 @@ export const router = createBrowserRouter([
     path: "/",
     Component: Layout,
     children: [
+      {
+        index: true,
+        path: "/dashboard",
+        Component: Dashboard
+      },
+      {
+        index: true,
+        path: "/home",
+        Component: Home
+      },
       ...adminPrivateRoutes(),
       {
         index: true,

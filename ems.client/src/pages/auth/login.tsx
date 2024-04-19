@@ -83,7 +83,7 @@ export const LoginForm = (props: LoginProps) => {
   const onLoginSuccess = async (response: LoginResponse) => {
     setLoginDetails(response)
     const isAdmin = isTokenForAdmin(response?.accessToken);    
-    navigate(isAdmin ? "/dashboard" : "/home"); 
+    navigate(isAdmin ? "/dashboard" : "/home");
     toast.success("Logged in successfully");
   };
 
