@@ -1,8 +1,9 @@
+import "../cards/style.css";
 import React from 'react';
 
 const BarChart = () => {
   return (
-    <>
+    <>  
       <div className="card h-100">
         <div className="card-body">
           <div className="d-flex justify-content-between mb-4">
@@ -21,8 +22,8 @@ const BarChart = () => {
           <img 
             src={require('C:/Users/WIN10/source/repos/EventManagementSystem/ems.client/src/assets/images/barCHaart.jpg')}
             alt="dashboard"
-            className="img-fluid" // Apply Bootstrap class for responsiveness
-            style={{ width: '100%', height: 'auto' }} // Make image take full width and adjust height accordingly 
+            className="img-fluid" 
+            style={{ maxWidth: '100%', height: 'auto' }} 
           />
         </div>
       </div>

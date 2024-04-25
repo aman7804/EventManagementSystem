@@ -15,11 +15,9 @@ const Dashboard: React.FC = () => {
     
   return (
     <Grid container spacing={2}>
-      {/* 60% Column */}
-      <Grid item xs={8}>
+      <Grid item xl={8} xs={12} md={8}>
         <Grid container spacing={2}>
-          {/* First Row */}
-          <Grid item xs={6}>
+          <Grid item xl={6} xs={12} md={6}>
             <DashboardCard
               title="Bookings"
               startDate={formattedStartDate}
@@ -29,7 +27,7 @@ const Dashboard: React.FC = () => {
               seeMore="click here to see more info."
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xl={6} xs={12} md={6}>
             <DashboardCard
               title="Bookings"
               startDate={formattedStartDate}
@@ -39,15 +37,12 @@ const Dashboard: React.FC = () => {
               seeMore="click here to see more info."
             />
           </Grid>
-          {/* Second Row */}
-          <Grid item xs={12}>
+          <Grid item xl={12} xs={12} md={12}>
             <BarChart />
           </Grid>
         </Grid>
       </Grid>
-      {/* 40% Column */}
-      <Grid item xs={4}>
-        {/* Add content for the 40% column if needed */}
+      <Grid item xl={4} xs={12} md={4}>
       </Grid>
     </Grid>
   );
