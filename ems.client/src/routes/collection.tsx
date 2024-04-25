@@ -21,11 +21,6 @@ export const router = createBrowserRouter([
         path: "/dashboard",
         Component: Dashboard
       },
-      {
-        index: true,
-        path: "/home",
-        Component: Home
-      },
       ...adminPrivateRoutes(),
       {
         index: true,
@@ -38,6 +33,11 @@ export const router = createBrowserRouter([
     id: "login",
     path: "/login",
     Component: Login
+  },
+  {
+    index: true,
+    path: "/home",
+    Component: Home
   },
   {
     id: "signup",

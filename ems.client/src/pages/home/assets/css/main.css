@@ -2873,9 +2873,14 @@
 			border-color: rgba(0, 0, 0, 0.1);
 		}
 
-	/* Wrapper */
+	/* wrapper-home */
 
-			.wrapper .inner {
+		.wrapper-home {
+			padding: 6em 0 4em 0;
+			position: relative;
+		}
+
+			.wrapper-home .inner {
 				margin: 0 auto;
 				width: 80em;
 				position: relative;
@@ -2885,443 +2890,443 @@
 
 				@media screen and (max-width: 736px) {
 
-					.wrapper header {
+					.wrapper-home header {
 						margin-bottom: 2em;
 					}
 
 				}
 
-			.wrapper.style1 {
+			.wrapper-home.style1 {
 				background-color: #fafafa;
 				color: #999999;
 			}
 
-				.wrapper.style1 input, .wrapper.style1 select, .wrapper.style1 textarea {
+				.wrapper-home.style1 input, .wrapper-home.style1 select, .wrapper-home.style1 textarea {
 					color: #000;
 				}
 
-				.wrapper.style1 a {
+				.wrapper-home.style1 a {
 					color: #000;
 				}
 
-					.wrapper.style1 a:hover {
+					.wrapper-home.style1 a:hover {
 						color: rgba(0, 0, 0, 0.5);
 					}
 
-				.wrapper.style1 strong, .wrapper.style1 b {
+				.wrapper-home.style1 strong, .wrapper-home.style1 b {
 					color: #000;
 				}
 
-				.wrapper.style1 h1, .wrapper.style1 h2, .wrapper.style1 h3, .wrapper.style1 h4, .wrapper.style1 h5, .wrapper.style1 h6 {
+				.wrapper-home.style1 h1, .wrapper-home.style1 h2, .wrapper-home.style1 h3, .wrapper-home.style1 h4, .wrapper-home.style1 h5, .wrapper-home.style1 h6 {
 					color: #000;
 				}
 
-				.wrapper.style1 blockquote {
+				.wrapper-home.style1 blockquote {
 					border-left-color: rgba(0, 0, 0, 0.15);
 				}
 
-				.wrapper.style1 code {
+				.wrapper-home.style1 code {
 					background: rgba(0, 0, 0, 0.075);
 					border-color: rgba(0, 0, 0, 0.15);
 				}
 
-				.wrapper.style1 hr {
+				.wrapper-home.style1 hr {
 					border-bottom-color: rgba(0, 0, 0, 0.15);
 				}
 
-				.wrapper.style1 .box {
+				.wrapper-home.style1 .box {
 					border-color: rgba(0, 0, 0, 0.15);
 				}
 
-				.wrapper.style1 input[type="submit"],
-				.wrapper.style1 input[type="reset"],
-				.wrapper.style1 input[type="button"],
-				.wrapper.style1 button,
-				.wrapper.style1 .button {
+				.wrapper-home.style1 input[type="submit"],
+				.wrapper-home.style1 input[type="reset"],
+				.wrapper-home.style1 input[type="button"],
+				.wrapper-home.style1 button,
+				.wrapper-home.style1 .button {
 					background-color: #00acfe;
 					color: #fff !important;
 				}
 
-					.wrapper.style1 input[type="submit"]:hover,
-					.wrapper.style1 input[type="reset"]:hover,
-					.wrapper.style1 input[type="button"]:hover,
-					.wrapper.style1 button:hover,
-					.wrapper.style1 .button:hover {
+					.wrapper-home.style1 input[type="submit"]:hover,
+					.wrapper-home.style1 input[type="reset"]:hover,
+					.wrapper-home.style1 input[type="button"]:hover,
+					.wrapper-home.style1 button:hover,
+					.wrapper-home.style1 .button:hover {
 						background-color: #4aa3df;
 					}
 
-					.wrapper.style1 input[type="submit"]:active,
-					.wrapper.style1 input[type="reset"]:active,
-					.wrapper.style1 input[type="button"]:active,
-					.wrapper.style1 button:active,
-					.wrapper.style1 .button:active {
+					.wrapper-home.style1 input[type="submit"]:active,
+					.wrapper-home.style1 input[type="reset"]:active,
+					.wrapper-home.style1 input[type="button"]:active,
+					.wrapper-home.style1 button:active,
+					.wrapper-home.style1 .button:active {
 						background-color: #258cd1;
 					}
 
-					.wrapper.style1 input[type="submit"].alt,
-					.wrapper.style1 input[type="reset"].alt,
-					.wrapper.style1 input[type="button"].alt,
-					.wrapper.style1 button.alt,
-					.wrapper.style1 .button.alt {
+					.wrapper-home.style1 input[type="submit"].alt,
+					.wrapper-home.style1 input[type="reset"].alt,
+					.wrapper-home.style1 input[type="button"].alt,
+					.wrapper-home.style1 button.alt,
+					.wrapper-home.style1 .button.alt {
 						background-color: transparent;
 						box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.15);
 						color: #000 !important;
 					}
 
-						.wrapper.style1 input[type="submit"].alt:hover,
-						.wrapper.style1 input[type="reset"].alt:hover,
-						.wrapper.style1 input[type="button"].alt:hover,
-						.wrapper.style1 button.alt:hover,
-						.wrapper.style1 .button.alt:hover {
+						.wrapper-home.style1 input[type="submit"].alt:hover,
+						.wrapper-home.style1 input[type="reset"].alt:hover,
+						.wrapper-home.style1 input[type="button"].alt:hover,
+						.wrapper-home.style1 button.alt:hover,
+						.wrapper-home.style1 .button.alt:hover {
 							background-color: rgba(0, 0, 0, 0.075);
 						}
 
-						.wrapper.style1 input[type="submit"].alt:active,
-						.wrapper.style1 input[type="reset"].alt:active,
-						.wrapper.style1 input[type="button"].alt:active,
-						.wrapper.style1 button.alt:active,
-						.wrapper.style1 .button.alt:active {
+						.wrapper-home.style1 input[type="submit"].alt:active,
+						.wrapper-home.style1 input[type="reset"].alt:active,
+						.wrapper-home.style1 input[type="button"].alt:active,
+						.wrapper-home.style1 button.alt:active,
+						.wrapper-home.style1 .button.alt:active {
 							background-color: rgba(0, 0, 0, 0.2);
 						}
 
-						.wrapper.style1 input[type="submit"].alt.icon:before,
-						.wrapper.style1 input[type="reset"].alt.icon:before,
-						.wrapper.style1 input[type="button"].alt.icon:before,
-						.wrapper.style1 button.alt.icon:before,
-						.wrapper.style1 .button.alt.icon:before {
+						.wrapper-home.style1 input[type="submit"].alt.icon:before,
+						.wrapper-home.style1 input[type="reset"].alt.icon:before,
+						.wrapper-home.style1 input[type="button"].alt.icon:before,
+						.wrapper-home.style1 button.alt.icon:before,
+						.wrapper-home.style1 .button.alt.icon:before {
 							color: #bfbfbf;
 						}
 
-					.wrapper.style1 input[type="submit"].special,
-					.wrapper.style1 input[type="reset"].special,
-					.wrapper.style1 input[type="button"].special,
-					.wrapper.style1 button.special,
-					.wrapper.style1 .button.special {
+					.wrapper-home.style1 input[type="submit"].special,
+					.wrapper-home.style1 input[type="reset"].special,
+					.wrapper-home.style1 input[type="button"].special,
+					.wrapper-home.style1 button.special,
+					.wrapper-home.style1 .button.special {
 						background-color: #000;
 						color: #fafafa !important;
 					}
 
-				.wrapper.style1 label {
+				.wrapper-home.style1 label {
 					color: #000;
 				}
 
-				.wrapper.style1 input[type="text"],
-				.wrapper.style1 input[type="password"],
-				.wrapper.style1 input[type="email"],
-				.wrapper.style1 select,
-				.wrapper.style1 textarea {
+				.wrapper-home.style1 input[type="text"],
+				.wrapper-home.style1 input[type="password"],
+				.wrapper-home.style1 input[type="email"],
+				.wrapper-home.style1 select,
+				.wrapper-home.style1 textarea {
 					background: rgba(0, 0, 0, 0.075);
 					border-color: rgba(0, 0, 0, 0.15);
 				}
 
-					.wrapper.style1 input[type="text"]:focus,
-					.wrapper.style1 input[type="password"]:focus,
-					.wrapper.style1 input[type="email"]:focus,
-					.wrapper.style1 select:focus,
-					.wrapper.style1 textarea:focus {
+					.wrapper-home.style1 input[type="text"]:focus,
+					.wrapper-home.style1 input[type="password"]:focus,
+					.wrapper-home.style1 input[type="email"]:focus,
+					.wrapper-home.style1 select:focus,
+					.wrapper-home.style1 textarea:focus {
 						border-color: #000;
 						box-shadow: 0 0 0 1px #000;
 					}
 
-				.wrapper.style1 .select-wrapper:before {
+				.wrapper-home.style1 .select-wrapper:before {
 					color: rgba(0, 0, 0, 0.15);
 				}
 
-				.wrapper.style1 input[type="checkbox"] + label,
-				.wrapper.style1 input[type="radio"] + label {
+				.wrapper-home.style1 input[type="checkbox"] + label,
+				.wrapper-home.style1 input[type="radio"] + label {
 					color: #999999;
 				}
 
-					.wrapper.style1 input[type="checkbox"] + label:before,
-					.wrapper.style1 input[type="radio"] + label:before {
+					.wrapper-home.style1 input[type="checkbox"] + label:before,
+					.wrapper-home.style1 input[type="radio"] + label:before {
 						background: rgba(0, 0, 0, 0.075);
 						border-color: rgba(0, 0, 0, 0.15);
 					}
 
-				.wrapper.style1 input[type="checkbox"]:checked + label:before,
-				.wrapper.style1 input[type="radio"]:checked + label:before {
+				.wrapper-home.style1 input[type="checkbox"]:checked + label:before,
+				.wrapper-home.style1 input[type="radio"]:checked + label:before {
 					background-color: #000;
 					border-color: #000;
 					color: #fafafa;
 				}
 
-				.wrapper.style1 input[type="checkbox"]:focus + label:before,
-				.wrapper.style1 input[type="radio"]:focus + label:before {
+				.wrapper-home.style1 input[type="checkbox"]:focus + label:before,
+				.wrapper-home.style1 input[type="radio"]:focus + label:before {
 					border-color: #000;
 					box-shadow: 0 0 0 1px #000;
 				}
 
-				.wrapper.style1 ::-webkit-input-placeholder {
+				.wrapper-home.style1 ::-webkit-input-placeholder {
 					color: #bfbfbf !important;
 				}
 
-				.wrapper.style1 :-moz-placeholder {
+				.wrapper-home.style1 :-moz-placeholder {
 					color: #bfbfbf !important;
 				}
 
-				.wrapper.style1 ::-moz-placeholder {
+				.wrapper-home.style1 ::-moz-placeholder {
 					color: #bfbfbf !important;
 				}
 
-				.wrapper.style1 :-ms-input-placeholder {
+				.wrapper-home.style1 :-ms-input-placeholder {
 					color: #bfbfbf !important;
 				}
 
-				.wrapper.style1 .formerize-placeholder {
+				.wrapper-home.style1 .formerize-placeholder {
 					color: #bfbfbf !important;
 				}
 
-				.wrapper.style1 ul.alt li {
+				.wrapper-home.style1 ul.alt li {
 					border-top-color: rgba(0, 0, 0, 0.15);
 				}
 
-				.wrapper.style1 header p {
+				.wrapper-home.style1 header p {
 					color: #bfbfbf;
 				}
 
-				.wrapper.style1 table tbody tr {
+				.wrapper-home.style1 table tbody tr {
 					border-color: rgba(0, 0, 0, 0.15);
 				}
 
-					.wrapper.style1 table tbody tr:nth-child(2n + 1) {
+					.wrapper-home.style1 table tbody tr:nth-child(2n + 1) {
 						background-color: rgba(0, 0, 0, 0.075);
 					}
 
-				.wrapper.style1 table th {
+				.wrapper-home.style1 table th {
 					color: #000;
 				}
 
-				.wrapper.style1 table thead {
+				.wrapper-home.style1 table thead {
 					border-bottom-color: rgba(0, 0, 0, 0.15);
 				}
 
-				.wrapper.style1 table tfoot {
+				.wrapper-home.style1 table tfoot {
 					border-top-color: rgba(0, 0, 0, 0.15);
 				}
 
-				.wrapper.style1 table.alt tbody tr td {
+				.wrapper-home.style1 table.alt tbody tr td {
 					border-color: rgba(0, 0, 0, 0.15);
 				}
 
-			.wrapper.style2 {
+			.wrapper-home.style2 {
 				background-color: #00acfe;
 				color: #aed6f1;
 			}
 
-				.wrapper.style2 input, .wrapper.style2 select, .wrapper.style2 textarea {
+				.wrapper-home.style2 input, .wrapper-home.style2 select, .wrapper-home.style2 textarea {
 					color: #fff;
 				}
 
-				.wrapper.style2 a {
+				.wrapper-home.style2 a {
 					color: #999999;
 				}
 
-					.wrapper.style2 a:hover {
+					.wrapper-home.style2 a:hover {
 						color: rgba(153, 153, 153, 0.5);
 					}
 
-				.wrapper.style2 strong, .wrapper.style2 b {
+				.wrapper-home.style2 strong, .wrapper-home.style2 b {
 					color: #fff;
 				}
 
-				.wrapper.style2 h1, .wrapper.style2 h2, .wrapper.style2 h3, .wrapper.style2 h4, .wrapper.style2 h5, .wrapper.style2 h6 {
+				.wrapper-home.style2 h1, .wrapper-home.style2 h2, .wrapper-home.style2 h3, .wrapper-home.style2 h4, .wrapper-home.style2 h5, .wrapper-home.style2 h6 {
 					color: #fff;
 				}
 
-				.wrapper.style2 blockquote {
+				.wrapper-home.style2 blockquote {
 					border-left-color: rgba(255, 255, 255, 0.25);
 				}
 
-				.wrapper.style2 code {
+				.wrapper-home.style2 code {
 					background: rgba(255, 255, 255, 0.075);
 					border-color: rgba(255, 255, 255, 0.25);
 				}
 
-				.wrapper.style2 hr {
+				.wrapper-home.style2 hr {
 					border-bottom-color: rgba(255, 255, 255, 0.25);
 				}
 
-				.wrapper.style2 .box {
+				.wrapper-home.style2 .box {
 					border-color: rgba(255, 255, 255, 0.25);
 				}
 
-				.wrapper.style2 input[type="submit"],
-				.wrapper.style2 input[type="reset"],
-				.wrapper.style2 input[type="button"],
-				.wrapper.style2 button,
-				.wrapper.style2 .button {
+				.wrapper-home.style2 input[type="submit"],
+				.wrapper-home.style2 input[type="reset"],
+				.wrapper-home.style2 input[type="button"],
+				.wrapper-home.style2 button,
+				.wrapper-home.style2 .button {
 					background-color: #fff;
 					color: #00acfe !important;
 				}
 
-					.wrapper.style2 input[type="submit"].alt,
-					.wrapper.style2 input[type="reset"].alt,
-					.wrapper.style2 input[type="button"].alt,
-					.wrapper.style2 button.alt,
-					.wrapper.style2 .button.alt {
+					.wrapper-home.style2 input[type="submit"].alt,
+					.wrapper-home.style2 input[type="reset"].alt,
+					.wrapper-home.style2 input[type="button"].alt,
+					.wrapper-home.style2 button.alt,
+					.wrapper-home.style2 .button.alt {
 						background-color: transparent;
 						box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.25);
 						color: #fff !important;
 					}
 
-						.wrapper.style2 input[type="submit"].alt:hover,
-						.wrapper.style2 input[type="reset"].alt:hover,
-						.wrapper.style2 input[type="button"].alt:hover,
-						.wrapper.style2 button.alt:hover,
-						.wrapper.style2 .button.alt:hover {
+						.wrapper-home.style2 input[type="submit"].alt:hover,
+						.wrapper-home.style2 input[type="reset"].alt:hover,
+						.wrapper-home.style2 input[type="button"].alt:hover,
+						.wrapper-home.style2 button.alt:hover,
+						.wrapper-home.style2 .button.alt:hover {
 							background-color: rgba(255, 255, 255, 0.075);
 						}
 
-						.wrapper.style2 input[type="submit"].alt:active,
-						.wrapper.style2 input[type="reset"].alt:active,
-						.wrapper.style2 input[type="button"].alt:active,
-						.wrapper.style2 button.alt:active,
-						.wrapper.style2 .button.alt:active {
+						.wrapper-home.style2 input[type="submit"].alt:active,
+						.wrapper-home.style2 input[type="reset"].alt:active,
+						.wrapper-home.style2 input[type="button"].alt:active,
+						.wrapper-home.style2 button.alt:active,
+						.wrapper-home.style2 .button.alt:active {
 							background-color: rgba(255, 255, 255, 0.2);
 						}
 
-						.wrapper.style2 input[type="submit"].alt.icon:before,
-						.wrapper.style2 input[type="reset"].alt.icon:before,
-						.wrapper.style2 input[type="button"].alt.icon:before,
-						.wrapper.style2 button.alt.icon:before,
-						.wrapper.style2 .button.alt.icon:before {
+						.wrapper-home.style2 input[type="submit"].alt.icon:before,
+						.wrapper-home.style2 input[type="reset"].alt.icon:before,
+						.wrapper-home.style2 input[type="button"].alt.icon:before,
+						.wrapper-home.style2 button.alt.icon:before,
+						.wrapper-home.style2 .button.alt.icon:before {
 							color: #67b2e4;
 						}
 
-					.wrapper.style2 input[type="submit"].special,
-					.wrapper.style2 input[type="reset"].special,
-					.wrapper.style2 input[type="button"].special,
-					.wrapper.style2 button.special,
-					.wrapper.style2 .button.special {
+					.wrapper-home.style2 input[type="submit"].special,
+					.wrapper-home.style2 input[type="reset"].special,
+					.wrapper-home.style2 input[type="button"].special,
+					.wrapper-home.style2 button.special,
+					.wrapper-home.style2 .button.special {
 						background-color: #fafafa;
 						color: #000 !important;
 					}
 
-						.wrapper.style2 input[type="submit"].special:hover,
-						.wrapper.style2 input[type="reset"].special:hover,
-						.wrapper.style2 input[type="button"].special:hover,
-						.wrapper.style2 button.special:hover,
-						.wrapper.style2 .button.special:hover {
+						.wrapper-home.style2 input[type="submit"].special:hover,
+						.wrapper-home.style2 input[type="reset"].special:hover,
+						.wrapper-home.style2 input[type="button"].special:hover,
+						.wrapper-home.style2 button.special:hover,
+						.wrapper-home.style2 .button.special:hover {
 							background-color: white;
 						}
 
-						.wrapper.style2 input[type="submit"].special:active,
-						.wrapper.style2 input[type="reset"].special:active,
-						.wrapper.style2 input[type="button"].special:active,
-						.wrapper.style2 button.special:active,
-						.wrapper.style2 .button.special:active {
+						.wrapper-home.style2 input[type="submit"].special:active,
+						.wrapper-home.style2 input[type="reset"].special:active,
+						.wrapper-home.style2 input[type="button"].special:active,
+						.wrapper-home.style2 button.special:active,
+						.wrapper-home.style2 .button.special:active {
 							background-color: #ededed;
 						}
 
-				.wrapper.style2 label {
+				.wrapper-home.style2 label {
 					color: #fff;
 				}
 
-				.wrapper.style2 input[type="text"],
-				.wrapper.style2 input[type="password"],
-				.wrapper.style2 input[type="email"],
-				.wrapper.style2 select,
-				.wrapper.style2 textarea {
+				.wrapper-home.style2 input[type="text"],
+				.wrapper-home.style2 input[type="password"],
+				.wrapper-home.style2 input[type="email"],
+				.wrapper-home.style2 select,
+				.wrapper-home.style2 textarea {
 					background: rgba(255, 255, 255, 0.075);
 					border-color: rgba(255, 255, 255, 0.25);
 				}
 
-					.wrapper.style2 input[type="text"]:focus,
-					.wrapper.style2 input[type="password"]:focus,
-					.wrapper.style2 input[type="email"]:focus,
-					.wrapper.style2 select:focus,
-					.wrapper.style2 textarea:focus {
+					.wrapper-home.style2 input[type="text"]:focus,
+					.wrapper-home.style2 input[type="password"]:focus,
+					.wrapper-home.style2 input[type="email"]:focus,
+					.wrapper-home.style2 select:focus,
+					.wrapper-home.style2 textarea:focus {
 						border-color: #fafafa;
 						box-shadow: 0 0 0 1px #fafafa;
 					}
 
-				.wrapper.style2 .select-wrapper:before {
+				.wrapper-home.style2 .select-wrapper:before {
 					color: rgba(255, 255, 255, 0.25);
 				}
 
-				.wrapper.style2 input[type="checkbox"] + label,
-				.wrapper.style2 input[type="radio"] + label {
+				.wrapper-home.style2 input[type="checkbox"] + label,
+				.wrapper-home.style2 input[type="radio"] + label {
 					color: #aed6f1;
 				}
 
-					.wrapper.style2 input[type="checkbox"] + label:before,
-					.wrapper.style2 input[type="radio"] + label:before {
+					.wrapper-home.style2 input[type="checkbox"] + label:before,
+					.wrapper-home.style2 input[type="radio"] + label:before {
 						background: rgba(255, 255, 255, 0.075);
 						border-color: rgba(255, 255, 255, 0.25);
 					}
 
-				.wrapper.style2 input[type="checkbox"]:checked + label:before,
-				.wrapper.style2 input[type="radio"]:checked + label:before {
+				.wrapper-home.style2 input[type="checkbox"]:checked + label:before,
+				.wrapper-home.style2 input[type="radio"]:checked + label:before {
 					background-color: #fafafa;
 					border-color: #fafafa;
 					color: #000;
 				}
 
-				.wrapper.style2 input[type="checkbox"]:focus + label:before,
-				.wrapper.style2 input[type="radio"]:focus + label:before {
+				.wrapper-home.style2 input[type="checkbox"]:focus + label:before,
+				.wrapper-home.style2 input[type="radio"]:focus + label:before {
 					border-color: #fafafa;
 					box-shadow: 0 0 0 1px #fafafa;
 				}
 
-				.wrapper.style2 ::-webkit-input-placeholder {
+				.wrapper-home.style2 ::-webkit-input-placeholder {
 					color: #67b2e4 !important;
 				}
 
-				.wrapper.style2 :-moz-placeholder {
+				.wrapper-home.style2 :-moz-placeholder {
 					color: #67b2e4 !important;
 				}
 
-				.wrapper.style2 ::-moz-placeholder {
+				.wrapper-home.style2 ::-moz-placeholder {
 					color: #67b2e4 !important;
 				}
 
-				.wrapper.style2 :-ms-input-placeholder {
+				.wrapper-home.style2 :-ms-input-placeholder {
 					color: #67b2e4 !important;
 				}
 
-				.wrapper.style2 .formerize-placeholder {
+				.wrapper-home.style2 .formerize-placeholder {
 					color: #67b2e4 !important;
 				}
 
-				.wrapper.style2 ul.alt li {
+				.wrapper-home.style2 ul.alt li {
 					border-top-color: rgba(255, 255, 255, 0.25);
 				}
 
-				.wrapper.style2 header p {
+				.wrapper-home.style2 header p {
 					color: #67b2e4;
 				}
 
-				.wrapper.style2 table tbody tr {
+				.wrapper-home.style2 table tbody tr {
 					border-color: rgba(255, 255, 255, 0.25);
 				}
 
-					.wrapper.style2 table tbody tr:nth-child(2n + 1) {
+					.wrapper-home.style2 table tbody tr:nth-child(2n + 1) {
 						background-color: rgba(255, 255, 255, 0.075);
 					}
 
-				.wrapper.style2 table th {
+				.wrapper-home.style2 table th {
 					color: #fff;
 				}
 
-				.wrapper.style2 table thead {
+				.wrapper-home.style2 table thead {
 					border-bottom-color: rgba(255, 255, 255, 0.25);
 				}
 
-				.wrapper.style2 table tfoot {
+				.wrapper-home.style2 table tfoot {
 					border-top-color: rgba(255, 255, 255, 0.25);
 				}
 
-				.wrapper.style2 table.alt tbody tr td {
+				.wrapper-home.style2 table.alt tbody tr td {
 					border-color: rgba(255, 255, 255, 0.25);
 				}
 
-				.wrapper.style2 .image {
+				.wrapper-home.style2 .image {
 					box-shadow: 0px 0px 0px 7px #00acfe, 0px 0px 0px 8px rgba(255, 255, 255, 0.25);
 				}
 
 			@media screen and (max-width: 1280px) {
 
-				.wrapper > .inner {
+				.wrapper-home > .inner {
 					width: 60em;
 				}
 
@@ -3329,7 +3334,7 @@
 
 			@media screen and (max-width: 980px) {
 
-				.wrapper > .inner {
+				.wrapper-home > .inner {
 					width: 90%;
 				}
 
@@ -3337,7 +3342,7 @@
 
 			@media screen and (max-width: 736px) {
 
-				.wrapper {
+				.wrapper-home {
 					padding: 3em 0 1em 0;
 				}
 
@@ -3681,11 +3686,11 @@
 
 	/* Banner */
 
-		#banner {
+		#banner {	
 			display: -ms-flexbox;
 			-ms-flex-pack: center;
 			-ms-flex-align: center;
-			padding: 8em 0 6em 0;
+			padding: 8em 0 6em 0;		
 			-moz-align-items: center;
 			-webkit-align-items: center;
 			-ms-align-items: center;
@@ -3698,7 +3703,7 @@
 			-webkit-justify-content: center;
 			-ms-justify-content: center;
 			justify-content: center;
-			background-image: url("../../images/al-elmes-ULHxWq8reao-unsplash.jpg");
+			background-image: url("../../../../assets/images/home/al-elmes-ULHxWq8reao-unsplash.jpg");
 			background-position: center;
 			background-size: cover;
 			background-repeat: no-repeat;
