@@ -1709,9 +1709,9 @@ footer p {
     padding: 10px 0 20px;
   }
 
-  .sidebar-toggle .sidebar {
-    left: 0;
-  }
+  // .sidebar-toggle .sidebar {
+  //   left: 0;
+  // }
 
   .overlay {
     position: fixed;
@@ -1727,10 +1727,10 @@ footer p {
     transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   }
 
-  .sidebar-toggle .overlay {
-    opacity: 1;
-    z-index: 11;
-  }
+  // .sidebar-toggle .overlay {
+  //   opacity: 1;
+  //   z-index: 11;
+  // }
 
   .main-content {
     flex-basis: 100%;
