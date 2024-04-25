@@ -1,5 +1,5 @@
 import React from 'react'
-import accountImage from '../../assets/images/account.svg';
+import messageIcon from '../../assets/images/icons8-message-20.png';
 import "../../components/cards/style.css";
 
 const LatestQueries: React.FC = () => {
@@ -17,28 +17,28 @@ const LatestQueries: React.FC = () => {
                 <span className="d-block">Jason Sandoval</span>
                 <span className="text-secondary">jason84@example.com</span>
               </div>
-              <i className="zmdi zmdi-comment icon icon-md text-secondary" aria-hidden="true"></i>
+              <img src={messageIcon} alt="msgIcon" className="mr-2 mx-2" aria-hidden="true"/>
             </li>
             <li className="d-flex align-items-center justify-content-between py-2 px-3 border-top">
               <div className="mr-auto">
                 <span className="d-block">Andrea Dixon</span>
                 <span className="text-secondary">andreadixon@me.com</span>
               </div>
-              <i className="zmdi zmdi-comment icon icon-md text-secondary" aria-hidden="true"></i>
+              <img src={messageIcon} alt="msgIcon" className="mr-2 mx-2" aria-hidden="true"/>
             </li>
             <li className="d-flex align-items-center justify-content-between py-2 px-3 border-top">
               <div className="mr-auto">
                 <span className="d-block">Christian Fox</span>
                 <span className="text-secondary">christian@nike.com</span>
               </div>
-              <i className="zmdi zmdi-comment icon icon-md text-secondary" aria-hidden="true"></i>
+              <img src={messageIcon} alt="msgIcon" className="mr-2 mx-2" aria-hidden="true"/>
             </li>
             <li className="d-flex align-items-center justify-content-between py-2 px-3 border-top">
               <div className="mr-auto">
                 <span className="d-block">Olivia Johnson</span>
                 <span className="text-secondary">olivia-89@example.com</span>
               </div>
-              <i className="zmdi zmdi-comment icon icon-md text-secondary" aria-hidden="true"></i>
+              <img src={messageIcon} alt="msgIcon" className="mr-2 mx-2" aria-hidden="true"/>
             </li>
           </ul>
 
@@ -49,14 +49,14 @@ const LatestQueries: React.FC = () => {
                 <span className="d-block">David Holland</span>
                 <span className="text-secondary">david-96@neole.com</span>
               </div>
-              <i className="zmdi zmdi-comment icon icon-md text-secondary" aria-hidden="true"></i>
+              <img src={messageIcon} alt="msgIcon" className="mr-2 mx-2" aria-hidden="true"/>
             </li>
             <li className="d-flex align-items-center justify-content-between py-2 px-3 border-top">
               <div className="mr-auto">
                 <span className="d-block">Catherine Ellis</span>
                 <span className="text-secondary">cath_92@example.com</span>
               </div>
-              <i className="zmdi zmdi-comment icon icon-md text-secondary" aria-hidden="true"></i>
+              <img src={messageIcon} alt="msgIcon" className="mr-2 mx-2" aria-hidden="true"/>
             </li>
           </ul>
         </div> 
