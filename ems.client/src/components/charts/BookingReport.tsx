@@ -1,7 +1,7 @@
 import "../cards/style.css";
 import React from 'react';
 
-const BarChart = () => {
+const BookingReport = () => {
   return (
     <>  
       <div className="card h-100">
@@ -31,4 +31,4 @@ const BarChart = () => {
   );
 }
 
-export default BarChart;
+export default BookingReport;
