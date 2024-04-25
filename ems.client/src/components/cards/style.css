@@ -109,10 +109,6 @@ html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
 .card-body {
   flex: 1 1 auto;
   padding: 24px;
@@ -129,14 +125,6 @@ div {
 
 .text-secondary {
   color: #9e9e9e !important;
-}
-
-.mb-4, .my-4 {
-  margin-bottom: 32px !important;
-}
-
-.d-inline-block {
-  display: inline-block !important;
 }
 
 .align-items-baseline {
@@ -213,15 +201,165 @@ div {
   align-items: center !important;
 }
 
-.justify-content-between {
-  justify-content: space-between !important;
-}
-
-.d-flex {
-  display: flex !important;
-}
-
 .btn-block {
   display: block;
   width: 100%;
 }
+
+.col > .card.h-100, [class*=col-] > .card.h-100 {
+  height: calc(100% - 24px) !important;
+}
+
+.col > .card, [class*=col-] > .card {
+  margin-bottom: 24px;
+}
+
+.card {
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.02), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.h-100 {
+  height: 100% !important;
+}
+
+div {
+  display: block;
+  unicode-bidi: isolate;
+}
+
+.chartjs-size-monitor, .chartjs-size-monitor-expand, .chartjs-size-monitor-shrink {
+  position: absolute;
+  direction: ltr;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
+  z-index: -1;
+}
+
+.chartjs-size-monitor-expand>div {
+  position: absolute;
+  width: 1000000px;
+  height: 1000000px;
+  left: 0;
+  top: 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+label, .form-label {
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+label {
+  cursor: default;
+}
+
+.element.style {
+  display: block;
+  height: 394px;
+  width: 789px;
+}
+
+.chartjs-render-monitor {
+  animation: chartjs-render-animation 1ms;
+}
+
+.form-control, .custom-select {
+  border: none;
+  border-bottom: 1px solid #2196f3;
+  border-radius: 0.1429rem 0.1429rem 0 0;
+}
+
+.custom-control-label::before, .custom-file-label, .custom-select {
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+select {
+  word-wrap: normal;
+}
+
+.custom-select {
+  display: inline-block;
+  width: 100%;
+  height: 2.7143rem;
+  padding: 0.5715rem 2.3571rem 0.5715rem 0.8571rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212121;
+  vertical-align: middle;
+  background: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23616161' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right 0.8571rem center / 16px;
+  background-color: #f5f5f5;
+  border: 1px solid #2196f3;
+  border-radius: 0.1429rem;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+
+button, select {
+  text-transform: none;
+}
+
+input, button, select, optgroup, textarea {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+select:not(:-internal-list-box) {
+  overflow: visible !important;
+}
+
+select:not(:-internal-select-author-button) {
+  appearance: auto;
+  box-sizing: border-box;
+  align-items: center;
+  -webkit-rtl-ordering: logical;
+  color: fieldtext;
+  background-color: field;
+  cursor: default;
+  white-space: pre;
+  border-width: 1px;
+  border-style: solid;
+  border-color: light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+  border-image: initial;
+  border-radius: 0px;
+}
+
+select {
+  text-rendering: auto;
+  color: fieldtext;
+  letter-spacing: normal;
+  word-spacing: normal;
+  line-height: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  text-align: start;
+  margin: 0em;
+}
+
