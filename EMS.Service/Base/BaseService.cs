@@ -30,8 +30,13 @@ namespace EMS.Service.Base
         public virtual async Task UpdateAsync(D dto)
         {
             if (dto == null) throw new ArgumentNullException(nameof(dto), "DTO cannot be null");
-            T entity = ToEntity(dto);   
-            await Repo.UpdateAsync(entity);
+            T newEntity = ToEntity(dto);   
+            T oldEntity = await Repo.GetByIdAsync(dto.Id, true) ??
+                throw new Exception(ExceptionMessage.RECORD_NOT_FOUND);
+            newEntity.CreatedBy = oldEntity.CreatedBy;
+            newEntity.CreateDate = oldEntity.CreateDate;
+
+            await Repo.UpdateAsync(newEntity);
         }
 
         public async Task DeleteAsync(int Id)

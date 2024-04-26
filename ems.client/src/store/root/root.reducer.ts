@@ -10,6 +10,7 @@ import cateringReducer from "../catering/reducer"
 import userReducer from "../user/reducer"
 import profileReducer from "../profile/reducer"
 import packageReducer from "../package/reducer"
+import bookingReducer from "../booking/reducer"
 
 const rootReducer = combineReducers<unknown>({
   auth: persistReducer(
@@ -33,6 +34,7 @@ const rootReducer = combineReducers<unknown>({
     profileReducer
   ),
   package: packageReducer,
+  booking: bookingReducer
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

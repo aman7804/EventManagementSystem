@@ -9,6 +9,7 @@ import cateringSaga from "store/catering/saga";
 import userSaga from "store/user/saga";
 import profileSaga from "store/profile/saga";
 import packageSaga from "store/package/saga";
+import bookingSaga from "store/booking/saga";
 
 export function* rootSaga() {
   yield all([
@@ -20,6 +21,7 @@ export function* rootSaga() {
     fork(cateringSaga),
     fork(userSaga),
     fork(profileSaga),
-    fork(packageSaga)
+    fork(packageSaga),
+    fork(bookingSaga)
   ]);
 }

@@ -30,7 +30,7 @@ namespace EMS.Api.Controllers
             if (dto.Id != CurrentUser)
                 return Unauthorized(new { message = "Unauthorized" });
 
-            await service.UpdateProfileAsync(dto);
+            await service.UpdateAsync(dto);
             return GetResult<UserDTO>(null, HttpStatusCode.OK);
         }
 

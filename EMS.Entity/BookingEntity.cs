@@ -7,21 +7,24 @@ namespace EMS.Entity
 {
     public class BookingEntity : SoftDeleteBaseEntity
     {
-        [Required] public int CustomerId { get; set; }
-        [Required] public int MinGuest { get; set; } // should i validate this and bellow one too, idk which validation would be nice?
-        [Required] public int MaxGuest { get; set; }
+        [Required, ForeignKey("User")]
+        public int CustomerId { get; set; }
+        public UserEntity Customer { get; set; } = null!; 
+
+        [Required] public int NumberOfGuests { get; set; }
 
         [Required, Column(TypeName = "decimal(18,2)")]
         public decimal TotalAmount { get; set; }
 
         [Required, Column(TypeName = "decimal(18,2)")]
-        public decimal DueAmount { get; set; }
-        public DateTime DateTime { get; set; } = DateTime.Now;  // should i give it default value, if yes: where?   
+        public decimal PaidAmount { get; set; }
 
-        [ForeignKey("Package")]
+        public DateTime DateTime { get; set; } = DateTime.Now;
+
+        [Required, ForeignKey("Package")]
         public int PackageId { get; set; }
         public PackageEntity Package { get; set; } = null!;
-        public EnumBookingStatus Status { get; set; } = EnumBookingStatus.Pending;  //should i validate this, if yes how?
+        public EnumBookingStatus Status { get; set; } = EnumBookingStatus.Pending;
     }
 
 }
