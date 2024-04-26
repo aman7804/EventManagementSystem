@@ -3,5 +3,7 @@ using EMS.Entity;
 
 namespace EMS.Repository.UserModule
 {
-    public interface IUserRepository : IBaseRepository<UserEntity> { }
+    public interface IUserRepository : IBaseRepository<User>
+    {
+    }
 }

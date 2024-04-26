@@ -1,24 +1,27 @@
 ﻿using EMS.Data;
+using EMS.Entity;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using EMS.Shared.Constant;
 using Microsoft.AspNetCore.Http;
-using EMS.Entity.Base;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace EMS.Repository.Base
 {
     public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
     {
         public readonly SqlDbContext Context;
+
         public readonly int CurrentUser;
         public BaseRepository(SqlDbContext sqlDbContext, IHttpContextAccessor httpContextAccessor)
         {
             Context = sqlDbContext;
-            var userIdClaim = httpContextAccessor.HttpContext?.User?.FindFirst(JwtRegisteredClaimNames.Name);
 
-            CurrentUser = userIdClaim?.Value != null
-                ? Convert.ToInt32(userIdClaim.Value) : 0;
+            string? userId = httpContextAccessor.HttpContext?.User?.Identity?.Name;
+
+            if (!string.IsNullOrWhiteSpace(userId))
+            {
+                CurrentUser = Convert.ToInt32(userId);
+            }
         }
 
         public virtual async Task AddAsync(T entity)
@@ -28,27 +31,25 @@ namespace EMS.Repository.Base
             Context.Add(entity);
             await Context.SaveChangesAsync();
         }
-        public virtual async Task UpdateAsync(T entity)
-        {
-            entity.UpdateDate = DateTime.Now;
-            entity.UpdatedBy = CurrentUser;
-            Context.Update(entity);
-            await Context.SaveChangesAsync();
-        }
 
         public virtual async Task DeleteAsync(int id)
         {
-            T? entity = await GetByIdAsync(id) ?? throw new Exception(ExceptionMessage.RECORD_NOT_FOUND);
+            T? entity = await GetByIdAsync(id);
+            if (entity == null)
+            {
+                throw new Exception(ExceptionMessage.RECORD_NOT_FOUND);
+            }
             Context.Remove(entity);
             await Context.SaveChangesAsync();
         }
 
-        public virtual IQueryable<T> GetAll(Expression<Func<T, bool>>? predicate)
+        public virtual IQueryable<T> GetAll(Expression<Func<T, bool>> predicate)
         {
             IQueryable<T> query = Context.Set<T>().AsQueryable<T>();
             if (predicate != null)
-                query = query.Where(predicate);
-            
+            {
+                query.Where(predicate);
+            }
             return query;
         }
 
@@ -56,13 +57,24 @@ namespace EMS.Repository.Base
         {
             IQueryable<T> query = GetAll(predicate);
             if (asNoTracking)
-                query = query.AsNoTracking();
+            {
+                query.AsNoTracking();
+            }
             
             return await query.FirstOrDefaultAsync();
         }
 
-        public virtual async Task<T?> GetByIdAsync(int id, bool asNoTracking = false) =>
-            await GetAsync(x => x.Id == id, asNoTracking);
+        public virtual async Task<T?> GetByIdAsync(int id, bool asNoTracking = false)
+        {
+            return await GetAsync(x => x.Id == id, asNoTracking);
+        }
 
+        public virtual async Task UpdateAsync(T entity)
+        {
+            entity.UpdateDate = DateTime.Now;
+            entity.UpdatedBy = CurrentUser;
+            Context.Update(entity);
+            await Context.SaveChangesAsync();
+        }
     }
 }
