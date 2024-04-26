@@ -12,3 +12,6 @@ export const getBookingListSelector =
 export const getCurrentBookingSelector =
   createSelector( getState, (state) => get(state, "booking.current") )
 
+export const getBookingReportSelector =
+  createSelector( getState, (state) => get(state, "booking.report") )
+

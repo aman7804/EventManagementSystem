@@ -110,9 +110,28 @@ const reducers = (state = initialState, action: BookingActions): unknown => {
         pending: false,
         error: (action.payload as GENERIC.FailureResponse).message,
       };
-    default:
-      return state;
-  }
-};
-
-export default reducers;
+      /* Report */
+      case ACTION_TYPE.GET_REPORT_REQUEST:
+        return {
+          ...state,
+          pending: true,
+        };
+      case ACTION_TYPE.GET_REPORT_SUCCESS:
+        return {
+          ...state,
+          pending: false,
+          report: action.payload.data,
+          error: null,
+        };
+      case ACTION_TYPE.GET_REPORT_FAILURE:
+        return {
+          ...state,
+          pending: false,
+          error: action.payload.message,
+        };
+      default:
+        return state;
+    }
+  };
+  
+  export default reducers;

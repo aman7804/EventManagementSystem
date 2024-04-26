@@ -73,5 +73,48 @@ namespace EMS.Service.BookingModule
             return paginationDTO;
 
         }
+        
+
+        public async Task<BookingSummaryDTO> GetBookingSummary()
+        {
+            return new BookingSummaryDTO()
+            {
+                NoOfBookings = 1000,
+                BookingRatio= 13.56M,
+            };
+        }
+
+
+        public async Task<BookingRevenueDTO> GetBookingRevenue()
+        {
+            return new BookingRevenueDTO()
+            {
+                TotalRevenue = 45600,
+                RevenueRatio= 13.56M,
+            };
+        }
+
+        public async Task<BookingReportDTO> GetBookingReport(EnumBookingReportType enumBookingReportType)
+        {
+            return enumBookingReportType switch
+            {
+                EnumBookingReportType.Daily => new BookingReportDTO()
+                {
+                    NoOfBookings = new int[7] { 12, 2, 33, 3, 4, 4, 6 }
+                },
+                EnumBookingReportType.Weekly => new BookingReportDTO()
+                {
+                    NoOfBookings = new int[7] { 123, 22, 98, 123, 43, 212, 231 }
+                },
+                EnumBookingReportType.Yearly => new BookingReportDTO()
+                {
+                    NoOfBookings = new int[7] { 1231, 2321, 394, 456, 554, 989, 842 }
+                },
+                _ => new BookingReportDTO()
+                {
+                    NoOfBookings = new int[7] { 12, 2, 33, 3, 4, 4, 6 }
+                },
+            };
+        }
     }
-}
+}d

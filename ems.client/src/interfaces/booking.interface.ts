@@ -1,3 +1,4 @@
+import { EnumBookingReportType, EnumBookingStatus } from 'utils/enums';
 import { UpdateStatusRequestPayload } from 'store/booking/types';
 import * as GENERIC from './generic.interface'
 
@@ -60,4 +61,25 @@ export interface IBookingContainerDispatch {
 export interface IBookingContainerState {
   list: IBooking[];
   current: IBooking;
+}
+
+/* Dashboard Component Modals */
+export interface IBookingSummary {
+  noOfBookings: number,
+  bookingRatio: number
+}
+
+export interface IBookingRevenue {
+  totalRevenue: number,
+  revenueRatio: number
+}
+
+export interface IBookingReport {
+  noOfBookings: number[]
+}
+
+export interface IBookingReportRequestPayload {
+  enumBookingReportType: EnumBookingReportType,
+  message?: string,
+  data?: IBooking,
 }

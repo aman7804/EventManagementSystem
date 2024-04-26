@@ -1,7 +1,8 @@
 import * as ACTION_TYPE from "./action.types";
 import * as GENERIC from "interfaces/generic.interface";
-import { IBookingPagination, IGetByIdBooking } from "interfaces/booking.interface";
+import { IBooking, IBookingPagination, IBookingReport, IBookingReportRequestPayload, IGetByIdBooking } from "interfaces/booking.interface";
 
+type typeModal = IBooking;
 type typeModalPagination = IBookingPagination;
 
 export interface UpdateStatusRequestPayload{
@@ -59,7 +60,7 @@ export type GetRequest = {
 }
 export type GetSuccess = {
   type: typeof ACTION_TYPE.GET_SUCCESS;
-  payload: GENERIC.GetSuccessResponse<IGetByIdBooking>;
+  payload: GENERIC.GetSuccessResponse<typeModal>;
 };
 export type GetFailure = {
   type: typeof ACTION_TYPE.GET_FAILURE;
@@ -79,6 +80,24 @@ export type DeleteFailure = {
   payload: GENERIC.FailureResponse;
 };
 
+/* Reports */
+
+export type GetReportRequest = {
+  type: typeof ACTION_TYPE.GET_REPORT_REQUEST;
+  payload: IBookingReportRequestPayload;
+}
+
+export type GetReportSuccess = {
+  type: typeof ACTION_TYPE.GET_REPORT_SUCCESS;
+  payload: GENERIC.GetSuccessResponse<IBookingReport>;
+};
+
+export type GetReportFailure = {
+  type: typeof ACTION_TYPE.GET_REPORT_FAILURE;
+  payload: GENERIC.FailureResponse;
+};
+
+
 export type BookingActions =
   | ListRequest
   | ListSuccess
@@ -94,4 +113,7 @@ export type BookingActions =
   | GetFailure
   | DeleteRequest
   | DeleteSuccess
-  | DeleteFailure;
+  | DeleteFailure
+  | GetReportRequest
+  | GetReportSuccess
+  | GetReportFailure;
