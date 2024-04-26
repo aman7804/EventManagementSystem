@@ -1,4 +1,4 @@
-﻿using EMS.Entity;
+﻿using EMS.Entity.Base;
 using System.Linq.Expressions;
 
 namespace EMS.Repository.Base
@@ -10,6 +10,6 @@ namespace EMS.Repository.Base
         Task DeleteAsync(int id);
         Task<T?> GetByIdAsync(int id, bool asNoTracking = false);
         Task<T?> GetAsync(Expression<Func<T, bool>> predicate, bool asNoTracking = false);
-        IQueryable<T> GetAll(Expression<Func<T, bool>> predicate);
+        IQueryable<T> GetAll(Expression<Func<T, bool>>? predicate);
     }
 }

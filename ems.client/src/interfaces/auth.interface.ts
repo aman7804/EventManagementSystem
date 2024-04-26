@@ -1,0 +1,51 @@
+import { JwtPayload } from "jwt-decode";
+import {
+  ChangePasswordPayload,
+    LoginPayload, SignupPayload,
+  } from "store/auth/types";
+  
+  export interface ILogin {
+    emailId: string;
+    password: string;
+  }
+  export interface ISignup{
+    firstName:string,
+    lastName:string,
+    address: string,
+    mobileNo: string,
+    emailId:string,
+    password:string
+  }
+  export interface IChangePassword{
+    emailId: string,
+    oldPassword: string,
+    newPassword: string
+  }
+  
+  export interface ILoginResponse {
+    firstName: string;
+    lastName: string;
+    emailAddress: string;
+    roleId: number;
+    token: string;
+    roleName: string;
+    id: number;
+  }
+  
+  export interface ILoginContainerState {
+    isAdmin: boolean | undefined;
+    isAuthenticated: boolean | undefined;
+  }
+  
+  export interface ILoginContainerDispatch {
+    loginRequest: (payload: LoginPayload) => {};
+  }
+  export interface ISignupContainerDispatch {
+    signupRequest: (payload: SignupPayload) => {};
+  }
+  export interface IChangePasswordContainerDispatch {
+    changePasswordRequest: (payload: ChangePasswordPayload) => {};
+  }
+  export interface IJwtTokenMeta extends JwtPayload {
+    role: string | undefined;
+  } 
