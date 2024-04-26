@@ -9,6 +9,7 @@ import {
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { checkIsAuthenticated } from 'store/auth/selector';
+import Header from 'components/header';
 
 const Home: React.FC = () => {
 	const isAuthenticated = useSelector(checkIsAuthenticated);
@@ -24,7 +25,7 @@ const Home: React.FC = () => {
 			<meta name="viewport" content="width=device-width, initial-scale=1" />
 			<link rel="stylesheet" href="assets/css/main.css" />
 			{/* Header */}
-			<header id="header" className="alt">
+			{/* <header id="header" className="alt">
 				<div className="logo">
 				<Link to="#">
 					EMS <span>by Aman</span>
@@ -36,7 +37,8 @@ const Home: React.FC = () => {
 							<Link to="/signup">SignUp</Link>
 						</>
 					)}
-			</header>
+			</header> */}
+			<Header />
 			
 			{/* Banner */}
 			<section id="banner">
