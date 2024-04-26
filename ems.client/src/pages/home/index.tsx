@@ -6,15 +6,15 @@ import {
 	home_p04,
 	home_p05
 } from "../../assets/images"
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { checkIsAuthenticated } from 'store/auth/selector';
 
 const Home: React.FC = () => {
+	const isAuthenticated = useSelector(checkIsAuthenticated);
+	
   return (
 		<>
-			{/*
-				Urban by TEMPLATED
-				templated.co @templatedco
-				Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
-			*/}
 			<title>Event Management System</title>
 			<meta charSet="utf-8" />
 			<meta
@@ -26,11 +26,16 @@ const Home: React.FC = () => {
 			{/* Header */}
 			<header id="header" className="alt">
 				<div className="logo">
-				<a href="index.html">
+				<Link to="#">
 					EMS <span>by Aman</span>
-				</a>
+				</Link>
 				</div>
-				<a href="/login">Login</a>
+				{!isAuthenticated && (
+						<>
+							<Link to="/login">Login</Link>
+							<Link to="/signup">SignUp</Link>
+						</>
+					)}
 			</header>
 			
 			{/* Banner */}
@@ -47,9 +52,9 @@ const Home: React.FC = () => {
 						
 					</p>
 				</header>
-				<a href="#main" className="button big scrolly">
+				<Link to="#" className="button big scrolly">
 					Explore Packages
-				</a>
+				</Link>
 				</div>
 			</section>
 			{/* Main */}
@@ -61,9 +66,9 @@ const Home: React.FC = () => {
 					<div className="flex flex-2">
 					<div className="col col1">
 						<div className="image round fit">
-						<a href="generic.html" className="link">
+						<Link to="#" className="link">
 							<img src={home_p01} alt="" width={320} height={320} />
-						</a>
+						</Link>
 						</div>
 					</div>
 					<div className="col col2">
@@ -71,9 +76,9 @@ const Home: React.FC = () => {
 						<p>
 							At Event Management System, we're dedicated to simplifying the process of planning and organizing your events. Whether it's a wedding, corporate function, or special celebration, our platform offers everything you need to bring your vision to life.
 						</p>
-						<a href="#" className="button">
+						<Link to="#" className="button">
 							Learn More
-						</a>
+						</Link>
 					</div>
 					</div>
 				</div>
@@ -93,15 +98,15 @@ const Home: React.FC = () => {
 							<li><p><b>Customizable Packages:</b> Tailor event packages to your needs, adjusting vendors and details effortlessly.</p></li>
 							<li><p><b>Effortless Booking:</b> Secure your event with just 10% upfront. Manage bookings seamlessly.</p></li>
 						</ul>
-						<a href="#" className="button">
+						<Link to="#" className="button">
 							Learn More
-						</a>
+						</Link>
 					</div>
 					<div className="col col1 first">
 						<div className="image round fit">
-						<a href="generic.html" className="link">
+						<Link to="#" className="link">
 							<img src={home_p02} alt="" width={320} height={320} />
-						</a>
+						</Link>
 						</div>
 					</div>
 					</div>
@@ -126,9 +131,9 @@ const Home: React.FC = () => {
 						Sed congue elit malesuada nibh, a varius odio vehicula aliquet.
 						Aliquam consequat, nunc quis sollicitudin aliquet.{" "}
 						</p>
-						<a href="#" className="button">
+						<Link to="#" className="button">
 						Learn More
-						</a>
+						</Link>
 					</div>
 					<div className="col align-center">
 						<div className="image round fit">
@@ -138,9 +143,9 @@ const Home: React.FC = () => {
 						Sed congue elit malesuada nibh, a varius odio vehicula aliquet.
 						Aliquam consequat, nunc quis sollicitudin aliquet.{" "}
 						</p>
-						<a href="#" className="button">
+						<Link to="#" className="button">
 						Learn More
-						</a>
+						</Link>
 					</div>
 					<div className="col align-center">
 						<div className="image round fit">
@@ -150,9 +155,9 @@ const Home: React.FC = () => {
 						Sed congue elit malesuada nibh, a varius odio vehicula aliquet.
 						Aliquam consequat, nunc quis sollicitudin aliquet.{" "}
 						</p>
-						<a href="#" className="button">
+						<Link to="#" className="button">
 						Learn More
-						</a>
+						</Link>
 					</div>
 					</div>
 				</div>
@@ -163,30 +168,30 @@ const Home: React.FC = () => {
 				<div className="copyright">
 				<ul className="icons">
 					<li>
-					<a href="#" className="icon fa-twitter">
+					<Link to="https://x.com/Aman782004?t=LrjidYko2daFlGvTgNEScQ&s=08" className="icon fa-twitter">
 						<span className="label">Twitter</span>
-					</a>
+					</Link>
 					</li>
 					<li>
-					<a href="#" className="icon fa-facebook">
+					<Link to="#" className="icon fa-facebook">
 						<span className="label">Facebook</span>
-					</a>
+					</Link>
 					</li>
 					<li>
-					<a href="#" className="icon fa-instagram">
+					<Link to="https://www.instagram.com/amanbhateriya_7804/" className="icon fa-instagram">
 						<span className="label">Instagram</span>
-					</a>
+					</Link>
 					</li>
 					<li>
-					<a href="#" className="icon fa-snapchat">
+					<Link to="https://www.snapchat.com/add/amanbhateriya7?share_id=iqOSzUGwR2g&locale=en-US" className="icon fa-snapchat">
 						<span className="label">Snapchat</span>
-					</a>
+					</Link>
 					</li>
 				</ul>
 				</div>
 			</footer>
 			<div className="copyright">
-				Site made with: <a href="https://templated.co/">TEMPLATED.CO</a>
+				Site made with: <Link to="https://templated.co/">TEMPLATED.CO</Link>
 			</div>
 			{/* Scripts */}
 			</>

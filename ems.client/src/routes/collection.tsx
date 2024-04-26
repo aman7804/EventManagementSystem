@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Navigate, RouteObject, createBrowserRouter } from "react-router-dom";
 import Layout from "pages/layout";
 import Login from "pages/auth/login.container";
 import Signup from "pages/auth/signup.container";
@@ -9,35 +9,32 @@ import Profile from "pages/profile";
 import Home from "pages/home";
 import Dashboard from "pages/dashboard/dashboard";
 
-
 export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Navigate to="/home" />, // redirect to home if hit '/'
+  },  
   {
     id: "root",
     path: "/",
     Component: Layout,
     children: [
-      {
-        index: true,
-        path: "/dashboard",
-        Component: Dashboard
-      },
       ...adminPrivateRoutes(),
       {
-        index: true,
         path: "/User/profile",
         element: <ProtectedRoute outlet={<Profile/>}/>
       }
     ]
   },
   {
+    id: "home",
+    path: "/home",
+    Component: Home
+  },
+  {
     id: "login",
     path: "/login",
     Component: Login
-  },
-  {
-    index: true,
-    path: "/home",
-    Component: Home
   },
   {
     id: "signup",
