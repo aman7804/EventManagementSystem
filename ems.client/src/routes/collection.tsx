@@ -1,4 +1,4 @@
-import { Navigate, RouteObject, createBrowserRouter } from "react-router-dom";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 import Layout from "pages/layout";
 import Login from "pages/auth/login.container";
 import Signup from "pages/auth/signup.container";
@@ -7,7 +7,7 @@ import ChangePassword from "pages/auth/changPassword.container";
 import ProtectedRoute from "./protected";
 import Profile from "pages/profile";
 import Home from "pages/home";
-import Dashboard from "pages/dashboard/dashboard";
+import ExplorePackages from "pages/explorePackages";
 
 export const router = createBrowserRouter([
   {
@@ -23,8 +23,13 @@ export const router = createBrowserRouter([
       {
         path: "/User/profile",
         element: <ProtectedRoute outlet={<Profile/>}/>
-      }
+      },
     ]
+  },
+  {
+    id: "explore-packages",
+    path: "/explore-packages",
+    Component: ExplorePackages
   },
   {
     id: "home",

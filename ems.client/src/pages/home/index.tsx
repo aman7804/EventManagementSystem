@@ -52,7 +52,7 @@ const Home: React.FC = () => {
 						
 					</p>
 				</header>
-				<Link to="#" className="button big scrolly">
+				<Link to="/explore-packages" className="button big scrolly">
 					Explore Packages
 				</Link>
 				</div>
