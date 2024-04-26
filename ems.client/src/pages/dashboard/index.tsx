@@ -1,60 +1,30 @@
-import { Grid, Box } from "@mui/material";
-import DashboardCard from "components/cards/DashboardCard";
-import BookingReport from "components/charts/BookingReport";
-import LatestQueries from "./LatestQueries";
+import { connect, MapDispatchToProps } from "react-redux";
+import DashboardComponent, { DashboardProps } from "pages/dashboard/dashboard";
+import { getReportRequest } from "store/booking/actions";
+import {
+  IDashboardContainerDispatch,
+  IDashboardContainerState
+} from "interfaces/dashboard.interface";
+import { RootState } from "store/root/root.reducer";
+import { getBookingReportSelector } from "store/booking/selector";
 
-const Dashboard: React.FC = () => {
-
-  const startDate = new Date('2024-02-26');
-  const endDate = new Date('2024-03-05');
-  
-  const formattedStartDate = startDate.toLocaleDateString('en-US',
-    {month: 'long', day: 'numeric'});
-  
-  const formattedEndDate = endDate.toLocaleDateString('en-US',
-    { month: 'long', day: 'numeric' });
-    
-  return (
-    <>
-    <Grid container spacing={2}>
-      <Grid item xs={12} xl={12} md={12}>
-        <Grid container spacing={2}>
-          <Grid item xl={8} xs={12} md={12}>
-            <Grid container spacing={2}>
-              <Grid item xl={6} xs={12} md={6}>
-                <DashboardCard
-                  title="Bookings"
-                  startDate={formattedStartDate}
-                  endDate={formattedEndDate}
-                  number={10000}
-                  percentage={69}
-                  seeMore="click here to see more info."
-                />
-              </Grid>
-              <Grid item xl={6} xs={12} md={6}>
-                <DashboardCard
-                  title="Bookings"
-                  startDate={formattedStartDate}
-                  endDate={formattedEndDate}
-                  number={10000}
-                  percentage={69}
-                  seeMore="click here to see more info."
-                />
-              </Grid>
-              <Grid item xl={12} xs={12} md={12}>
-                <BookingReport />
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xl={4} xs={12} md={12}>
-            <LatestQueries/>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
-    </>
-
-  );
+const mapDispatchToProps: MapDispatchToProps<
+    IDashboardContainerDispatch,
+    IDashboardContainerState
+> = {
+  getBookingReport: getReportRequest,
 };
 
-export default Dashboard;
+const mapStateToProps = (state:RootState) => {
+  return {
+    bookingReport: getBookingReportSelector(state),
+  };  
+}
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+const Dashboard: React.FC<DashboardProps> = (props) => {
+  return <DashboardComponent {...props} />;
+};
+
+export default connector(Dashboard);

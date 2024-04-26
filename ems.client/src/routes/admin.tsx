@@ -20,9 +20,13 @@ const User = lazy(
 const Package = lazy(
   () => import("pages/package")
 );
+const Dashboard = lazy(
+  () => import("pages/dashboard")
+);
 
 export default function adminPrivateRoutes() {
   return [
+    {path: "/dashboard", element: <ProtectedRoute outlet={<Dashboard />} />},
     {path: "/admin/venue", element: <ProtectedRoute outlet={<Venue />} />},
     {path: "/admin/photography", element: <ProtectedRoute outlet={<Photography />} />},
     {path: "/admin/decoration", element: <ProtectedRoute outlet={<Decoration />} />},
