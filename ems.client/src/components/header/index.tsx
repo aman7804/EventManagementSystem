@@ -62,7 +62,7 @@ const Header: React.FC<IGetUserProp> = ({userDetails, userProfile}) => {
 
   const isAuthenticated = useSelector(checkIsAuthenticated);
   return (
-    <AppBar position="static" className="header">
+    <AppBar position="static" className="header header-fix">
       <Toolbar
         disableGutters
         sx={{ flexWrap: "wrap" }}

@@ -21,6 +21,8 @@ const Home: React.FC = () => {
 			<Header />
 			
 			{/* Banner */}
+			{/* Main */}
+			<div id="main">
 			<section id="banner">
 				<div className="inner">
 				<header>
@@ -39,8 +41,6 @@ const Home: React.FC = () => {
 				</Link>
 				</div>
 			</section>
-			{/* Main */}
-			<div id="main">
 				{/* Section */}
 				<section className="wrapper-home style1">
 				<div className="inner">
