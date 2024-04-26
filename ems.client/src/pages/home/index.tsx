@@ -1,19 +1,12 @@
 import './assets/css/main.css';
 import {
 	home_p01,
-	home_p02,
-	home_p03,
-	home_p04,
-	home_p05
+	home_p02
 } from "../../assets/images"
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { checkIsAuthenticated } from 'store/auth/selector';
 import Header from 'components/header';
 
-const Home: React.FC = () => {
-	const isAuthenticated = useSelector(checkIsAuthenticated);
-	
+const Home: React.FC = () => {	
   return (
 		<>
 			<title>Event Management System</title>
@@ -25,19 +18,6 @@ const Home: React.FC = () => {
 			<meta name="viewport" content="width=device-width, initial-scale=1" />
 			<link rel="stylesheet" href="assets/css/main.css" />
 			{/* Header */}
-			{/* <header id="header" className="alt">
-				<div className="logo">
-				<Link to="#">
-					EMS <span>by Aman</span>
-				</Link>
-				</div>
-				{!isAuthenticated && (
-						<>
-							<Link to="/login">Login</Link>
-							<Link to="/signup">SignUp</Link>
-						</>
-					)}
-			</header> */}
 			<Header />
 			
 			{/* Banner */}
