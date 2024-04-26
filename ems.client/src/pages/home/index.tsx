@@ -114,56 +114,6 @@ const Home: React.FC = () => {
 					</div>
 				</div>
 				</section>
-				{/* Section */}
-				<section className="wrapper-home style1">
-				<div className="inner">
-					<header className="align-center">
-					<h2>Aliquam ipsum purus dolor</h2>
-					<p>
-						Cras sagittis turpis sit amet est tempus, sit amet consectetur purus
-						tincidunt.
-					</p>
-					</header>
-					<div className="flex flex-3">
-					<div className="col align-center">
-						<div className="image round fit">
-						<img src={home_p03} alt="" width={320} height={320} />
-						</div>
-						<p>
-						Sed congue elit malesuada nibh, a varius odio vehicula aliquet.
-						Aliquam consequat, nunc quis sollicitudin aliquet.{" "}
-						</p>
-						<Link to="#" className="button">
-						Learn More
-						</Link>
-					</div>
-					<div className="col align-center">
-						<div className="image round fit">
-						<img src={home_p05} alt="" width={320} height={320} />
-						</div>
-						<p>
-						Sed congue elit malesuada nibh, a varius odio vehicula aliquet.
-						Aliquam consequat, nunc quis sollicitudin aliquet.{" "}
-						</p>
-						<Link to="#" className="button">
-						Learn More
-						</Link>
-					</div>
-					<div className="col align-center">
-						<div className="image round fit">
-						<img src={home_p04} alt="" width={320} height={320} />
-						</div>
-						<p>
-						Sed congue elit malesuada nibh, a varius odio vehicula aliquet.
-						Aliquam consequat, nunc quis sollicitudin aliquet.{" "}
-						</p>
-						<Link to="#" className="button">
-						Learn More
-						</Link>
-					</div>
-					</div>
-				</div>
-				</section>
 			</div>
 			{/* Footer */}
 			<footer id="footer">
