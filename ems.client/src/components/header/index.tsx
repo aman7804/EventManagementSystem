@@ -56,13 +56,13 @@ const Header: React.FC<IGetUserProp> = ({userDetails, userProfile}) => {
   };
   
   const goToChangePassword = () => window.open("/change-password", "_blank")
-  const goToProfile = () => navigate("User/profile")
+  const goToProfile = () => navigate("/User/profile")
   const goToLogin = () => navigate("login")
   const goToSignup = () => navigate("signup")
 
   const isAuthenticated = useSelector(checkIsAuthenticated);
   return (
-    <AppBar position="static" className="header header-fix">
+    <AppBar position="static" className="header">
       <Toolbar
         disableGutters
         sx={{ flexWrap: "wrap" }}
