@@ -5,9 +5,10 @@ using Microsoft.AspNetCore.Http;
 
 namespace EMS.Repository.UserModule
 {
-    public class UserRepository : BaseRepository<UserEntity>, IUserRepository
+    public class UserRepository : BaseRepository<User>, IUserRepository
     {
-        public UserRepository(SqlDbContext sqlDbContext, IHttpContextAccessor httpContextAccessor)
-            : base(sqlDbContext, httpContextAccessor) { }
+        public UserRepository(SqlDbContext sqlDbContext, IHttpContextAccessor httpContextAccessor) 
+            : base(sqlDbContext, httpContextAccessor)
+        { }
     }
 }

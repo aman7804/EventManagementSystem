@@ -4,12 +4,11 @@ using EMS.Service.DTO;
 
 namespace EMS.Service.UserModule
 {
-    public interface IAuthService : IBaseService<UserEntity, UserDTO>
+    public interface IAuthService : IBaseService<User, UserDTO>
     {
-        Task<UserDTO> Login(LoginDTO loginDTO);
+        Task<UserDTO> Login(LoginDTO user);
         Task ChangePassword(ChangePasswordDTO changePasswordDTO);
+
         Task<UserDTO> GetByEmailId(string emailId);
-        Task RegisterUser(RegisterDTO registerDTO);
-        string GeneratePassword(int length = 7);
     }
 }
