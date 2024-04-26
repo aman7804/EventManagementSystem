@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import authService from "services/auth.service";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { checkIsAdmin, checkIsAuthenticated, getUserSelector } from "store/auth/selector";
 import { connect, useSelector } from "react-redux";
@@ -36,6 +36,8 @@ bc.onmessage=(e)=>{
 const Header: React.FC<IGetUserProp> = ({userDetails, userProfile}) => {
   const navigate = useNavigate();
   const isAdmin = useSelector(checkIsAdmin);
+
+  const currentEndpoint = useLocation().pathname;
 
   const [profileMenu, setProfileMenu] = React.useState<null | HTMLElement>(null);
   const [profileOpen, setProfileOpen] = React.useState<boolean>(false);
@@ -56,7 +58,7 @@ const Header: React.FC<IGetUserProp> = ({userDetails, userProfile}) => {
   };
   
   const goToChangePassword = () => window.open("/change-password", "_blank")
-  const goToProfile = () => navigate("/User/profile")
+  const goToProfile = () => (currentEndpoint !== "/home") && navigate("/User/profile")
   const goToLogin = () => navigate("login")
   const goToSignup = () => navigate("signup")
 

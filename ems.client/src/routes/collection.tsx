@@ -19,12 +19,12 @@ export const router = createBrowserRouter([
     path: "/",
     Component: Layout,
     children: [
-      ...adminPrivateRoutes()
+      ...adminPrivateRoutes(),
+      {
+        path: "/User/profile",
+        element: <ProtectedRoute outlet={<Profile/>}/>
+      },
     ]
-  },
-  {
-    path: "/User/profile",
-    element: <ProtectedRoute outlet={<Profile/>}/>
   },
   {
     id: "explore-packages",
