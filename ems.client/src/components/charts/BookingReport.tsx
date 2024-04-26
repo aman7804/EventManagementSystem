@@ -1,5 +1,5 @@
 import "../cards/style.css";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BarChart } from '@mui/x-charts/BarChart';
 import DateObject from "react-date-object";
 import { EnumBookingReportType } from "utils/enums";
@@ -12,13 +12,20 @@ export type BookingReportProps = {
 const BookingReport: React.FC<BookingReportProps> = (props) => {
   const {data } = props;
   const [reportAxis, setReportAxis] = useState<string[]>([]);
-  // const [reportData, setReportData] = useState<number[]>([]);
+  
+  useEffect(() => {
+    refreshReport("Monthly");
+  })
   
   const onChartTypeChange = (event: any) => {
+    refreshReport(event.target.value);
+  }
+
+  const refreshReport = (reportType: string) => {
     let currentDate = new DateObject();
     const { onReportTypeChange } = props;
     const axis = [];
-    switch (event.target.value) {
+    switch (reportType) {
       case "Daily":
         for (let i=1; i<8; i++) {
           currentDate.day -= 1;
@@ -58,21 +65,14 @@ const BookingReport: React.FC<BookingReportProps> = (props) => {
     }
 
     setReportAxis(axis.reverse());
-    // setReportData(new Array<number>(axis.length));
-    
-    console.log(axis.reverse());
   }
-
-  // const onReportDataReceive = (data: number[]) => {
-  //   setReportData(data);
-  // }
     
   return (
     <>  
       <div className="card h-100">
         <div className="card-body">
           <div className="d-flex justify-content-between mb-4">
-            <h2 className="mb-0 text-md">Bookings report</h2>
+            <h2 className="mb-0 text-md">Bookings Report</h2>
             <div className="form-group mb-0">
               <label htmlFor="barChartFilter" className="sr-only">Filter revenue</label>
               <select className="custom-select" id="barChartFilter" onChange={onChartTypeChange}>

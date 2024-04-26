@@ -4,7 +4,7 @@ import BookingReport from "components/charts/BookingReport";
 import LatestQueries from "./LatestQueries";
 import { IDashboardContainerDispatch, IDashboardContainerState } from "interfaces/dashboard.interface";
 import { EnumBookingReportType } from "utils/enums";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as GENERIC from "interfaces/generic.interface";
 import { IBookingReport } from "interfaces/booking.interface";
 
@@ -15,6 +15,10 @@ export type DashboardProps = IDashboardContainerState &
 
 const Dashboard: React.FC<DashboardProps> = (props) => {
   const [reportData, setReportData] = useState<number[] | undefined>([]);
+
+  useEffect(() => {
+    onReportTypeChange(EnumBookingReportType.monthly);
+  })
 
   const startDate = new Date('2024-02-26');
   const endDate = new Date('2024-03-05');
