@@ -3,7 +3,6 @@ using EMS.Service.Base;
 using EMS.Service.DTO;
 using EMS.Service.DTO.Booking;
 using EMS.Service.DTO.Filter;
-using EMS.Shared;
 
 namespace EMS.Service.BookingModule
 {
@@ -12,8 +11,5 @@ namespace EMS.Service.BookingModule
         Task<GetBookingDTO> GetBookingById(int Id);
         Task<PaginationDTO<BookingDTO, BookingFilter>>
             GetBookings(PaginationDTO<BookingDTO, BookingFilter> paginationDTO);
-        Task<BookingSummaryDTO> GetBookingSummary();
-        Task<BookingRevenueDTO> GetBookingRevenue();
-        Task<BookingReportDTO> GetBookingReport(EnumBookingReportType enumBookingReportType);    
     }
 }

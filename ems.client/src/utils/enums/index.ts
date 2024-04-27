@@ -7,18 +7,3 @@ export enum HttpStatusCodes {
   }
 
 export type Order = "asc" | "desc";
-
-export enum EnumBookingStatus {
-  pending = 0,
-  cancelled = 1,
-  rejected = 2,
-  paid = 3,
-  confirmed = 4
-}
-
-export enum EnumBookingReportType {
-  daily = 0,
-  weekly = 1,
-  monthly = 2,
-  yearly = 3
-}

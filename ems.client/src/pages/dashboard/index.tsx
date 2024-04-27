@@ -1,30 +1,16 @@
-import { connect, MapDispatchToProps } from "react-redux";
-import DashboardComponent, { DashboardProps } from "pages/dashboard/dashboard";
-import { getReportRequest } from "store/booking/actions";
-import {
-  IDashboardContainerDispatch,
-  IDashboardContainerState
-} from "interfaces/dashboard.interface";
-import { RootState } from "store/root/root.reducer";
-import { getBookingReportSelector } from "store/booking/selector";
+import { Typography } from "@mui/material";
+import { Box } from "@mui/system";
 
-const mapDispatchToProps: MapDispatchToProps<
-    IDashboardContainerDispatch,
-    IDashboardContainerState
-> = {
-  getBookingReport: getReportRequest,
+const Dashboard: React.FC = () => {
+  return (
+    <div>
+      <Box className="content-header">
+        <Typography variant="h2" className="heading">
+          Dashboard
+        </Typography>
+      </Box>
+    </div>
+  );
 };
 
-const mapStateToProps = (state:RootState) => {
-  return {
-    bookingReport: getBookingReportSelector(state),
-  };  
-}
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-const Dashboard: React.FC<DashboardProps> = (props) => {
-  return <DashboardComponent {...props} />;
-};
-
-export default connector(Dashboard);
+export default Dashboard;
