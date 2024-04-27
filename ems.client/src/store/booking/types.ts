@@ -1,9 +1,18 @@
 import * as ACTION_TYPE from "./action.types";
 import * as GENERIC from "interfaces/generic.interface";
-import { IBooking, IBookingPagination, IBookingReport, IBookingReportRequestPayload } from "interfaces/booking.interface";
+import { IBookingPagination, IGetByIdBooking, IBookingReport, IBookingReportRequestPayload } from "interfaces/booking.interface";
 
-type typeModal = IBooking;
 type typeModalPagination = IBookingPagination;
+
+export interface UpdateStatusRequestPayload{
+  data:{ id: number }
+  callback: any;
+}
+export interface UpdateStatusSuccessPayload{
+  isValid: boolean;
+  message: string;  
+  data?: any;
+}
 
 export type ListRequest = {
   type: typeof ACTION_TYPE.LIST_REQUEST;
@@ -20,18 +29,29 @@ export type ListFailure = {
   payload: GENERIC.FailureResponse;
 };
 
-export type SaveRequest = {
-  type: typeof ACTION_TYPE.SAVE_REQUEST;
-  payload: GENERIC.SaveRequestPayload<typeModal>;
+export type ConfirmRequest = {
+  type: typeof ACTION_TYPE.CONFIRM_REQUEST;
+  payload: UpdateStatusRequestPayload;
 }
-
-export type SaveSuccess = {
-  type: typeof ACTION_TYPE.SAVE_SUCCESS;
-  payload: GENERIC.SaveSuccessResponse;
+export type ConfirmSuccess = {
+  type: typeof ACTION_TYPE.CONFIRM_SUCCESS;
+  payload: UpdateStatusSuccessPayload;
+};
+export type ConfirmFailure = {
+  type: typeof ACTION_TYPE.CONFIRM_FAILURE;
+  payload: GENERIC.FailureResponse;
 };
 
-export type SaveFailure = {
-  type: typeof ACTION_TYPE.SAVE_FAILURE;
+export type RejectRequest = {
+  type: typeof ACTION_TYPE.REJECT_REQUEST;
+  payload: UpdateStatusRequestPayload;
+}
+export type RejectSuccess = {
+  type: typeof ACTION_TYPE.REJECT_SUCCESS;
+  payload: UpdateStatusSuccessPayload;
+};
+export type RejectFailure = {
+  type: typeof ACTION_TYPE.REJECT_FAILURE;
   payload: GENERIC.FailureResponse;
 };
 
@@ -39,12 +59,10 @@ export type GetRequest = {
   type: typeof ACTION_TYPE.GET_REQUEST;
   payload: GENERIC.GetRequestPayload;
 }
-
 export type GetSuccess = {
   type: typeof ACTION_TYPE.GET_SUCCESS;
-  payload: GENERIC.GetSuccessResponse<typeModal>;
+  payload: GENERIC.GetSuccessResponse<IGetByIdBooking>;
 };
-
 export type GetFailure = {
   type: typeof ACTION_TYPE.GET_FAILURE;
   payload: GENERIC.FailureResponse;
@@ -82,14 +100,16 @@ export type GetReportFailure = {
   payload: GENERIC.FailureResponse;
 };
 
-
 export type BookingActions =
   | ListRequest
   | ListSuccess
   | ListFailure
-  | SaveRequest
-  | SaveSuccess
-  | SaveFailure
+  | ConfirmRequest
+  | ConfirmSuccess
+  | ConfirmFailure
+  | RejectRequest
+  | RejectSuccess
+  | RejectFailure
   | GetRequest
   | GetSuccess
   | GetFailure

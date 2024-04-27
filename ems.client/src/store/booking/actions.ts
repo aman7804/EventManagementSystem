@@ -1,10 +1,8 @@
-import { IBooking, IBookingPagination, IBookingReportRequestPayload } from "interfaces/booking.interface";
+import { IGetByIdBooking, IBookingPagination, IBookingReportRequestPayload } from "interfaces/booking.interface";
 import * as ACTION_TYPE from "./action.types";
 import * as TYPES from "./types";
 import * as GENERIC from "interfaces/generic.interface";
 
-
-type typeModal = IBooking;
 type typeModalPagination = IBookingPagination;
 
 export const listRequest = (
@@ -13,14 +11,12 @@ export const listRequest = (
   type: ACTION_TYPE.LIST_REQUEST,
   payload,
 });
-
 export const listSuccess = (
   payload: GENERIC.ListSuccessResponse<typeModalPagination>
 ): TYPES.ListSuccess => ({
   type: ACTION_TYPE.LIST_SUCCESS,
   payload,
 });
-
 export const listFailure = (
   payload: GENERIC.FailureResponse
 ): TYPES.ListFailure => ({
@@ -28,24 +24,41 @@ export const listFailure = (
   payload,
 });
 
-export const saveRequest = (
-  payload: GENERIC.SaveRequestPayload<typeModal>
-): TYPES.SaveRequest => ({
-  type: ACTION_TYPE.SAVE_REQUEST,
+export const confirmRequest = (
+  payload: TYPES.UpdateStatusRequestPayload
+): TYPES.ConfirmRequest => ({
+  type: ACTION_TYPE.CONFIRM_REQUEST,
   payload,
 });
-
-export const saveSuccess = (
-  payload: GENERIC.SaveSuccessResponse
-): TYPES.SaveSuccess => ({
-  type: ACTION_TYPE.SAVE_SUCCESS,
+export const confirmSuccess = (
+  payload: TYPES.UpdateStatusSuccessPayload
+): TYPES.ConfirmSuccess => ({
+  type: ACTION_TYPE.CONFIRM_SUCCESS,
   payload,
 });
-
-export const saveFailure = (
+export const confirmFailure = (
   payload: GENERIC.FailureResponse
-): TYPES.SaveFailure => ({
-  type: ACTION_TYPE.SAVE_FAILURE,
+): TYPES.ConfirmFailure => ({
+  type: ACTION_TYPE.CONFIRM_FAILURE,
+  payload,
+});
+
+export const rejectRequest = (
+  payload: TYPES.UpdateStatusRequestPayload
+): TYPES.RejectRequest => ({
+  type: ACTION_TYPE.REJECT_REQUEST,
+  payload,
+});
+export const rejectSuccess = (
+  payload: TYPES.UpdateStatusSuccessPayload
+): TYPES.RejectSuccess => ({
+  type: ACTION_TYPE.REJECT_SUCCESS,
+  payload,
+});
+export const rejectFailure = (
+  payload: GENERIC.FailureResponse
+): TYPES.RejectFailure => ({
+  type: ACTION_TYPE.REJECT_FAILURE,
   payload,
 });
 
@@ -55,14 +68,12 @@ export const getByIdRequest = (
   type: ACTION_TYPE.GET_REQUEST,
   payload,
 });
-
 export const getByIdSuccess = (
-  payload: GENERIC.GetSuccessResponse<typeModal>
+  payload: GENERIC.GetSuccessResponse<IGetByIdBooking>
 ): TYPES.GetSuccess => ({
   type: ACTION_TYPE.GET_SUCCESS,
   payload,
 });
-
 export const getByIdFailure = (
   payload: GENERIC.FailureResponse
 ): TYPES.GetFailure => ({
@@ -76,14 +87,12 @@ export const deleteRequest = (
   type: ACTION_TYPE.DELETE_REQUEST,
   payload,
 });
-
 export const deleteSuccess = (
   payload: GENERIC.DeleteSuccessResponse
 ): TYPES.DeleteSuccess => ({
   type: ACTION_TYPE.DELETE_SUCCESS,
   payload,
 });
-
 export const deleteFailure = (
   payload: GENERIC.FailureResponse
 ): TYPES.DeleteFailure => ({

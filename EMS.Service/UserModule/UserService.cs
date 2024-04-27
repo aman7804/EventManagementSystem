@@ -7,7 +7,6 @@ using EMS.Shared;
 using EMS.Service.Extension;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using EMS.Data.Migrations;
 using EMS.Shared.Constant;
 
 namespace EMS.Service.UserModule
@@ -47,7 +46,7 @@ namespace EMS.Service.UserModule
             return paginationDTO;
         }
 
-        public async Task UpdateProfileAsync(UserDTO dto)
+        public override async Task UpdateAsync(UserDTO dto)
         {
             if (dto == null)
                 throw new ArgumentNullException(nameof(dto), "DTO cannot be null");

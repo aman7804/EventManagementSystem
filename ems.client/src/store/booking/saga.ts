@@ -1,7 +1,5 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import {
-  saveFailure,
-  saveSuccess,
   deleteFailure,
   deleteSuccess,
   getByIdFailure,
@@ -10,10 +8,14 @@ import {
   listSuccess,
   getReportSuccess,
   getReportFailure,
+  confirmSuccess,
+  confirmFailure,
+  rejectSuccess,
+  rejectFailure,
 } from "./actions";
 import * as ACTION_TYPE from "./action.types";
 import service from "services/booking.service";
-import { IBooking, IBookingPagination } from "interfaces/booking.interface";
+import { IBooking, IBookingPagination, IGetByIdBooking } from "interfaces/booking.interface";
 import { IApiSuccessResponse } from "interfaces/generic.interface";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,18 +41,36 @@ function* listSaga(action: any) {
   }
 }
 
-function* saveSaga(action: any) {
+function* confirmSaga(action: any) {
   try {
     const response: IApiSuccessResponse<IBooking> = yield call(
-      service.save, action.payload.data
+      service.confirmBooking, action.payload.data
     );
       yield put(
-        saveSuccess(response)
+        confirmSuccess(response)
     );
     action.payload.callback(response);
   } catch (e: any) {
     yield put(
-      saveFailure({
+      confirmFailure({
+        message: e.message
+      })
+    );
+  }
+}
+
+function* rejectSaga(action: any) {
+  try {
+    const response: IApiSuccessResponse<IBooking> = yield call(
+      service.rejectBooking, action.payload.data
+    );
+      yield put(
+        rejectSuccess(response)
+    );
+    action.payload.callback(response);
+  } catch (e: any) {
+    yield put(
+      rejectFailure({
         message: e.message
       })
     );
@@ -59,8 +79,8 @@ function* saveSaga(action: any) {
 
 function* getByIdSaga(action: any) {
   try {
-    const response: IApiSuccessResponse<IBooking> = yield call(
-      service.getById,action.payload.data
+    const response: IApiSuccessResponse<IGetByIdBooking> = yield call(
+      service.getById, action.payload.data
     );
     yield put(
       getByIdSuccess(response)
@@ -69,25 +89,6 @@ function* getByIdSaga(action: any) {
   } catch (e: any) {
     yield put(
       getByIdFailure({
-        message: e.message
-      })
-    );
-  }
-}
-
-function* deleteSaga(action: any) {
-  try {
-    const response: IApiSuccessResponse<IBooking> = yield call(
-      service.deleteById,action.payload.data
-    );
-
-    yield put(
-      deleteSuccess(response)
-    );
-    action.payload.callback(response);
-  } catch (e: any) {
-    yield put(
-      deleteFailure({
         message: e.message
       })
     );
@@ -112,13 +113,37 @@ function* getReport(action: any) {
     );
   }
 }
+      
+      
+      
+function* deleteSaga(action: any) {
+  try {
+    const response: IApiSuccessResponse<IBooking> = yield call(
+      service.deleteById,action.payload.data
+    );
+
+    yield put(
+      deleteSuccess(response)
+    );
+    action.payload.callback(response);
+  } catch (e: any) {
+    yield put(
+      deleteFailure({
+        message: e.message
+      })
+    );
+  }
+}
 
 function* bookingSaga() {
-  yield all([takeLatest(ACTION_TYPE.LIST_REQUEST, listSaga)]);
-  yield all([takeLatest(ACTION_TYPE.SAVE_REQUEST, saveSaga)]);
-  yield all([takeLatest(ACTION_TYPE.GET_REQUEST, getByIdSaga)]);
-  yield all([takeLatest(ACTION_TYPE.DELETE_REQUEST, deleteSaga)]);
-  yield all([takeLatest(ACTION_TYPE.GET_REPORT_REQUEST, getReport)]);
+  yield all([
+    takeLatest(ACTION_TYPE.LIST_REQUEST, listSaga),
+    takeLatest(ACTION_TYPE.GET_REQUEST, getByIdSaga),
+    takeLatest(ACTION_TYPE.CONFIRM_REQUEST, confirmSaga),
+    takeLatest(ACTION_TYPE.REJECT_REQUEST, rejectSaga),
+    takeLatest(ACTION_TYPE.DELETE_REQUEST, deleteSaga),
+    takeLatest(ACTION_TYPE.GET_REPORT_REQUEST, getReport)
+  ]);
 }
 
 export default bookingSaga;

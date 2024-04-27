@@ -4,6 +4,7 @@ using EMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EMS.Data.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    partial class SqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240304074549_userFkInBooking")]
+    partial class userFkInBooking
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,17 +48,20 @@ namespace EMS.Data.Migrations
                     b.Property<int?>("DeletedBy")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("DueAmount")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("NumberOfGuests")
+                    b.Property<int>("MaxGuest")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MinGuest")
                         .HasColumnType("int");
 
                     b.Property<int>("PackageId")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("PaidAmount")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -125,7 +131,7 @@ namespace EMS.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2024, 3, 5, 21, 5, 52, 149, DateTimeKind.Local).AddTicks(4662),
+                            CreateDate = new DateTime(2024, 3, 4, 13, 15, 48, 759, DateTimeKind.Local).AddTicks(2979),
                             CreatedBy = 1,
                             Description = "15 Items: (2 soups, 3 salad, 2 sweets, 2 sabji, 2 farsan, 2 types of roti, dal, rice)",
                             IsActive = true,
@@ -175,7 +181,7 @@ namespace EMS.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2024, 3, 5, 21, 5, 52, 149, DateTimeKind.Local).AddTicks(4624),
+                            CreateDate = new DateTime(2024, 3, 4, 13, 15, 48, 759, DateTimeKind.Local).AddTicks(2925),
                             CreatedBy = 1,
                             Name = "Ahmedabad",
                             StateId = 1
@@ -229,7 +235,7 @@ namespace EMS.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2024, 3, 5, 21, 5, 52, 149, DateTimeKind.Local).AddTicks(4677),
+                            CreateDate = new DateTime(2024, 3, 4, 13, 15, 48, 759, DateTimeKind.Local).AddTicks(2996),
                             CreatedBy = 1,
                             Description = "Balloon Gate, Cake, Floor, Stage, Welcome Statue",
                             IsActive = true,
@@ -306,7 +312,7 @@ namespace EMS.Data.Migrations
                         {
                             Id = 1,
                             CateringId = 1,
-                            CreateDate = new DateTime(2024, 3, 5, 21, 5, 52, 149, DateTimeKind.Local).AddTicks(4777),
+                            CreateDate = new DateTime(2024, 3, 4, 13, 15, 48, 759, DateTimeKind.Local).AddTicks(3046),
                             CreatedBy = 1,
                             IsActive = true,
                             IsDraft = false,
@@ -363,7 +369,7 @@ namespace EMS.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2024, 3, 5, 21, 5, 52, 149, DateTimeKind.Local).AddTicks(4756),
+                            CreateDate = new DateTime(2024, 3, 4, 13, 15, 48, 759, DateTimeKind.Local).AddTicks(3025),
                             CreatedBy = 1,
                             Description = "20 page album (Karzima), 60 minutes 4K, 10 mins Drone Shot",
                             IsActive = true,
@@ -408,7 +414,7 @@ namespace EMS.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreateDate = new DateTime(2024, 3, 5, 21, 5, 52, 149, DateTimeKind.Local).AddTicks(4603),
+                            CreateDate = new DateTime(2024, 3, 4, 13, 15, 48, 759, DateTimeKind.Local).AddTicks(2890),
                             CreatedBy = 1,
                             Name = "Gujarat"
                         });
@@ -479,7 +485,7 @@ namespace EMS.Data.Migrations
                         {
                             Id = 1,
                             Address = "string",
-                            CreateDate = new DateTime(2024, 3, 5, 21, 5, 52, 149, DateTimeKind.Local).AddTicks(4424),
+                            CreateDate = new DateTime(2024, 3, 4, 13, 15, 48, 759, DateTimeKind.Local).AddTicks(2593),
                             CreatedBy = 0,
                             EmailId = "nms.nt1986@gmail.com",
                             FirstName = "Nimesh",
@@ -555,7 +561,7 @@ namespace EMS.Data.Migrations
                             Id = 1,
                             Address = "Bapunagar, Ahmedabad",
                             CityId = 1,
-                            CreateDate = new DateTime(2024, 3, 5, 21, 5, 52, 149, DateTimeKind.Local).AddTicks(4642),
+                            CreateDate = new DateTime(2024, 3, 4, 13, 15, 48, 759, DateTimeKind.Local).AddTicks(2956),
                             CreatedBy = 1,
                             Description = "Nothing",
                             IsActive = true,

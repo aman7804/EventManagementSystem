@@ -22,6 +22,6 @@ export function* rootSaga() {
     fork(userSaga),
     fork(profileSaga),
     fork(packageSaga),
-    fork(bookingSaga),
+    fork(bookingSaga)
   ]);
 }

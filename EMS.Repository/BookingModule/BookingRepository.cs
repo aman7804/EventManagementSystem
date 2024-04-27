@@ -12,11 +12,6 @@ namespace EMS.Repository.BookingModule
         public BookingRepository(SqlDbContext dbContext, IHttpContextAccessor contextAccessor)
             : base(dbContext, contextAccessor) { }
 
-        public override async Task AddAsync(BookingEntity entity)
-        {
-            entity.CustomerId = CurrentUser;
-            await base.AddAsync(entity);
-        }
         public override async Task<BookingEntity?> GetAsync(Expression<Func<BookingEntity, bool>> predicate, bool asNoTracking = false)
         {
             IQueryable<BookingEntity> query = GetAll(predicate);
@@ -27,7 +22,8 @@ namespace EMS.Repository.BookingModule
                          .Include(p => p.Package)
                              .ThenInclude(v => v.Catering)
                          .Include(p => p.Package)
-                             .ThenInclude(p => p.Decoration);
+                             .ThenInclude(p => p.Decoration)
+                         .Include(u => u.Customer);
             if (asNoTracking)
                 query = query.AsNoTracking();
 

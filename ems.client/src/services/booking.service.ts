@@ -2,6 +2,7 @@ import baseService from "services/base.service";
 import Config from "config/index";
 import { IBooking, IBookingPagination, IBookingSummary, IBookingRevenue, IBookingReport } from "interfaces/booking.interface";
 import { EnumBookingReportType, EnumBookingStatus } from "utils/enums";
+import { IBookingPagination } from "interfaces/booking.interface";
 
 const baseUrl = Config.env.BaseUrl;
 
@@ -10,8 +11,11 @@ const bookingBaseUrl = `${baseUrl}/api/Booking`;
 const getList = async (payload: IBookingPagination) => 
   baseService.post(`${bookingBaseUrl}/list`, payload);
 
-const save = async (payload: IBooking) =>
-  baseService.post(`${bookingBaseUrl}/save`, payload);
+const confirmBooking = async (payload: { id: number }) =>
+  baseService.put(`${bookingBaseUrl}/confirm`, payload)
+
+const rejectBooking = async (payload: { id: number }) =>
+  baseService.put(`${bookingBaseUrl}/reject`, payload)
 
 const getById = async ( payload: { id: number }) =>
   baseService.get(`${bookingBaseUrl}/index/${payload.id}`);

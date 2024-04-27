@@ -31,7 +31,7 @@ import {
           ...state,
           pending: false,
           user: action.payload,
-          token: action.payload.accessToken,
+          token: action.payload.accessToken || "",
           error: null,
         };
       case LOGIN_FAILURE:
