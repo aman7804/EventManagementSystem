@@ -92,10 +92,29 @@ const reducers = (state = initialState, action: BookingActions): unknown => {
         pending: false,
         error: (action.payload as GENERIC.FailureResponse).message,
       };
+    /* Report */
+    case ACTION_TYPE.GET_REPORT_REQUEST:
+      return {
+        ...state,
+        pending: true,
+      };
     case ACTION_TYPE.DELETE_REQUEST:
       return {
         ...state,
         pending: true,
+      };
+    case ACTION_TYPE.GET_REPORT_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        report: action.payload.data,
+        error: null,
+      };
+    case ACTION_TYPE.GET_REPORT_FAILURE:
+      return {
+        ...state,
+        pending: false,
+        error: action.payload.message,
       };
     case ACTION_TYPE.DELETE_SUCCESS:
       return {

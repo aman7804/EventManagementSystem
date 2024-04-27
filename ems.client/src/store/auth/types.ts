@@ -19,7 +19,7 @@ import * as GENERIC from "interfaces/generic.interface";
   export interface AuthState {
     pending: boolean;
     user: LoginResponse | null;
-    token: string;
+    token?: string | null;
     error: string | null;
   }
 

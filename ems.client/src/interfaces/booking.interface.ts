@@ -1,3 +1,4 @@
+import { EnumBookingReportType, EnumBookingStatus } from 'utils/enums';
 import { UpdateStatusRequestPayload } from 'store/booking/types';
 import * as GENERIC from './generic.interface'
 
@@ -50,6 +51,7 @@ export interface IBookingPagination extends GENERIC.IPagination<IBooking> {
 /* Dispatch Container Model */
 export interface IBookingContainerDispatch {
   listRequest: (payload: GENERIC.ListRequestPayload<IBookingPagination>) => {};
+  saveRequest: (payload: GENERIC.SaveRequestPayload<IBooking>) => {};
   confirmRequest: (payload: UpdateStatusRequestPayload) => {};
   rejectRequest: (payload: UpdateStatusRequestPayload) => {};
   getRequest: (payload: GENERIC.GetRequestPayload) => {};
@@ -59,5 +61,26 @@ export interface IBookingContainerDispatch {
 /* State Container Model */
 export interface IBookingContainerState {
   list: IBooking[];
-  current: IBooking;
+  current: IBooking;}
+
+
+/* Dashboard Component Modals */
+export interface IBookingSummary {
+  noOfBookings: number,
+  bookingRatio: number
+}
+
+export interface IBookingRevenue {
+  totalRevenue: number,
+  revenueRatio: number
+}
+
+export interface IBookingReport {
+  noOfBookings: number[]
+}
+
+export interface IBookingReportRequestPayload {
+  enumBookingReportType: EnumBookingReportType,
+  message?: string,
+  data?: IBooking,
 }

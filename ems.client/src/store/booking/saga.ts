@@ -6,6 +6,8 @@ import {
   getByIdSuccess,
   listFailure,
   listSuccess,
+  getReportSuccess,
+  getReportFailure,
   confirmSuccess,
   confirmFailure,
   rejectSuccess,
@@ -93,6 +95,27 @@ function* getByIdSaga(action: any) {
   }
 }
 
+function* getReport(action: any) {
+  try {
+    debugger
+    const response: IApiSuccessResponse<IBooking> = yield call(
+      service.getReport, action.payload.enumBookingReportType
+    );
+    yield put(
+      getReportSuccess(response)
+    );
+    action.payload.callback(response);
+  } catch (e: any) {
+    yield put(
+      getReportFailure({
+        message: e.message
+      })
+    );
+  }
+}
+      
+      
+      
 function* deleteSaga(action: any) {
   try {
     const response: IApiSuccessResponse<IBooking> = yield call(
@@ -118,7 +141,8 @@ function* bookingSaga() {
     takeLatest(ACTION_TYPE.GET_REQUEST, getByIdSaga),
     takeLatest(ACTION_TYPE.CONFIRM_REQUEST, confirmSaga),
     takeLatest(ACTION_TYPE.REJECT_REQUEST, rejectSaga),
-    takeLatest(ACTION_TYPE.DELETE_REQUEST, deleteSaga)
+    takeLatest(ACTION_TYPE.DELETE_REQUEST, deleteSaga),
+    takeLatest(ACTION_TYPE.GET_REPORT_REQUEST, getReport)
   ]);
 }
 
