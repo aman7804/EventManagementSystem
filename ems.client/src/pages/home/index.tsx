@@ -1,4 +1,4 @@
-import './assets/css/main.css';
+// import './assets/css/main.css';
 import {
 	home_p01,
 	home_p02
@@ -6,7 +6,10 @@ import {
 import { Link } from 'react-router-dom';
 import Header from 'components/header';
 
+
 const Home: React.FC = () => {	
+  require('./assets/css/main.css');
+  
   return (
 		<>
 			<title>Event Management System</title>
@@ -16,7 +19,7 @@ const Home: React.FC = () => {
 				content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
 			/>
 			<meta name="viewport" content="width=device-width, initial-scale=1" />
-			<link rel="stylesheet" href="assets/css/main.css" />
+			<link rel="stylesheet" href="./assets/css/main.css" />
 			{/* Header */}
 			<Header />
 			
