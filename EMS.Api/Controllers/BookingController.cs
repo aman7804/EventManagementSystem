@@ -2,6 +2,7 @@
 using EMS.Service.DTO;
 using EMS.Service.DTO.Booking;
 using EMS.Service.DTO.Filter;
+using EMS.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -90,5 +91,23 @@ namespace EMS.Api.Controllers
         [HttpPost("list")]
         public async Task<IActionResult> List(PaginationDTO<BookingDTO,BookingFilter> pagination) =>
             GetResult(await service.GetBookings(pagination));
+
+        [HttpGet("getSummary")]
+        public async Task<IActionResult> GetBookingSummary()
+        {
+            return GetResult(await service.GetBookingSummary(), HttpStatusCode.OK);
+        }
+
+        [HttpGet("getRevenue")]
+        public async Task<IActionResult> GetBookingRevenue()
+        {
+            return GetResult(await service.GetBookingRevenue(), HttpStatusCode.OK);
+        }
+
+        [HttpGet("getReport")]
+        public async Task<IActionResult> GetBookingReport(EnumBookingReportType enumBookingReportType)
+        {
+            return GetResult(await service.GetBookingReport(enumBookingReportType), HttpStatusCode.OK);
+        }
     }
 }

@@ -1,8 +1,9 @@
-import { IGetByIdBooking, IBookingPagination } from "interfaces/booking.interface";
+import { IBooking, IBookingPagination, IBookingReportRequestPayload } from "interfaces/booking.interface";
 import * as ACTION_TYPE from "./action.types";
 import * as TYPES from "./types";
 import * as GENERIC from "interfaces/generic.interface";
 
+type typeModal = IBooking;
 type typeModalPagination = IBookingPagination;
 
 export const listRequest = (
@@ -69,7 +70,7 @@ export const getByIdRequest = (
   payload,
 });
 export const getByIdSuccess = (
-  payload: GENERIC.GetSuccessResponse<IGetByIdBooking>
+  payload: GENERIC.GetSuccessResponse<typeModal>
 ): TYPES.GetSuccess => ({
   type: ACTION_TYPE.GET_SUCCESS,
   payload,
@@ -97,5 +98,28 @@ export const deleteFailure = (
   payload: GENERIC.FailureResponse
 ): TYPES.DeleteFailure => ({
   type: ACTION_TYPE.DELETE_FAILURE,
+  payload,
+});
+
+/* Report */
+
+export const getReportRequest = (
+  payload: IBookingReportRequestPayload
+): TYPES.GetReportRequest => ({
+  type: ACTION_TYPE.GET_REPORT_REQUEST,
+  payload,
+});
+
+export const getReportSuccess = (
+  payload: GENERIC.GetSuccessResponse<typeModal>
+): TYPES.GetSuccess => ({
+  type: ACTION_TYPE.GET_SUCCESS,
+  payload,
+});
+
+export const getReportFailure = (
+  payload: GENERIC.FailureResponse
+): TYPES.GetFailure => ({
+  type: ACTION_TYPE.GET_FAILURE,
   payload,
 });
