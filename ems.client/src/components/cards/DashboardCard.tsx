@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./style.css";
 
 interface IDashBoardCard{
@@ -33,8 +34,8 @@ function DashboardCard(props: IDashBoardCard) {
         </div>
         {/* end of card-body */}
         <div className="px-1 py-1 border-top">
-          <a
-            href="/tables"
+          <Link
+            to="#"
             className="btn btn-text btn-secondary btn-block d-flex align-items-center justify-content-between"
           >
             {seeMore}
@@ -42,7 +43,7 @@ function DashboardCard(props: IDashBoardCard) {
               className="zmdi zmdi-arrow-right ml-1 icon"
               aria-hidden="true"
             ></i>
-          </a>
+          </Link>
         </div>
         {/* end of px-1 */}
       </div>
