@@ -116,7 +116,6 @@ function* deleteSaga(action: any) {
 
 function* getReport(action: any) {
   try {
-    debugger
     const response: IApiSuccessResponse<IBooking> = yield call(
       service.getReport, action.payload.enumBookingReportType
     );

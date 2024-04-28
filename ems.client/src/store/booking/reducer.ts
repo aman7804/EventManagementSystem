@@ -127,7 +127,7 @@ const reducers = (state = initialState, action: BookingActions): unknown => {
         return {
           ...state,
           pending: false,
-          error: action.payload.message,
+          error: (action.payload as GENERIC.FailureResponse).message,
         };
       default:
         return state;

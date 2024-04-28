@@ -18,7 +18,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
 
   useEffect(() => {
     onReportTypeChange(EnumBookingReportType.monthly);
-  })
+  },[])
 
   const startDate = new Date('2024-02-26');
   const endDate = new Date('2024-03-05');
