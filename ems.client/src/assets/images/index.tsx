@@ -48,3 +48,11 @@ export const courseListIcon = require("./ic-course-list.svg").default;
 export const courseListLightIcon =
   require("./ic-course-list-light.svg").default;
 export const profile = require("./profile.png");
+
+
+export const home_p03 = require("./home/pic03.jpg");
+export const home_p04 = require("./home/pic04.jpg");
+export const home_p05 = require("./home/pic05.jpg");
+export const home_p01 = require("./home/baloons1.jpg")
+export const home_p02 = require("./home/wed1.jpg");
+
