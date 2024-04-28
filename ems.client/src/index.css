@@ -497,7 +497,7 @@ main {
 }
 
 .profile-menu .MuiMenuItem-root .MuiButton-root {
-  color: #616161;
+  color: #616161 !important;
   font-weight: 400;
   text-transform: capitalize;
   line-height: 20px;
