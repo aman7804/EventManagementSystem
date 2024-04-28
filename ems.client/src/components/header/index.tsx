@@ -80,7 +80,7 @@ const Header: React.FC<IGetUserProp> = ({userDetails, userProfile}) => {
             <img src={MenuIcon} alt="menu" />
           </IconButton>
           <Link
-            to="/dashboard"
+            to="#"
             className="header-logo"
             title="Event Management System"
           >
