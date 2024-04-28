@@ -103,7 +103,7 @@ const Home: React.FC = () => {
 				<div className="copyright">
 				<ul className="icons">
 					<li>
-					<Link to="https://x.com/Aman782004?t=LrjidYko2daFlGvTgNEScQ&s=08" className="icon fa-twitter">
+					<Link to="https://x.com/Aman782004?t=LrjidYko2daFlGvTgNEScQ&s=08" target="_blank" rel="noopener noreferrer" className="icon fa-twitter">
 						<span className="label">Twitter</span>
 					</Link>
 					</li>
@@ -113,12 +113,12 @@ const Home: React.FC = () => {
 					</Link>
 					</li>
 					<li>
-					<Link to="https://www.instagram.com/amanbhateriya_7804/" className="icon fa-instagram">
-						<span className="label">Instagram</span>
+						<Link to="https://www.instagram.com/amanbhateriya_7804/" target="_blank" rel="noopener noreferrer" className="icon fa-instagram">
+							<span className="label">Instagram</span>
 					</Link>
 					</li>
 					<li>
-					<Link to="https://www.snapchat.com/add/amanbhateriya7?share_id=iqOSzUGwR2g&locale=en-US" className="icon fa-snapchat">
+					<Link to="https://www.snapchat.com/add/amanbhateriya7?share_id=iqOSzUGwR2g&locale=en-US" target="_blank" rel="noopener noreferrer" className="icon fa-snapchat">
 						<span className="label">Snapchat</span>
 					</Link>
 					</li>
@@ -126,7 +126,7 @@ const Home: React.FC = () => {
 				</div>
 			</footer>
 			<div className="copyright">
-				Site made with: <Link to="https://templated.co/">TEMPLATED.CO</Link>
+				Site made with: <Link to="https://templated.co/"  target="_blank" rel="noopener noreferrer">TEMPLATED.CO</Link>
 			</div>
 			{/* Scripts */}
 			</>
