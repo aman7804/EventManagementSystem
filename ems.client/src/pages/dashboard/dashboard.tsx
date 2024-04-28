@@ -20,7 +20,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
     onReportTypeChange(EnumBookingReportType.monthly);
   },[])
 
-  const startDate = new Date('2024-02-26');
+  const startDate = new Date('2024-12-26');
   const endDate = new Date('2024-03-05');
   
   const formattedStartDate = startDate.toLocaleDateString('en-US',
@@ -44,7 +44,6 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
     setReportData(response.data?.noOfBookings);
   };
 
-  
   return (
     <>
     <Grid container spacing={2}>
@@ -57,19 +56,19 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
                   title="Bookings"
                   startDate={formattedStartDate}
                   endDate={formattedEndDate}
-                  number={10000}
-                  percentage={69}
-                  seeMore="click here to see more info."
+                  number={723}
+                  percentage={17}
+                  seeMore="see more"
                 />
               </Grid>
               <Grid item xl={6} xs={12} md={6}>
                 <DashboardCard
-                  title="Bookings"
+                  title="Revenue"
                   startDate={formattedStartDate}
                   endDate={formattedEndDate}
-                  number={10000}
-                  percentage={69}
-                  seeMore="click here to see more info."
+                  number={93420}
+                  percentage={53}
+                  seeMore="see more"
                 />
               </Grid>
               <Grid item xl={12} xs={12} md={12}>
