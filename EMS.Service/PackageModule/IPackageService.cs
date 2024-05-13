@@ -10,5 +10,6 @@ namespace EMS.Service.PackageModule
         Task<PaginationDTO<PackageItemDTO, PackageItemFilter>> GetPackages
             (PaginationDTO<PackageItemDTO, PackageItemFilter> paginationDTO, int CurrentUser);
         Task<bool> DeletePackage(int Id, int CurrentUser);
+        Task<PackageFullDTO> GetPackageByIdAsync(int Id);
     }
 }

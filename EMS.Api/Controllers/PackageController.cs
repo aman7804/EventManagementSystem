@@ -36,7 +36,7 @@ namespace EMS.Api.Controllers
         [AllowAnonymous]
         [HttpGet("index/{Id}")]
         public async Task<IActionResult> Index(int Id) =>
-            GetResult(await service.GetByIdAsync(Id));
+            GetResult(await service.GetPackageByIdAsync(Id));
 
         [Authorize(Roles = "Admin")]
         [HttpPost("list")]

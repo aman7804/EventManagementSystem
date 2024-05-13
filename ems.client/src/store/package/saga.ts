@@ -11,7 +11,7 @@ import {
 } from "./actions";
 import * as ACTION_TYPE from "./action.types";
 import service from "services/package.service";
-import { IPackage, IPackagePagination } from "interfaces/package.interface";
+import { IPackage, IPackageFull, IPackagePagination } from "interfaces/package.interface";
 import { IApiSuccessResponse } from "interfaces/generic.interface";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -57,7 +57,7 @@ function* saveSaga(action: any) {
 
 function* getByIdSaga(action: any) {
   try {
-    const response: IApiSuccessResponse<IPackage> = yield call(
+    const response: IApiSuccessResponse<IPackageFull> = yield call(
       service.getById,action.payload.data
     );
     yield put(

@@ -7,7 +7,7 @@ import {
   listRequest,
 } from "store/package/actions";
 import {
-  IPackageContainerDispatch,
+  IPackageContainerDispatch, 
   IPackage,
 } from "interfaces/package.interface";
 import { RootState } from "store/root/root.reducer";

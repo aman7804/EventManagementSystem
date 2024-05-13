@@ -1,6 +1,6 @@
 import * as ACTION_TYPE from "./action.types";
 import * as GENERIC from "interfaces/generic.interface";
-import { IPackage, IPackagePagination } from "interfaces/package.interface";
+import { IPackage, IPackageFull, IPackagePagination } from "interfaces/package.interface";
 
 type typeModal = IPackage;
 type typeModalPagination = IPackagePagination;
@@ -42,7 +42,7 @@ export type GetRequest = {
 
 export type GetSuccess = {
   type: typeof ACTION_TYPE.GET_SUCCESS;
-  payload: GENERIC.GetSuccessResponse<typeModal>;
+  payload: GENERIC.GetSuccessResponse<IPackageFull>;
 };
 
 export type GetFailure = {

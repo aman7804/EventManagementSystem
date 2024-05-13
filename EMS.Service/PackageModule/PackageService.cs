@@ -103,5 +103,19 @@ namespace EMS.Service.PackageModule
             return true;
         }
 
+        public async Task<PackageFullDTO> GetPackageByIdAsync(int Id){            
+            if (Id <= 0) throw new ArgumentNullException(nameof(Id), "Id cannot be null");
+
+            IQueryable<PackageEntity>? packageEntityQry = Repo.GetAll(x => x.Id == Id)
+                .Include(v => v.Venue)
+                .Include(p => p.Photography)
+                .Include(d => d.Decoration)
+                .Include(c => c.Catering);           
+            PackageEntity? packageEntity = await packageEntityQry.FirstOrDefaultAsync();
+            
+            return packageEntity == null
+                ? throw new Exception(ExceptionMessage.RECORD_NOT_FOUND)
+                : Map<PackageEntity, PackageFullDTO>(packageEntity);
+        }
     }
 }
