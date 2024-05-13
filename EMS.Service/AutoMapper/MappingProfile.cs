@@ -65,6 +65,27 @@ namespace EMS.Service.AutoMapper
                 .ForPath(x => x.PackageDetail.CateringName, opt=> opt.MapFrom(y => y.Package.Catering.Name))
                 .ForPath(x => x.PackageDetail.CateringPrice, opt=> opt.MapFrom(y => y.Package.Catering.PricePerPlate))
                 .ForPath(x => x.PackageDetail.CateringDescription, opt=> opt.MapFrom(y => y.Package.Catering.Description));
+            CreateMap<PackageEntity, PackageFullDTO>()
+				.ForPath(x => x.VenueId, opt=> opt.MapFrom(y => y.Venue.Id))
+				.ForPath(x => x.VenueName, opt=> opt.MapFrom(y => y.Venue.Name))
+                .ForPath(x => x.VenueAddress, opt=> opt.MapFrom(y => y.Venue.Address))
+                .ForPath(x => x.VenueDescription, opt=> opt.MapFrom(y => y.Venue.Description))
+                .ForPath(x => x.VenuePrice, opt=> opt.MapFrom(y => y.Venue.Price))
+                .ForPath(x => x.MinCapacity, opt=> opt.MapFrom(y => y.Venue.MinCapacity))
+                .ForPath(x => x.MaxCapacity, opt=> opt.MapFrom(y => y.Venue.MaxCapacity))
+                .ForPath(x => x.CityId, opt=> opt.MapFrom(y => y.Venue.CityId))
+				.ForPath(x => x.PhotographyId, opt=> opt.MapFrom(y => y.Photography.Id))
+                .ForPath(x => x.PhotographyName, opt=> opt.MapFrom(y => y.Photography.Name))
+                .ForPath(x => x.PhotographyPrice, opt=> opt.MapFrom(y => y.Photography.Price))
+                .ForPath(x => x.PhotographyDescription, opt=> opt.MapFrom(y => y.Photography.Description))
+				.ForPath(x => x.DecorationId, opt=> opt.MapFrom(y => y.Decoration.Id))
+                .ForPath(x => x.DecorationName, opt=> opt.MapFrom(y => y.Decoration.Name))
+                .ForPath(x => x.DecorationPrice, opt=> opt.MapFrom(y => y.Decoration.Price))
+                .ForPath(x => x.DecorationDescription, opt=> opt.MapFrom(y => y.Decoration.Description))
+				.ForPath(x => x.CateringId, opt=> opt.MapFrom(y => y.Catering.Id))
+                .ForPath(x => x.CateringName, opt=> opt.MapFrom(y => y.Catering.Name))
+                .ForPath(x => x.CateringPrice, opt=> opt.MapFrom(y => y.Catering.PricePerPlate))
+                .ForPath(x => x.CateringDescription, opt=> opt.MapFrom(y => y.Catering.Description));
         }
     }
 }

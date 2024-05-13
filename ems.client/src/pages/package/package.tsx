@@ -32,6 +32,7 @@ import {
   IPackage,
   IPackageContainerDispatch,
   IPackageContainerState,
+  IPackageFull,
   IPackagePagination,
 } from "interfaces/package.interface";
 import { showLoader } from "utils/helper";
@@ -141,7 +142,7 @@ const PackageForm: React.FC<PackageProps> = (props) => {
       toast.error(SOMETHING_WENT_WRONG);
     }
   };
-  const onGetPackageSuccess = (response: GENERIC.IApiSuccessResponse<IPackage>) => {
+  const onGetPackageSuccess = (response: GENERIC.IApiSuccessResponse<IPackageFull>) => {
     setShowScreen(true);
   };
 

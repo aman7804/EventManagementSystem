@@ -1,4 +1,4 @@
-import { IPackage, IPackagePagination } from "interfaces/package.interface";
+import { IPackage, IPackageFull, IPackagePagination } from "interfaces/package.interface";
 import * as ACTION_TYPE from "./action.types";
 import * as TYPES from "./types";
 import * as GENERIC from "interfaces/generic.interface";
@@ -57,7 +57,7 @@ export const getByIdRequest = (
 });
 
 export const getByIdSuccess = (
-  payload: GENERIC.GetSuccessResponse<typeModal>
+  payload: GENERIC.GetSuccessResponse<IPackageFull>
 ): TYPES.GetSuccess => ({
   type: ACTION_TYPE.GET_SUCCESS,
   payload,

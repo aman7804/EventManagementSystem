@@ -16,6 +16,32 @@ export interface IPackage {
   cateringName: string;
 }
 
+export interface IPackageFull{
+  name: string;
+  isActive: boolean;
+  isDraft: boolean;
+  venueId: number;
+  venueName: string;
+  venueAddress: string;
+  venuePrice: number;
+  venueDescription: string;
+  minCapacity: number;
+  maxCapacity: number;
+  cityId: number;
+  photographyId: number;
+  photographyName: string;
+  photographyPrice: number;
+  photographyDescription: string;
+  decorationId: number;
+  decorationName: string;
+  decorationPrice: number;
+  decorationDescription: string;
+  cateringId: number;
+  cateringName: string;
+  cateringPrice: number;
+  cateringDescription: string;
+}
+
 /* Search Model */
 export interface IPackageSearch {
   search?: string;
