@@ -45,6 +45,7 @@ import projectTheme from "App.theme";
 import * as GENERIC from "interfaces/generic.interface";
 import { get } from "lodash";
 import EnhancedTableHead from "components/elements/EnhancedTableHead";
+import AddEditPackage from "components/package.create";
 
 const ArrowBackIcon = () =>
   <img src={arrowBackwardIcon} alt="arrow-backward" />;
@@ -422,7 +423,6 @@ const PackageForm: React.FC<PackageProps> = (props) => {
               </Grid>
             </>
   }
-
   return (
     <>
       <div>
@@ -445,20 +445,38 @@ const PackageForm: React.FC<PackageProps> = (props) => {
         {!showScreen ? 
           getListingScreen()
           :
-          (<h1>Nothing to Show</h1>)
-          // (<AddEditPackage
-          //     isEditPackage={isEditPackage}
-          //     showScreen={showScreen}
-          //     handlePackageClose={handlePackageClose}
-          //     handleAddPackage={handleSavePackage}
-          //     currentPackageData={isEditPackage ? {...props.current} : {
-          //       id: 0,
-          //       description: "",
-          //       name: "",
-          //       price: undefined,
-          //       isActive: true,
-          //     }}
-          //   />)
+          // (<h1>Nothing to Show</h1>)
+          (<AddEditPackage
+              isEditPackage={isEditPackage}
+              showScreen={showScreen}
+              handlePackageClose={handlePackageClose}
+              // handleAddPackage={handleSavePackage}
+              currentPackageData={isEditPackage ? {...props.current} : {
+                name: "",
+                isActive: false,
+                isDraft: false,
+                venueId: 0,
+                venueName: "",
+                venueAddress: "",
+                venuePrice: 0,
+                venueDescription: "",
+                minCapacity: 0,
+                maxCapacity: 0,
+                cityId: 0,
+                photographyId: 0,
+                photographyName: "",
+                photographyPrice: 0,
+                photographyDescription: "",
+                decorationId: 0,
+                decorationName: "",
+                decorationPrice: 0,
+                decorationDescription: "",
+                cateringId: 0,
+                cateringName: "",
+                cateringPrice: 0,
+                cateringDescription: "",
+              }}
+            />)
         }            
       </div>
       <DeleteConfirmationModal

@@ -2,9 +2,16 @@ import { GenericState } from "interfaces/generic.interface";
 import * as ACTION_TYPE from "./action.types";
 
 import { PackageActions } from "./types";
-import { IPackage } from "interfaces/package.interface";
+import { IPackage, IPackageFull } from "interfaces/package.interface";
 
-const initialState: GenericState<IPackage> = {
+interface InitialState{
+  pending: boolean;
+  list: IPackage[] | null;
+  message: string | null;
+  current: IPackageFull | null;
+}
+
+const initialState: InitialState = {
   pending: false,
   list: [],
   message: null,

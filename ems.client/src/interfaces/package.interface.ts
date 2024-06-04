@@ -63,5 +63,5 @@ export interface IPackageContainerDispatch {
 /* State Container Model */
 export interface IPackageContainerState {
   list: IPackage[];
-  current: IPackage;
+  current: IPackageFull;
 }
