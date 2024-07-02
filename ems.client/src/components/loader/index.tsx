@@ -15,14 +15,14 @@ const Loader: React.FC<ILoaderProps> = ({
 }) => {
   return (
     <div id="loaderForAPICall" className={className}>
-      <div className={`preloader ${className} fullscreen`}>
+      {/* <div className={`preloader ${className} fullscreen`}> */}
         <CircularProgress
           className="main-loader"
           color={color}
           thickness={thickness}
           size={size}
         />
-      </div>
+      {/* </div> */}
     </div>
   );
 };

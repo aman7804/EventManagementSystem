@@ -55,25 +55,26 @@ export const showLoader = (): void => {
   const wrapper = document.getElementById("wrapper");
   
   
-  if (loaderDiv && wrapper) {
+  if (loaderDiv) {
     loaderDiv.classList.add("loaderShow");
     loaderDiv.classList.remove("loaderHide");
-    
-    wrapper.classList.add("reduced-opacity-wrapper")
-    wrapper.classList.remove("wrapper")
-    
+    if(wrapper){
+      wrapper.classList.add("reduced-opacity-wrapper")
+      wrapper.classList.remove("wrapper")
+    }
   }
 };
 
 export const hideLoader = (): void => {
   const loaderDiv = document.getElementById("loaderForAPICall");
   const wrapper = document.getElementById("wrapper");
-  if (loaderDiv && wrapper) {
+  if (loaderDiv) {
     loaderDiv.classList.remove("loaderShow");
     loaderDiv.classList.add("loaderHide");
-    
-    wrapper.classList.add("wrapper")
-    wrapper.classList.remove("reduced-opacity-wrapper")
+    if(wrapper){
+      wrapper.classList.add("wrapper")
+      wrapper.classList.remove("reduced-opacity-wrapper")
+    }
   }
 };
 

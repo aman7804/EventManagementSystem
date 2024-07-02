@@ -36,7 +36,7 @@ root.render(
               draggable
               pauseOnHover
             />
-            <Loader />
+            <Loader className="loaderHide"/>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <App />
             </LocalizationProvider>
