@@ -90,3 +90,21 @@ export const deleteFailure = (
   type: ACTION_TYPE.DELETE_FAILURE,
   payload,
 });
+
+export const dropDownListRequest = () => ({
+  type: ACTION_TYPE.DROP_DOWN_LIST_REQUEST
+})
+
+export const dropDownListSuccess = (
+  payload: GENERIC.GetSuccessResponse<GENERIC.IKeyValuePair[]>
+): TYPES.DropDownListSuccess => ({
+  type: ACTION_TYPE.DROP_DOWN_LIST_SUCCESS,
+  payload
+})
+
+export const dropDownListFailure = (
+  payload: GENERIC.FailureResponse
+): TYPES.DropDownListFailure => ({
+  type: ACTION_TYPE.DROP_DOWN_LIST_FAILURE,
+  payload
+})

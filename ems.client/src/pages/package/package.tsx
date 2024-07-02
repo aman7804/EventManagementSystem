@@ -100,6 +100,10 @@ const PackageForm: React.FC<PackageProps> = (props) => {
       setIsEditPackage(false);
       setShowScreen(true);
     }
+    props.getVenueDropDownRequest();
+    props.getPhotographyDropDownRequest();
+    props.getCateringDropDownRequest();
+    props.getDecorationDropDownRequest();
   };
   const handlePackageClose = () => {
     setShowScreen(false);
@@ -451,6 +455,10 @@ const PackageForm: React.FC<PackageProps> = (props) => {
               showScreen={showScreen}
               handlePackageClose={handlePackageClose}
               // handleAddPackage={handleSavePackage}
+              venueDropDownList={props.venueDropDownList}
+              photographyDropDownList={props.photographyDropDownList}
+              cateringDropDownList={props.cateringDropDownList}
+              decorationDropDownList={props.decorationDropDownList}
               currentPackageData={isEditPackage ? {...props.current} : {
                 name: "",
                 isActive: false,

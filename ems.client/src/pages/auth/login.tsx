@@ -90,7 +90,6 @@ export const LoginForm = (props: LoginProps) => {
   const onSubmit = async (data: ILogin) => {
     const { loginRequest } = props;
     if (loginRequest) {
-      debugger;
       showLoader();
       const payload: LoginPayload = {
         values: {

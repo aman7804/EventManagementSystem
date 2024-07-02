@@ -12,3 +12,6 @@ export const getCateringListSelector =
 export const getCurrentCateringSelector =
   createSelector( getState, (state) => get(state, "catering.current") )
 
+export const getDropDownSelector = 
+  createSelector(getState, (state) => get(state, "catering.dropDownList") )
+

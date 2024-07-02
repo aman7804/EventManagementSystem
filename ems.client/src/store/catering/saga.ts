@@ -8,6 +8,8 @@ import {
   getByIdSuccess,
   listFailure,
   listSuccess,
+  dropDownListSuccess,
+  dropDownListFailure,
 } from "./actions";
 import * as ACTION_TYPE from "./action.types";
 import service from "services/catering.service";
@@ -92,11 +94,31 @@ function* deleteSaga(action: any) {
   }
 }
 
+function* getDropDownListSaga(action: any) {
+  try {
+    const response: IApiSuccessResponse<any> = yield call( service.getDropDownList );
+
+    yield put(
+      dropDownListSuccess(response)
+    );
+    action.payload.callback(response);
+  } catch (e: any) {
+    yield put(
+      dropDownListFailure({
+        message: e.message
+      })
+    );
+  }
+}
+
 function* cateringSaga() {
-  yield all([takeLatest(ACTION_TYPE.LIST_REQUEST, listSaga)]);
-  yield all([takeLatest(ACTION_TYPE.SAVE_REQUEST, saveSaga)]);
-  yield all([takeLatest(ACTION_TYPE.GET_REQUEST, getByIdSaga)]);
-  yield all([takeLatest(ACTION_TYPE.DELETE_REQUEST, deleteSaga)]);
+  yield all([
+    takeLatest(ACTION_TYPE.LIST_REQUEST, listSaga),
+    takeLatest(ACTION_TYPE.DROP_DOWN_LIST_REQUEST, getDropDownListSaga),
+    takeLatest(ACTION_TYPE.SAVE_REQUEST, saveSaga),
+    takeLatest(ACTION_TYPE.GET_REQUEST, getByIdSaga),
+    takeLatest(ACTION_TYPE.DELETE_REQUEST, deleteSaga)
+  ]);
 }
 
 export default cateringSaga;

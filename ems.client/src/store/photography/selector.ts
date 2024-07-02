@@ -11,3 +11,5 @@ export const getPhotographyListSelector =
 export const getCurrentPhotographySelector =
   createSelector( getState, (state) => get(state, "photography.current") )
 
+export const getDropDownSelector = 
+  createSelector(getState, (state) => get(state, "photography.dropDownList") )

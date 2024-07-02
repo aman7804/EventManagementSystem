@@ -11,3 +11,5 @@ export const getDecorationListSelector =
 export const getCurrentDecorationSelector =
   createSelector( getState, (state) => get(state, "decoration.current"));
 
+export const getDropDownSelector = 
+  createSelector(getState, (state) => get(state, "decoration.dropDownList") )

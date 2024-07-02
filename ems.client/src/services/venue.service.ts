@@ -18,10 +18,14 @@ const getById = async ( payload: { id: number }) =>
 const deleteById = async (payload: { id: number }) =>
   baseService.delete(`${venueBaseUrl}/delete/${payload.id}`);
 
+const getDropDownList = async () =>
+  baseService.get(`${venueBaseUrl}/drop-down-list`);
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getList,
   save,
   getById,
   deleteById,
+  getDropDownList
 };

@@ -7,6 +7,7 @@ import {
     Typography,
   } from "@mui/material";
   import { saveIcon } from "assets/images";
+  import * as GENERIC from '../interfaces/generic.interface'
   import { useForm } from "react-hook-form";
   import { IPackage, IPackageFull } from "interfaces/package.interface";
   import { useEffect, useState } from "react";
@@ -14,13 +15,18 @@ import {
   import CheckBox from "components/elements/CheckBox";
   import React from "react";
 import { NumericFormatProps } from "react-number-format";
+import DropDownSelect from "./elements/DropDownSelect";
   
   interface IAddEditPackageProps {
     isEditPackage: boolean;
     showScreen: boolean;
     handlePackageClose: any;
     // handleAddPackage: any;
-    currentPackageData?: IPackageFull
+    currentPackageData?: IPackageFull;
+    venueDropDownList: GENERIC.IKeyValuePair[];
+    photographyDropDownList: GENERIC.IKeyValuePair[];
+    decorationDropDownList: GENERIC.IKeyValuePair[];
+    cateringDropDownList: GENERIC.IKeyValuePair[];
   }
   
   export interface IIndexable {
@@ -45,6 +51,10 @@ import { NumericFormatProps } from "react-number-format";
     handlePackageClose,
     // handleAddPackage: handleSavePackage,
     currentPackageData,
+    venueDropDownList,
+    cateringDropDownList,
+    decorationDropDownList,
+    photographyDropDownList
   }) => {
 
     const maxNameLength = 100;
@@ -99,6 +109,12 @@ import { NumericFormatProps } from "react-number-format";
       data.price = removeNumberFormatting(data.price.toString());
       // handleSavePackage(data);
     }
+    console.log(
+      "venueDDL: ",venueDropDownList,
+      "pDDL: ",photographyDropDownList,
+      "dDDL: ",decorationDropDownList,
+      "cDDL: ",cateringDropDownList,
+    )
     return (
       <Grid
         container
@@ -194,8 +210,45 @@ import { NumericFormatProps } from "react-number-format";
                   </Grid>
                 </Grid> */}
                 <Grid container spacing={2}>
-                  <Grid item container>
-
+                  <Grid item xs={6}>
+                    Container 1
+                    <DropDownSelect
+                      label="Venue"
+                      value={currentPackageData?.venueId}
+                      list={venueDropDownList}
+                      error={undefined}
+                      helperText={"undefined"}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    Container 2
+                    <DropDownSelect
+                      label="Photography"
+                      value={currentPackageData?.photographyId}
+                      list={photographyDropDownList}
+                      error={undefined}
+                      helperText={"undefined"}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    Container 3
+                    <DropDownSelect
+                      label="Decoration"
+                      value={currentPackageData?.decorationId}
+                      list={decorationDropDownList}
+                      error={undefined}
+                      helperText={"undefined"}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    Container 4
+                    <DropDownSelect
+                      label="Catering"
+                      value={currentPackageData?.cateringId}
+                      list={cateringDropDownList}
+                      error={undefined}
+                      helperText={"undefined"}
+                    />
                   </Grid>
                 </Grid>
                 <Grid container spacing={2}>

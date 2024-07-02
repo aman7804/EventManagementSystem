@@ -11,3 +11,5 @@ export const getVenueListSelector =
 export const getCurrentVenueSelector =
   createSelector( getState,(state) => get(state, "venue.current") )
 
+export const getDropDownSelector = 
+  createSelector(getState, (state) => get(state, "venue.dropDownList") )

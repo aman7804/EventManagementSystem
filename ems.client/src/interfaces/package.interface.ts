@@ -58,10 +58,18 @@ export interface IPackageContainerDispatch {
   saveRequest: (payload: GENERIC.SaveRequestPayload<IPackage>) => {};
   getRequest: (payload: GENERIC.GetRequestPayload) => {};
   deleteRequest: (payload: GENERIC.DeleteRequestPayload) => {};
+  getVenueDropDownRequest: () => {};
+  getPhotographyDropDownRequest: () => {};
+  getDecorationDropDownRequest: () => {};
+  getCateringDropDownRequest: () => {};
 }
 
 /* State Container Model */
 export interface IPackageContainerState {
   list: IPackage[];
   current: IPackageFull;
+  venueDropDownList: GENERIC.IKeyValuePair[];
+  photographyDropDownList: GENERIC.IKeyValuePair[];
+  decorationDropDownList: GENERIC.IKeyValuePair[];
+  cateringDropDownList: GENERIC.IKeyValuePair[];
 }

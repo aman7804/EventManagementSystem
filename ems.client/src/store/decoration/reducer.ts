@@ -85,6 +85,24 @@ const reducers = (state = initialState, action: DecorationActions): unknown => {
         pending: false,
         error: action.payload.message,
       };
+    case ACTION_TYPE.DROP_DOWN_LIST_REQUEST:
+      return {
+        ...state,
+        pending: true
+      };
+    case ACTION_TYPE.DROP_DOWN_LIST_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        dropDownList: action.payload.data,
+        error: null
+      };
+    case ACTION_TYPE.DROP_DOWN_LIST_FAILURE:
+      return {
+        ...state,
+        pending: false,
+        error: action.payload.message
+      };
     default:
       return state;
   }

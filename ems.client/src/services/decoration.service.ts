@@ -4,19 +4,22 @@ import { IDecoration, IDecorationPagination } from "interfaces/decoration.interf
 
 const baseUrl = Config.env.BaseUrl;
 
-const venueBaseUrl = `${baseUrl}/api/Decoration`;
+const decorationBaseUrl = `${baseUrl}/api/Decoration`;
 
 const getList = async (payload: IDecorationPagination) => 
-  baseService.post(`${venueBaseUrl}/list`, payload);
+  baseService.post(`${decorationBaseUrl}/list`, payload);
 
 const save = async (payload: IDecoration) =>
-  baseService.post(`${venueBaseUrl}/save`, payload);
+  baseService.post(`${decorationBaseUrl}/save`, payload);
 
 const getById = async ( payload: { id: number }) =>
-  baseService.get(`${venueBaseUrl}/index/${payload.id}`);
+  baseService.get(`${decorationBaseUrl}/index/${payload.id}`);
 
 const deleteById = async (payload: { id: number }) =>
-  baseService.delete(`${venueBaseUrl}/delete/${payload.id}`);
+  baseService.delete(`${decorationBaseUrl}/delete/${payload.id}`);
+
+const getDropDownList = async () =>
+  baseService.get(`${decorationBaseUrl}/drop-down-list`);
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
@@ -24,4 +27,5 @@ export default {
   save,
   getById,
   deleteById,
+  getDropDownList
 };

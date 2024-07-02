@@ -4,19 +4,22 @@ import { ICatering, ICateringPagination } from "interfaces/catering.interface";
 
 const baseUrl = Config.env.BaseUrl;
 
-const venueBaseUrl = `${baseUrl}/api/Catering`;
+const cateringBaseUrl = `${baseUrl}/api/Catering`;
 
 const getList = async (payload: ICateringPagination) => 
-  baseService.post(`${venueBaseUrl}/list`, payload);
+  baseService.post(`${cateringBaseUrl}/list`, payload);
 
 const save = async (payload: ICatering) =>
-  baseService.post(`${venueBaseUrl}/save`, payload);
+  baseService.post(`${cateringBaseUrl}/save`, payload);
 
 const getById = async ( payload: { id: number }) =>
-  baseService.get(`${venueBaseUrl}/index/${payload.id}`);
+  baseService.get(`${cateringBaseUrl}/index/${payload.id}`);
 
 const deleteById = async (payload: { id: number }) =>
-  baseService.delete(`${venueBaseUrl}/delete/${payload.id}`);
+  baseService.delete(`${cateringBaseUrl}/delete/${payload.id}`);
+
+const getDropDownList = async () =>
+  baseService.get(`${cateringBaseUrl}/drop-down-list`);
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
@@ -24,4 +27,5 @@ export default {
   save,
   getById,
   deleteById,
+  getDropDownList
 };

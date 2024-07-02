@@ -5,6 +5,21 @@ import { IDecoration, IDecorationPagination } from "interfaces/decoration.interf
 type typeModal = IDecoration;
 type typeModalPagination = IDecorationPagination;
 
+export type DropDownListRequest = {
+  type: typeof ACTION_TYPE.DROP_DOWN_LIST_REQUEST;
+  payload: GENERIC.GetRequestPayload;
+}
+
+export type DropDownListSuccess = {
+  type: typeof ACTION_TYPE.DROP_DOWN_LIST_SUCCESS;
+  payload: GENERIC.GetSuccessResponse<GENERIC.IKeyValuePair[]>;
+};
+
+export type DropDownListFailure = {
+  type: typeof ACTION_TYPE.DROP_DOWN_LIST_FAILURE;
+  payload: GENERIC.FailureResponse;
+};
+
 export type ListRequest = {
   type: typeof ACTION_TYPE.LIST_REQUEST;
   payload: GENERIC.ListRequestPayload<typeModalPagination>;
@@ -77,4 +92,8 @@ export type DecorationActions =
   | GetFailure
   | DeleteRequest
   | DeleteSuccess
-  | DeleteFailure;
+  | DeleteFailure
+  | DropDownListRequest
+  | DropDownListSuccess
+  | DropDownListFailure;
+  
