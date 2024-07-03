@@ -1,4 +1,8 @@
+import { ICatering } from './catering.interface';
+import { IDecoration } from './decoration.interface';
 import * as GENERIC from './generic.interface'
+import { IPhotography } from './photography.interface';
+import { IVenue } from './venue.interface';
 
 /* Model */
 export interface IPackage {
@@ -62,6 +66,10 @@ export interface IPackageContainerDispatch {
   getPhotographyDropDownRequest: () => {};
   getDecorationDropDownRequest: () => {};
   getCateringDropDownRequest: () => {};
+  getVenueRequest: (payload: GENERIC.GetRequestPayload) => {};
+  getPhotographyRequest: (payload: GENERIC.GetRequestPayload) => {};
+  getCateringRequest: (payload: GENERIC.GetRequestPayload) => {};
+  getDecorationRequest: (payload: GENERIC.GetRequestPayload) => {};
 }
 
 /* State Container Model */
@@ -72,4 +80,8 @@ export interface IPackageContainerState {
   photographyDropDownList: GENERIC.IKeyValuePair[];
   decorationDropDownList: GENERIC.IKeyValuePair[];
   cateringDropDownList: GENERIC.IKeyValuePair[];
+  getVenue: IVenue;
+  getPhotography: IPhotography;
+  getCatering: ICatering;
+  getDecoration: IDecoration;
 }

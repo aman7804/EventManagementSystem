@@ -46,6 +46,10 @@ import * as GENERIC from "interfaces/generic.interface";
 import { get } from "lodash";
 import EnhancedTableHead from "components/elements/EnhancedTableHead";
 import AddEditPackage from "components/package.create";
+import { IVenue } from "interfaces/venue.interface";
+import { ICatering } from "interfaces/catering.interface";
+import { IDecoration } from "interfaces/decoration.interface";
+import { IPhotography } from "interfaces/photography.interface";
 
 const ArrowBackIcon = () =>
   <img src={arrowBackwardIcon} alt="arrow-backward" />;
@@ -254,7 +258,60 @@ const PackageForm: React.FC<PackageProps> = (props) => {
 
     return rangeText;
   };
+  
+  const onGetVenueSuccess = (response: GENERIC.IApiSuccessResponse<IVenue>) => {};
+  const onGetCateringSuccess = (response: GENERIC.IApiSuccessResponse<ICatering>) => {};
+  const onGetDecorationSuccess = (response: GENERIC.IApiSuccessResponse<IDecoration>) => {};
+  const onGetPhotographySuccess = (response: GENERIC.IApiSuccessResponse<IPhotography>) => {};
+  
+  const getVenueRequest = (id: number) => {
+    const { getVenueRequest } = props;
 
+    if (getVenueRequest) {
+      showLoader();
+      const payload = {
+        data: {id},
+        callback: onGetVenueSuccess,
+      };
+      getVenueRequest(payload);
+    }
+  };
+  const getCateringRequest = (id: number) => {
+    const { getCateringRequest } = props;
+
+    if (getCateringRequest) {
+      showLoader();
+      const payload = {
+        data: {id},
+        callback: onGetCateringSuccess,
+      };
+      getCateringRequest(payload);
+    }
+  };
+  const getDecorationRequest = (id: number) => {
+    const { getDecorationRequest } = props;
+
+    if (getDecorationRequest) {
+      showLoader();
+      const payload = {
+        data: {id},
+        callback: onGetDecorationSuccess,
+      };
+      getDecorationRequest(payload);
+    }
+  };  
+  const getPhotographyRequest = (id: number) => {
+    const { getPhotographyRequest } = props;
+
+    if (getPhotographyRequest) {
+      showLoader();
+      const payload = {
+        data: {id},
+        callback: onGetPhotographySuccess,
+      };
+      getPhotographyRequest(payload);
+    }
+  };
 
   const getListingScreen = () => {
     const list = get(props, "list.data", []);
@@ -459,6 +516,14 @@ const PackageForm: React.FC<PackageProps> = (props) => {
               photographyDropDownList={props.photographyDropDownList}
               cateringDropDownList={props.cateringDropDownList}
               decorationDropDownList={props.decorationDropDownList}
+              getVenueRequest={getVenueRequest}
+              getPhotographyRequest={getPhotographyRequest}
+              getDecorationRequest={getDecorationRequest}
+              getCateringRequest={getCateringRequest}
+              getVenue={props.getVenue}
+              getDecoration={props.getDecoration}
+              getCatering={props.getCatering}
+              getPhotography={props.getPhotography}
               currentPackageData={isEditPackage ? {...props.current} : {
                 name: "",
                 isActive: false,

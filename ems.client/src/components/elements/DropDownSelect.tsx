@@ -11,28 +11,35 @@ interface IDropDownProps {
   onChange?: (e: SelectChangeEvent) => void,
   error: boolean | undefined
   helperText: string | undefined
+  allowNone?: boolean
 }
 
 const DropDownSelect = (props: IDropDownProps) => {
-  const {key, label, onChange, value, list, helperText, error} = props;
+  const {key, label, onChange, value, list, helperText, error, allowNone} = props;
   const [selectedValue,setSelectedValue] = useState<string|undefined>(value?.toString() || "");
-  
+
   return (
     <>
       <FormControl fullWidth error={error}>
-        <InputLabel id={key || `dropdown${label.replaceAll(" ", "_")}`}>
+        <InputLabel
+        id={key || `dropdown${label.replaceAll(" ", "_")}`}
+        shrink={selectedValue===('0' || "") ? false : true}
+        // shrink={Boolean(selectedValue)}
+        >
           {label} <span className="color-red">*</span>
         </InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          labelId={key || `dropdown-${label.replaceAll(" ", "_")}`}
+          id={key || `dropdown-${label.replaceAll(" ", "_")}-select`}
           value={selectedValue}
-          label="Age"
           onChange={(e) => {
             setSelectedValue(e.target.value);
             if (onChange) onChange(e);
           }}
         >
+          {allowNone && (
+            <MenuItem value=""><em>None</em></MenuItem>
+          )}
           {list?.map((item) => 
               <MenuItem value={item.id}>{item.name}</MenuItem>
           )}

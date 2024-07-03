@@ -16,6 +16,11 @@ import {
   import React from "react";
 import { NumericFormatProps } from "react-number-format";
 import DropDownSelect from "./elements/DropDownSelect";
+import { IVenue } from "interfaces/venue.interface";
+import { IPhotography } from "interfaces/photography.interface";
+import { ICatering } from "interfaces/catering.interface";
+import { IDecoration } from "interfaces/decoration.interface";
+import { getDefaultSettings } from "http2";
   
   interface IAddEditPackageProps {
     isEditPackage: boolean;
@@ -27,7 +32,15 @@ import DropDownSelect from "./elements/DropDownSelect";
     photographyDropDownList: GENERIC.IKeyValuePair[];
     decorationDropDownList: GENERIC.IKeyValuePair[];
     cateringDropDownList: GENERIC.IKeyValuePair[];
-  }
+    getVenueRequest: (id: number) => void;
+    getPhotographyRequest: (id: number) => void;
+    getCateringRequest: (id: number) => void;
+    getDecorationRequest: (id: number) => void;
+    getVenue?: IVenue | null;
+    getPhotography?: IPhotography | null;
+    getCatering?: ICatering | null;
+    getDecoration?: IDecoration | null;
+  } 
   
   export interface IIndexable {
     [key: string]: any;
@@ -54,44 +67,48 @@ import DropDownSelect from "./elements/DropDownSelect";
     venueDropDownList,
     cateringDropDownList,
     decorationDropDownList,
-    photographyDropDownList
+    photographyDropDownList,
+    getVenueRequest,
+    getPhotographyRequest,
+    getDecorationRequest,
+    getCateringRequest,
+    getVenue,
+    getCatering,
+    getDecoration,
+    getPhotography
   }) => {
-
-    const maxNameLength = 100;
-    const maxDescriptionLength = 250;
-    // const [priceValue, setPriceValue] = useState(currentPackageData?.price);
 
     const onModalClose = () => {
       reset();
       handlePackageClose();
     };
 
-    const getErrorMessage = (fieldName: string, type: string|undefined): string => {
-      if (type) {    
-        switch (type) {
-          case "required":
-            return `${fieldNames[fieldName]} is required.`;
-          case "maxLength":
-            return  `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
-              ${fieldName === "description" ? maxDescriptionLength : maxNameLength}.`;
-          default:
-            return "";
-        }
-      }
-      return "";
-    }
-    const getError = (fieldName: string): string => {
-      switch (fieldName) {
-        case "name":
-          return getErrorMessage(fieldName, errors.name?.type);
-        // case "description":
-        //   return getErrorMessage(fieldName, errors.description?.type);
-        // case "price":
-        //   return getErrorMessage(fieldName, errors.price?.type);
-        default:
-          return "field cannot be empty";
-      }
-    };
+    // const getErrorMessage = (fieldName: string, type: string|undefined): string => {
+    //   if (type) {    
+    //     switch (type) {
+    //       case "required":
+    //         return `${fieldNames[fieldName]} is required.`;
+    //       case "maxLength":
+    //         return  `Maximum length of ${fieldNames[fieldName].toLowerCase()} is
+    //           ${fieldName === "description" ? maxDescriptionLength : maxNameLength}.`;
+    //       default:
+    //         return "";
+    //     }
+    //   }
+    //   return "";
+    // }
+    // const getError = (fieldName: string): string => {
+    //   switch (fieldName) {
+    //     case "name":
+    //       return getErrorMessage(fieldName, errors.name?.type);
+    //     // case "description":
+    //     //   return getErrorMessage(fieldName, errors.description?.type);
+    //     // case "price":
+    //     //   return getErrorMessage(fieldName, errors.price?.type);
+    //     default:
+    //       return "field cannot be empty";
+    //   }
+    // };
     const {
       register,
       handleSubmit,
@@ -109,12 +126,14 @@ import DropDownSelect from "./elements/DropDownSelect";
       data.price = removeNumberFormatting(data.price.toString());
       // handleSavePackage(data);
     }
-    console.log(
-      "venueDDL: ",venueDropDownList,
-      "pDDL: ",photographyDropDownList,
-      "dDDL: ",decorationDropDownList,
-      "cDDL: ",cateringDropDownList,
-    )
+    const [selectedVenue, setSelectedVenue] = useState<number|null|"">();
+    const [selectedPhotography, setSelectedPhotography] = useState<number|null|"">();
+    const [selectedDecoration, setSelectedDecoration] = useState<number|null|"">();
+    const [selectedCatering, setSelectedCatering] = useState<number|null|"">();
+    console.log(getVenue,'\n')
+    console.log(getDecoration,'\n')
+    console.log(getCatering,'\n')
+    console.log(getPhotography,'\n')
     return (
       <Grid
         container
@@ -128,127 +147,163 @@ import DropDownSelect from "./elements/DropDownSelect";
                 {isEditPackage ? "Edit Package" : "Add Package"}
               </Typography>       
             </Box>              
-              <form onSubmit={handleSubmit(beginSubmit)}>           
-                {/* <Grid container spacing={2}>
-                  <Grid item
-                    xs={isEditPackage ? 8 : 12}
-                    md={isEditPackage ? 8 : 12}
-                    xl={isEditPackage ? 8 : 12}
-                  >       
-                      <TextField
-                        id="name"
-                        label={
-                          <>
-                            Package Name <span className="color-red">*</span>
-                          </>
-                        }
-                        fullWidth
-                        variant="outlined"
-                        multiline
-                        error={!!errors.name}
-                        helperText={getError("name")}
-                        {...register("name", {
-                          required: true,
-                          maxLength: maxNameLength,
-                        })}
-                      />
-                  </Grid>
-                  {
-                    isEditPackage  && (
-                      <Grid item xs={4} xl={4} md={4} mt={2} alignContent={"center"}>
-                        <CheckBox
-                          label="Active"  
-                          isChecked={
-                            currentPackageData ? currentPackageData.isActive : true
-                          }
-                          {...register("isActive")}
-                          onChange={e => setValue("isActive", e.target.checked)}
-                        />
-                      </Grid>
-                    )
-                  }
-                  <Grid item xs={12} md={12} xl={12}>
-                    <TextField
-                      id="description"
-                      label="Description"
-                      fullWidth
-                      variant="outlined"
-                      multiline
-                      error={!!errors.description}
-                      helperText={getError("description")}
-                      {...register("description", {
-                        maxLength: maxDescriptionLength 
-                      })}
-                    />
-                  </Grid>
-                  <Grid item xs={12} xl={4} md={6}>
-                    <TextField
-                      id="price"
-                      label={
-                      <>
-                        Price <span className="color-red">*</span>
-                      </>
-                      }
-                      fullWidth
-                      autoComplete="off"
-                      variant="outlined"
-                      error={!!errors.price}
-                      helperText={getError("price")}
-                      {...register("price", { required: true })}
-                      InputProps={{
-                        inputComponent: CustomPriceComponent as any,
-                      }}
-                      value={isEditPackage ? priceValue : undefined } 
-                      onBlur={(e) => {
-                        if (e.target.value === '')
-                          setPriceValue(undefined)
-                        else 
-                          setPriceValue(Number(e.target.value))
-                      }}
-                      InputLabelProps={{shrink:  priceValue !== undefined }}
-                    />
-                  </Grid>
-                </Grid> */}
+              <form onSubmit={handleSubmit(beginSubmit)}>   
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
-                    Container 1
-                    <DropDownSelect
-                      label="Venue"
-                      value={currentPackageData?.venueId}
-                      list={venueDropDownList}
-                      error={undefined}
-                      helperText={"undefined"}
-                    />
+                    <Grid container spacing={2}>
+                      <Grid item xs={7}>
+                        Venue
+                        <DropDownSelect
+                          label="Venue"
+                          value={currentPackageData?.venueId}
+                          list={venueDropDownList}
+                          error={undefined}
+                          helperText={"undefined"}
+                          onChange={e=>{
+                            setSelectedVenue(Number(e.target.value))
+                            Number(e.target.value)
+                              && getVenueRequest(Number(e.target.value))
+                          }}
+                          allowNone={true}
+                        />
+                      </Grid>
+                      <Grid item xs={5}>
+                        PRICE:{getVenue?.price}
+                      </Grid>
+                    </Grid>
+                    <Grid container spacing={2}>
+                      <TextField
+                        label="Capacity"
+                        value={
+                          selectedVenue
+                          ? `${getVenue?.minCapacity?.toString()} - 
+                            ${getVenue?.maxCapacity?.toString()}`
+                          : ''
+                        }
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                        // InputLabelProps={{
+                        //   shrink: true,
+                        // }}
+                      />
+                      <TextField
+                          label="Address"
+                          fullWidth
+                          value={selectedVenue ? getVenue?.address : ''}
+                          // value={getVenue?.address}
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                      />
+                      <TextField
+                          label="Description"
+                          fullWidth
+                          value={selectedVenue ? getVenue?.description : ''}
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                      />
+                    </Grid>
                   </Grid>
                   <Grid item xs={6}>
-                    Container 2
-                    <DropDownSelect
-                      label="Photography"
-                      value={currentPackageData?.photographyId}
-                      list={photographyDropDownList}
-                      error={undefined}
-                      helperText={"undefined"}
-                    />
+                    <Grid container spacing={2}>
+                      <Grid item xs={7}>
+                        Photography
+                        <DropDownSelect
+                          label="Photography"
+                          value={currentPackageData?.photographyId}
+                          list={photographyDropDownList}
+                          error={undefined}
+                          helperText={"undefined"}
+                          onChange={e=>{
+                            setSelectedPhotography(Number(e.target.value))
+                            Number(e.target.value)
+                              && getPhotographyRequest(Number(e.target.value))
+                          }}
+                          allowNone={true}
+                        />
+                      </Grid>
+                      <Grid item xs={5}>
+                        PRICE: {selectedPhotography && getPhotography?.price}
+                      </Grid>
+                    </Grid>
+                    <Grid container spacing={2}>
+                      <TextField
+                          label="Description"
+                          fullWidth
+                          value={selectedPhotography ? getPhotography?.description : ''}
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                      />
+                    </Grid>
                   </Grid>
                   <Grid item xs={6}>
-                    Container 3
-                    <DropDownSelect
-                      label="Decoration"
-                      value={currentPackageData?.decorationId}
-                      list={decorationDropDownList}
-                      error={undefined}
-                      helperText={"undefined"}
-                    />
+                    <Grid container spacing={2}>
+                      <Grid item xs={7}>
+                        Decoration
+                        <DropDownSelect
+                          label="Decoration"
+                          value={currentPackageData?.decorationId}
+                          list={decorationDropDownList}
+                          error={undefined}
+                          helperText={"undefined"}
+                          onChange={e=>{
+                            setSelectedDecoration(Number(e.target.value))
+                            Number(e.target.value)
+                              && getDecorationRequest(Number(e.target.value))
+                          }}
+                          allowNone={true}
+                        />
+                      </Grid>
+                      <Grid item xs={5}>
+                        PRICE:{selectedDecoration && getDecoration?.price}
+                      </Grid>
+                    </Grid>
+                    <Grid container spacing={2}>
+                      <TextField
+                          label="Description"
+                          fullWidth
+                          value={selectedDecoration ? getDecoration?.description : ''}
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                      />
+                    </Grid>
                   </Grid>
                   <Grid item xs={6}>
-                    Container 4
-                    <DropDownSelect
-                      label="Catering"
-                      value={currentPackageData?.cateringId}
-                      list={cateringDropDownList}
-                      error={undefined}
-                      helperText={"undefined"}
-                    />
+                    <Grid container spacing={2}>
+                      <Grid item xs={7}>
+                        Catering
+                        <DropDownSelect
+                          label="Catering"
+                          value={currentPackageData?.cateringId}
+                          list={cateringDropDownList}
+                          error={undefined}
+                          helperText={"undefined"}
+                          onChange={e=>{
+                            setSelectedCatering(Number(e.target.value))
+                            Number(e.target.value)
+                              && getCateringRequest(Number(e.target.value))
+                          }}
+                          allowNone={true}
+                        />
+                      </Grid>
+                      <Grid item xs={5}>
+                        PRICE:{selectedCatering && getCatering?.price}
+                      </Grid>
+                    </Grid>
+                    <Grid container spacing={2}>
+                      <TextField
+                          label="Description"
+                          fullWidth
+                          value={selectedCatering ? getCatering?.description : ''}
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                      />
+                    </Grid>
                   </Grid>
                 </Grid>
                 <Grid container spacing={2}>
