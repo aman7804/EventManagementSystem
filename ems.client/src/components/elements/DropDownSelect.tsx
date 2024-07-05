@@ -12,21 +12,20 @@ interface IDropDownProps {
   error: boolean | undefined
   helperText: string | undefined
   allowNone?: boolean
+  isRequired?: boolean
 }
 
 const DropDownSelect = (props: IDropDownProps) => {
-  const {key, label, onChange, value, list, helperText, error, allowNone} = props;
+  const {key, label, onChange, value, list, helperText, error, allowNone, isRequired} = props;
   const [selectedValue,setSelectedValue] = useState<string|undefined>(value?.toString() || "");
-
   return (
     <>
       <FormControl fullWidth error={error}>
         <InputLabel
         id={key || `dropdown${label.replaceAll(" ", "_")}`}
-        shrink={selectedValue===('0' || "") ? false : true}
-        // shrink={Boolean(selectedValue)}
+        shrink={Boolean(selectedValue)}
         >
-          {label} <span className="color-red">*</span>
+          {label} {isRequired ? <span className="color-red">*</span> : ""}
         </InputLabel>
         <Select
           labelId={key || `dropdown-${label.replaceAll(" ", "_")}`}

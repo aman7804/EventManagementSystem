@@ -250,6 +250,7 @@ const AddEditVenue: React.FC<IAddEditVenueProps> = ({
                       setValue("cityId", Number(e.target.value))
                       trigger("cityId")
                     }}
+                    isRequired={true}
                   />
                 </Grid>
                 <Grid item xs={12} md={12} xl={12}>
